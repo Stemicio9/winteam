@@ -11,7 +11,7 @@ Widget ActionButton(String text, BuildContext context, Function action){
     height: 50.0,
     margin: EdgeInsets.all(10),
     child: MaterialButton(
-      onPressed: () {action;},
+      onPressed:  () {action;},
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(80.0)),
       padding: EdgeInsets.all(0.0),

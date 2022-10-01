@@ -50,20 +50,28 @@ class DrawerWidget extends StatelessWidget {
     lista.add(
         DrawerHeader(
           decoration: const BoxDecoration(color: Colors.white),
+
+          child: Image.asset("assets/images/logo.png", width: 100, height: 100),
+        ),
+
+
+      /* DrawerHeader(
+          decoration: const BoxDecoration(color: Colors.white),
           child: Align(
             alignment: Alignment.center,
             child: Container(
               height: 100,
               width: 100,
-
               decoration: BoxDecoration(
                   color: azzurroscuro,
-                //  image: DecorationImage(image: immagineprofilo(),fit: BoxFit.cover),
-                  borderRadius: const BorderRadius.all(Radius.circular(100))
+                  borderRadius: const BorderRadius.all(Radius.circular(100)),
+
               ),
             ),
           ),
-        )
+        ) */
+
+
     );
 
     lista.add(creatile(v1, (){raccoglitore.policyprivacy(context);}, context, const IconData(60223, fontFamily: 'MaterialIcons')));
