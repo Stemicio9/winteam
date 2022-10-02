@@ -1,6 +1,7 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:winteam/constants/language.dart';
 import 'package:winteam/pages/pagine_lavoratore/profilo_lavoratore.dart';
 import 'package:winteam/pages/pagine_lavoratore/ricerca_utente_lavoratore.dart';
 import 'package:winteam/widgets/appbars.dart';
@@ -48,7 +49,7 @@ class DashboardLavoratoreState extends State<DashboardLavoratore> with TickerPro
 
       length: 4,
       child: Scaffold(
-        appBar: appbarConAction("Dashboard", context),
+        appBar: appbarConAction(getCurrentLanguageValue(DASHBOARD_CONST)!, context),
 
         drawer: DrawerWidget(),
 

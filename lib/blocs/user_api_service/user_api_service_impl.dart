@@ -1,17 +1,8 @@
-// GENERATED CODE - DO NOT MODIFY BY HAND
-
 part of 'user_api_service.dart';
 
-// **************************************************************************
-// RetrofitGenerator
-// **************************************************************************
-
-// ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers
-
-
-//
 
 const url_base = "http://192.168.1.89:8081";
+
 
 UserListApiService userListApiService = UserListApiService(Dio(),baseUrl: url_base);
 
