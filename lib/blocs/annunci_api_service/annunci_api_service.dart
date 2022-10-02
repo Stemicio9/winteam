@@ -14,4 +14,6 @@ abstract class AnnunciListApiService {
   Future<HttpResponse<dynamic>> getAnnunciList();
 
 
+
+
 }

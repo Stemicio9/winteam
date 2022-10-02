@@ -1,5 +1,8 @@
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:winteam/authentication/firebase_repository.dart';
+import 'package:winteam/blocs/user_api_service/user_api_service.dart';
 import 'package:winteam/constants/colors.dart';
 import 'package:winteam/constants/cosstanti_tema.dart';
 import 'package:winteam/constants/route_constants.dart';
@@ -28,7 +31,7 @@ class RegistratiState extends State<Registrati>{
 
   final _formKey = GlobalKey<FormState>();
 
-  bool switchvalue = false;   // false = Lavoratore , true = Datore
+  int switchvalue = 0;   // 0 = Lavoratore , 1 = Datore , 2 = Influencer, 3 = Admin
 
   @override
   Widget build(BuildContext context) {
@@ -128,6 +131,19 @@ class RegistratiState extends State<Registrati>{
     if(token == null) {
       print("ERRORE NELLA REGISTRAZIONE");
       return; */
+
+    UserCredential? user = await createUser(emailcontroller.text,passwordcontroller.text);
+    if(user == null){
+      // @todo la registrazione non è andata a buon fine per qualche motivo
+      return;
+    }
+
+    var roleId = switchvalue == 0 ? "LAVORATORE" : "DATORE";
+
+    // @todo chiamare la rest per creare utente anche sul server Spring
+
+    UserListApiService
+
   }
 
 // @todo Rifare l'operazione di registrazione su firebase

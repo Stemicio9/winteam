@@ -3,11 +3,28 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:winteam/authentication/firebase_repository.dart';
+import 'package:winteam/blocs/user_bloc/current_user_cubit.dart';
+import 'package:winteam/blocs/user_bloc/user_list_cubit.dart';
 import 'package:winteam/constants/cosstanti_tema.dart';
+import 'package:winteam/entities/user_entity.dart';
 
 
 import '../../widgets/action_buttons.dart';
 import '../../widgets/inputs.dart';
+
+class LoginWidget extends StatelessWidget {
+  const LoginWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (_) => UserListCubit(),
+      child: LoginForm(),
+    );
+  }
+}
 
 
 class LoginForm extends StatefulWidget{
@@ -20,6 +37,7 @@ class LoginForm extends StatefulWidget{
 
 class LoginFormState extends State<LoginForm> {
 
+  UserCubit get _cubit => context.read<UserCubit>();
 
   final _formKey = GlobalKey<FormState>();
 
@@ -61,8 +79,21 @@ class LoginFormState extends State<LoginForm> {
               ), */
               spaziotrawidgetinaltezza(context, 20),
 
+              BlocBuilder<UserCubit, UserState>(
+                  builder: (_, state) {
 
-              ActionButton('Lavoratore', context, (){Navigator.pushNamed(context, '/dashboardlavoratore');},250),
+                    if (state is UserError) {
+                     // return const Center(child: CircularProgressIndicator());
+                      return Container();
+                    } else {
+                      // @todo insert here button that calls login
+                      return ActionButton('Lavoratore', context, (){
+                        },250);
+                    }
+                  }),
+
+
+
 
               // entrabutton("Entra",context, formsubmit),
 
@@ -129,7 +160,22 @@ extension EmailValidator on String {
   } */
 
     if (_formKey.currentState!.validate()) {
+        UserCredential? log = await signIn(_emailTextController.text, _passwordTextController.text);
+        if(log == null || log?.user == null){
+          // @todo avvisare che il login è sbagliato
+          return;
+        }
+        // DATORE, LAVORATORE, INFLUENCER
+        UserEntity? entity = await _cubit.me();
+        if(entity == null) return;
 
+        if(entity.roleId == "DATORE"){
+          Navigator.pushNamed(context, '/dashboardDatore');
+        }else if(entity.roleId == "LAVORATORE"){
+          Navigator.pushNamed(context, '/dashboardlavoratore');
+        }else{
+
+        }
     }
   }
 }

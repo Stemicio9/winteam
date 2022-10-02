@@ -19,7 +19,7 @@ class UserCubit extends Cubit<UserState> {
   final UserEntity _user = UserEntity(email: "dummy@dummy.it", firstName: "dummy");
   UserEntity get user => _user;
 
-  void me() async {
+  Future<UserEntity?> me() async {
     emit(UserLoading());
     try {
       // TODO: fetch users
@@ -29,9 +29,8 @@ class UserCubit extends Cubit<UserState> {
       var decoded = jsonDecode(encoded);
       var json = UserEntity.fromJson(decoded);
       emit(UserLoaded(json));
-
+      return json;
     } catch (e) {
-
       emit(UserError());
     }
   }

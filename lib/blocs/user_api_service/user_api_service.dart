@@ -22,4 +22,7 @@ abstract class UserListApiService {
 
   @GET('/user/page')
   Future<HttpResponse<dynamic>> fetchUsers(Filter filters);
+
+  @GET('/user/register')
+  Future<HttpResponse<dynamic>> register(String role);
 }
