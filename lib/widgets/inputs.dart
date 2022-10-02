@@ -83,8 +83,7 @@ class InputWidgetSenzaFocus extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return
-      Center(
+    return Center(
           child: SizedBox(
             width: MediaQuery.of(context).size.width - 60,
             child: Material(
