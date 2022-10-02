@@ -43,14 +43,19 @@ class RegistratiState extends State<Registrati>{
 
                 GestureDetector(
                   onTap: (){Navigator.pushNamed(context, RouteConstants.login);},
-
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Container(
                         margin: EdgeInsets.only(left: 30),
+                        child: Icon(Icons.arrow_back_ios, color: azzurroscuro,size: 40  ),
                       ),
-                      Icon(Icons.arrow_back_ios, color: azzurroscuro,size: 40  ),
+
+                      Container(
+                        margin: EdgeInsets.only(right: 30),
+                        child: Image.asset('assets/images/logo.png',height: 100,width: 100),
+
+                      )
                     ],
                   ),
                 ),

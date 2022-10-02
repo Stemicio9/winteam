@@ -33,24 +33,31 @@ class PasswordDimenticataFormState extends State<PasswordDimenticataForm>{
           children: <Widget>[
             GestureDetector(
               onTap: (){Navigator.pushNamed(context, RouteConstants.login);},
-
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Container(
                     margin: EdgeInsets.only(left: 30),
+                    child: Icon(Icons.arrow_back_ios, color: azzurroscuro,size: 40  ),
                   ),
-                  Icon(Icons.arrow_back_ios, color: azzurroscuro,size: 40  ),
+
+                  Container(
+                    margin: EdgeInsets.only(right: 30),
+                    child: Image.asset('assets/images/logo.png',height: 100,width: 100),
+
+                  )
                 ],
               ),
             ),
 
-            spaziotrawidgetinaltezza(context, 10),
-
+            Container(
+              margin: EdgeInsets.only(bottom: 50),
+            ),
             Texth1(testo: 'RECUPERA PASSWORD', color: Colors.black),
 
-            spaziotrawidgetinaltezza(context, 10),
-
+            Container(
+              margin: EdgeInsets.only(bottom: 100),
+            ),
             InputWidget(labeltext: 'Inserisci la tua Email', hinttext: "esempio@email.it", controller: emailcontroller, ispassword: false,),
 
 
@@ -65,15 +72,15 @@ class PasswordDimenticataFormState extends State<PasswordDimenticataForm>{
               ),
             ), */
 
-            spaziotrawidgetinaltezza(context, 20),
+            spaziotrawidgetinaltezza(context, 30),
 
             ActionButton("Cambia password", context,submit,250),
 
-            spaziotrawidgetinaltezza(context, 20),
+            Image.asset('assets/images/giphy.gif' ,height: 175, width: 175),
 
-            Image.asset('assets/images/giphy.gif' ,height: 200, width: 200),
-
-            spaziotrawidgetinaltezza(context, 30),
+            Container(
+              margin: EdgeInsets.only(bottom: 100),
+            )
 
           ],
         );
