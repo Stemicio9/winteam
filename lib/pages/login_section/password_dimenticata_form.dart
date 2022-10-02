@@ -31,6 +31,22 @@ class PasswordDimenticataFormState extends State<PasswordDimenticataForm>{
   Widget build(BuildContext context) {
     return Column(
           children: <Widget>[
+            GestureDetector(
+              onTap: (){Navigator.pushNamed(context, RouteConstants.login);},
+
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Container(
+                    margin: EdgeInsets.only(left: 30),
+                  ),
+                  Icon(Icons.arrow_back_ios, color: azzurroscuro,size: 40  ),
+                ],
+              ),
+            ),
+
+            spaziotrawidgetinaltezza(context, 10),
+
             Texth1(testo: 'RECUPERA PASSWORD', color: Colors.black),
 
             spaziotrawidgetinaltezza(context, 10),
@@ -53,12 +69,14 @@ class PasswordDimenticataFormState extends State<PasswordDimenticataForm>{
 
             ActionButton("Cambia password", context,submit),
 
+            spaziotrawidgetinaltezza(context, 20),
+
             Image.asset('assets/images/giphy.gif' ,height: 200, width: 200),
 
             spaziotrawidgetinaltezza(context, 30),
 
 
-            GestureDetector(
+        /*    GestureDetector(
                 onTap: (){Navigator.pushNamed(context, RouteConstants.login);},
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -75,7 +93,7 @@ class PasswordDimenticataFormState extends State<PasswordDimenticataForm>{
                     )
                   ],
                 )
-            ),
+            ), */
           ],
         );
 

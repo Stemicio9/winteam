@@ -37,30 +37,45 @@ class RegistratiState extends State<Registrati>{
           key: _formKey,
           child: Column(
               children: <Widget>[
+
+                GestureDetector(
+                  onTap: (){Navigator.pushNamed(context, RouteConstants.login);},
+
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Container(
+                        margin: EdgeInsets.only(left: 30),
+                      ),
+                      Icon(Icons.arrow_back_ios, color: azzurroscuro,size: 40  ),
+                    ],
+                  ),
+                ),
+
+                spaziotrawidgetinaltezza(context, 15),
+
                 Texth1(testo: 'REGISTRAZIONE', color: Colors.black),
 
                 spaziotrawidgetinaltezza(context, 20),
 
-                // Add TextFormFields and ElevatedButton here.
-                const Padding(padding: EdgeInsets.only(bottom: 20),),
-
                 InputWidget(labeltext: "Email", hinttext: "email@esempio.com", controller: emailcontroller, ispassword: false ,validator: validaemail),
-                const Padding(padding: EdgeInsets.only(bottom: 20),),
+
+                spaziotrawidgetinaltezza(context,35),
 
                 InputWidget(labeltext: "Password", hinttext: "******", controller: passwordcontroller, ispassword: true ,validator: validapassword),
-                const Padding(padding: EdgeInsets.only(bottom: 20),),
+
+                spaziotrawidgetinaltezza(context,35),
 
                 InputWidget( labeltext: "Conferma password",hinttext: "******", controller: nomeutentecontroller, ispassword: false ,validator: defaultvalidator),
-                const Padding(padding: EdgeInsets.only(bottom: 20),),
 
-               spaziotrawidgetinaltezza(context, 20),
+               spaziotrawidgetinaltezza(context,25),
 
 
                 ActionButton("Registrati", context,registrati),
 
-                spaziotrawidgetinaltezza(context, 30),
+                spaziotrawidgetinaltezza(context, 5),
 
-                Text("Hai già un account?",
+              /*  Text("Hai già un account?",
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w700,
@@ -70,7 +85,7 @@ class RegistratiState extends State<Registrati>{
                 spaziotrawidgetinaltezza(context, 40),
 
 
-                    GestureDetector(
+                GestureDetector(
                         onTap: (){Navigator.pushNamed(context, RouteConstants.login);},
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -86,7 +101,7 @@ class RegistratiState extends State<Registrati>{
                             )
                           ],
                         )
-                    ),
+                    ), */
 
 
                 /*    Row(
