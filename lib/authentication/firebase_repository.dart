@@ -40,7 +40,7 @@ Future<UserCredential?> signIn(String email, String password) async {
 
 
 Future<bool> askResetPassword(String email) async {
-  await FirebaseAuth.instance
+   await FirebaseAuth.instance
       .sendPasswordResetEmail(email: email);
   return true;
 }

@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:winteam/authentication/firebase_repository.dart';
 import 'package:winteam/constants/colors.dart';
 import 'package:winteam/constants/cosstanti_tema.dart';
 import 'package:winteam/constants/route_constants.dart';
@@ -94,6 +95,10 @@ class PasswordDimenticataFormState extends State<PasswordDimenticataForm>{
     setState(() {
       risposta = result;
     }); */
+    var result = await askResetPassword(emailcontroller.text);
+    if(result){
+      // @todo inserire qui il toaster per dire che è stata inviata una mail all'indirizzo ${emailcontroller.text}
+    }
   }
 
 }

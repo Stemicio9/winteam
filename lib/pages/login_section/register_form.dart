@@ -1,6 +1,7 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:retrofit/retrofit.dart';
 import 'package:winteam/authentication/firebase_repository.dart';
 import 'package:winteam/blocs/user_api_service/user_api_service.dart';
 import 'package:winteam/constants/colors.dart';
@@ -147,7 +148,14 @@ class RegistratiState extends State<Registrati>{
 
     // @todo chiamare la rest per creare utente anche sul server Spring
 
-    UserListApiService
+    //HttpResponse<dynamic> response = await userListApiService.register("DATORE");
+     HttpResponse<dynamic> response = await userListApiService.register(roleId);
+
+    if(response.response.statusCode == 200){
+       Navigator.pushNamed(context, "/");
+    }else{
+
+    }
 
   }
 

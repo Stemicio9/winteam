@@ -87,7 +87,7 @@ class LoginFormState extends State<LoginForm> {
                       return Container();
                     } else {
                       // @todo insert here button that calls login
-                      return ActionButton('Lavoratore', context, (){
+                      return ActionButton('Lavoratore', context, (){ formsubmit();
                         },250);
                     }
                   }),
@@ -163,14 +163,17 @@ extension EmailValidator on String {
         UserCredential? log = await signIn(_emailTextController.text, _passwordTextController.text);
         if(log == null || log?.user == null){
           // @todo avvisare che il login è sbagliato
+          print("UTENTE NULLO");
           return;
         }
         // DATORE, LAVORATORE, INFLUENCER
         UserEntity? entity = await _cubit.me();
         if(entity == null) return;
 
+        print("USERENTITY CREATA");
+        print(entity.roleId);
         if(entity.roleId == "DATORE"){
-          Navigator.pushNamed(context, '/dashboardDatore');
+          Navigator.pushNamed(context, '/dashboarddatore');
         }else if(entity.roleId == "LAVORATORE"){
           Navigator.pushNamed(context, '/dashboardlavoratore');
         }else{
