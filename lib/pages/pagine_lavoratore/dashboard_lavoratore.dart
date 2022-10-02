@@ -124,4 +124,5 @@ class DashboardLavoratoreState extends State<DashboardLavoratore> with TickerPro
       ),
     );
   }
+
 }

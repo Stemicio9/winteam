@@ -1,6 +1,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:winteam/widgets/texts.dart';
 
 import '../constants/colors.dart';
 
@@ -11,7 +12,9 @@ Widget ActionButton(String text, BuildContext context, Function action){
     height: 50.0,
     margin: EdgeInsets.all(10),
     child: MaterialButton(
-      onPressed:  () {action;},
+      onPressed: () {
+        action;
+        },
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(80.0)),
       padding: EdgeInsets.all(0.0),
@@ -23,11 +26,7 @@ Widget ActionButton(String text, BuildContext context, Function action){
           constraints:
           BoxConstraints(maxWidth: 250.0, minHeight: 50.0),
           alignment: Alignment.center,
-          child: Text(
-            text,
-            textAlign: TextAlign.center,
-            style: TextStyle(color: Colors.white, fontSize: 15),
-          ),
+          child: Texth5(testo: text,color: Colors.white,)
         ),
       ),
     ),

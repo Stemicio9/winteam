@@ -3,6 +3,7 @@ import 'package:winteam/bottombar/tab_icon.dart';
 import 'package:winteam/bottombar/tab_item_icon.dart';
 
 import 'disegna_curva.dart';
+typedef _LetIndexPage = bool Function(int value);
 
 class JumpingTabBar extends StatefulWidget {
   final void Function(int index) onChangeTab;
@@ -11,11 +12,24 @@ class JumpingTabBar extends StatefulWidget {
   final Duration duration;
   final Color backgroundColor;
 
+
+/*  final int index;
+  final ValueChanged<int>? onTap;
+  final _LetIndexPage letIndexChange;  */
+
+
   final List<TabItemIcon> items;
 
   final Gradient circleGradient;
   JumpingTabBar({
     Key? key,
+
+
+ /*   this.onTap,
+    _LetIndexPage? letIndexChange,
+    this.index = 0, */
+
+
     required this.backgroundColor,
     this.duration = const Duration(milliseconds: 4100),
     this.circleGradient = const LinearGradient(
@@ -26,7 +40,7 @@ class JumpingTabBar extends StatefulWidget {
       begin: Alignment.bottomLeft,
       end: Alignment.topRight,
     ),
-    this.selectedIndex = 3,
+    this.selectedIndex = 0,
     required this.items,
     required this.controller,
     required this.onChangeTab,

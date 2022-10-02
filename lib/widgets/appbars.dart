@@ -7,7 +7,7 @@ import '../constants/colors.dart';
 appbarSenzaActions(String titolo){
   return AppBar(
     backgroundColor: azzurroscuro,
-    title: Texth1(testo: titolo),
+    title: Texth1(testo: titolo,color: Colors.white,),
     centerTitle: true,
     shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(
@@ -23,7 +23,7 @@ appbarConAction(String titolo,context) {
   return AppBar(
     iconTheme: IconThemeData(color: Colors.white),
     backgroundColor: azzurroscuro,
-    title: Texth1(testo: titolo),
+    title: Texth1(testo: titolo,color: Colors.white),
     centerTitle: true,
     shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(

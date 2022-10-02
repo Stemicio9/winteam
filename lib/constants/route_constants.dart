@@ -1,6 +1,7 @@
 
 import 'package:winteam/main.dart';
-import 'package:winteam/pages/pagine_lavoratore/dashboard_lavoratore.dart';
+
+import '../pages/pagine_lavoratore/dashboard_lavoratore.dart';
 
 class RouteConstants {
   static const String dashboardLavoratore = "/dashboardlavoratore";
