@@ -61,8 +61,7 @@ class LoginFormState extends State<LoginForm> {
               spaziotrawidgetinaltezza(context, 20),
 
 
-              ActionButton('Lavoratore', context, (){Navigator.pushNamed(context, '/dashboardlavoratore');
-              }),
+              ActionButton('Lavoratore', context, (){Navigator.pushNamed(context, '/dashboardlavoratore');},250),
 
               // entrabutton("Entra",context, formsubmit),
 

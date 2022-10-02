@@ -71,38 +71,9 @@ class RegistratiState extends State<Registrati>{
                spaziotrawidgetinaltezza(context,25),
 
 
-                ActionButton("Registrati", context,registrati),
+                ActionButton("Registrati", context,registrati,250),
 
                 spaziotrawidgetinaltezza(context, 5),
-
-              /*  Text("Hai già un account?",
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-
-                spaziotrawidgetinaltezza(context, 40),
-
-
-                GestureDetector(
-                        onTap: (){Navigator.pushNamed(context, RouteConstants.login);},
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children:  [
-                            Icon(Icons.arrow_back_ios, color: azzurroscuro,size: 20  ),
-
-                             Text("Vai al Login",
-                              style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w700,
-                                  color: azzurroscuro
-                              ),
-                            )
-                          ],
-                        )
-                    ), */
-
 
                 /*    Row(
                     mainAxisAlignment: MainAxisAlignment.center,

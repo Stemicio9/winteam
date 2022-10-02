@@ -16,16 +16,10 @@ class PasswordDimenticataState extends State<PasswordDimenticata>{
     return Scaffold(
       backgroundColor: Colors.white,
       body: Container(
-        height: MediaQuery
-            .of(context)
-            .size
-            .height,
+        height: MediaQuery.of(context).size.height,
         child: SingleChildScrollView(
             child: Container(
-              height: MediaQuery
-                  .of(context)
-                  .size
-                  .height,
+              height: MediaQuery.of(context).size.height,
               child: GestureDetector(
                 behavior: HitTestBehavior.opaque,
                 onTap: () {

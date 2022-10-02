@@ -67,7 +67,7 @@ class PasswordDimenticataFormState extends State<PasswordDimenticataForm>{
 
             spaziotrawidgetinaltezza(context, 20),
 
-            ActionButton("Cambia password", context,submit),
+            ActionButton("Cambia password", context,submit,250),
 
             spaziotrawidgetinaltezza(context, 20),
 
@@ -75,25 +75,6 @@ class PasswordDimenticataFormState extends State<PasswordDimenticataForm>{
 
             spaziotrawidgetinaltezza(context, 30),
 
-
-        /*    GestureDetector(
-                onTap: (){Navigator.pushNamed(context, RouteConstants.login);},
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children:  [
-                    Icon(Icons.arrow_back_ios, color: azzurroscuro,size: 20  ),
-
-
-                    Text("Torna al Login",
-                      style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w700,
-                          color: azzurroscuro
-                      ),
-                    )
-                  ],
-                )
-            ), */
           ],
         );
 

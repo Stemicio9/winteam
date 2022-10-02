@@ -4,8 +4,12 @@ import '../constants/colors.dart';
 
 
 
-appbarSenzaActions(String titolo){
+appbarSenzaActions(BuildContext context,String titolo){
   return AppBar(
+    leading: GestureDetector(
+      onTap: (){Navigator.pop(context);},
+      child: Icon(Icons.arrow_back_ios,color: Colors.white,)
+    ),
     backgroundColor: azzurroscuro,
     title: Texth1(testo: titolo,color: Colors.white,),
     centerTitle: true,

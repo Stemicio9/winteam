@@ -107,7 +107,7 @@ class _LoginState extends State<Login> {
 
               ),
 
-              ActionButton("Registrati", context, vaiapaginaregistrati),
+              ActionButton("Registrati", context, vaiapaginaregistrati,250),
 
 
             ],

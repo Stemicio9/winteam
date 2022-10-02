@@ -43,6 +43,7 @@ dependencies:
   go_router:
   flutter_bloc:
   retrofit:
+  date_range_form_field: ^1.0.2
 
 dev_dependencies:
   flutter_test:
