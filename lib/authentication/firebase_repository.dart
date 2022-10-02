@@ -4,7 +4,6 @@
 
 
 
-
 import 'package:firebase_auth/firebase_auth.dart';
 
 Future createUser(String email, String password) async{
@@ -40,5 +39,19 @@ Future<UserCredential?> signIn(String email, String password) async {
 }
 
 
-//
+Future<bool> askResetPassword(String email) async {
+  await FirebaseAuth.instance
+      .sendPasswordResetEmail(email: email);
+  return true;
+}
 
+
+Future<bool> updatePassword(String newPassword) async {
+  await FirebaseAuth.instance.currentUser?.updatePassword(newPassword);
+  return true;
+}
+
+Future<bool> updateEmail(String newEmail) async {
+  await FirebaseAuth.instance.currentUser?.updateEmail(newEmail);
+  return true;
+}

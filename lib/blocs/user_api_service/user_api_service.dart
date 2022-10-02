@@ -1,8 +1,8 @@
 
 import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:retrofit/http.dart';
 import 'package:retrofit/retrofit.dart';
+import 'package:winteam/constants/StateConstants.dart';
 
 part  'user_api_service_impl.dart';
 
@@ -16,4 +16,10 @@ abstract class UserListApiService {
 
   @GET('/me')
   Future<HttpResponse<dynamic>> me();
+
+  @GET('/user/list/{uid}')
+  Future<HttpResponse<dynamic>> getUser(String uid);
+
+  @GET('/user/page')
+  Future<HttpResponse<dynamic>> fetchUsers(Filter filters);
 }

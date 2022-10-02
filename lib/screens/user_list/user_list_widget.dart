@@ -1,11 +1,8 @@
-
-
-
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:winteam/blocs/user_bloc/user_list_cubit.dart';
+import 'package:winteam/constants/StateConstants.dart';
 import 'package:winteam/entities/user_entity.dart';
 
 class UserListWidget extends StatelessWidget {
@@ -37,6 +34,9 @@ class UserListViewState extends State<UserListView> {
 
   UserListCubit get _cubit => context.read<UserListCubit>();
 
+  final txtList = TextEditingController();
+
+
   @override
   void initState() {
     callRest();
@@ -48,7 +48,14 @@ class UserListViewState extends State<UserListView> {
     return  SafeArea(
         child: Column(
           children: [
+
             MaterialButton(child: Text("refresh forte"),onPressed: (){callRestWithout();}),
+            TextFormField(
+              onChanged: (newValue) {
+                callRestWithoutFiltered(newValue);
+              },
+            ),
+
             BlocBuilder<UserListCubit, UserListState>(
                 builder: (_, state) {
                   print("SONO DENTRO IL BLOCBUILDER");
@@ -69,8 +76,19 @@ class UserListViewState extends State<UserListView> {
   }
 
 
+  void callRestWithoutFiltered(String filtro){
+    if(filtro.isEmpty){
+      callRestWithout();
+      return;
+    }
+    Filter filter = Filter();
+    filter.filterAnd = "email|like_insensitive|$filtro";
+    _cubit.fetchUserFilteredPaged(filter);
+  }
+
   void callRestWithout(){
-    _cubit.fetchUsers();
+   // _cubit.fetchUsers();
+    _cubit.fetchUserFilteredPaged(Filter());
   }
 
   void callRest(){
@@ -84,17 +102,18 @@ class UserListViewState extends State<UserListView> {
 
   Widget userList(List<UserEntity> userList){
     return
-    Container(
-      height: 600,
-      child: ListView.builder(
-        itemCount: userList.length,
-          itemBuilder: (context,index) {
-            return Container(
-              child: Text(userList[index].email),
-            );
-          }
-      ),
-    );
+      Expanded(
+          child: Container(
+            child: ListView.builder(
+                itemCount: userList.length,
+                itemBuilder: (context,index) {
+                  return Container(
+                    child: Text(userList[index].email ?? ""),
+                  );
+                }
+            ),
+          )
+      );
 
   }
 

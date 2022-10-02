@@ -1,6 +1,7 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:winteam/constants/language.dart';
 import '../constants/colors.dart';
 
 
@@ -33,11 +34,11 @@ class DrawerWidget extends StatelessWidget {
 
 
   costruiscilista(context){
-    String v1 = "Policy privacy";
-    String v2 = "Come funziona?";
-    String v3 = "Contattaci";
-    String v4 = "Eventi";
-    String v5 = "Logout";
+    String v1 = getCurrentLanguageValue(POLICY_PRIVACY)!;
+    String v2 = getCurrentLanguageValue(COME_FUNZIONA)!;
+    String v3 = getCurrentLanguageValue(CONTATTACI)!;
+    String v4 = getCurrentLanguageValue(EVENTI)!;
+    String v5 = getCurrentLanguageValue(LOGOUT)!;
 
     listaelementimenu.add(v1);
     listaelementimenu.add(v2);

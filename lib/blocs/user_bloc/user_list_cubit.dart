@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:retrofit/dio.dart';
 import 'package:winteam/blocs/user_api_service/user_api_service.dart';
+import 'package:winteam/constants/StateConstants.dart';
 import 'package:winteam/entities/user_entity.dart';
 
 
@@ -41,20 +42,33 @@ class UserListCubit extends Cubit<UserListState> {
   }
 
 
+  void fetchUserFilteredPaged(Filter filter) async {
+    emit(UserListLoading());
+    try {
+      // TODO: fetch users
+      // Qui bisogna creare la nostra lista
+      HttpResponse<dynamic> result = await userListApiService.fetchUsers(filter);
 
-  List<UserEntity> fakeUserList(){
-    List<UserEntity> result = List.empty(growable: true);
+      print("la risposta");
+      print(result);
 
-    for(var i = 0; i<10; i++){
-      const UserEntity curr = UserEntity(
-        name: DUMMY_NAME,
-        email: DUMMY_EMAIL
-      );
-      result.add(curr);
+      print("la risposta.data");
+      print(result.data);
+      var encoded = jsonEncode(result.data["items"]);
+      print(encoded);
+      var json = (jsonDecode(encoded) as List)
+          .map((data) => UserEntity.fromJson(data))
+          .toList();
+
+      emit(UserListLoaded(json));
+
+    } catch (e) {
+      print(e.toString());
+      emit(UserListError());
     }
-
-    return result;
   }
+
+
 
 }
 
