@@ -1,6 +1,7 @@
 
 
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:winteam/constants/cosstanti_tema.dart';
 
@@ -115,6 +116,8 @@ class LoginFormState extends State<LoginForm> {
     }
     //  Navigator.of(context).pushNamed('/dashboardlavoratore');
   }
+  if (_formKey.currentState!.validate()) {
+
 
 }
 
@@ -124,5 +127,9 @@ extension EmailValidator on String {
         r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
         .hasMatch(this);
   } */
+
+    if (_formKey.currentState!.validate()) {
+
+    }
   }
 }

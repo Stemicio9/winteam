@@ -1,13 +1,31 @@
-import 'package:flutter/material.dart';
-import 'package:winteam/constants/route_constants.dart';
-import 'package:winteam/widgets/action_buttons.dart';
-import 'package:winteam/widgets/appbars.dart';
-import 'package:winteam/widgets/chips.dart';
-import 'package:winteam/widgets/drawerWidget.dart';
-import 'package:winteam/widgets/inputs.dart';
-import 'package:winteam/widgets/texts.dart';
+import 'dart:io';
 
-void main() {
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:winteam/authentication/firebase_repository.dart';
+import 'package:winteam/blocs/user_api_service/user_api_service.dart';
+import 'package:winteam/blocs/user_bloc/current_user_cubit.dart';
+import 'package:winteam/blocs/user_bloc/user_list_cubit.dart';
+import 'package:winteam/constants/route_constants.dart';
+import 'package:winteam/pages/pagine_datore/dashboard_datore.dart';
+import 'package:winteam/screens/user_list/user_list_widget.dart';
+import 'firebase_options.dart';
+import 'package:retrofit/retrofit.dart';
+
+void main() async{
+
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
+
+  final auth = FirebaseAuth.instanceFor(app: Firebase.app(), persistence: Persistence.LOCAL);
+
+
   runApp(const MyApp());
 }
 
@@ -17,16 +35,36 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-
-        primarySwatch: Colors.blue,
-      ),
-      routes: RouteConstants.route(context),
-      initialRoute: '/',
- //     home: const MyHomePage(title: 'Flutter Demo Home Page'),
+    return MultiBlocProvider(
+        providers: [
+        BlocProvider(
+            create: (context) => UserListCubit(),
+        ),
+          BlocProvider(
+            create: (context) => UserCubit(),
+          ),
+        ],
+        child: MaterialApp(
+          title: 'Flutter Demo',
+          theme: ThemeData(
+            // This is the theme of your application.
+            //
+            // Try running your application with "flutter run". You'll see the
+            // application has a blue toolbar. Then, without quitting the app, try
+            // changing the primarySwatch below to Colors.green and then invoke
+            // "hot reload" (press "r" in the console where you ran "flutter run",
+            // or simply save your changes to "hot reload" in a Flutter IDE).
+            // Notice that the counter didn't reset back to zero; the application
+            // is not restarted.
+            primarySwatch: Colors.blue,
+          ),
+          routes: RouteConstants.route(context) ,
+          initialRoute: "/",
+        )
     );
+
+
+
   }
 }
 
@@ -39,31 +77,43 @@ class MyHomePage extends StatefulWidget {
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
-
 class _MyHomePageState extends State<MyHomePage> {
-  TextEditingController inputController = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      drawer: DrawerWidget(),
-        appBar: appbarConAction('Titolo Appbar',context),
-        body: Center(
-          child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                ActionButton('Action Button',context,(){},250),
-                InputWidget(labeltext: 'Input', hinttext: 'provaprova', controller: inputController),
-                ChipsWidget(),
-                Texth1(testo: 'Testo in h1',color: Colors.black,),
-                Texth3(testo: 'Testo in h3',color: Colors.black,),
-                Texth5(testo: 'Testo in h5',color: Colors.black,),
-                ActionButton('Dashboard lavoratore', context, (){Navigator.pushNamed(context, '/dashboardlavoratore');},250)
+       logIn();
+   //    create();
+       return Scaffold(
+         body:
+               Container(
+                 child: Center(
+           //          child: UserListView()
+                   child: DashboardDatore()
+                 ),
+               ),
 
-              ]
-          ),
-        )
-    );
+
+       );
   }
 
+
+  void create() async {
+
+    var result = await createUser("s.miceli90@gmail.com", "123456");
+
+  }
+
+
+  void logIn() async {
+    var result = await signIn("s.miceli90@gmail.com", "123456");
+    var tok = await FirebaseAuth.instance.currentUser!.getIdToken();
+    fetchUsers();
+  }
+
+
+  void fetchUsers() async {
+    HttpResponse<dynamic> users = await userListApiService.getUserList();
+    print("RISPOSTA = ");
+    print(users.data);
+  }
+ 
 }
