@@ -43,7 +43,8 @@ class UserEntity {
       id: json["id"] ?? "",
       firstName: json["firstName"] ?? "",
       lastName: json["lastName"] ?? "",
-      email: json["email"] ?? "")
+      email: json["email"] ?? "",
+      roleId: json["roleId"] ?? "")
   ;
 
 }
