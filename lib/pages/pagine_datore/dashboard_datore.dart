@@ -2,8 +2,11 @@
 
 import 'package:flutter/material.dart';
 import 'package:winteam/constants/language.dart';
+import 'package:winteam/pages/pagine_datore/annunci_datore.dart';
+import 'package:winteam/pages/pagine_datore/notifiche_datore.dart';
+import 'package:winteam/pages/pagine_datore/pubblica_annuncio_datore.dart';
+import 'package:winteam/pages/pagine_datore/ricerca_utente_datore.dart';
 import 'package:winteam/screens/profile_page.dart';
-import 'package:winteam/screens/user_list/user_list_widget.dart';
 import 'package:winteam/widgets/appbars.dart';
 import 'package:winteam/widgets/drawerWidget.dart';
 import '../../appstate/dashboard_page_state.dart';
@@ -23,32 +26,31 @@ class DashboardDatore extends StatefulWidget {
 class DashboardDatoreState extends State<DashboardDatore> with TickerProviderStateMixin{
 
 
-//  ProfiloLavoratore profilo = ProfiloLavoratore();
-//  NotificheLavoratore notifiche = NotificheLavoratore();
-//  RicercaUtenteLavoratore ricerca = RicercaUtenteLavoratore();
-//  AnnunciLavoratore annunci = AnnunciLavoratore();
-  DatoreProfile profile = DatoreProfile();
+  PubblicaAnnuncioDatore pubblicaannuncio = PubblicaAnnuncioDatore();
+  DatoreProfile profilo = DatoreProfile();
+  NotificheDatore notifiche = NotificheDatore();
+  RicercaUtenteDatore ricerca = RicercaUtenteDatore();
+  AnnunciDatore annunci = AnnunciDatore();
 
   late TabController controller;
 
   @override
   void initState() {
-    controller = TabController(length: 4, vsync: this);
+    controller = TabController(length: 5, vsync: this);
     super.initState();
   }
 
 
-
   void onChangeTab(int index) {
-
-    selectedIndexLavoratore = index;
+    print("CAMBIO TAB");
+    selectedIndex = index;
   }
 
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
 
-      length: 4,
+      length: 5,
       child: Scaffold(
         appBar: appbarConAction(getCurrentLanguageValue(DASHBOARD_CONST)!, context),
 
@@ -57,12 +59,11 @@ class DashboardDatoreState extends State<DashboardDatore> with TickerProviderSta
         body: TabBarView(
           physics: const NeverScrollableScrollPhysics(),
           children: [
-            Container(
-
-            ),
-            UserListWidget(),
-            Container(),
-            profile,
+            annunci,
+            ricerca,
+            pubblicaannuncio,
+            notifiche,
+            profilo
           ],
         ),
         bottomNavigationBar: JumpingTabBar(
@@ -84,6 +85,10 @@ class DashboardDatoreState extends State<DashboardDatore> with TickerProviderSta
             ),
             TabItemIcon(
               iconData: Icons.search,
+              curveColor: Colors.white,
+            ),
+            TabItemIcon(
+              iconData: Icons.add_box,
               curveColor: Colors.white,
             ),
             TabItemIcon(

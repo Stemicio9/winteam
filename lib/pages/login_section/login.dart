@@ -1,6 +1,7 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:winteam/constants/colors.dart';
 import 'package:winteam/constants/route_constants.dart';
 import 'package:winteam/widgets/action_buttons.dart';
 
@@ -107,7 +108,7 @@ class _LoginState extends State<Login> {
 
               ),
 
-              ActionButton("Registrati", context, vaiapaginaregistrati,250),
+              ActionButton("Registrati", context, vaiapaginaregistrati,250,azzurroscuro, Colors.white),
 
 
             ],

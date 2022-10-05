@@ -1,4 +1,3 @@
-import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -9,9 +8,8 @@ import 'package:winteam/blocs/user_api_service/user_api_service.dart';
 import 'package:winteam/blocs/user_bloc/current_user_cubit.dart';
 import 'package:winteam/blocs/user_bloc/user_list_cubit.dart';
 import 'package:winteam/constants/route_constants.dart';
+import 'package:winteam/firebase_options.dart';
 import 'package:winteam/pages/pagine_datore/dashboard_datore.dart';
-import 'package:winteam/screens/user_list/user_list_widget.dart';
-import 'firebase_options.dart';
 import 'package:retrofit/retrofit.dart';
 
 void main() async{

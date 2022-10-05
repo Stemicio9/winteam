@@ -1,7 +1,10 @@
 import 'package:winteam/pages/drawer_pages/come_funziona.dart';
 import 'package:winteam/pages/login_section/password_dimenticata.dart';
 import 'package:winteam/pages/login_section/register_page.dart';
+import 'package:winteam/pages/pagine_datore/dettaglio_annuncio_datore.dart';
+import 'package:winteam/pages/pagine_datore/lista_candidati.dart';
 import 'package:winteam/pages/pagine_lavoratore/annunci_lavoratore.dart';
+import 'package:winteam/pages/pagine_lavoratore/dettaglio_annuncio_lavoratore.dart';
 import 'package:winteam/pages/pagine_lavoratore/filtri_annunci_lavoratore.dart';
 
 import 'package:winteam/pages/pagine_datore/dashboard_datore.dart';
@@ -19,6 +22,12 @@ class RouteConstants {
   static const String comeFunziona = "/comefunziona";
   static const String passDimenticata = "/passworddimenticata";
   static const String filtriAnnunciLavoratore = "/filtriannunci";
+  static const String dettaglioAnnuncioLavoratore = "/dettaglioannunciolavoratore";
+  static const String dettaglioAnnuncioDatore = "/dettaglioannunciodatore";
+  static const String listaCandidati = "/listacandidati";
+
+
+
 
 
 
@@ -34,5 +43,10 @@ class RouteConstants {
     passDimenticata: (context) => PasswordDimenticata(),
     filtriAnnunciLavoratore: (context) => FiltriAnnunci(),
     dashboardDatore: (context) => DashboardDatore(),
+    dettaglioAnnuncioLavoratore: (context) => DettaglioAnnuncioLavoratore(),
+    dettaglioAnnuncioDatore: (context) => DettaglioAnnuncioDatore(),
+    listaCandidati: (context) => ListaCandidati(),
+
+
   };
 }

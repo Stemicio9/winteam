@@ -6,10 +6,16 @@ const Color azzurroscuro = Color(0xFF03A0FE);
 const Color azzurrochiaro = Color(0xFF0EDED2);
 const Color giallo = Color.fromRGBO(254, 167, 10, 1);
 final Color verde = const Color(0xFF2FE000).withOpacity(0.2);
+final Color verdeopaco = const Color(0xFF468A33).withOpacity(0.6);
 const Color verdepieno = Color(0xFF2FE000);
 const Color arancio = Color(0xFFE07400);
 const Color blunotte = Color(0xFF010392);
 const Color giallochiaro = Color(0xFFFFCD00);
+final Color rossoopaco = Color(0xFFFF0000).withOpacity(0.6);
+
+
+
+
 
 Map<int, Color> azzurroscuroformaterial =
 {

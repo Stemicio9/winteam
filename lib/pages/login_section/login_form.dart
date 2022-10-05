@@ -7,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:winteam/authentication/firebase_repository.dart';
 import 'package:winteam/blocs/user_bloc/current_user_cubit.dart';
 import 'package:winteam/blocs/user_bloc/user_list_cubit.dart';
+import 'package:winteam/constants/colors.dart';
 import 'package:winteam/constants/cosstanti_tema.dart';
 import 'package:winteam/entities/user_entity.dart';
 
@@ -70,16 +71,9 @@ class LoginFormState extends State<LoginForm> {
                 labeltext: "Password",
               ),
 
-             /* ActionButton(
-                  'Datore',
-                  context,
-                      (){
-                    Navigator.pushNamed(context, '/dashboarddatore');
-                  }
-              ), */
               spaziotrawidgetinaltezza(context, 20),
 
-              BlocBuilder<UserCubit, UserState>(
+           /*   BlocBuilder<UserCubit, UserState>(
                   builder: (_, state) {
 
                     if (state is UserError) {
@@ -90,12 +84,16 @@ class LoginFormState extends State<LoginForm> {
                       return ActionButton('Lavoratore', context, (){
                         },250);
                     }
-                  }),
+                  }), */
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ActionButton('Datore', context, (){Navigator.pushNamed(context, '/dashboarddatore');}, 125,azzurroscuro, Colors.white),
+                  ActionButton('Lavoratore', context, (){Navigator.pushNamed(context, '/dashboardlavoratore');}, 125,azzurroscuro, Colors.white),
+                ],
+              )
 
 
-
-
-              // entrabutton("Entra",context, formsubmit),
 
 
             ]
@@ -161,7 +159,7 @@ extension EmailValidator on String {
 
     if (_formKey.currentState!.validate()) {
         UserCredential? log = await signIn(_emailTextController.text, _passwordTextController.text);
-        if(log == null || log?.user == null){
+        if(log == null || log.user == null){
           // @todo avvisare che il login è sbagliato
           return;
         }

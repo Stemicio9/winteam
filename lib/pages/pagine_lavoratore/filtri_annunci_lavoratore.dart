@@ -73,7 +73,7 @@ class FiltriAnnunciState extends State<FiltriAnnunci>{
               ),
               Expanded(
                   flex: 1,
-                  child: ActionButton("Applica", context, (){}, 150)
+                  child: ActionButton("Applica", context, (){}, 150, azzurroscuro, Colors.white)
               ),
               Expanded(
                 flex: 1,

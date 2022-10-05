@@ -79,7 +79,7 @@ class RegistratiState extends State<Registrati>{
                spaziotrawidgetinaltezza(context,25),
 
 
-                ActionButton("Registrati", context,registrati,250),
+                ActionButton("Registrati", context,registrati,250, azzurroscuro, Colors.white),
 
                 spaziotrawidgetinaltezza(context, 5),
 
@@ -147,7 +147,7 @@ class RegistratiState extends State<Registrati>{
 
     // @todo chiamare la rest per creare utente anche sul server Spring
 
-    UserListApiService
+    UserListApiService;
 
   }
 

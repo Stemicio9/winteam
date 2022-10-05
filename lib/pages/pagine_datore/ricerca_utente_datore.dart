@@ -3,14 +3,14 @@ import 'package:winteam/widgets/chips.dart';
 
 import '../../widgets/appbars.dart';
 
-class RicercaUtenteLavoratore extends StatefulWidget {
+class RicercaUtenteDatore extends StatefulWidget {
   @override
-  State<RicercaUtenteLavoratore> createState() => RicercaUtenteLavoratoreState();
+  State<RicercaUtenteDatore> createState() =>RicercaUtenteDatoreState();
 }
 
 
 
-class RicercaUtenteLavoratoreState extends State<RicercaUtenteLavoratore>{
+class RicercaUtenteDatoreState extends State<RicercaUtenteDatore>{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
