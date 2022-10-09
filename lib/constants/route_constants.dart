@@ -3,13 +3,13 @@ import 'package:winteam/pages/login_section/password_dimenticata.dart';
 import 'package:winteam/pages/login_section/register_page.dart';
 import 'package:winteam/pages/pagine_datore/dettaglio_annuncio_datore.dart';
 import 'package:winteam/pages/pagine_datore/lista_candidati.dart';
-import 'package:winteam/pages/pagine_lavoratore/annunci_lavoratore.dart';
 import 'package:winteam/pages/pagine_lavoratore/dettaglio_annuncio_lavoratore.dart';
 import 'package:winteam/pages/pagine_lavoratore/filtri_annunci_lavoratore.dart';
 
 import 'package:winteam/pages/pagine_datore/dashboard_datore.dart';
 
 import '../pages/login_section/login.dart';
+import '../pages/pagine_datore/pubblica_annuncio_datore.dart';
 import '../pages/pagine_lavoratore/dashboard_lavoratore.dart';
 
 class RouteConstants {
@@ -25,13 +25,7 @@ class RouteConstants {
   static const String dettaglioAnnuncioLavoratore = "/dettaglioannunciolavoratore";
   static const String dettaglioAnnuncioDatore = "/dettaglioannunciodatore";
   static const String listaCandidati = "/listacandidati";
-
-
-
-
-
-
-
+  static const String aggiungiAnnuncio = "/aggiungiannuncio";
 
 
   static dynamic route(context) => {
@@ -46,6 +40,7 @@ class RouteConstants {
     dettaglioAnnuncioLavoratore: (context) => DettaglioAnnuncioLavoratore(),
     dettaglioAnnuncioDatore: (context) => DettaglioAnnuncioDatore(),
     listaCandidati: (context) => ListaCandidati(),
+    aggiungiAnnuncio: (context) => PubblicaAnnuncioDatore(),
 
 
   };

@@ -24,7 +24,7 @@ Widget ActionButton(String text, BuildContext context, Function action, double m
           constraints:
           BoxConstraints(maxWidth: maxWidth, minHeight: 50.0),
           alignment: Alignment.center,
-          child: Texth5(testo: text,color: textColor,)
+          child: Texth5(testo: text,color: textColor)
         ),
       ),
     ),
@@ -95,7 +95,7 @@ Widget ActionButtonAnnunci(String text, BuildContext context, Function action, d
             constraints:
             BoxConstraints(maxWidth: maxWidth, minHeight: 50.0),
             alignment: Alignment.center,
-            child: Texth5(testo: text,color: azzurroscuro,)
+            child: Texth5(testo: text,color: azzurroscuro)
         ),
       ),
     ),

@@ -31,7 +31,7 @@ class RegistratiState extends State<Registrati>{
   TextEditingController nomeutentecontroller = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
-
+  bool _isHidden = true;
   int switchvalue = 0;   // 0 = Lavoratore , 1 = Datore , 2 = Influencer, 3 = Admin
 
   @override
@@ -75,7 +75,7 @@ class RegistratiState extends State<Registrati>{
 
                 spaziotrawidgetinaltezza(context,35),
 
-                InputWidget( labeltext: "Conferma password",hinttext: "******", controller: nomeutentecontroller, ispassword: false ,validator: defaultvalidator),
+                InputWidget( labeltext: "Conferma password",hinttext: "******", controller: nomeutentecontroller, ispassword: true ,validator: defaultvalidator),
 
                spaziotrawidgetinaltezza(context,25),
 
@@ -83,6 +83,7 @@ class RegistratiState extends State<Registrati>{
                 ActionButton("Registrati", context,registrati,250, azzurroscuro, Colors.white),
 
                 spaziotrawidgetinaltezza(context, 5),
+
 
                 /*    Row(
                     mainAxisAlignment: MainAxisAlignment.center,

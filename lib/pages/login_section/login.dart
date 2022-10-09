@@ -86,7 +86,7 @@ class _LoginState extends State<Login> {
               Center(
                   child: GestureDetector(
                       onTap: vaiapaginapassworddimenticata,
-                      child: const Text("Password dimenticata?",
+                      child: const Text("Hai dimenticato la password?",
                         style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w700,

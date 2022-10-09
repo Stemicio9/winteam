@@ -13,7 +13,7 @@ class PubblicaAnnuncioDatoreState extends State<PubblicaAnnuncioDatore>{
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Text('BODY'),
+        child: Text('BODY PUBBLICA ANNUNCIO'),
       ),
     );
   }

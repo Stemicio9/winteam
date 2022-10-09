@@ -11,7 +11,16 @@ const Color verdepieno = Color(0xFF2FE000);
 const Color arancio = Color(0xFFE07400);
 const Color blunotte = Color(0xFF010392);
 const Color giallochiaro = Color(0xFFFFCD00);
+
+
 final Color rossoopaco = Color(0xFFFF0000).withOpacity(0.6);
+final Color rossomoltoopaco = Color(0xFFFF0000).withOpacity(0.1);
+final Color gialloopaco = Color.fromRGBO(254, 167, 10, 1).withOpacity(0.6);
+final Color giallomoltoopaco = Color.fromRGBO(254, 167, 10, 1).withOpacity(0.1);
+final Color verdemoltoopaco = const Color(0xFF2FE000).withOpacity(0.1);
+final Color azzurroscuromoltoopaco = Color(0xFF03A0FE).withOpacity(0.1);
+
+
 
 
 

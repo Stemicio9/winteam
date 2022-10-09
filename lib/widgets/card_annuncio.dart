@@ -35,132 +35,191 @@ Widget CardAnnuncioLavoratore(BuildContext context, String stato){
   return Card(
       margin: EdgeInsets.all(10),
       elevation: 10,
-      child: Column(
-        children: [
-          Container(margin: EdgeInsets.only(top: 10)),
+      child: Container(
+          padding: EdgeInsets.symmetric(horizontal: 20),
+          child: Column(
+          children: [
 
-          ListTile(
-            title: const Text('Nome attività/utente', style: TextStyle(color: azzurroscuro),),
-            subtitle: Text('Città'),
-            trailing: Chip(
-            backgroundColor: stato == "ATTIVO" ? verdeopaco : stato == "CHIUSO" ? rossoopaco : stato == 'STORICO' ? giallo : Colors.white,
-              label: Text(
-                  stato,
-                style: TextStyle(color: Colors.white),
+            Container(margin: EdgeInsets.only(top: 10)),
+
+            Container(
+                width: double.infinity,
+                child: Row(
+                  children: [
+
+                    Container(
+                      width: 50,
+                      height: 50,
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                            color: azzurroscuro,
+                            width: 2
+                        ),
+                        shape: BoxShape.circle,
+                        image: const DecorationImage(
+                            image: AssetImage('assets/images/profiledefault.jpeg'),
+                            fit: BoxFit.fill
+                        ),
+                      ),
+                    ),
+
+                    Padding(
+                      padding: EdgeInsets.only(left: 14),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: const [
+                          Text( 'Nome attività', style:  TextStyle(color: azzurroscuro, fontSize: 16),),
+                          Text('Città', textAlign: TextAlign.left,
+                          ),
+                        ],
+                      ),
+                    ),
+
+                    const Spacer(),
+
+                    Chip(
+                      backgroundColor: stato == "ATTIVO" ? Colors.green : stato == "CHIUSO" ? rossoopaco : stato == 'STORICO' ? giallo : Colors.white,
+                      label: Text(
+                        stato,
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
+                  ],
+                )
+            ),
+            Padding(padding: EdgeInsets.only(top: 10)),
+
+            Container(
+              margin: EdgeInsets.symmetric(horizontal: 30),
+
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+
+                  iconaConTitolo(Icon(Icons.today_outlined,color: giallo), '04/10'),
+                  iconaConTitolo(Icon(Icons.location_on_outlined,color: giallo),'5 Km'),
+                  iconaConTitolo(Icon(Icons.timer_outlined,color: giallo), '19:00'),
+                  iconaConTitolo(Icon(Icons.euro_symbol_outlined,color: giallo), '120'),
+
+                ],
               ),
             ),
-            leading: Container(
-              width: 50,
-              height: 50,
-              decoration: BoxDecoration(
-                border: Border.all(
-                    color: azzurroscuro,
-                    width: 2
-                ),
-                shape: BoxShape.circle,
-                image: const DecorationImage(
-                    image: AssetImage('assets/images/profiledefault.jpeg'),
-                    fit: BoxFit.fill
-                ),
-              ),
-            ),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Container(margin: EdgeInsets.only(right: 20)),
 
-              iconaConTitolo(Icon(Icons.today_outlined,color: giallo), '04/10'),
-              iconaConTitolo(Icon(Icons.location_on_outlined,color: giallo),'5 Km'),
-              iconaConTitolo(Icon(Icons.timer_outlined,color: giallo), '19:00'),
-              iconaConTitolo(Icon(Icons.euro_symbol_outlined,color: giallo), '120 €'),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Image.asset('assets/images/logo.png',width: 70,height: 70),
+                GestureDetector(
+                  onTap: (){Navigator.pushNamed(context, RouteConstants.dettaglioAnnuncioLavoratore);},
+                  child: Icon(Icons.info_rounded, color: giallo,size: 35,),
 
-              Container(margin: EdgeInsets.only(left: 20)),
-            ],
-          ),
-          ListTile(
-              leading: Image.asset('assets/images/logo.png',width: 70,height: 70),
-              trailing: GestureDetector(
-                onTap: (){Navigator.pushNamed(context, RouteConstants.dettaglioAnnuncioLavoratore);},
-                child: Icon(Icons.info_rounded, color: giallo,size: 35,),
+                )
+              ],
 
-              )
-
-          ),
-        ],
+            )
+          ],
+        )
       )
   );
 }
+
+
 
 
 Widget CardAnnuncioDatore(BuildContext context, String stato) {
   return Card(
       margin: EdgeInsets.all(10),
       elevation: 10,
-      child: Column(
-        children: [
-          Container(margin: EdgeInsets.only(top: 10)),
+      child: Container(
+          padding: EdgeInsets.symmetric(horizontal: 20),
 
-          ListTile(
-            title: const Text(
-              'Nome attività/utente', style: TextStyle(color: azzurroscuro),),
-            subtitle: Text('Città'),
-            trailing: Chip(
-              backgroundColor: stato == "CHIUSO" ? verdeopaco : stato ==
-                  "ATTIVO" ? rossoopaco : stato == 'STORICO' ? giallo : Colors
-                  .white,
-              label: Text(
-                stato,
-                style: TextStyle(color: Colors.white),
+          child: Column(
+          children: [
+            Container(margin: EdgeInsets.only(top: 10)),
+
+            Container(
+                width: double.infinity,
+                child: Row(
+                  children: [
+
+                    Container(
+                      width: 50,
+                      height: 50,
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                            color: azzurroscuro,
+                            width: 2
+                        ),
+                        shape: BoxShape.circle,
+                        image: const DecorationImage(
+                            image: AssetImage('assets/images/profiledefault.jpeg'),
+                            fit: BoxFit.fill
+                        ),
+                      ),
+                    ),
+
+                    Padding(
+                      padding: EdgeInsets.only(left: 14),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: const [
+                          Text( 'Nome attività', style:  TextStyle(color: azzurroscuro, fontSize: 16),),
+                          Text('Città', textAlign: TextAlign.left,
+                          ),
+                        ],
+                      ),
+                    ),
+
+                    const Spacer(),
+
+                    Chip(
+                      backgroundColor: stato == "CHIUSO" ? Colors.green : stato == "ATTIVO" ? rossoopaco : stato == 'STORICO' ? giallo : Colors.white,
+                      label: Text(
+                        stato,
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
+                  ],
+                )
+            ),
+
+            Padding(padding: EdgeInsets.only(top: 10)),
+
+            Container(
+              margin: EdgeInsets.symmetric(horizontal: 30),
+
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+
+                  iconaConTitolo(Icon(Icons.today_outlined,color: giallo), '04/10'),
+                  iconaConTitolo(Icon(Icons.location_on_outlined,color: giallo),'5 Km'),
+                  iconaConTitolo(Icon(Icons.timer_outlined,color: giallo), '19:00'),
+                  iconaConTitolo(Icon(Icons.euro_symbol_outlined,color: giallo), '120'),
+
+                ],
               ),
             ),
-            leading: Container(
-              width: 50,
-              height: 50,
-              decoration: BoxDecoration(
-                border: Border.all(
-                    color: azzurroscuro,
-                    width: 2
-                ),
-                shape: BoxShape.circle,
-                image: const DecorationImage(
-                    image: AssetImage('assets/images/profiledefault.jpeg'),
-                    fit: BoxFit.fill
-                ),
-              ),
+
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Image.asset('assets/images/logo.png', width: 70, height: 70),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pushNamed(
+                        context, RouteConstants.dettaglioAnnuncioDatore);
+                  },
+                  child: Icon(Icons.info_rounded, color: giallo, size: 35,),
+
+                )
+              ],
+
             ),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Container(margin: EdgeInsets.only(left: 20)),
-
-              iconaConTitolo(
-                  Icon(Icons.today_outlined, color: giallo), '04/10'),
-              iconaConTitolo(
-                  Icon(Icons.location_on_outlined, color: giallo), '5 Km'),
-              iconaConTitolo(
-                  Icon(Icons.timer_outlined, color: giallo), '19:00'),
-              iconaConTitolo(
-                  Icon(Icons.euro_symbol_outlined, color: giallo), '120 €'),
-
-              Container(margin: EdgeInsets.only(left: 20)),
-            ],
-          ),
-          ListTile(
-              leading: Image.asset(
-                  'assets/images/logo.png', width: 70, height: 70),
-              trailing: GestureDetector(
-                onTap: () {
-                  Navigator.pushNamed(
-                      context, RouteConstants.dettaglioAnnuncioDatore);
-                },
-                child: Icon(Icons.info_rounded, color: giallo, size: 35,),
-
-              )
-
-          ),
-        ],
+          ],
+        )
       )
   );
 }

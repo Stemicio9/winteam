@@ -45,6 +45,9 @@ dependencies:
   retrofit:
   date_range_form_field: ^1.0.2
   json_annotation:
+  getwidget: ^3.0.1
+  percent_indicator: ^4.2.2
+  flutter_expandable_fab: ^1.5.2
 
 
 dev_dependencies:

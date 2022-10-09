@@ -75,12 +75,11 @@ class DrawerWidget extends StatelessWidget {
 
     );
 
-    lista.add(creatile(v1, (){raccoglitore.policyprivacy(context);}, context, const IconData(60223, fontFamily: 'MaterialIcons')));
-    lista.add(creatile(v2, (){raccoglitore.comefunziona(context);}, context, const IconData(59515, fontFamily: 'MaterialIcons')));
-    lista.add(creatile(v3, (){raccoglitore.contattaci(context);}, context, const IconData(57529, fontFamily: 'MaterialIcons')));
-    lista.add(creatile(v4, (){raccoglitore.eventi();}, context, const IconData(59512, fontFamily: 'MaterialIcons'), comingsoon: true));
- //   lista.add(creatile(v5, (){loginservice.logout(context);}, context, const IconData(59513, fontFamily: 'MaterialIcons')));
-
+    lista.add(creatile(v1, (){raccoglitore.policyprivacy(context);}, context, const IconData(0xf2d0, fontFamily: 'MaterialIcons')));
+    lista.add(creatile(v2, (){raccoglitore.comefunziona(context);}, context, const IconData(0xf669, fontFamily: 'MaterialIcons')));
+    lista.add(creatile(v3, (){raccoglitore.contattaci(context);}, context, const IconData(0xf01b2, fontFamily: 'MaterialIcons')));
+    lista.add(creatile(v4, (){raccoglitore.eventi();}, context, const IconData(0xf06ae, fontFamily: 'MaterialIcons'), comingsoon: true));
+    lista.add(creatile(v5, (){}, context, const IconData(0xf88b, fontFamily: 'MaterialIcons')));
     listaelementimenu.clear();
 
     return lista;
