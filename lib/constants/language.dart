@@ -16,6 +16,12 @@ const String EVENTI = "Eventi";
 const String LOGOUT = "Logout";
 
 
+// Stati degli annunci
+const String ACTIVE = "active";
+const String ACCEPTED = "accepted";
+const String HISTORY = "history";
+
+
 
 
 final Map<String,String> LANG_IT = {
@@ -25,9 +31,9 @@ final Map<String,String> LANG_IT = {
   EVENTI:"Eventi",
   LOGOUT:"Logout",
   CONTATTACI:"Contattaci",
-  "":"",
-  "":"",
-  "":"",
+  ACTIVE:"ATTIVO",
+  ACCEPTED:"ACCETTATO",
+  HISTORY:"ARCHIVIATO",
   "":"",
   "":"",
   "":"",
@@ -37,8 +43,9 @@ final Map<String,String> LANG_IT = {
 final Map<String,String> LANG_EN = {
   DASHBOARD_CONST:"Dashboard",
   "":"",
-  "":"",
-  "":"",
+  ACTIVE:"ACTIVE",
+  ACCEPTED:"ACCEPTED",
+  HISTORY:"HISTORY",
   "":"",
   "":"",
   "":"",

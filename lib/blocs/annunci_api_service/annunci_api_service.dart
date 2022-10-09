@@ -10,8 +10,8 @@ abstract class AnnunciListApiService {
   factory AnnunciListApiService(Dio dio, {String baseUrl}) =
   _AnnunciListApiService;
 
-  @GET('/annunci')
-  Future<HttpResponse<dynamic>> getAnnunciList();
+  @GET('/advertisement/list/owner')
+  Future<HttpResponse<dynamic>> getAnnunciList(String query);
 
 
 

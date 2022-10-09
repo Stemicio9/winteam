@@ -14,6 +14,7 @@ class _UserListApiService implements UserListApiService {
   String? baseUrl;
 
 
+
   @override
   Future<HttpResponse<dynamic>> getUserList() async {
     const _extra = <String, dynamic>{};
@@ -23,6 +24,8 @@ class _UserListApiService implements UserListApiService {
       "w1ntoken" : token
     };
     final _data = <String, dynamic>{};
+
+
 
     final _result = await _dio.fetch(_setStreamType<HttpResponse<dynamic>>(
         Options(method: 'GET', headers: _headers, extra: _extra)
@@ -43,6 +46,9 @@ class _UserListApiService implements UserListApiService {
       "w1ntoken" : token
     };
     final _data = <String, dynamic>{};
+
+    print("BASE URL");
+    print(_dio.options.baseUrl);
 
     final _result = await _dio.fetch(_setStreamType<HttpResponse<dynamic>>(
         Options(method: 'GET', headers: _headers, extra: _extra)

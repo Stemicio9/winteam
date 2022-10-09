@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:winteam/authentication/firebase_repository.dart';
+import 'package:winteam/blocs/annunci_bloc/annunci_cubit.dart';
 import 'package:winteam/blocs/user_api_service/user_api_service.dart';
 import 'package:winteam/blocs/user_bloc/current_user_cubit.dart';
 import 'package:winteam/blocs/user_bloc/user_list_cubit.dart';
@@ -40,6 +41,9 @@ class MyApp extends StatelessWidget {
         ),
           BlocProvider(
             create: (context) => UserCubit(),
+          ),
+          BlocProvider(
+            create: (context) => AnnunciCubit(),
           ),
         ],
         child: MaterialApp(

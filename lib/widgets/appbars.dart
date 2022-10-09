@@ -39,7 +39,7 @@ appbarConAction(String titolo,context) {
       IconButton(color: Colors.white,
           icon: const Icon(Icons.exit_to_app),
           onPressed: () {
-            context;
+            Navigator.pushNamed(context, "/");
           })
     ],
 

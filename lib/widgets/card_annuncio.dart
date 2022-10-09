@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:winteam/constants/colors.dart';
+import 'package:winteam/constants/language.dart';
 import 'package:winteam/constants/route_constants.dart';
 
 
@@ -126,8 +127,13 @@ Widget CardAnnuncioLavoratore(BuildContext context, String stato){
 
 
 
+List<String> annunciStatusList = ["active", "accepted", "history"];
 
-Widget CardAnnuncioDatore(BuildContext context, String stato) {
+
+Widget CardAnnuncioDatore(BuildContext context, String stato,
+    String activityName, String city,
+    String date, String hour,
+    String payment, String distance) {
   return Card(
       margin: EdgeInsets.all(10),
       elevation: 10,
@@ -164,9 +170,9 @@ Widget CardAnnuncioDatore(BuildContext context, String stato) {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        children: const [
-                          Text( 'Nome attività', style:  TextStyle(color: azzurroscuro, fontSize: 16),),
-                          Text('Città', textAlign: TextAlign.left,
+                        children:  [
+                          Text( activityName , style:  TextStyle(color: azzurroscuro, fontSize: 16),),
+                          Text(city, textAlign: TextAlign.left,
                           ),
                         ],
                       ),
@@ -175,9 +181,9 @@ Widget CardAnnuncioDatore(BuildContext context, String stato) {
                     const Spacer(),
 
                     Chip(
-                      backgroundColor: stato == "CHIUSO" ? Colors.green : stato == "ATTIVO" ? rossoopaco : stato == 'STORICO' ? giallo : Colors.white,
+                      backgroundColor: stato == annunciStatusList[1] ? Colors.green : stato == annunciStatusList[0] ? rossoopaco : stato == annunciStatusList[2] ? giallo : Colors.white,
                       label: Text(
-                        stato,
+                        getCurrentLanguageValue(stato)!,
                         style: TextStyle(color: Colors.white),
                       ),
                     ),
@@ -194,10 +200,10 @@ Widget CardAnnuncioDatore(BuildContext context, String stato) {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
 
-                  iconaConTitolo(Icon(Icons.today_outlined,color: giallo), '04/10'),
-                  iconaConTitolo(Icon(Icons.location_on_outlined,color: giallo),'5 Km'),
-                  iconaConTitolo(Icon(Icons.timer_outlined,color: giallo), '19:00'),
-                  iconaConTitolo(Icon(Icons.euro_symbol_outlined,color: giallo), '120'),
+                  iconaConTitolo(Icon(Icons.today_outlined,color: giallo), date ?? "Nessuna data inserita"),
+                  iconaConTitolo(Icon(Icons.location_on_outlined,color: giallo), distance ?? ""),
+                  iconaConTitolo(Icon(Icons.timer_outlined,color: giallo), hour ?? "??:??"),
+                  iconaConTitolo(Icon(Icons.euro_symbol_outlined,color: giallo), payment ?? "NS"),
 
                 ],
               ),

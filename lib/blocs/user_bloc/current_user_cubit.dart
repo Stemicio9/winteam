@@ -24,13 +24,20 @@ class UserCubit extends Cubit<UserState> {
     try {
       // TODO: fetch users
       // Qui bisog na creare la nostra a
+      print("CHIAMO LA REST PER CAPIRE LE MIE INFO");
+
+
+
       HttpResponse<dynamic> result = await userListApiService.me();
+      print("Risultato result");
+      print(result);
       var encoded = jsonEncode(result.data);
       var decoded = jsonDecode(encoded);
       var json = UserEntity.fromJson(decoded);
       emit(UserLoaded(json));
       return json;
     } catch (e) {
+      print(e);
       emit(UserError());
     }
   }

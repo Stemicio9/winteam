@@ -21,18 +21,23 @@ class AnnunciCubit extends Cubit<AnnunciState> {
   final List<AnnunciEntity> _annuncis = [];
   List<AnnunciEntity> get annuncis => _annuncis;
 
-  void fetchAnnuncis() async {
+  void fetchAnnuncis(String query) async {
     emit(AnnunciLoading());
     try {
       // TODO: fetch Annuncis
       // Qui bisogna creare la nostra a
-      HttpResponse<dynamic> result = await annunciListApiService.getAnnunciList();
+      print("FACCIO RICHIESTA DEGLI ANNUNCI CON QUERY $query");
+      HttpResponse<dynamic> result = await annunciListApiService.getAnnunciList(query);
+
+      print("LA RISPOSTA ALLA REST ");
+      print(result.response);
 
       var encoded = jsonEncode(result.data);
+      print("HO ENCODATO");
       var json = (jsonDecode(encoded) as List)
           .map((data) => AnnunciEntity.fromJson(data))
           .toList();
-
+      print("HO CARICATO GLI ANNUNCI");
       emit(AnnunciLoaded(json));
 
     } catch (e) {

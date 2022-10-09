@@ -85,9 +85,11 @@ class LoginFormState extends State<LoginForm> {
                         },250);
                     }
                   }), */
+              ActionButton('Normal Login', context, (){formsubmit();}, 125,azzurroscuro, Colors.white),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+
                   ActionButton('Datore', context, (){Navigator.pushNamed(context, '/dashboarddatore');}, 125,azzurroscuro, Colors.white),
                   ActionButton('Lavoratore', context, (){Navigator.pushNamed(context, '/dashboardlavoratore');}, 125,azzurroscuro, Colors.white),
                 ],
@@ -159,11 +161,15 @@ extension EmailValidator on String {
 
     if (_formKey.currentState!.validate()) {
         UserCredential? log = await signIn(_emailTextController.text, _passwordTextController.text);
+
         if(log == null || log.user == null){
           // @todo avvisare che il login è sbagliato
           print("UTENTE NULLO");
           return;
         }
+        print("token");
+        var a = await log!.user!.getIdToken();
+        print(a);
         // DATORE, LAVORATORE, INFLUENCER
         UserEntity? entity = await _cubit.me();
         if(entity == null) return;

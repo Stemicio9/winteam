@@ -15,10 +15,14 @@ class _AnnunciListApiService implements AnnunciListApiService {
 
 
   @override
-  Future<HttpResponse<dynamic>> getAnnunciList() async {
+  Future<HttpResponse<dynamic>> getAnnunciList(String query) async {
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{
+      "state" : query
+    };
     var token = await FirebaseAuth.instance.currentUser!.getIdToken();
+    print("il token è ");
+    print(token);
     final _headers = <String, dynamic>{
       "w1ntoken" : token
     };
@@ -26,7 +30,7 @@ class _AnnunciListApiService implements AnnunciListApiService {
 
     final _result = await _dio.fetch(_setStreamType<HttpResponse<dynamic>>(
         Options(method: 'GET', headers: _headers, extra: _extra)
-            .compose(_dio.options, '/annunci/list/all',
+            .compose(_dio.options, '/advertisement/list/owner',
             queryParameters: queryParameters, data: _data)
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = _result.data;

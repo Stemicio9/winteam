@@ -14,7 +14,7 @@ abstract class UserListApiService {
   @GET('/users')
   Future<HttpResponse<dynamic>> getUserList();
 
-  @GET('/me')
+  @GET('/user/me')
   Future<HttpResponse<dynamic>> me();
 
   @GET('/user/list/{uid}')

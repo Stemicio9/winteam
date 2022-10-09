@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:winteam/blocs/annunci_bloc/annunci_cubit.dart';
 import 'package:winteam/constants/colors.dart';
 class ChipsDatoreWidget extends StatefulWidget{
 
@@ -8,15 +10,18 @@ class ChipsDatoreWidget extends StatefulWidget{
 
 class ChipsDatoreWidgetState extends State<ChipsDatoreWidget>{
 
+  AnnunciCubit get _cubit => context.read<AnnunciCubit>();
 
   late int defaultChoiceIndex;
   List<String> _choicesList = ['Tutti', 'Attivi', 'Accettati', 'Storico'];
+  List<String> _choicesListQuery = ['all', 'active', 'accepted', 'history'];
 
 
   @override
   void initState() {
     super.initState();
     defaultChoiceIndex = 0;
+    _cubit.fetchAnnuncis(_choicesListQuery[defaultChoiceIndex]);
   }
 
   @override
@@ -39,6 +44,7 @@ class ChipsDatoreWidgetState extends State<ChipsDatoreWidget>{
           ),
           selectedColor: azzurroscuro,
           onSelected: (value) {
+            _cubit.fetchAnnuncis(_choicesListQuery[index]);
             setState(() {
               defaultChoiceIndex = value ? index : defaultChoiceIndex;
             });
