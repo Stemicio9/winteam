@@ -47,6 +47,32 @@ class AnnunciCubit extends Cubit<AnnunciState> {
   }
 
 
+  void fetchAnnunciLavoratore(int page, int size) async {
+    emit(AnnunciLoading());
+    try {
+      // TODO: fetch Annuncis
+      // Qui bisogna creare la nostra a
+
+      HttpResponse<dynamic> result = await annunciListApiService.getAnnunciPaged(page, size);
+
+      print("LA RISPOSTA ALLA REST ");
+      print(result.response);
+
+      var encoded = jsonEncode(result.data);
+      print("HO ENCODATO");
+      var totalJson = jsonDecode(encoded);
+      var json = (totalJson["items"] as List)
+          .map((data) => AnnunciEntity.fromJson(data))
+          .toList();
+      print("HO CARICATO GLI ANNUNCI");
+      emit(AnnunciLoaded(json));
+
+    } catch (e) {
+      print(e.toString());
+      emit(AnnunciError());
+    }
+  }
+
 
  
 

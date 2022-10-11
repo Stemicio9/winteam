@@ -35,7 +35,7 @@ class AnnunciEntity {
     date: json["date"] ?? "",
     hourSlot: json["hourSlot"] ?? "",
     skill: json["skill"] ?? "",
-    payment: json["payment"] ?? "",
+    payment: json["payment"].toString() ?? "",
     publisherUserId: json["publisherUserId"] ?? "",
     candidateUserList: json["candidateUserList"] ?? "",
     matchedUserId: json["matchedUserId"] ?? "",

@@ -58,7 +58,6 @@ class UserListViewState extends State<UserListView> {
 
             BlocBuilder<UserListCubit, UserListState>(
                 builder: (_, state) {
-                  print("SONO DENTRO IL BLOCBUILDER");
                   if (state is UserListLoading) {
                     return const Center(child: CircularProgressIndicator());
                   } else if (state is UserListLoaded) {
@@ -82,12 +81,13 @@ class UserListViewState extends State<UserListView> {
       return;
     }
     Filter filter = Filter();
-    filter.filterAnd = "email|like_insensitive|$filtro";
+    filter.filterOr = "email|like_insensitive|$filtro|string";
+    filter.filterOr = "${filter.filterOr}&firstName|like_insensitive|$filtro|string";
+    filter.filterOr = "${filter.filterOr}&lastName|like_insensitive|$filtro|string";
     _cubit.fetchUserFilteredPaged(filter);
   }
 
   void callRestWithout(){
-   // _cubit.fetchUsers();
     _cubit.fetchUserFilteredPaged(Filter());
   }
 

@@ -2,6 +2,10 @@
 
 import 'package:date_range_form_field/date_range_form_field.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:winteam/blocs/annunci_bloc/annunci_cubit.dart';
+import 'package:winteam/constants/StateConstants.dart';
+import 'package:winteam/constants/language.dart';
 import 'package:winteam/widgets/action_buttons.dart';
 import 'package:winteam/widgets/appbars.dart';
 
@@ -21,6 +25,8 @@ class FiltriAnnunci extends StatefulWidget{
 class FiltriAnnunciState extends State<FiltriAnnunci>{
 
   TextEditingController stipendiocontroller = TextEditingController();
+
+  AnnunciCubit get _cubit => context.read<AnnunciCubit>();
 
 
   List<bool> isSelected = [false,false,false,false];
@@ -73,7 +79,11 @@ class FiltriAnnunciState extends State<FiltriAnnunci>{
               ),
               Expanded(
                   flex: 1,
-                  child: ActionButton("Applica", context, (){}, 150, azzurroscuro, Colors.white)
+                  child: ActionButton("Applica", context, (){
+                    compileHourSlotFilter();
+                    _cubit.fetchAnnunciLavoratore(0, 20);
+                    Navigator.pop(context);
+                  }, 150, azzurroscuro, Colors.white)
               ),
               Expanded(
                 flex: 1,
@@ -84,6 +94,16 @@ class FiltriAnnunciState extends State<FiltriAnnunci>{
         )
 
     );
+  }
+
+
+  void compileHourSlotFilter(){
+    filterAnnunciLavoratore.fasceOrarie = List.empty(growable: true);
+    for(var i = 0; i < isSelected.length; i++){
+      if(isSelected[i]){
+        filterAnnunciLavoratore.fasceOrarie!.add(filterHourSlotToSend[i]);
+      }
+    }
   }
 
 
@@ -243,32 +263,6 @@ class PulsanteOrari extends StatelessWidget {
 }
 
 
-class SliderDistanza extends StatefulWidget {
-  const SliderDistanza({Key? key}) : super(key: key);
-
-  @override
-  State<SliderDistanza> createState() => SliderDistanzaState();
-}
-
-class SliderDistanzaState extends State<SliderDistanza> {
-  double _currentSliderValue = 0;
-
-  @override
-  Widget build(BuildContext context) {
-    return Slider(
-      value: _currentSliderValue,
-      max: 100,
-      divisions: 100,
-      label: _currentSliderValue.round().toString() + " km",
-      onChanged: (double value) {
-        setState(() {
-          _currentSliderValue = value;
-        });
-      },
-    );
-  }
-}
-
 
 
 
@@ -285,27 +279,17 @@ class FormData extends StatefulWidget {
 GlobalKey<FormState> myFormKey = new GlobalKey();
 
 class FormDataState extends State<FormData> {
-  DateTimeRange? myDateRange;
 
-  void _submitForm() {
-    final FormState? form = myFormKey.currentState;
-    form!.save();
-  }
+
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Form(
-          key: myFormKey,
-          child: Column(
+    return Column(
             children: [
               SafeArea(
                 child: DateRangeField(
                     enabled: true,
-                    initialValue: DateTimeRange(
-                        start: DateTime.now(),
-                        end: DateTime.now().add(Duration(days: 5))),
+                    initialValue: filterAnnunciLavoratore.dateRange,
                     decoration: InputDecoration(
                       labelText: 'Seleziona data',
                       prefixIcon: Icon(Icons.date_range),
@@ -318,20 +302,48 @@ class FormDataState extends State<FormData> {
                       }
                       return null;
                     },
+                    onChanged: (value) {
+                      print("IL VALORE SELEZIONATO");
+                      print(value);
+                      filterAnnunciLavoratore.dateRange = value!;
+                    },
                     onSaved: (value) {
-                      setState(() {
-                        myDateRange = value!;
-                      });
+
                     }),
               ),
             ],
-          ),
-        ),
-      ),
-    );
+          );
   }
 }
 
+
+
+
+class SliderDistanza extends StatefulWidget {
+  const SliderDistanza({Key? key}) : super(key: key);
+
+  @override
+  State<SliderDistanza> createState() => SliderDistanzaState();
+}
+
+class SliderDistanzaState extends State<SliderDistanza> {
+
+
+  @override
+  Widget build(BuildContext context) {
+    return Slider(
+      value: filterAnnunciLavoratore.distanzaMassima ?? 0,
+      max: 100,
+      divisions: 100,
+      label:  filterAnnunciLavoratore.distanzaMassima != null ?  "${filterAnnunciLavoratore.distanzaMassima!.round()} €" : "",
+      onChanged: (double value) {
+        setState(() {
+          filterAnnunciLavoratore.distanzaMassima = value;
+        });
+      },
+    );
+  }
+}
 
 
 class SliderStipendio extends StatefulWidget {
@@ -342,18 +354,18 @@ class SliderStipendio extends StatefulWidget {
 }
 
 class SliderStipendioState extends State<SliderStipendio> {
-  double _currentSliderValue = 0;
+
 
   @override
   Widget build(BuildContext context) {
     return Slider(
-      value: _currentSliderValue,
+      value: filterAnnunciLavoratore.pagaMinima ?? 0,
       max: 200,
       divisions: 200,
-      label: _currentSliderValue.round().toString() + " €",
+      label: filterAnnunciLavoratore.pagaMinima != null ?  "${filterAnnunciLavoratore.pagaMinima!.round()} €" : "",
       onChanged: (double value) {
         setState(() {
-          _currentSliderValue = value;
+          filterAnnunciLavoratore.pagaMinima = value;
         });
       },
     );

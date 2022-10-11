@@ -22,6 +22,20 @@ const String ACCEPTED = "accepted";
 const String HISTORY = "history";
 
 
+// Parti della giornata
+const String MORNING = "morning";
+const String AFTERNOON = "afternoon";
+const String EVENING = "evening";
+const String NIGHT = "night";
+
+const List<String> filterHourSlotToSend =  [MORNING, AFTERNOON, EVENING, NIGHT];
+
+
+// Richieste sulla subscription
+
+const String WHAT_SEARCH = "search";
+const String WHAT_CREATE_ADVERTISEMENT = "createAdvertisement";
+
 
 
 final Map<String,String> LANG_IT = {

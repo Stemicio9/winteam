@@ -124,6 +124,28 @@ class _UserListApiService implements UserListApiService {
      return httpResponse;
   }
 
+  @override
+  Future<HttpResponse> canI(String query) async{
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{
+      "what" : query
+    };
+    var token = await FirebaseAuth.instance.currentUser!.getIdToken();
+    final _headers = <String, dynamic>{
+      "w1ntoken" : token
+    };
+    final _data = <String, dynamic>{};
+
+    final _result = await _dio.fetch(_setStreamType<HttpResponse<dynamic>>(
+        Options(method: 'GET', headers: _headers, extra: _extra)
+            .compose(_dio.options, '/user/cani',
+            queryParameters: queryParameters, data: _data)
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = _result.data;
+    final httpResponse = HttpResponse(value, _result);
+    return httpResponse;
+  }
+
 
   RequestOptions _setStreamType<T>(RequestOptions requestOptions) {
     if (T != dynamic &&
@@ -137,6 +159,8 @@ class _UserListApiService implements UserListApiService {
     }
     return requestOptions;
   }
+
+
 
 
 

@@ -17,12 +17,10 @@ class _AnnunciListApiService implements AnnunciListApiService {
   @override
   Future<HttpResponse<dynamic>> getAnnunciList(String query) async {
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{
+    final queryParameters =  <String, dynamic>{
       "state" : query
     };
     var token = await FirebaseAuth.instance.currentUser!.getIdToken();
-    print("il token è ");
-    print(token);
     final _headers = <String, dynamic>{
       "w1ntoken" : token
     };
@@ -39,6 +37,27 @@ class _AnnunciListApiService implements AnnunciListApiService {
   }
 
 
+  @override
+  Future<HttpResponse> getAnnunciPaged(int page, int size) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = filterAnnunciLavoratore.toFilter(page, size).toQueryParameters();
+    var token = await FirebaseAuth.instance.currentUser!.getIdToken();
+
+    final _headers = <String, dynamic>{
+      "w1ntoken" : token
+    };
+    final _data = <String, dynamic>{};
+
+    final _result = await _dio.fetch(_setStreamType<HttpResponse<dynamic>>(
+        Options(method: 'GET', headers: _headers, extra: _extra)
+            .compose(_dio.options, '/advertisement/page',
+            queryParameters: queryParameters, data: _data)
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = _result.data;
+    final httpResponse = HttpResponse(value, _result);
+    return httpResponse;
+  }
+
 
 
   RequestOptions _setStreamType<T>(RequestOptions requestOptions) {
@@ -53,6 +72,8 @@ class _AnnunciListApiService implements AnnunciListApiService {
     }
     return requestOptions;
   }
+
+
 
 
 

@@ -25,4 +25,8 @@ abstract class UserListApiService {
 
   @GET('/user/register')
   Future<HttpResponse<dynamic>> register(String role);
+
+  @GET('/user/cani')
+  Future<HttpResponse<dynamic>> canI(String query);
+
 }

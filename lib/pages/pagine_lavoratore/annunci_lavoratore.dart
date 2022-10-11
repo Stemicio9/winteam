@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:winteam/blocs/annunci_bloc/annunci_cubit.dart';
 import 'package:winteam/constants/colors.dart';
 import 'package:winteam/constants/route_constants.dart';
 import 'package:winteam/widgets/action_buttons.dart';
@@ -16,9 +18,7 @@ class AnnunciLavoratoreState extends State<AnnunciLavoratore>{
     return Scaffold(
       //  appBar: appbarConAction('Annunci', context),
       drawer: DrawerWidget(),
-      body: SingleChildScrollView(
-        scrollDirection: Axis.vertical,
-        child: Container(
+      body:  Container(
           child: Column(
             children: [
               Container(
@@ -45,6 +45,36 @@ class AnnunciLavoratoreState extends State<AnnunciLavoratore>{
                 margin: EdgeInsets.only(bottom: 15),
               ),
 
+              BlocBuilder<AnnunciCubit, AnnunciState>(
+                  builder: (_, state) {
+
+                    if (state is AnnunciLoading) {
+                      return const Center(child: CircularProgressIndicator());
+                    } else if (state is AnnunciLoaded) {
+                      return
+                        Expanded(
+                            child: ListView.builder(
+                                itemCount: state.Annunci.length,
+                                itemBuilder: (context,index) => CardAnnuncioDatore(context, state.Annunci[index].advertisementStatus, "", "CITTA", state.Annunci[index].date, state.Annunci[index].hourSlot, state.Annunci[index].payment, "2KM")
+
+                            )
+                        );
+
+                    } else if (state is AnnunciEmpty) {
+                      // @todo insert an empty state element
+                      return Container(
+                        child: Center(
+                          child: Text(
+                              "NON CI SONO ANNUNCI"
+                          ),
+                        ),
+                      );
+                    } else {
+                      return const Center(child: Text('Errore di caricamento'));
+                    }
+                  }),
+
+              /*
               CardAnnuncioLavoratore(context,'ATTIVO'),
               CardAnnuncioLavoratore(context,'STORICO'),
               CardAnnuncioLavoratore(context,'CHIUSO'),
@@ -52,14 +82,14 @@ class AnnunciLavoratoreState extends State<AnnunciLavoratore>{
               CardAnnuncioLavoratore(context,'CHIUSO'),
               CardAnnuncioLavoratore(context,'STORICO'),
               CardAnnuncioLavoratore(context,'ATTIVO'),
+
+*/
 
 
             ],
 
           ),
         ),
-      ),
-
     );
   }
 
