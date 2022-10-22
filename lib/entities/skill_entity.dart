@@ -1,5 +1,5 @@
 
-class SkillLavoratore {
+class SkillEntity {
   String? id;
   String? name;
   String? imageLink;
@@ -7,7 +7,7 @@ class SkillLavoratore {
   String? hexColorBackground;
 
 
-  SkillLavoratore({
+  SkillEntity({
     this.id,
     this.name,
     this.imageLink,
@@ -16,7 +16,7 @@ class SkillLavoratore {
   });
 
 
-  factory SkillLavoratore.fromJson(Map<String, dynamic> json) => SkillLavoratore(
+  factory SkillEntity.fromJson(Map<String, dynamic> json) => SkillEntity(
     id: json["id"] ?? "",
     name: json["name"] ?? "",
     imageLink: json["imageLink"] ?? "",
