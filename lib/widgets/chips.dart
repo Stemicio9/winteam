@@ -8,7 +8,6 @@ class ChipsWidget extends StatefulWidget{
 
 class ChipsWidgetState extends State<ChipsWidget>{
 
-
   late int defaultChoiceIndex;
   List<String> _choicesList = ['Tutti', 'Ricerca', 'Accettati', 'Storico'];
 

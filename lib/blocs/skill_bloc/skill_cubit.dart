@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:retrofit/retrofit.dart';
 import 'package:flutter/cupertino.dart';
@@ -12,6 +11,8 @@ part 'skill_cubit_state.dart';
 
 class SkillCubit extends Cubit<SkillState> {
   SkillCubit() : super(SkillListLoading());
+
+  List<SkillEntity> selectedEntities = List<SkillEntity>.empty(growable: true);
 
   final SkillEntity _skill = SkillEntity();
   SkillEntity get skill => _skill;

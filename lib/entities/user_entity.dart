@@ -45,8 +45,8 @@ class UserEntity {
       lastName: json["lastName"] ?? "",
       email: json["email"] ?? "",
       roleId: json["roleId"] ?? "",
-      skillList: (json["skillList"] as List<dynamic>).map((e) => SkillEntity.fromJson(Map<String, dynamic>.from(e as Map))).toList(),
+      skillList: json["skillList"] != null ? (json["skillList"] as List<dynamic>).map((e) => SkillEntity.fromJson(Map<String, dynamic>.from(e as Map))).toList() : [],
       description: json["description"] ?? "",
-      phoneNumber: json["phoneNumber"] ?? ""
+      phoneNumber: json["phoneNumber"] ?? "",
   );
 }
