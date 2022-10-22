@@ -196,18 +196,17 @@ class FiltriAnnunciState extends State<FiltriAnnunci> {
              /* avatarImage: (index, item) =>
                   AssetImage('assets/images/avatar_image.png'), */
             ),
-            choiceCheckmark: true,
-            choiceStyle: C2ChipStyle.filled(
-              selectedStyle: const C2ChipStyle(
-                backgroundColor: azzurroscuro,
+            choiceStyle: C2ChipStyle.outlined(
+              color: azzurroscuro,
+              foregroundStyle: TextStyle(fontSize: 15,color: azzurroscuro),
+              borderRadius: const BorderRadius.all(Radius.circular(10)),
+              borderWidth: 1,
+              height: 40,
+              selectedStyle: C2ChipStyle.filled(
+                color: azzurroscuro,
+                checkmarkColor: Colors.white,
                 foregroundStyle: TextStyle(fontSize: 15,color: Colors.white),
               ),
-              color: grigiochiaro,
-              foregroundStyle: TextStyle(fontSize: 15,color: azzurroscuro),
-              borderRadius: const BorderRadius.all(Radius.circular(50)),
-              borderWidth: 1,
-
-
             ),
 
         )
@@ -323,9 +322,10 @@ class FormDataState extends State<FormData> {
               initialValue: filterAnnunciLavoratore.dateRange,
               decoration: InputDecoration(
                 labelText: 'Seleziona data',
-                prefixIcon: Icon(Icons.date_range),
-                hintText: 'Please select a start and end date',
+                prefixIcon: Icon(Icons.date_range,color: azzurroscuro,),
+                hintText: 'Seleziona una data di inizio e una di fine',
                 border: OutlineInputBorder(),
+
               ),
               validator: (value) {
                 if (value!.start.isBefore(DateTime.now())) {

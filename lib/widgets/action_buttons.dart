@@ -46,8 +46,8 @@ Widget ActionButtonFiltri(String testo, BuildContext context, Function action, d
       child: Ink(
         decoration: BoxDecoration(
             color: azzurroscuro,
-            border: Border.all(color: azzurroscuro,width: 2),
-            borderRadius: BorderRadius.circular(20.0)),
+            border: Border.all(color: azzurroscuro),
+            borderRadius: BorderRadius.circular(10.0)),
         child: Container(
             constraints:
             BoxConstraints(maxWidth: maxWidth, minHeight: 50.0),

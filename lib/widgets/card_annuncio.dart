@@ -54,7 +54,7 @@ Widget CardAnnuncioLavoratore(BuildContext context, String stato){
                       decoration: BoxDecoration(
                         border: Border.all(
                             color: azzurroscuro,
-                            width: 2
+                            width: 1
                         ),
                         shape: BoxShape.circle,
                         image: const DecorationImage(
@@ -155,7 +155,7 @@ Widget CardAnnuncioDatore(BuildContext context, String stato,
                       decoration: BoxDecoration(
                         border: Border.all(
                             color: azzurroscuro,
-                            width: 2
+                            width: 1
                         ),
                         shape: BoxShape.circle,
                         image: const DecorationImage(
