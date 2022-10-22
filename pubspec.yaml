@@ -48,7 +48,11 @@ dependencies:
   getwidget: ^3.0.1
   percent_indicator: ^4.2.2
   flutter_expandable_fab: ^1.5.2
-
+  flutter_rating_bar: ^4.0.1
+  image_picker: ^0.8.6
+  firebase_storage: ^10.3.9
+  fluttertoast: ^8.0.9
+  chips_choice: ^3.0.0
 
 dev_dependencies:
   flutter_test:

@@ -58,7 +58,7 @@ Widget CardAnnuncioLavoratore(BuildContext context, String stato){
                         ),
                         shape: BoxShape.circle,
                         image: const DecorationImage(
-                            image: AssetImage('assets/images/profiledefault.jpeg'),
+                            image: AssetImage('assets/images/avatar_image.png'),
                             fit: BoxFit.fill
                         ),
                       ),
@@ -159,7 +159,7 @@ Widget CardAnnuncioDatore(BuildContext context, String stato,
                         ),
                         shape: BoxShape.circle,
                         image: const DecorationImage(
-                            image: AssetImage('assets/images/profiledefault.jpeg'),
+                            image: AssetImage('assets/images/avatar_image.png'),
                             fit: BoxFit.fill
                         ),
                       ),

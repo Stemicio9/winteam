@@ -67,7 +67,7 @@ class RegistratiState extends State<Registrati>{
 
                 spaziotrawidgetinaltezza(context, 20),
 
-                InputWidget(labeltext: "Email", hinttext: "email@esempio.com", controller: emailcontroller, ispassword: false ,validator: validaemail),
+                InputWidget(labeltext: "Email", hinttext: "email@example.com", controller: emailcontroller, ispassword: false ,validator: validaemail),
 
                 spaziotrawidgetinaltezza(context,35),
 

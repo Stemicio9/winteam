@@ -1,7 +1,9 @@
 
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:winteam/constants/language.dart';
+import 'package:winteam/constants/route_constants.dart';
 import '../constants/colors.dart';
 
 
@@ -79,7 +81,7 @@ class DrawerWidget extends StatelessWidget {
     lista.add(creatile(v2, (){raccoglitore.comefunziona(context);}, context, const IconData(0xf669, fontFamily: 'MaterialIcons')));
     lista.add(creatile(v3, (){raccoglitore.contattaci(context);}, context, const IconData(0xf01b2, fontFamily: 'MaterialIcons')));
     lista.add(creatile(v4, (){raccoglitore.eventi();}, context, const IconData(0xf06ae, fontFamily: 'MaterialIcons'), comingsoon: true));
-    lista.add(creatile(v5, (){}, context, const IconData(0xf88b, fontFamily: 'MaterialIcons')));
+    lista.add(creatile(v5, (){ FirebaseAuth.instance.signOut();Navigator.pushNamed(context, RouteConstants.login);}, context, const IconData(0xf88b, fontFamily: 'MaterialIcons')));
     listaelementimenu.clear();
 
     return lista;

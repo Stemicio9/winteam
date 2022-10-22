@@ -25,9 +25,6 @@ class UserCubit extends Cubit<UserState> {
       // TODO: fetch users
       // Qui bisog na creare la nostra a
       print("CHIAMO LA REST PER CAPIRE LE MIE INFO");
-
-
-
       HttpResponse<dynamic> result = await userListApiService.me();
       print("Risultato result");
       print(result);

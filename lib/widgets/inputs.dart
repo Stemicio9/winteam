@@ -1,7 +1,5 @@
-
-
-
 import 'package:flutter/material.dart';
+import 'package:winteam/constants/colors.dart';
 
 class InputWidget extends StatelessWidget {
 
@@ -17,6 +15,7 @@ class InputWidget extends StatelessWidget {
   bool? enabled = true;
 
 
+
   InputWidget({required hinttext,required controller, this.ispassword = false ,validator = defaultvalidator, this.labeltext = "", this.onchanged = funzionecostante, this.autofocus = false, this.keyboard = TextInputType.text, this.enabled })
       : hinttext = hinttext,
         controller = controller,
@@ -28,9 +27,8 @@ class InputWidget extends StatelessWidget {
     return Center(
           child: SizedBox(
             width: MediaQuery.of(context).size.width - 60,
-
             child: Material(
-              elevation: 10,
+              elevation: 7,
               color: Colors.white,
               /*       shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(round)),
@@ -48,7 +46,9 @@ class InputWidget extends StatelessWidget {
                   decoration: InputDecoration(
                       border: InputBorder.none,
                       hintText: hinttext,
-                      labelText: labeltext
+                      labelText: labeltext,
+                      hintStyle: TextStyle(color: Colors.grey),
+                      labelStyle: TextStyle(color: azzurroscuro),
                   ),
                 ),
               ),

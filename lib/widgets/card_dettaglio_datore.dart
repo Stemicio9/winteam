@@ -75,7 +75,7 @@ Widget CardDettaglioDatore(String stato){
                 children: [
                   Icon(Icons.speaker_notes, color: giallo,),
                   Container(padding: EdgeInsets.only(right: 7),),
-                  Text('Descrizione', style: TextStyle(color: azzurroscuro,fontSize: 16),),
+                  Text('Descrizione', style: TextStyle(color: azzurroscuro,fontSize: 16,fontWeight: FontWeight.bold),),
                 ],
               ),
               Container(padding: EdgeInsets.only(top: 8),),

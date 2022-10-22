@@ -27,7 +27,7 @@ Widget CardCandidato(){
                           ),
                           shape: BoxShape.circle,
                           image: const DecorationImage(
-                              image: AssetImage('assets/images/profiledefault.jpeg'),
+                              image: AssetImage('assets/images/avatar_image.png'),
                               fit: BoxFit.fill
                           ),
                         ),

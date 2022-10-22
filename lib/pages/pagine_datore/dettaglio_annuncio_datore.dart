@@ -8,6 +8,7 @@ import 'package:winteam/widgets/texts.dart';
 
 import '../../widgets/Expandable_fab.dart';
 
+
 class DettaglioAnnuncioDatore extends StatefulWidget{
   @override
   State<DettaglioAnnuncioDatore> createState() => DettaglioAnnuncioDatoreState();
@@ -68,6 +69,8 @@ class DettaglioAnnuncioDatoreState extends State<DettaglioAnnuncioDatore>{
                       context: context,
                       builder: (context) =>
                           AlertDialog(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10)),
                             title: Texth3(
                               testo:'Eliminare definitivamente l\'annuncio?',
                               color: Colors.black,

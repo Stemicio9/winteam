@@ -59,7 +59,11 @@ class PasswordDimenticataFormState extends State<PasswordDimenticataForm>{
             Container(
               margin: EdgeInsets.only(bottom: 100),
             ),
-            InputWidget(labeltext: 'Inserisci la tua Email', hinttext: "esempio@email.it", controller: emailcontroller, ispassword: false,),
+            InputWidget(
+              labeltext: 'Inserisci la tua Email',
+              hinttext: "email@example.com",
+              controller: emailcontroller,
+              ispassword: false,),
 
 
 

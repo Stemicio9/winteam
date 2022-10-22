@@ -35,13 +35,13 @@ appbarConAction(String titolo,context) {
         )
     ),
 
-    actions: [
+   /* actions: [
       IconButton(color: Colors.white,
           icon: const Icon(Icons.exit_to_app),
           onPressed: () {
             Navigator.pushNamed(context, "/");
           })
-    ],
+    ], */
 
   );
 }

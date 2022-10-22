@@ -1,5 +1,5 @@
 
-
+import 'package:chips_choice/chips_choice.dart';
 import 'package:date_range_form_field/date_range_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -11,8 +11,6 @@ import 'package:winteam/widgets/appbars.dart';
 
 import '../../constants/colors.dart';
 
-
-
 class FiltriAnnunci extends StatefulWidget{
   @override
   FiltriAnnunciState createState() {
@@ -21,29 +19,44 @@ class FiltriAnnunci extends StatefulWidget{
 
 }
 
-
-class FiltriAnnunciState extends State<FiltriAnnunci>{
+class FiltriAnnunciState extends State<FiltriAnnunci> {
 
   TextEditingController stipendiocontroller = TextEditingController();
 
   AnnunciCubit get _cubit => context.read<AnnunciCubit>();
 
+  List<String> _choicesList = ['Mattina', 'Pomeriggio', 'Sera', 'Notte'];
+  List<String> elementiSelezionati = [];
+  List<Icon> iconList = [
+    Icon(Icons.brightness_low_rounded, color: giallochiaro),
+    Icon(Icons.brightness_7_rounded, color: giallo),
+    Icon(Icons.brightness_medium_rounded, color: arancio),
+    Icon(Icons.brightness_4_rounded, color: blunotte)
+  ];
 
-  List<bool> isSelected = [false,false,false,false];
+  late int defaultChoiceIndex;
+
+  List<bool> isSelected = [false, false, false, false];
 
   FiltriAnnunciState();
+
+  @override
+  void initState() {
+    super.initState();
+    defaultChoiceIndex = 0;
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         resizeToAvoidBottomInset: false,
-        appBar: appbarSenzaActions(context,'Filtri'),
+        appBar: appbarSenzaActions(context, 'Filtri'),
         body: GestureDetector(
           behavior: HitTestBehavior.opaque,
           onTap: () {
             FocusScope.of(context).requestFocus(FocusNode());
           },
-          child:   Column(
+          child: Column(
             children: [
               Expanded(
                 flex: 1,
@@ -79,7 +92,7 @@ class FiltriAnnunciState extends State<FiltriAnnunci>{
               ),
               Expanded(
                   flex: 1,
-                  child: ActionButton("Applica", context, (){
+                  child: ActionButton("Applica", context, () {
                     compileHourSlotFilter();
                     _cubit.fetchAnnunciLavoratore(0, 20);
                     Navigator.pop(context);
@@ -97,17 +110,17 @@ class FiltriAnnunciState extends State<FiltriAnnunci>{
   }
 
 
-  void compileHourSlotFilter(){
+  void compileHourSlotFilter() {
     filterAnnunciLavoratore.fasceOrarie = List.empty(growable: true);
-    for(var i = 0; i < isSelected.length; i++){
-      if(isSelected[i]){
+    for (var i = 0; i < isSelected.length; i++) {
+      if (isSelected[i]) {
         filterAnnunciLavoratore.fasceOrarie!.add(filterHourSlotToSend[i]);
       }
     }
   }
 
 
-  Widget rigastipendio(){
+  Widget rigastipendio() {
     return Padding(
       padding: const EdgeInsets.only(left: 20),
       child: Container(
@@ -123,7 +136,7 @@ class FiltriAnnunciState extends State<FiltriAnnunci>{
     );
   }
 
-  Widget rigaorario(){
+  Widget rigaorario() {
     return Padding(
       padding: const EdgeInsets.only(left: 20),
       child: Container(
@@ -137,7 +150,8 @@ class FiltriAnnunciState extends State<FiltriAnnunci>{
       ),
     );
   }
-  Widget rigadistanza(){
+
+  Widget rigadistanza() {
     return Padding(
       padding: const EdgeInsets.only(left: 20),
       child: Container(
@@ -151,7 +165,8 @@ class FiltriAnnunciState extends State<FiltriAnnunci>{
       ),
     );
   }
-  Widget rigadata(){
+
+  Widget rigadata() {
     return Padding(
       padding: const EdgeInsets.only(left: 20),
       child: Container(
@@ -168,51 +183,73 @@ class FiltriAnnunciState extends State<FiltriAnnunci>{
 
 
   Widget oraributtons() {
-    Widget buttons = ToggleButtons(
-      children: <Widget>[
-        PulsanteOrari(testo: "Mattina" , icona:  Icon(Icons.brightness_low_rounded, color: giallochiaro)),
-        PulsanteOrari(testo: "Pomeriggio", icona:  Icon(Icons.brightness_7_rounded, color: giallo)),
-        PulsanteOrari(testo: "  Sera  ", icona:  Icon(Icons.brightness_medium_rounded, color: arancio)),
-        PulsanteOrari(testo: " Notte ", icona:  Icon(Icons.brightness_4_rounded, color: blunotte)),
-      ],
-      onPressed: (int index) {
-        int count = 0;
-        for (var val in isSelected) {
-          if (val) count++;
-        }
-
-        setState(() {
-          isSelected[index] = !isSelected[index];
-        });
-      },
-      isSelected: isSelected,
-      borderRadius: BorderRadius.circular(10),
-
-
-    );
-
-    return Stack(
+    return Wrap(
+      spacing: 15,
       children: [
-        Column(
-          children: [
-            Expanded(
-              flex: 1,
-              child: Container(),
+        ChipsChoice<String>.multiple(
+            value: elementiSelezionati,
+            onChanged: (val) => setState(() => elementiSelezionati = val),
+            choiceItems: C2Choice.listFrom<String, String>(
+              source: _choicesList,
+              value: (i, v) => v,
+              label: (i, v) => v,
+             /* avatarImage: (index, item) =>
+                  AssetImage('assets/images/avatar_image.png'), */
             ),
-            Expanded(
-              flex: 16,
-              child: buttons,
+            choiceCheckmark: true,
+            choiceStyle: C2ChipStyle.filled(
+              selectedStyle: const C2ChipStyle(
+                backgroundColor: azzurroscuro,
+                foregroundStyle: TextStyle(fontSize: 15,color: Colors.white),
+              ),
+              color: grigiochiaro,
+              foregroundStyle: TextStyle(fontSize: 15,color: azzurroscuro),
+              borderRadius: const BorderRadius.all(Radius.circular(50)),
+              borderWidth: 1,
+
+
             ),
-            Expanded(
-              flex: 1,
-              child: Container(),
-            )
-          ],
+
         )
       ],
-    );
+    ) ;
   }
 }
+
+
+
+
+/*     Wrap(
+      spacing: 15,
+      children: List.generate(_choicesList.length, (index) {
+        return ChoiceChip(
+          avatar: iconList[index],
+          backgroundColor: azzurroscuromoltoopaco,
+          labelPadding: const EdgeInsets.only(right: 10,left: 10,top: 4,bottom: 4),
+          label: Text(_choicesList[index]),
+          selected: defaultChoiceIndex == index,
+          shape: const StadiumBorder(
+              side: BorderSide(
+                  color: azzurroscuro)
+          ),
+          selectedColor: azzurroscuro,
+          labelStyle: TextStyle(
+            color: defaultChoiceIndex == index ? Colors.white : azzurroscuro,
+          ),
+          onSelected: (value) {
+            setState(() {
+              defaultChoiceIndex = value ? index : defaultChoiceIndex;
+            });
+          },
+          // backgroundColor: color,
+          elevation: 1,
+        );
+      }),
+    );
+  }
+} */
+
+
 
 
 
@@ -265,12 +302,6 @@ class PulsanteOrari extends StatelessWidget {
 
 
 
-
-
-
-
-
-
 class FormData extends StatefulWidget {
   @override
   FormDataState createState() => FormDataState();
@@ -285,34 +316,34 @@ class FormDataState extends State<FormData> {
   @override
   Widget build(BuildContext context) {
     return Column(
-            children: [
-              SafeArea(
-                child: DateRangeField(
-                    enabled: true,
-                    initialValue: filterAnnunciLavoratore.dateRange,
-                    decoration: InputDecoration(
-                      labelText: 'Seleziona data',
-                      prefixIcon: Icon(Icons.date_range),
-                      hintText: 'Please select a start and end date',
-                      border: OutlineInputBorder(),
-                    ),
-                    validator: (value) {
-                      if (value!.start.isBefore(DateTime.now())) {
-                        return 'Please enter a later start date';
-                      }
-                      return null;
-                    },
-                    onChanged: (value) {
-                      print("IL VALORE SELEZIONATO");
-                      print(value);
-                      filterAnnunciLavoratore.dateRange = value!;
-                    },
-                    onSaved: (value) {
-
-                    }),
+      children: [
+        SafeArea(
+          child: DateRangeField(
+              enabled: true,
+              initialValue: filterAnnunciLavoratore.dateRange,
+              decoration: InputDecoration(
+                labelText: 'Seleziona data',
+                prefixIcon: Icon(Icons.date_range),
+                hintText: 'Please select a start and end date',
+                border: OutlineInputBorder(),
               ),
-            ],
-          );
+              validator: (value) {
+                if (value!.start.isBefore(DateTime.now())) {
+                  return 'Please enter a later start date';
+                }
+                return null;
+              },
+              onChanged: (value) {
+                print("IL VALORE SELEZIONATO");
+                print(value);
+                filterAnnunciLavoratore.dateRange = value!;
+              },
+              onSaved: (value) {
+
+              }),
+        ),
+      ],
+    );
   }
 }
 

@@ -56,15 +56,17 @@ class LoginFormState extends State<LoginForm> {
 
               // Add TextFormFields and ElevatedButton here.
               InputWidget(
-                hinttext: "email@esempio.com",
+                hinttext: "email@example.com",
                 controller: _emailTextController,
                 ispassword: false,
                 validator: validaemail,
-                labeltext: "Email",),
+                labeltext: "Email",
+              ),
 
               spaziotrawidgetinaltezza(context, 30),
 
-              InputWidget(hinttext: "password",
+              InputWidget(
+                hinttext: "Password",
                 controller: _passwordTextController,
                 ispassword: true,
                 validator: validapassword,

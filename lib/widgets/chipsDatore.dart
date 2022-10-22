@@ -30,12 +30,10 @@ class ChipsDatoreWidgetState extends State<ChipsDatoreWidget>{
       spacing: 15,
       children: List.generate(_choicesList.length, (index) {
         return ChoiceChip(
+          backgroundColor: azzurroscuromoltoopaco,
           labelPadding: const EdgeInsets.only(right: 15,left: 15,top: 4,bottom: 4),
           label: Text(
-              _choicesList[index],
-              style: const TextStyle(
-                  color: Colors.white
-              )
+              _choicesList[index]
           ),
           selected: defaultChoiceIndex == index,
           shape: const StadiumBorder(
@@ -43,6 +41,9 @@ class ChipsDatoreWidgetState extends State<ChipsDatoreWidget>{
                   color: azzurroscuro)
           ),
           selectedColor: azzurroscuro,
+          labelStyle: TextStyle(
+            color: defaultChoiceIndex == index ? Colors.white : azzurroscuro,
+          ),
           onSelected: (value) {
             _cubit.fetchAnnuncis(_choicesListQuery[index]);
             setState(() {

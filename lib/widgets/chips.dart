@@ -24,19 +24,18 @@ class ChipsWidgetState extends State<ChipsWidget>{
      spacing: 15,
      children: List.generate(_choicesList.length, (index) {
        return ChoiceChip(
+         backgroundColor: azzurroscuromoltoopaco,
          labelPadding: const EdgeInsets.only(right: 10,left: 10,top: 4,bottom: 4),
-         label: Text(
-           _choicesList[index],
-           style: const TextStyle(
-             color: Colors.white
-           )
-         ),
+         label: Text(_choicesList[index]),
          selected: defaultChoiceIndex == index,
          shape: const StadiumBorder(
              side: BorderSide(
                  color: azzurroscuro)
          ),
          selectedColor: azzurroscuro,
+         labelStyle: TextStyle(
+           color: defaultChoiceIndex == index ? Colors.white : azzurroscuro,
+         ),
          onSelected: (value) {
            setState(() {
              defaultChoiceIndex = value ? index : defaultChoiceIndex;
