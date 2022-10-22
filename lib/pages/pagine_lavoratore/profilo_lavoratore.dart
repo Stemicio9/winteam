@@ -9,6 +9,7 @@ import 'package:winteam/entities/user_entity.dart';
 import 'package:winteam/widgets/texts.dart';
 import '../../constants/colors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:hexcolor/hexcolor.dart';
 
 class ProfiloLavoratoreWidget extends StatelessWidget {
   const ProfiloLavoratoreWidget({super.key});
@@ -71,8 +72,7 @@ class ProfiloLavoratoreState extends State<ProfiloLavoratore> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: BlocBuilder<UserCubit, UserState>(builder: (_, state) {
+    return BlocBuilder<UserCubit, UserState>(builder: (_, state) {
         if (state is UserLoading) {
           return const Center(child: CircularProgressIndicator());
         } else if (state is UserLoaded) {
@@ -83,15 +83,14 @@ class ProfiloLavoratoreState extends State<ProfiloLavoratore> {
         } else {
           return const Center(child: Text('Errore di caricamento'));
         }
-      }),
-    );
+      });
   }
 
   Widget everyContent() {
     return Column(
       children: [
         Container(
-          padding: EdgeInsets.symmetric(horizontal: 15),
+          padding: EdgeInsets.symmetric(horizontal: 10),
           child: Column(
             children: [
               Container(padding: EdgeInsets.only(top: 20)),
@@ -181,9 +180,9 @@ class ProfiloLavoratoreState extends State<ProfiloLavoratore> {
                         children: [
                           GestureDetector(
                             child: Chip(
-                              labelPadding: const EdgeInsets.only(right: 10,left: 10,top: 4,bottom: 4),
+                              labelPadding: const EdgeInsets.only(top: 4,bottom: 4),
                               label: Text(
-                                'Add',
+                                entity!.skillList!.isEmpty ? 'Aggiungi le tue skill' : '',
                                 style: TextStyle(color: grigio),
                               ),
                               avatar: Icon(Icons.add_rounded, color: grigio),
@@ -195,9 +194,6 @@ class ProfiloLavoratoreState extends State<ProfiloLavoratore> {
                               Navigator.pushNamed(
                                   context, RouteConstants.aggiungiSkill);
                             },
-                          ),
-                          Container(
-                            padding: EdgeInsets.only(left: 3),
                           ),
 
 
@@ -213,15 +209,15 @@ class ProfiloLavoratoreState extends State<ProfiloLavoratore> {
                                       Container(padding: EdgeInsets.only(right: 7)),
                                       Chip(
                                         labelPadding: const EdgeInsets.only(right: 10,left: 10,top: 4,bottom: 4),
-                                        label: Text(entity!.skillList![index].name!, style: TextStyle(color: azzurroscuro)),
+                                        label: Text(entity!.skillList![index].name!, style: TextStyle(color: HexColor(entity!.skillList![index].hexColorText!))),
                                         avatar: ClipOval(
                                           child: SizedBox.fromSize(
                                             size: Size.fromRadius(48), // Image radius
                                             child:Image.asset('assets/images/avatar_image.png', fit: BoxFit.cover)
                                           ),
                                         ),
-                                        backgroundColor: azzurroscuromoltoopaco,
-                                        shape: StadiumBorder(side: BorderSide(color: azzurroscuro)),
+                                        backgroundColor: HexColor(entity!.skillList![index].hexColorBackground!),
+                                        shape: StadiumBorder(side: BorderSide(color: HexColor(entity!.skillList![index].hexColorText!))),
                                       )
                                     ],
                                   );

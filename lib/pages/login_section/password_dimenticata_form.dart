@@ -79,7 +79,7 @@ class PasswordDimenticataFormState extends State<PasswordDimenticataForm>{
 
             spaziotrawidgetinaltezza(context, 30),
 
-            ActionButton("Cambia password", context,submit,250,azzurroscuro, Colors.white),
+            ActionButton("Conferma", context,submit,250,azzurroscuro, Colors.white),
 
             Image.asset('assets/images/giphy.gif' ,height: 175, width: 175),
 

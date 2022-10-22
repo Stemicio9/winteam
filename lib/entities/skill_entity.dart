@@ -3,12 +3,16 @@ class SkillEntity {
   String? id;
   String? name;
   String? imageLink;
+  String? hexColorText;
+  String? hexColorBackground;
 
 
   SkillEntity({
     this.id,
     this.name,
-    this.imageLink
+    this.imageLink,
+    this.hexColorText,
+    this.hexColorBackground,
   });
 
 
@@ -16,6 +20,8 @@ class SkillEntity {
     id: json["id"] ?? "",
     name: json["name"] ?? "",
     imageLink: json["imageLink"] ?? "",
+    hexColorText: json["hexColorText"] ?? "",
+    hexColorBackground: json["hexColorBackground"] ?? "",
   );
 
 }
