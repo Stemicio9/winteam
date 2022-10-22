@@ -1,5 +1,5 @@
 
-import 'package:winteam/entities/skill_lavoratore.dart';
+import 'package:winteam/entities/skill_entity.dart';
 
 class UserEntity {
 
@@ -10,7 +10,7 @@ class UserEntity {
   String? email;
   String? description;
   String? brief;
-  List<SkillLavoratore>? skillList;
+  List<SkillEntity>? skillList;
   List<String>? availabilityDays;
   List<String>? availabilityHourSlots;
   List<String>? availabilityCities;
@@ -45,7 +45,7 @@ class UserEntity {
       lastName: json["lastName"] ?? "",
       email: json["email"] ?? "",
       roleId: json["roleId"] ?? "",
-      skillList: (json["skillList"] as List<dynamic>).map((e) => SkillLavoratore.fromJson(Map<String, dynamic>.from(e as Map))).toList(),
+      skillList: (json["skillList"] as List<dynamic>).map((e) => SkillEntity.fromJson(Map<String, dynamic>.from(e as Map))).toList(),
       description: json["description"] ?? "",
       phoneNumber: json["phoneNumber"] ?? ""
   );

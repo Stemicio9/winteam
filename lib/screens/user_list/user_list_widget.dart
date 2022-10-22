@@ -33,7 +33,6 @@ class UserListViewState extends State<UserListView> {
 
 
   UserListCubit get _cubit => context.read<UserListCubit>();
-
   final txtList = TextEditingController();
 
 

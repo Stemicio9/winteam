@@ -5,6 +5,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:winteam/authentication/firebase_repository.dart';
 import 'package:winteam/blocs/annunci_bloc/annunci_cubit.dart';
+import 'package:winteam/blocs/skill_bloc/skill_cubit.dart';
 import 'package:winteam/blocs/subscription_bloc/subscription_cubit.dart';
 import 'package:winteam/blocs/user_api_service/user_api_service.dart';
 import 'package:winteam/blocs/user_bloc/current_user_cubit.dart';
@@ -40,6 +41,9 @@ class MyApp extends StatelessWidget {
         BlocProvider(
             create: (context) => UserListCubit(),
         ),
+          BlocProvider(
+            create: (context) => SkillCubit(),
+          ),
           BlocProvider(
             create: (context) => UserCubit(),
           ),

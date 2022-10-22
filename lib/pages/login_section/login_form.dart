@@ -174,6 +174,8 @@ extension EmailValidator on String {
         print(a);
         // DATORE, LAVORATORE, INFLUENCER
         UserEntity? entity = await _cubit.me();
+        print("STAMPO LA ENTITY");
+        print(entity);
         if(entity == null) return;
 
         print("USERENTITY CREATA");
