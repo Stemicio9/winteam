@@ -16,7 +16,7 @@ abstract class AnnunciListApiService {
   Future<HttpResponse<dynamic>> getAnnunciList(String query);
 
   @GET('/advertisement/page')
-  Future<HttpResponse<dynamic>> getAnnunciPaged(int page, int size);
+  Future<HttpResponse<dynamic>> getAnnunciPaged(Map<String,dynamic> queryParameters, String state, int page, int size);
 
   @POST('/advertisement/create')
   Future<HttpResponse<dynamic>> publishAnnuncio(AnnunciEntity annuncio);

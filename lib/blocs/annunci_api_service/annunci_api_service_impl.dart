@@ -39,11 +39,13 @@ class _AnnunciListApiService implements AnnunciListApiService {
 
 
   @override
-  Future<HttpResponse> getAnnunciPaged(int page, int size) async {
+  Future<HttpResponse> getAnnunciPaged(Map<String, dynamic> queryParameters, String state, int page, int size) async {
     const _extra = <String, dynamic>{};
-    final queryParameters = filterAnnunciLavoratore.toFilter(page, size).toQueryParameters();
     var token = await FirebaseAuth.instance.currentUser!.getIdToken();
 
+    queryParameters.addAll({
+      "state": state
+    });
     final _headers = <String, dynamic>{
       "w1ntoken" : token
     };

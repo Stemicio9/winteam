@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:winteam/blocs/annunci_bloc/annunci_cubit.dart';
+import 'package:winteam/constants/StateConstants.dart';
 import 'package:winteam/constants/colors.dart';
 class ChipsWidget extends StatefulWidget{
 
@@ -8,13 +11,21 @@ class ChipsWidget extends StatefulWidget{
 
 class ChipsWidgetState extends State<ChipsWidget>{
 
+  AnnunciCubit get _cubit => context.read<AnnunciCubit>();
+
   late int defaultChoiceIndex;
-  List<String> _choicesList = ['Tutti', 'Ricerca', 'Accettati', 'Storico'];
+  List<String> _choicesList = ['Tutti', 'In Corso', 'Accettati', 'Storico'];
+  List<String> _choicesListQuery = ['all', 'current', 'accepted', 'history'];
+
+  //accettati lavoratore -> se lavoratore è matched e la data attuale è inferiore a quella dell'annuncio
+  //storico lavoratore -> tutti annunci in cui lavoratore è candidato e data attuale è maggiore a quella dell'annuncio
+  //in corso -> annunci in cui lavoratore è candidato e data attuale è inferiore a quella dell'annuncio
 
   @override
   void initState() {
     super.initState();
     defaultChoiceIndex = 0;
+    _cubit.fetchAnnuncis(_choicesListQuery[defaultChoiceIndex]);
   }
 
   @override
@@ -37,6 +48,8 @@ class ChipsWidgetState extends State<ChipsWidget>{
            fontWeight: FontWeight.normal
          ),
          onSelected: (value) {
+           filterAnnunciLavoratore.state = _choicesListQuery[index];
+           _cubit.fetchAnnunciLavoratore(0, 20);
            setState(() {
              defaultChoiceIndex = value ? index : defaultChoiceIndex;
            });
@@ -45,32 +58,6 @@ class ChipsWidgetState extends State<ChipsWidget>{
        );
      }),
    );
-
-
- /*   return Center(
-      child: ChoiceChip(
-          label: Text('Chip di prova'),
-          selected: isSelected,
-          shape: StadiumBorder(
-              side: BorderSide(
-                  color: azzurroscuro)
-          ),
-          labelStyle: TextStyle(
-            color: isSelected ? Colors.white : azzurroscuro,
-          ),
-
-          selectedColor: azzurroscuro,
-
-
-          onSelected: (newBoolvalue) {
-            setState(() {
-              isSelected = newBoolvalue;
-            }
-
-            );
-          }
-      ),
-    ); */
   }
 }
 

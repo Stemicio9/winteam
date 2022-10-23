@@ -18,6 +18,7 @@ const String LOGOUT = "Logout";
 
 // Stati degli annunci
 const String ACTIVE = "active";
+const String CURRENT = "current";
 const String ACCEPTED = "accepted";
 const String HISTORY = "history";
 
@@ -48,6 +49,7 @@ final Map<String,String> LANG_IT = {
   ACTIVE:"ATTIVO",
   ACCEPTED:"ACCETTATO",
   HISTORY:"ARCHIVIATO",
+  CURRENT:"IN CORSO",
   "":"",
   "":"",
   "":"",
@@ -60,6 +62,7 @@ final Map<String,String> LANG_EN = {
   ACTIVE:"ACTIVE",
   ACCEPTED:"ACCEPTED",
   HISTORY:"HISTORY",
+  CURRENT:"CURRENT",
   "":"",
   "":"",
   "":"",

@@ -55,32 +55,6 @@ class ChipsDatoreWidgetState extends State<ChipsDatoreWidget>{
         );
       }),
     );
-
-
-    /*   return Center(
-      child: ChoiceChip(
-          label: Text('Chip di prova'),
-          selected: isSelected,
-          shape: StadiumBorder(
-              side: BorderSide(
-                  color: azzurroscuro)
-          ),
-          labelStyle: TextStyle(
-            color: isSelected ? Colors.white : azzurroscuro,
-          ),
-
-          selectedColor: azzurroscuro,
-
-
-          onSelected: (newBoolvalue) {
-            setState(() {
-              isSelected = newBoolvalue;
-            }
-
-            );
-          }
-      ),
-    ); */
   }
 }
 

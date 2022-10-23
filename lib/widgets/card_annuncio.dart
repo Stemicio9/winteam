@@ -35,6 +35,13 @@ Widget iconaConTitolo(Icon icon, String testo){
   );
 }
 
+
+
+
+
+
+
+
 Widget CardAnnuncioLavoratore(BuildContext context, String stato){
   return Card(
       margin: EdgeInsets.all(10),
@@ -130,7 +137,7 @@ Widget CardAnnuncioLavoratore(BuildContext context, String stato){
 
 
 
-List<String> annunciStatusList = ["active", "accepted", "history"];
+List<String> annunciStatusList = ["active", "accepted", "history", "current"];
 
 
 class CardAnnuncioDatore extends StatelessWidget{
@@ -183,7 +190,7 @@ class CardAnnuncioDatore extends StatelessWidget{
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children:  [
-                              Text(  annuncio.title ?? "PER ORA COS", style:  TextStyle(color: azzurroscuro, fontSize: 16),),
+                              Text(annuncio.title ?? "PER ORA COS", style:  TextStyle(color: azzurroscuro, fontSize: 16),),
                               Text(annuncio.description ?? "INDIRIZZO FINTO", textAlign: TextAlign.left,
                               ),
                             ],
@@ -191,14 +198,13 @@ class CardAnnuncioDatore extends StatelessWidget{
                         ),
 
                         const Spacer(),
-
-                        Chip(
-                          backgroundColor: annuncio.advertisementStatus == annunciStatusList[1] ? Colors.green : annuncio.advertisementStatus == annunciStatusList[0] ? rossoopaco : annuncio.advertisementStatus == annunciStatusList[2] ? giallo : Colors.white,
+                        annuncio.advertisementStatus != "all" ? Chip(
+                          backgroundColor: (annuncio.advertisementStatus == annunciStatusList[1] || annuncio.advertisementStatus == annunciStatusList[3]) ? Colors.green : annuncio.advertisementStatus == annunciStatusList[0] ? rossoopaco : annuncio.advertisementStatus == annunciStatusList[2] ? giallo : Colors.white,
                           label: Text(
-                            getCurrentLanguageValue(annuncio.advertisementStatus)!,
+                            getCurrentLanguageValue(annuncio.advertisementStatus) ?? "ATTIVO",
                             style: TextStyle(color: Colors.white),
                           ),
-                        ),
+                        ) : Container()
                       ],
                     )
                 ),
@@ -213,7 +219,7 @@ class CardAnnuncioDatore extends StatelessWidget{
                     children: [
 
                       iconaConTitolo(Icon(Icons.today_outlined,color: giallo), annuncio.date ?? "Nessuna data inserita"),
-                      iconaConTitolo(Icon(Icons.location_on_outlined,color: giallo), "" ?? ""),
+                      //iconaConTitolo(Icon(Icons.location_on_outlined,color: giallo), "" ?? ""),
                       iconaConTitolo(Icon(Icons.timer_outlined,color: giallo), annuncio.hourSlot ?? "??:??"),
                       iconaConTitolo(Icon(Icons.euro_symbol_outlined,color: giallo), annuncio.payment ?? "NS"),
 

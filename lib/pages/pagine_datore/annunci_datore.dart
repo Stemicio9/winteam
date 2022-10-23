@@ -21,77 +21,62 @@ class AnnunciDatoreState extends State<AnnunciDatore>{
     return Scaffold(
       drawer: DrawerWidget(),
       body:
-         Container(
-          child: Column(
-            children: [
+         Column(
+           children: [
 
-              Container(
-                margin: EdgeInsets.only(top: 20, left: 10),
+             Container(
+               margin: EdgeInsets.only(top: 20, left: 10),
 
-                child: SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child:Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      ChipsDatoreWidget()
-                    ],
-                  ),
-                ),
-              ),
+               child: SingleChildScrollView(
+                 scrollDirection: Axis.horizontal,
+                 child:Row(
+                   mainAxisAlignment: MainAxisAlignment.start,
+                   children: [
+                     ChipsDatoreWidget()
+                   ],
+                 ),
+               ),
+             ),
 
 
-              Container(
-                margin: EdgeInsets.only(bottom: 15),
-              ),
+             Container(
+               margin: EdgeInsets.only(bottom: 15),
+             ),
 
-              BlocBuilder<AnnunciCubit, AnnunciState>(
-                  builder: (_, state) {
+             BlocBuilder<AnnunciCubit, AnnunciState>(
+                 builder: (_, state) {
 
-                    if (state is AnnunciLoading) {
-                      return const Center(child: CircularProgressIndicator());
-                    } else if (state is AnnunciLoaded) {
-                       return
-                       Expanded(
-                           child: ListView.builder(
-                               itemCount: state.Annunci.length,
-                               itemBuilder: (context,index) =>
-                                   CardAnnuncioDatore(annuncio: state.Annunci[index])
+                   if (state is AnnunciLoading) {
+                     return const Center(child: CircularProgressIndicator());
+                   } else if (state is AnnunciLoaded) {
+                      return
+                      Expanded(
+                          child: ListView.builder(
+                              itemCount: state.Annunci.length,
+                              itemBuilder: (context,index) =>
+                                  CardAnnuncioDatore(annuncio: state.Annunci[index])
 
-                           )
-                       );
-
-                    } else if (state is AnnunciEmpty) {
-                      // @todo insert an empty state element
-                      return Container(
-                        child: Center(
-                          child: Text(
-                            "NON CI SONO ANNUNCI"
-                          ),
-                        ),
+                          )
                       );
-                    } else {
-                      return const Center(child: Text('Errore di caricamento'));
-                    }
-                  }),
+
+                   } else if (state is AnnunciEmpty) {
+                     // @todo insert an empty state element
+                     return Container(
+                       child: Center(
+                         child: Text(
+                           "NON CI SONO ANNUNCI"
+                         ),
+                       ),
+                     );
+                   } else {
+                     return const Center(child: Text('Errore di caricamento'));
+                   }
+                 }),
 
 
+           ],
 
-              /*
-
-              CardAnnuncioDatore(context,'ATTIVO'),
-              CardAnnuncioDatore(context,'STORICO'),
-              CardAnnuncioDatore(context,'CHIUSO'),
-              CardAnnuncioDatore(context,'ATTIVO'),
-              CardAnnuncioDatore(context,'CHIUSO'),
-              CardAnnuncioDatore(context,'STORICO'),
-              CardAnnuncioDatore(context,'ATTIVO'),
-
-              */
-
-            ],
-
-          ),
-        ),
+         ),
 
 
     );

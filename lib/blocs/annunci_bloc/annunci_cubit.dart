@@ -8,10 +8,9 @@ import 'package:winteam/blocs/annunci_api_service/annunci_api_service.dart';
 import 'package:winteam/entities/annunci_entity.dart';
 import 'package:winteam/entities/user_entity.dart';
 
-
+import '../../constants/StateConstants.dart';
 
 part 'annunci_cubit_state.dart';
-
 
 const String DUMMY_NAME = "EGG";
 const String DUMMY_EMAIL = "s.miceli90@gmail.com";
@@ -52,10 +51,8 @@ class AnnunciCubit extends Cubit<AnnunciState> {
   void fetchAnnunciLavoratore(int page, int size) async {
     emit(AnnunciLoading());
     try {
-      // TODO: fetch Annuncis
-      // Qui bisogna creare la nostra a
-
-      HttpResponse<dynamic> result = await annunciListApiService.getAnnunciPaged(page, size);
+      final queryParameters = filterAnnunciLavoratore.toFilter(page, size).toQueryParameters();
+      HttpResponse<dynamic> result = await annunciListApiService.getAnnunciPaged(queryParameters, filterAnnunciLavoratore.state!, page, size);
 
       print("LA RISPOSTA ALLA REST ");
       print(result.response);
@@ -93,7 +90,7 @@ class AnnunciCubit extends Cubit<AnnunciState> {
     }
   }
 
- 
+
 
 }
 

@@ -40,7 +40,7 @@ class AnnunciEntity {
     date: json["date"] ?? "",
     hourSlot: json["hourSlot"] ?? "",
     skillId: json["skillId"] ?? "",
-    skillDTO: SkillEntity.fromJson(json["skillDTO"]),
+    skillDTO: json["skillDTO"] != null ? SkillEntity.fromJson(json["skillDTO"]): SkillEntity(),
     payment: json["payment"].toString() ?? "",
     publisherUserId: json["publisherUserId"] ?? "",
     candidateUserList: json["candidateUserList"] ?? "",

@@ -15,7 +15,6 @@ class Filter {
 
   Filter({this.page, this.size,this.filterOr,this.filterAnd,this.orders});
 
-
   Map<String,dynamic> toQueryParameters(){
      return {
        "page" : page ?? 0,
@@ -59,8 +58,10 @@ class FilterAnnunciLavoratore {
   DateTimeRange? dateRange = DateTimeRange(
       start: DateTime.now(),
       end: DateTime.now().add(Duration(days: 5)));
+  String? state = 'all';
 
-  FilterAnnunciLavoratore({this.pagaMinima, this.distanzaMassima, this.fasceOrarie, this.dateRange});
+
+  FilterAnnunciLavoratore({this.pagaMinima, this.distanzaMassima, this.fasceOrarie, this.dateRange, this.state});
 
 
   Filter toFilter(int page, int size){
@@ -80,13 +81,13 @@ class FilterAnnunciLavoratore {
       result = "$result$PAYMENT_STRING$SEPARATOR$OPERATOR_GREATER_THAN_OR_EQUAL_TO$SEPARATOR$pagaMinima$SEPARATOR$NUMBER_TYPE";
       first = false;
     }
-    if(distanzaMassima != null && distanzaMassima != 0){
+    /*if(distanzaMassima != null && distanzaMassima != 0){
       if(!first){
         result = "$result&";
       }
       result = "$result$DISTANCE_STRING$SEPARATOR$OPERATOR_LESS_THAN_OR_EQUAL_TO$SEPARATOR$distanzaMassima$SEPARATOR$NUMBER_TYPE";
       first = false;
-    }
+    }*/
     if(dateRange != null){
       if(dateRange!.start != null){
         DateTime start = dateRange!.start.subtract(const Duration(days: 1));

@@ -66,14 +66,14 @@ class FiltriAnnunciState extends State<FiltriAnnunci> {
                   flex: 1,
                   child: SliderStipendio()
               ),
-              Expanded(
+              /*Expanded(
                 flex: 1,
                 child: rigadistanza(),
               ),
               Expanded(
                 flex: 1,
                 child: SliderDistanza(),
-              ),
+              ),*/
               Expanded(
                 flex: 1,
                 child: rigaorario(),
