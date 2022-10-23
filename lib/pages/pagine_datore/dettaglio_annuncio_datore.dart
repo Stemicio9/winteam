@@ -1,14 +1,81 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:winteam/blocs/annunci_bloc/annunci_cubit.dart';
+import 'package:winteam/blocs/annunci_user_list/annunci_user_list_cubit.dart';
 import 'package:winteam/constants/colors.dart';
 import 'package:winteam/constants/route_constants.dart';
+import 'package:winteam/entities/annunci_entity.dart';
 import 'package:winteam/widgets/action_buttons.dart';
 import 'package:winteam/widgets/appbars.dart';
 import 'package:winteam/widgets/card_dettaglio_datore.dart';
-import 'package:winteam/widgets/texts.dart';
-
-import '../../widgets/Expandable_fab.dart';
 
 
+
+class DettaglioAnnuncioDatoreWidget extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (_) => AnnunciUserListCubit(),
+      child: DettaglioAnnuncioDatore(),
+    );
+  }
+
+}
+
+class DettaglioAnnuncioDatore extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+     return DettaglioAnnuncioDatoreState();
+  }
+
+}
+
+
+class DettaglioAnnuncioDatoreState extends State<DettaglioAnnuncioDatore>{
+
+
+
+
+  @override
+  Widget build(BuildContext context) {
+
+    final annuncio = ModalRoute.of(context)!.settings.arguments as AnnunciEntity;
+
+    return Scaffold(
+        appBar: appbarSenzaActions(context, 'Dettaglio annuncio'),
+        body: Column(
+          children: [
+            Container(padding: EdgeInsets.only(top: 30),),
+
+            CardDettaglioDatore(annuncio: annuncio),
+
+            Container(padding: EdgeInsets.only(top: 20),),
+
+            ActionButton(annuncio.candidateUserList.isEmpty ? "Nessun candidato" :
+            annuncio.candidateUserList.length == 1 ? "1 candidato" :
+            "${annuncio.candidateUserList.length} candidati", context,
+                    (){
+              if(annuncio.candidateUserList.isNotEmpty) {
+                Navigator.pushNamed(
+                    context,
+                    RouteConstants.listaCandidati,
+                   arguments: annuncio);
+              }
+              },
+                250, azzurroscuro, Colors.white),
+
+          ],
+        ),
+        floatingActionButton: Padding(
+            padding: EdgeInsets.only(bottom:25,right: 25),
+
+        )
+
+    );
+  }
+}
+
+/*
 class DettaglioAnnuncioDatore extends StatefulWidget{
   @override
   State<DettaglioAnnuncioDatore> createState() => DettaglioAnnuncioDatoreState();
@@ -130,3 +197,4 @@ class DettaglioAnnuncioDatoreState extends State<DettaglioAnnuncioDatore>{
     );
   }
 }
+*/

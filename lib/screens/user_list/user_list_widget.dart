@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:winteam/blocs/user_bloc/user_list_cubit.dart';
 import 'package:winteam/constants/StateConstants.dart';
 import 'package:winteam/entities/user_entity.dart';
+import 'package:winteam/widgets/card_candidato.dart';
 
 class UserListWidget extends StatelessWidget {
 
@@ -38,7 +39,7 @@ class UserListViewState extends State<UserListView> {
 
   @override
   void initState() {
-    callRest();
+    callRestWithoutFiltered("");
     super.initState();
   }
 
@@ -48,12 +49,16 @@ class UserListViewState extends State<UserListView> {
         child: Column(
           children: [
 
-            MaterialButton(child: Text("refresh forte"),onPressed: (){callRestWithout();}),
-            TextFormField(
-              onChanged: (newValue) {
-                callRestWithoutFiltered(newValue);
-              },
+            Padding(
+              padding: EdgeInsets.all(8),
+              child: TextFormField(
+                onChanged: (newValue) {
+                  callRestWithoutFiltered(newValue);
+                },
+              ),
             ),
+
+
 
             BlocBuilder<UserListCubit, UserListState>(
                 builder: (_, state) {
@@ -103,13 +108,19 @@ class UserListViewState extends State<UserListView> {
     return
       Expanded(
           child: Container(
+            child: RefreshIndicator(
+              onRefresh: (){
+                callRestWithoutFiltered(txtList.text);
+                return Future<bool>.value(true);
+                },
             child: ListView.builder(
                 itemCount: userList.length,
                 itemBuilder: (context,index) {
                   return Container(
-                    child: Text(userList[index].email ?? ""),
+                    child: CardCandidato(user: userList[index])
                   );
                 }
+            )
             ),
           )
       );

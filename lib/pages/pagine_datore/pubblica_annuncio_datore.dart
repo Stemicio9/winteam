@@ -2,13 +2,18 @@ import 'package:currency_text_input_formatter/currency_text_input_formatter.dart
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:winteam/blocs/annunci_bloc/annunci_cubit.dart';
 import 'package:winteam/blocs/skill_bloc/skill_cubit.dart';
 import 'package:intl/intl.dart';
+import 'package:winteam/blocs/subscription_bloc/subscription_cubit.dart';
+import 'package:winteam/constants/language.dart';
+import 'package:winteam/entities/annunci_entity.dart';
+import 'package:winteam/widgets/texts.dart';
 import '../../constants/StateConstants.dart';
 import '../../constants/colors.dart';
 import '../../entities/skill_entity.dart';
 import '../../widgets/appbars.dart';
-
+import '../../widgets/skill_chip.dart';
 
 class PubblicaAnnuncioDatore extends StatefulWidget {
   @override
@@ -17,33 +22,96 @@ class PubblicaAnnuncioDatore extends StatefulWidget {
 
 class PubblicaAnnuncioDatoreState extends State<PubblicaAnnuncioDatore> {
   SkillCubit get _cubit => context.read<SkillCubit>();
+  SubscriptionCubit get _cubitSub => context.read<SubscriptionCubit>();
+
+  AnnunciCubit get _cubitAnnunci => context.read<AnnunciCubit>();
   DatePicker datePicker = DatePicker();
   ChipsWidget hourSlotSelector = ChipsWidget();
   String title = "";
   String description = "";
   String paymentAmount = "";
 
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
+    _cubitSub.cani(WHAT_CREATE_ADVERTISEMENT);
     return SingleChildScrollView(
         child: Expanded(
             child: Column(
       children: [
+
+        SizedBox(
+          height: 5,
+        ),
+        BlocBuilder<SubscriptionCubit, SubscriptionState>(
+            builder: (_, state) {
+
+              if (state is SubscriptionLoading) {
+                return const Center(child: CircularProgressIndicator());
+              } else if (state is SubscriptionCanI) {
+               return canIPart();
+              } else if (state is SubscriptionCannotI) {
+                // @todo in questa sezione dobbiamo inserire un banner che indica che l'utente non è abilitato per questa operazione
+                return Container(
+                    margin: EdgeInsets.all(16),
+                    padding: EdgeInsets.all(16),
+                    height: 90,
+                    decoration: BoxDecoration(
+                        color: rossoopaco,
+                        borderRadius: BorderRadius.all(Radius.circular(20))
+                    ),
+                    child: Texth5(
+                      testo: "IL TUO ABBONAMENTO NON TI PERMETTE DI PUBBLICARE ANNUNCI, AGGIORNA IL TUO ABBONAMENTO",
+                      color: Colors.white,
+                    )
+
+                );
+              } else {
+                return const Center(child: Text("Non riesco a caricare i dati dell'abbonamento"));
+              }
+            }),
+
+
+      ],
+    )));
+  }
+
+
+  Widget canIPart(){
+    return Column(
+      children: [
+        SizedBox(
+          height: 5,
+        ),
         MaterialButton(
-            child: Text("Scegli lista Skills"),
+            child: (_cubit.selectedEntity.name != null &&
+                _cubit.selectedEntity.name!.isNotEmpty)
+                ? SkillChip(
+              skillName: _cubit.selectedEntity.name!,
+              hexColorText: _cubit.selectedEntity.hexColorText!,
+              hexColorBackground:
+              _cubit.selectedEntity.hexColorBackground!,
+              imageLink: _cubit.selectedEntity.imageLink!,
+            )
+                : SkillChip(
+              skillName: "NESSUNA MANSIONE SELEZIONATA",
+              hexColorText: "0000ff",
+              hexColorBackground: 'ffffff',
+              imageLink: '',
+            ),
             onPressed: goToSelectSkill),
-        Text(_cubit.selectedEntities[0].name.toString()), //Prova per mostrare la skill selezionata (rimuovere per testare)
         datePicker,
         hourSlotSelector,
         getTitleWidget(),
         getDescriptionWidget(),
         getPaymentAmount(),
-        ElevatedButton(
-            child: Text("Crea Annuncio"),
-            onPressed: null)
+        ElevatedButton(child: Text("Crea Annuncio"), onPressed: publishAnnuncio)
       ],
-    )));
+    );
   }
 
   void goToSelectSkill() {
@@ -51,7 +119,6 @@ class PubblicaAnnuncioDatoreState extends State<PubblicaAnnuncioDatore> {
         .push(MaterialPageRoute(builder: (_) => SelectSkillPage()))
         .then((value) => setState(() {}));
   }
-
 
   Widget getTitleWidget() {
     return Padding(
@@ -115,6 +182,30 @@ class PubblicaAnnuncioDatoreState extends State<PubblicaAnnuncioDatore> {
       ),
     );
   }
+
+  void publishAnnuncio() {
+    print("STAMPO LA DATA");
+    print(paymentAmount);
+    var finalPrice = paymentAmount.replaceAll(RegExp(r'[^0-9,]'), '');
+    finalPrice = finalPrice.replaceAll(',', '.');
+    print(finalPrice);
+    AnnunciEntity annuncio = AnnunciEntity(
+        id: "",
+        title: title,
+        description: description,
+        date: datePicker.pickedDate!.toIso8601String(),
+        hourSlot: hourSlotSelector.hourSlotSelected,
+        skillId: _cubit.selectedEntity.id!,
+        payment: finalPrice,
+        skillDTO: SkillEntity(),
+        publisherUserId: "",
+        candidateUserList: [],
+        matchedUserId: "",
+        advertisementStatus: "");
+
+    _cubitAnnunci.publishAnnuncio(annuncio);
+    _cubit.selectedEntity = SkillEntity();
+  }
 }
 
 class SelectSkillPage extends StatefulWidget {
@@ -155,7 +246,6 @@ class SelectSkillPageState extends State<SelectSkillPage> {
 
   @override
   Widget build(BuildContext context) {
-    selectedSkills = _cubit.selectedEntities;
     return Scaffold(
       appBar: appbarSenzaActions(context, "Cerca Mansione"),
       body: SafeArea(
@@ -198,7 +288,7 @@ class SelectSkillPageState extends State<SelectSkillPage> {
     return Expanded(
         child: Container(
             child: Column(children: [
-      Expanded(
+      /*   Expanded(
           child: ListView.builder(
               itemCount: selectedSkills.length,
               itemBuilder: (context, index) {
@@ -216,41 +306,48 @@ class SelectSkillPageState extends State<SelectSkillPage> {
                   },
                   key: Key(selectedSkills[index].id.toString()),
                 ));
-              })),
-      Divider(
+              })
+      ), */
+      /*    Divider(
         height: 20,
         thickness: 5,
         indent: 20,
         endIndent: 0,
         color: Colors.redAccent,
-      ),
+      ), */
       Expanded(
           child: ListView.builder(
               itemCount: skillListDef.length,
               itemBuilder: (context, index) {
                 return Container(
                     child: GestureDetector(
-                  child: Text(skillListDef[index].name ?? ""),
+                  child: ListTile(
+                    title: Text(skillListDef[index].name ?? ""),
+                  ),
+                  // Text(skillListDef[index].name ?? ""),
                   onTap: () {
                     setState(() {
+                      _cubit.selectedEntity = skillListDef[index];
                       selectedSkills.add(skillListDef[index]);
                     });
+                    Navigator.pop(context);
                   },
                 ));
               })),
-      ElevatedButton(
+      /*  ElevatedButton(
         onPressed: () {
-          _cubit.selectedEntities = selectedSkills;
+         // _cubit.selectedEntities = selectedSkills;
           Navigator.pop(context);
         },
         child: Text("Fine"),
-      ),
+      ), */
     ])));
   }
 }
 
 class DatePicker extends StatefulWidget {
   TextEditingController dateInput = TextEditingController()..text = "";
+  DateTime? pickedDate;
 
   @override
   State<StatefulWidget> createState() {
@@ -289,11 +386,17 @@ class _DatePicker extends State<DatePicker> {
 
             if (pickedDate != null) {
               //pickedDate output format => 2021-03-10 00:00:00.000
-              String formattedDate = DateFormat('yyyy-MM-dd').format(
-                  pickedDate); //formatted date output using intl package =>  2021-03-16
+              /*     String formattedDate = DateFormat('yyyy-MM-dd').format(
+                  pickedDate);
               setState(() {
                 widget.dateInput.text =
-                    formattedDate; //set output date to TextField value.
+                    formattedDate;
+              }); */
+              setState(() {
+                String formattedDate =
+                    DateFormat('yyyy-MM-dd').format(pickedDate);
+                widget.dateInput.text = formattedDate;
+                widget.pickedDate = pickedDate;
               });
             } else {}
           },

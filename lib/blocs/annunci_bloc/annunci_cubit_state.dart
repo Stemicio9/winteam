@@ -16,3 +16,10 @@ class AnnunciLoaded extends AnnunciState {
 class AnnunciEmpty extends AnnunciState {}
 
 class AnnunciError extends AnnunciState {}
+
+
+class AnnunciPublishing extends AnnunciState {}
+class AnnunciPublished extends AnnunciState {}
+class AnnunciPublishingError extends AnnunciState {}
+
+

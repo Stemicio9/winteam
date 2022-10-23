@@ -44,7 +44,7 @@ class DettaglioAnnuncioLavoratoreState extends State<DettaglioAnnuncioLavoratore
           children: [
             Container(padding: EdgeInsets.only(top: 30),),
 
-            CardDettaglioDatore('ATTIVO'),
+     //       CardDettaglioDatore(),
 
             Container(padding: EdgeInsets.only(top: 50),),
 

@@ -59,6 +59,49 @@ class _AnnunciListApiService implements AnnunciListApiService {
     return httpResponse;
   }
 
+  @override
+  Future<HttpResponse> publishAnnuncio(AnnunciEntity annuncio) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    var token = await FirebaseAuth.instance.currentUser!.getIdToken();
+
+    final _headers = <String, dynamic>{
+      "w1ntoken" : token
+    };
+    final _data = annuncio.toJson();
+
+    final _result = await _dio.fetch(_setStreamType<HttpResponse<dynamic>>(
+        Options(method: 'POST', headers: _headers, extra: _extra)
+            .compose(_dio.options, '/advertisement/create',
+            queryParameters: queryParameters, data: _data)
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = _result.data;
+    final httpResponse = HttpResponse(value, _result);
+    return httpResponse;
+  }
+
+  @override
+  Future<HttpResponse<dynamic>> listUserAnnuncio(AnnunciEntity annuncio) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{
+      "id" : annuncio.id
+    };
+    var token = await FirebaseAuth.instance.currentUser!.getIdToken();
+
+    final _headers = <String, dynamic>{
+      "w1ntoken" : token
+    };
+    final _data = annuncio.toJson();
+
+    final _result = await _dio.fetch(_setStreamType<HttpResponse<dynamic>>(
+        Options(method: 'GET', headers: _headers, extra: _extra)
+            .compose(_dio.options, '/advertisement/list/users',
+            queryParameters: queryParameters, data: _data)
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = _result.data;
+    final httpResponse = HttpResponse(value, _result);
+    return httpResponse;
+  }
 
 
   RequestOptions _setStreamType<T>(RequestOptions requestOptions) {

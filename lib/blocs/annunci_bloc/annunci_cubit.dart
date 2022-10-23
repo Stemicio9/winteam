@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:retrofit/dio.dart';
 import 'package:winteam/blocs/annunci_api_service/annunci_api_service.dart';
 import 'package:winteam/entities/annunci_entity.dart';
+import 'package:winteam/entities/user_entity.dart';
 
 
 
@@ -21,11 +22,12 @@ class AnnunciCubit extends Cubit<AnnunciState> {
   final List<AnnunciEntity> _annuncis = [];
   List<AnnunciEntity> get annuncis => _annuncis;
 
+  AnnunciEntity? annuncioSelezionatoDettaglio;
+
   void fetchAnnuncis(String query) async {
     emit(AnnunciLoading());
     try {
       // TODO: fetch Annuncis
-      // Qui bisogna creare la nostra a
       print("FACCIO RICHIESTA DEGLI ANNUNCI CON QUERY $query");
       HttpResponse<dynamic> result = await annunciListApiService.getAnnunciList(query);
 
@@ -73,6 +75,23 @@ class AnnunciCubit extends Cubit<AnnunciState> {
     }
   }
 
+
+  void publishAnnuncio(AnnunciEntity annuncio) async {
+    emit(AnnunciPublishing());
+    try {
+
+      HttpResponse<dynamic> result = await annunciListApiService.publishAnnuncio(annuncio);
+
+      print("LA RISPOSTA ALLA REST ");
+      print(result.response);
+
+      emit(AnnunciPublished());
+
+    } catch (e) {
+      print(e.toString());
+      emit(AnnunciPublishingError());
+    }
+  }
 
  
 

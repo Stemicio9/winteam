@@ -3,6 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:retrofit/retrofit.dart';
 import 'package:winteam/constants/StateConstants.dart';
+import 'package:winteam/entities/annunci_entity.dart';
 
 part  'annunci_api_service_impl.dart';
 
@@ -16,6 +17,12 @@ abstract class AnnunciListApiService {
 
   @GET('/advertisement/page')
   Future<HttpResponse<dynamic>> getAnnunciPaged(int page, int size);
+
+  @POST('/advertisement/create')
+  Future<HttpResponse<dynamic>> publishAnnuncio(AnnunciEntity annuncio);
+
+  @GET('/advertisement/list/users')
+  Future<HttpResponse<dynamic>> listUserAnnuncio(AnnunciEntity annuncio);
 
 
 

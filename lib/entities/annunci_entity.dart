@@ -1,5 +1,7 @@
 
 
+import 'package:winteam/entities/skill_entity.dart';
+
 class AnnunciEntity {
 
   final String id;
@@ -7,7 +9,8 @@ class AnnunciEntity {
   final String description;
   final String date;
   final String hourSlot;
-  final String skill;
+  final String skillId;
+  final SkillEntity skillDTO;
   final String payment;
   final String publisherUserId;
   final List<dynamic> candidateUserList;
@@ -20,12 +23,14 @@ class AnnunciEntity {
     required this.description,
     required this.date,
     required this.hourSlot,
-    required this.skill,
+    required this.skillId,
+    required this.skillDTO,
     required this.payment,
     required this.publisherUserId,
     required this.candidateUserList,
     required this.matchedUserId,
     required this.advertisementStatus});
+
 
 
   factory AnnunciEntity.fromJson(Map<String, dynamic> json) => AnnunciEntity(
@@ -34,7 +39,8 @@ class AnnunciEntity {
     description: json["description"] ?? "",
     date: json["date"] ?? "",
     hourSlot: json["hourSlot"] ?? "",
-    skill: json["skill"] ?? "",
+    skillId: json["skillId"] ?? "",
+    skillDTO: SkillEntity.fromJson(json["skillDTO"]),
     payment: json["payment"].toString() ?? "",
     publisherUserId: json["publisherUserId"] ?? "",
     candidateUserList: json["candidateUserList"] ?? "",
@@ -43,4 +49,19 @@ class AnnunciEntity {
 
   );
 
+  Map<String,dynamic> toJson() => {
+    "id" : id,
+    "title" : title,
+    "description" : description,
+    "date" : date,
+    "hourSlot" : hourSlot,
+    "skillId" : skillId,
+    "payment" : payment,
+    "publisherUserId" : publisherUserId,
+    "candidateUserList" : candidateUserList,
+    "matchedUserId" : matchedUserId,
+    "advertisementStatus" : advertisementStatus
+  };
+
 }
+

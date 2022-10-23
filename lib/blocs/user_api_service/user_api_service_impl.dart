@@ -1,8 +1,7 @@
 part of 'user_api_service.dart';
 
 
-const url_base = "http://192.168.1.89:8081";
-//const url_base = "http://192.168.1.74:8081";
+
 
 
 UserListApiService userListApiService = UserListApiService(Dio(),baseUrl: url_base);

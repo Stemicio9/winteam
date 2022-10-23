@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:winteam/blocs/annunci_bloc/annunci_cubit.dart';
 import 'package:winteam/constants/colors.dart';
 import 'package:winteam/constants/language.dart';
 import 'package:winteam/constants/route_constants.dart';
+import 'package:winteam/entities/annunci_entity.dart';
 
 
 Widget iconaConTitoloDettaglio(Icon icon, String testo){
@@ -130,102 +133,116 @@ Widget CardAnnuncioLavoratore(BuildContext context, String stato){
 List<String> annunciStatusList = ["active", "accepted", "history"];
 
 
-Widget CardAnnuncioDatore(BuildContext context, String stato,
-    String activityName, String city,
-    String date, String hour,
-    String payment, String distance) {
-  return Card(
-      margin: EdgeInsets.all(10),
-      elevation: 10,
-      child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 20),
+class CardAnnuncioDatore extends StatelessWidget{
 
-          child: Column(
-          children: [
-            Container(margin: EdgeInsets.only(top: 10)),
 
-            Container(
-                width: double.infinity,
-                child: Row(
-                  children: [
 
-                    Container(
-                      width: 50,
-                      height: 50,
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                            color: azzurroscuro,
-                            width: 1
-                        ),
-                        shape: BoxShape.circle,
-                        image: const DecorationImage(
-                            image: AssetImage('assets/images/avatar_image.png'),
-                            fit: BoxFit.fill
-                        ),
-                      ),
-                    ),
+  final AnnunciEntity annuncio;
 
-                    Padding(
-                      padding: EdgeInsets.only(left: 14),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children:  [
-                          Text( activityName , style:  TextStyle(color: azzurroscuro, fontSize: 16),),
-                          Text(city, textAlign: TextAlign.left,
-                          ),
-                        ],
-                      ),
-                    ),
 
-                    const Spacer(),
+  CardAnnuncioDatore({required this.annuncio});
 
-                    Chip(
-                      backgroundColor: stato == annunciStatusList[1] ? Colors.green : stato == annunciStatusList[0] ? rossoopaco : stato == annunciStatusList[2] ? giallo : Colors.white,
-                      label: Text(
-                        getCurrentLanguageValue(stato)!,
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    ),
-                  ],
-                )
-            ),
 
-            Padding(padding: EdgeInsets.only(top: 10)),
+  @override
+  Widget build(BuildContext context) {
 
-            Container(
-              margin: EdgeInsets.symmetric(horizontal: 30),
+     return Card(
+        margin: EdgeInsets.all(10),
+        elevation: 10,
+        child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 20),
 
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-
-                  iconaConTitolo(Icon(Icons.today_outlined,color: giallo), date ?? "Nessuna data inserita"),
-                  iconaConTitolo(Icon(Icons.location_on_outlined,color: giallo), distance ?? ""),
-                  iconaConTitolo(Icon(Icons.timer_outlined,color: giallo), hour ?? "??:??"),
-                  iconaConTitolo(Icon(Icons.euro_symbol_outlined,color: giallo), payment ?? "NS"),
-
-                ],
-              ),
-            ),
-
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            child: Column(
               children: [
-                Image.asset('assets/images/logo.png', width: 70, height: 70),
-                GestureDetector(
-                  onTap: () {
-                    Navigator.pushNamed(
-                        context, RouteConstants.dettaglioAnnuncioDatore);
-                  },
-                  child: Icon(Icons.info_rounded, color: giallo, size: 35,),
+                Container(margin: EdgeInsets.only(top: 10)),
 
-                )
+                Container(
+                    width: double.infinity,
+                    child: Row(
+                      children: [
+
+                        Container(
+                          width: 50,
+                          height: 50,
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                                color: azzurroscuro,
+                                width: 1
+                            ),
+                            shape: BoxShape.circle,
+                            image: const DecorationImage(
+                                image: AssetImage('assets/images/avatar_image.png'),
+                                fit: BoxFit.fill
+                            ),
+                          ),
+                        ),
+
+                        Padding(
+                          padding: EdgeInsets.only(left: 14),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children:  [
+                              Text(  annuncio.title ?? "PER ORA COS", style:  TextStyle(color: azzurroscuro, fontSize: 16),),
+                              Text(annuncio.description ?? "INDIRIZZO FINTO", textAlign: TextAlign.left,
+                              ),
+                            ],
+                          ),
+                        ),
+
+                        const Spacer(),
+
+                        Chip(
+                          backgroundColor: annuncio.advertisementStatus == annunciStatusList[1] ? Colors.green : annuncio.advertisementStatus == annunciStatusList[0] ? rossoopaco : annuncio.advertisementStatus == annunciStatusList[2] ? giallo : Colors.white,
+                          label: Text(
+                            getCurrentLanguageValue(annuncio.advertisementStatus)!,
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                      ],
+                    )
+                ),
+
+                Padding(padding: EdgeInsets.only(top: 10)),
+
+                Container(
+                  margin: EdgeInsets.symmetric(horizontal: 30),
+
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+
+                      iconaConTitolo(Icon(Icons.today_outlined,color: giallo), annuncio.date ?? "Nessuna data inserita"),
+                      iconaConTitolo(Icon(Icons.location_on_outlined,color: giallo), "" ?? ""),
+                      iconaConTitolo(Icon(Icons.timer_outlined,color: giallo), annuncio.hourSlot ?? "??:??"),
+                      iconaConTitolo(Icon(Icons.euro_symbol_outlined,color: giallo), annuncio.payment ?? "NS"),
+
+                    ],
+                  ),
+                ),
+
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Image.asset('assets/images/logo.png', width: 70, height: 70),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.pushNamed(
+                            context,
+                            RouteConstants.dettaglioAnnuncioDatore,
+                            arguments: annuncio);
+                      },
+                      child: Icon(Icons.info_rounded, color: giallo, size: 35,),
+
+                    )
+                  ],
+
+                ),
               ],
-
-            ),
-          ],
+            )
         )
-      )
-  );
+    );
+  }
+
 }
+

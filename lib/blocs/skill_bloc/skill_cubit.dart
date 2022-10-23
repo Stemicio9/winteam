@@ -12,7 +12,7 @@ part 'skill_cubit_state.dart';
 class SkillCubit extends Cubit<SkillState> {
   SkillCubit() : super(SkillListLoading());
 
-  List<SkillEntity> selectedEntities = List<SkillEntity>.empty(growable: true);
+  SkillEntity selectedEntity = SkillEntity();
 
   final SkillEntity _skill = SkillEntity();
   SkillEntity get skill => _skill;
@@ -21,12 +21,6 @@ class SkillCubit extends Cubit<SkillState> {
     emit(SkillListLoading());
     try {
       HttpResponse<dynamic> result = await skillListApiService.getSkillListByFilter(filter);
-
-      print("la risposta");
-      print(result);
-
-      print("la risposta.data");
-      print(result.data);
       var encoded = jsonEncode(result.data);
       print(encoded);
       var json = (jsonDecode(encoded) as List)
