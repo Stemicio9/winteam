@@ -106,6 +106,57 @@ class _AnnunciListApiService implements AnnunciListApiService {
   }
 
 
+  @override
+  Future<HttpResponse<dynamic>> matchUser(String userId, String advertisementId) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    var token = await FirebaseAuth.instance.currentUser!.getIdToken();
+
+    final _headers = <String, dynamic>{
+      "w1ntoken" : token
+    };
+
+    final data = <String, dynamic>{
+      "userId" : userId,
+      "advertisementId" : advertisementId
+    };
+
+    final _result = await _dio.fetch(_setStreamType<HttpResponse<dynamic>>(
+        Options(method: 'POST', headers: _headers, extra: _extra)
+            .compose(_dio.options, '/advertisement/matched',
+            queryParameters: queryParameters, data: data)
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = _result.data;
+    final httpResponse = HttpResponse(value, _result);
+    return httpResponse;
+  }
+
+
+  @override
+  Future<HttpResponse<dynamic>> candidate(String advertisementId) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    var token = await FirebaseAuth.instance.currentUser!.getIdToken();
+
+    final _headers = <String, dynamic>{
+      "w1ntoken" : token
+    };
+
+    final data = <String, dynamic>{
+      "advertisementId" : advertisementId
+    };
+
+    final _result = await _dio.fetch(_setStreamType<HttpResponse<dynamic>>(
+        Options(method: 'POST', headers: _headers, extra: _extra)
+            .compose(_dio.options, '/advertisement/candidate',
+            queryParameters: queryParameters, data: data)
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = _result.data;
+    final httpResponse = HttpResponse(value, _result);
+    return httpResponse;
+  }
+
+
   RequestOptions _setStreamType<T>(RequestOptions requestOptions) {
     if (T != dynamic &&
         !(requestOptions.responseType == ResponseType.bytes ||

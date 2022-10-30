@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:winteam/blocs/annunci_bloc/annunci_cubit.dart';
 import 'package:winteam/blocs/annunci_user_list/annunci_user_list_cubit.dart';
+import 'package:winteam/blocs/users_matched_bloc/users_matched_cubit.dart';
 import 'package:winteam/entities/annunci_entity.dart';
 import 'package:winteam/widgets/appbars.dart';
 import 'package:winteam/widgets/card_candidato.dart';
@@ -10,8 +11,16 @@ import 'package:winteam/widgets/card_candidato.dart';
 class ListaCandidatiWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => AnnunciUserListCubit(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => AnnunciUserListCubit(),
+        ),
+        BlocProvider(
+          create: (context) => UsersMatchedCubit(),
+        ),
+      ],
+
       child: ListaCandidati(),
     );
   }
@@ -27,11 +36,15 @@ class ListaCandidati extends StatefulWidget{
 class ListaCandidatiState extends State<ListaCandidati> {
 
   AnnunciUserListCubit get _cubit => context.read<AnnunciUserListCubit>();
+  UsersMatchedCubit get matchCubit => context.read<UsersMatchedCubit>();
 
+
+  late AnnunciEntity annuncio;
 
   @override
   void initState() {
     super.initState();
+
   }
 
 
@@ -39,18 +52,49 @@ class ListaCandidatiState extends State<ListaCandidati> {
   Widget build(BuildContext context) {
 
 
-    var annuncio = ModalRoute.of(context)!.settings.arguments as AnnunciEntity;
+     annuncio = ModalRoute.of(context)!.settings.arguments as AnnunciEntity;
     _cubit.listCandidati(annuncio);
+    print("HO FATTO LA BUILD ");
+    print(annuncio.matchedUserId);
+    matchCubit.getUserMatched(annuncio.matchedUserId);
 
-    print("INIZIO A COSTRUIRE LISTA CANDIDATI GRAFICA");
     return Scaffold(
       appBar: appbarSenzaActions(context, 'Lista candidati'),
-      body: UserListWidget()
+      body: Column(
+        children: [
+
+          BlocBuilder<UsersMatchedCubit, UsersMatchedState>(
+              builder: (_, state) {
+                if (state is UsersMatchedLoading) {
+                  return Container();
+                }else if(state is UsersMatchedEmpty) {
+                  return Container();
+                } else if (state is UsersMatchedLoaded) {
+                  return CardCandidato(user: state.user, match: false);
+                }  else {
+                  return Container();
+                }
+              }),
+
+          Expanded(child: UserListWidget(reloadAll: reloadAll, matchUser: matchUser,)),
+
+        ],
+      )
 
 
     );
   }
 
+
+  void reloadAll() async {
+    await _cubit.listCandidati(annuncio);
+    matchCubit.getUserMatched(annuncio.matchedUserId);
+  }
+
+
+  void matchUser(String userId){
+    _cubit.matchUser(userId, annuncio.id);
+  }
 
 
 
@@ -59,6 +103,11 @@ class ListaCandidatiState extends State<ListaCandidati> {
 
 class UserListWidget extends StatelessWidget {
 
+
+  Function reloadAll;
+  Function(String)? matchUser;
+
+  UserListWidget({required this.reloadAll, this.matchUser});
 
   @override
   Widget build(BuildContext context) {
@@ -72,21 +121,24 @@ class UserListWidget extends StatelessWidget {
           if (state is AnnunciUserListLoading) {
             return const Center(child: CircularProgressIndicator());
           } else if (state is AnnunciUserListLoaded) {
-            print("COSTRUISCO LA LISTA DI UTENTI");
-            print(state.utenti.length);
 
             return ListView.builder(
                 itemCount: state.utenti.length,
                 itemBuilder: (_,index) {
 
-                    return CardCandidato(user: state.utenti[index]);
+                    return CardCandidato(user: state.utenti[index], match: false, matchUser: matchUser,);
 
                 });
 
-          }  else {
+          } else if (state is AnnunciListReloadAll){
+            reloadAll();
+            return Container();
+          } else {
             return const Center(child: Text('Errore di caricamento'));
           }
         });
   }
+
+
 
 }

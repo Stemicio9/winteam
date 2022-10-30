@@ -24,6 +24,10 @@ abstract class AnnunciListApiService {
   @GET('/advertisement/list/users')
   Future<HttpResponse<dynamic>> listUserAnnuncio(AnnunciEntity annuncio);
 
+  @POST('/advertisement/match')
+  Future<HttpResponse<dynamic>> matchUser(String userId, String advertisementId);
 
+  @POST('/advertisement/canditate')
+  Future<HttpResponse<dynamic>> candidate(String advertisementId);
 
 }

@@ -48,7 +48,7 @@ class DettaglioAnnuncioLavoratoreState extends State<DettaglioAnnuncioLavoratore
 
             Container(padding: EdgeInsets.only(top: 50),),
 
-            ActionButton('Candidati', context, () {}, 250, azzurroscuro, Colors.white),
+            ActionButton('Candidati', () {}, 250, azzurroscuro, Colors.white),
           ],
         ),
 

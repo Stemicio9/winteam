@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:retrofit/retrofit.dart';
 import 'package:winteam/blocs/annunci_api_service/annunci_api_service.dart';
 import 'package:winteam/constants/StateConstants.dart';
+import 'package:winteam/entities/user_entity.dart';
 
 part  'user_api_service_impl.dart';
 
@@ -30,4 +31,9 @@ abstract class UserListApiService {
   @GET('/user/cani')
   Future<HttpResponse<dynamic>> canI(String query);
 
+  @POST('/user/update')
+  Future<HttpResponse<dynamic>> updateUser(UserEntity userEntity);
+
+  @GET("/user/mysubscription")
+  Future<HttpResponse<dynamic>> mySubscription(String uid);
 }

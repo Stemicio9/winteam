@@ -30,15 +30,15 @@ class ChipsDatoreWidgetState extends State<ChipsDatoreWidget>{
       spacing: 15,
       children: List.generate(_choicesList.length, (index) {
         return ChoiceChip(
-          backgroundColor: azzurroscuromoltoopaco,
+          backgroundColor: Colors.white,
           labelPadding: const EdgeInsets.only(right: 15,left: 15,top: 4,bottom: 4),
           label: Text(
               _choicesList[index]
           ),
           selected: defaultChoiceIndex == index,
-          shape: const StadiumBorder(
-              side: BorderSide(
-                  color: azzurroscuro)
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+              side: BorderSide(color: azzurroscuro)
           ),
           selectedColor: azzurroscuro,
           labelStyle: TextStyle(
@@ -51,7 +51,6 @@ class ChipsDatoreWidgetState extends State<ChipsDatoreWidget>{
             });
           },
           // backgroundColor: color,
-          elevation: 1,
         );
       }),
     );

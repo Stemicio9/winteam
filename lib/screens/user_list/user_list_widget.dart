@@ -117,7 +117,7 @@ class UserListViewState extends State<UserListView> {
                 itemCount: userList.length,
                 itemBuilder: (context,index) {
                   return Container(
-                    child: CardCandidato(user: userList[index])
+                    child: CardCandidato(user: userList[index], match: true)
                   );
                 }
             )

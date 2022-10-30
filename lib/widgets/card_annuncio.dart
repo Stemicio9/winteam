@@ -190,16 +190,25 @@ class CardAnnuncioDatore extends StatelessWidget{
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children:  [
-                              Text(annuncio.title ?? "PER ORA COS", style:  TextStyle(color: azzurroscuro, fontSize: 16),),
-                              Text(annuncio.description ?? "INDIRIZZO FINTO", textAlign: TextAlign.left,
+                              Container(
+                                width: 150,
+                              child: Text(annuncio.title ?? "PER ORA COS",
+                                style:  TextStyle(color: azzurroscuro, fontSize: 16),
+                                overflow: TextOverflow.ellipsis,
                               ),
+
+                              )
+                         //     Text(annuncio.description ?? "INDIRIZZO FINTO", textAlign: TextAlign.left,),
                             ],
                           ),
                         ),
 
                         const Spacer(),
                         annuncio.advertisementStatus != "all" ? Chip(
-                          backgroundColor: (annuncio.advertisementStatus == annunciStatusList[1] || annuncio.advertisementStatus == annunciStatusList[3]) ? Colors.green : annuncio.advertisementStatus == annunciStatusList[0] ? rossoopaco : annuncio.advertisementStatus == annunciStatusList[2] ? giallo : Colors.white,
+                          backgroundColor: annuncio.advertisementStatus == annunciStatusList[1] ?
+                          verdeChip : annuncio.advertisementStatus == annunciStatusList[0] ?
+                          rossoopaco : annuncio.advertisementStatus == annunciStatusList[2] ?
+                          giallo : annuncio.advertisementStatus == annunciStatusList[3] ? azzurroscuro : Colors.white,
                           label: Text(
                             getCurrentLanguageValue(annuncio.advertisementStatus) ?? "ATTIVO",
                             style: TextStyle(color: Colors.white),
@@ -213,11 +222,9 @@ class CardAnnuncioDatore extends StatelessWidget{
 
                 Container(
                   margin: EdgeInsets.symmetric(horizontal: 30),
-
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-
                       iconaConTitolo(Icon(Icons.today_outlined,color: giallo), annuncio.date ?? "Nessuna data inserita"),
                       //iconaConTitolo(Icon(Icons.location_on_outlined,color: giallo), "" ?? ""),
                       iconaConTitolo(Icon(Icons.timer_outlined,color: giallo), annuncio.hourSlot ?? "??:??"),

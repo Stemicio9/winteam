@@ -108,7 +108,7 @@ class _LoginState extends State<Login> {
 
               ),
 
-              ActionButton("Registrati", context, vaiapaginaregistrati,250,azzurroscuro, Colors.white),
+              ActionButton("Registrati", vaiapaginaregistrati,250,azzurroscuro, Colors.white),
 
 
             ],

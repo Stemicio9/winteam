@@ -36,10 +36,11 @@ class DashboardLavoratoreState extends State<DashboardLavoratore> with TickerPro
   late TabController controller;
   late FToast fToast;
 
+  final int bottomNavigationMenuLength = 2;
 
   @override
   void initState() {
-    controller = TabController(length: 4, vsync: this);
+    controller = TabController(length: bottomNavigationMenuLength, vsync: this);
     fToast = FToast();
     fToast.init(context);
     super.initState();
@@ -47,7 +48,6 @@ class DashboardLavoratoreState extends State<DashboardLavoratore> with TickerPro
 
 
   void onChangeTab(int index) {
-    print("CAMBIO TAB");
     selectedIndexLavoratore = index;
   }
 
@@ -70,8 +70,8 @@ class DashboardLavoratoreState extends State<DashboardLavoratore> with TickerPro
           physics: const NeverScrollableScrollPhysics(),
           children: [
             annunci,
-            ricerca,
-            notifiche,
+           // ricerca,
+           // notifiche,
             profilo
           ],
         ),
@@ -79,7 +79,7 @@ class DashboardLavoratoreState extends State<DashboardLavoratore> with TickerPro
           controller: controller,
           onChangeTab: onChangeTab,
           backgroundColor: Colors.blue,
-          circleGradient: LinearGradient(
+          circleGradient: const LinearGradient(
             colors: [
               giallo,
               Colors.amber,
@@ -92,11 +92,11 @@ class DashboardLavoratoreState extends State<DashboardLavoratore> with TickerPro
               iconData: Icons.wysiwyg,
               curveColor: Colors.white,
             ),
-            TabItemIcon(
+   /*         TabItemIcon(
               iconData: Icons.search,
               curveColor: Colors.white,
-            ),
-            TabItemIcon(
+            ), */
+        /*    TabItemIcon(
                 buildWidget: (_, color) => Stack(
                   children: <Widget>[
                     const Icon(
@@ -130,7 +130,7 @@ class DashboardLavoratoreState extends State<DashboardLavoratore> with TickerPro
                   ],
                 ),
                 curveColor: Colors.white
-            ),
+            ), */
             TabItemIcon(iconData: Icons.person, curveColor: Colors.white),
           ],
           selectedIndex: selectedIndex,
@@ -161,7 +161,7 @@ class DashboardLavoratoreState extends State<DashboardLavoratore> with TickerPro
     fToast.showToast(
       child: toast,
       gravity: ToastGravity.BOTTOM,
-      toastDuration: Duration(seconds: 4),
+      toastDuration: const Duration(seconds: 4),
     );
   }
   Future<bool> onWillPop(context) async {
@@ -181,7 +181,7 @@ class DashboardLavoratoreState extends State<DashboardLavoratore> with TickerPro
                 style: OutlinedButton.styleFrom(
                   shape:RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(80.0)),
-                  side: BorderSide(
+                  side: const BorderSide(
                       width: 2,
                       color: azzurroscuro),
                 ),
@@ -189,8 +189,8 @@ class DashboardLavoratoreState extends State<DashboardLavoratore> with TickerPro
                   Navigator.of(context).pop(false);
                 },
                 child: Text(
-                  'Annulla',
-                  style: TextStyle(
+                  getCurrentLanguageValue(ANNULLA)!,
+                  style: const TextStyle(
                       fontSize: 15,
                       color: azzurroscuro
                   ),
@@ -209,8 +209,8 @@ class DashboardLavoratoreState extends State<DashboardLavoratore> with TickerPro
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(80.0)),
                 child: Text(
-                  'Conferma',
-                  style: TextStyle(
+                  getCurrentLanguageValue(CONFERMA)!,
+                  style: const TextStyle(
                       fontSize: 15,
                       color: Colors.white
                   ),

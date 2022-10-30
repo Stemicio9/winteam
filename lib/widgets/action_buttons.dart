@@ -4,7 +4,7 @@ import '../constants/colors.dart';
 
 
 
-Widget ActionButton(String text, BuildContext context, Function action, double maxWidth, Color color, Color textColor){
+Widget ActionButton(String text, Function action, double maxWidth, Color color, Color textColor){
   return Container(
     height: 50.0,
     margin: EdgeInsets.all(10),

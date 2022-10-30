@@ -2,11 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:winteam/blocs/annunci_bloc/annunci_cubit.dart';
 import 'package:winteam/blocs/annunci_user_list/annunci_user_list_cubit.dart';
+import 'package:winteam/blocs/user_bloc/current_user_cubit.dart';
+import 'package:winteam/blocs/users_matched_bloc/users_matched_cubit.dart';
 import 'package:winteam/constants/colors.dart';
 import 'package:winteam/constants/route_constants.dart';
 import 'package:winteam/entities/annunci_entity.dart';
 import 'package:winteam/widgets/action_buttons.dart';
 import 'package:winteam/widgets/appbars.dart';
+import 'package:winteam/widgets/card_candidato.dart';
 import 'package:winteam/widgets/card_dettaglio_datore.dart';
 
 
@@ -14,8 +17,18 @@ import 'package:winteam/widgets/card_dettaglio_datore.dart';
 class DettaglioAnnuncioDatoreWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => AnnunciUserListCubit(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => AnnunciUserListCubit(),
+        ),
+        BlocProvider(
+        create: (context) => UsersMatchedCubit(),
+        ),
+        BlocProvider(
+          create: (context) => UserCubit(),
+        )
+      ],
       child: DettaglioAnnuncioDatore(),
     );
   }
@@ -33,43 +46,96 @@ class DettaglioAnnuncioDatore extends StatefulWidget {
 
 class DettaglioAnnuncioDatoreState extends State<DettaglioAnnuncioDatore>{
 
+  AnnunciUserListCubit get annunciCubit => context.read<AnnunciUserListCubit>();
+  UsersMatchedCubit get matchCubit => context.read<UsersMatchedCubit>();
+  UserCubit get userCubit => context.read<UserCubit>();
 
-
+  @override
+  void initState() {
+    userCubit.me();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
 
     final annuncio = ModalRoute.of(context)!.settings.arguments as AnnunciEntity;
+    matchCubit.getUserMatched(annuncio.matchedUserId);
 
     return Scaffold(
         appBar: appbarSenzaActions(context, 'Dettaglio annuncio'),
-        body: Column(
-          children: [
-            Container(padding: EdgeInsets.only(top: 30),),
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              Container(padding: EdgeInsets.only(top: 30),),
 
-            CardDettaglioDatore(annuncio: annuncio),
+              CardDettaglioDatore(annuncio: annuncio),
 
-            Container(padding: EdgeInsets.only(top: 20),),
+              Container(padding: EdgeInsets.only(top: 20),),
 
-            ActionButton(annuncio.candidateUserList.isEmpty ? "Nessun candidato" :
-            annuncio.candidateUserList.length == 1 ? "1 candidato" :
-            "${annuncio.candidateUserList.length} candidati", context,
-                    (){
-              if(annuncio.candidateUserList.isNotEmpty) {
-                Navigator.pushNamed(
-                    context,
-                    RouteConstants.listaCandidati,
-                   arguments: annuncio);
-              }
-              },
-                250, azzurroscuro, Colors.white),
+              BlocBuilder<UserCubit, UserState>(
 
-          ],
-        ),
-        floatingActionButton: Padding(
-            padding: EdgeInsets.only(bottom:25,right: 25),
+                  builder: (_,state) {
 
+                    print("CHE STATO HO ?");
+                    print(state.toString());
+
+                    if (state is UserLoaded) {
+
+                      print("SONO NELLO STATE USERLOADED");
+                      print(state.user.roleId);
+                      if(state.user.roleId == "LAVORATORE"){
+                        bool show = true;
+                        if(annuncio.candidateUserList.contains(state.user.id)) {
+                          show = false;
+                        }
+                        if(annuncio.matchedUserId.isNotEmpty){
+                          show = false;
+                        }
+                        return ActionButton(show ? "CANDIDATI" : "NON TI PUOI CANDIDARE" ,
+                                (){
+                                      annunciCubit.candidate(annuncio.id);
+
+                                  },
+                            250,
+                            azzurroscuro,
+                            Colors.white
+                        );
+                      }else{
+                        return ActionButton(annuncio.candidateUserList.isEmpty ? "Nessun candidato" :
+                        annuncio.candidateUserList.length == 1 ? "1 candidato" :
+                        "${annuncio.candidateUserList.length} candidati",
+                                (){
+                              if(annuncio.candidateUserList.isNotEmpty) {
+                                Navigator.pushNamed(context, RouteConstants.listaCandidati, arguments: annuncio);}},
+                            250,
+                            azzurroscuro,
+                            Colors.white
+                        );
+                      }
+                    } else {
+                      return Container();
+                    }
+
+
+              }),
+              BlocBuilder<UsersMatchedCubit, UsersMatchedState>(
+                  builder: (_, state) {
+                    if (state is UsersMatchedLoading) {
+                      return Container();
+                    }else if(state is UsersMatchedEmpty) {
+                      return Container();
+                    } else if (state is UsersMatchedLoaded) {
+                      return CardCandidato(user: state.user, match: true);
+                    }  else {
+                      return Container();
+                    }
+                  }),
+
+            ],
+          ),
         )
+
 
     );
   }

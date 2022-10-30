@@ -24,6 +24,8 @@ final Color azzurroscuromoltoopaco = Color(0xFF03A0FE).withOpacity(0.1);
 final Color grigioopaco = Color(0xFF6C6969).withOpacity(0.1);
 final Color grigiochiaro = Color(0xFFD3D3D3).withOpacity(0.1);
 
+final Color verdeChip = Colors.green;
+
 
 
 

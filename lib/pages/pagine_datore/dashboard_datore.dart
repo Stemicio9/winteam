@@ -39,9 +39,12 @@ class DashboardDatoreState extends State<DashboardDatore> with TickerProviderSta
   late TabController controller;
   late FToast fToast;
 
+
+  final int bottomNavigationMenuLength = 4;
+
   @override
   void initState() {
-    controller = TabController(length: 5, vsync: this);
+    controller = TabController(length: bottomNavigationMenuLength, vsync: this);
     fToast = FToast();
     fToast.init(context);
     super.initState();
@@ -49,7 +52,6 @@ class DashboardDatoreState extends State<DashboardDatore> with TickerProviderSta
 
 
   void onChangeTab(int index) {
-    print("CAMBIO TAB");
     selectedIndex = index;
   }
 
@@ -60,7 +62,7 @@ class DashboardDatoreState extends State<DashboardDatore> with TickerProviderSta
       return onWillPop(context);
     },
       child: DefaultTabController(
-      length: 5,
+      length: 4,
       child: Scaffold(
         appBar: appbarConAction(getCurrentLanguageValue(DASHBOARD_CONST)!, context),
 
@@ -72,7 +74,7 @@ class DashboardDatoreState extends State<DashboardDatore> with TickerProviderSta
             annunci,
             ricerca,
             pubblicaannuncio,
-            notifiche,
+           // notifiche,
             profilo
           ],
         ),
@@ -80,7 +82,7 @@ class DashboardDatoreState extends State<DashboardDatore> with TickerProviderSta
           controller: controller,
           onChangeTab: onChangeTab,
           backgroundColor: Colors.blue,
-          circleGradient: LinearGradient(
+          circleGradient: const LinearGradient(
             colors: [
               giallo,
               Colors.amber,
@@ -101,7 +103,7 @@ class DashboardDatoreState extends State<DashboardDatore> with TickerProviderSta
               iconData: Icons.add_box,
               curveColor: Colors.white,
             ),
-            TabItemIcon(
+          /*  TabItemIcon(
                 buildWidget: (_, color) => Stack(
                   children: <Widget>[
                     const Icon(
@@ -135,7 +137,7 @@ class DashboardDatoreState extends State<DashboardDatore> with TickerProviderSta
                   ],
                 ),
                 curveColor: Colors.white
-            ),
+            ), */
             TabItemIcon(iconData: Icons.person, curveColor: Colors.white),
           ],
           selectedIndex: selectedIndex,

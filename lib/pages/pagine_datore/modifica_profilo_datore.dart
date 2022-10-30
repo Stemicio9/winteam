@@ -4,12 +4,28 @@ import 'dart:typed_data';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:winteam/blocs/user_bloc/current_user_cubit.dart';
 import 'package:winteam/constants/colors.dart';
+import 'package:winteam/entities/user_entity.dart';
 import 'package:winteam/pages/login_section/register_form.dart';
 import 'package:winteam/widgets/action_buttons.dart';
 import 'package:winteam/widgets/appbars.dart';
 import 'package:winteam/widgets/inputs.dart';
+
+
+class ModificaProfiloDatoreWidget extends StatelessWidget {
+  const ModificaProfiloDatoreWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (_) => UserCubit(),
+      child: ModificaProfiloDatore(),
+    );
+  }
+}
 
 class ModificaProfiloDatore extends StatefulWidget{
   @override
@@ -18,20 +34,20 @@ class ModificaProfiloDatore extends StatefulWidget{
 }
 
 
-
-
 String imageDefaultName = "profileImage";
 
 class ModificaProfiloDatoreState extends State<ModificaProfiloDatore>{
-
+  UserCubit get _cubit => context.read<UserCubit>();
+  UserEntity? entity;
+  final FirebaseAuth auth = FirebaseAuth.instance;
   XFile? imageFile;
   String uid = '';
-  final FirebaseAuth auth = FirebaseAuth.instance;
-  TextEditingController emailcontroller = TextEditingController();
-  TextEditingController telefonocontroller = TextEditingController();
-  TextEditingController indirizzocontroller = TextEditingController();
-  TextEditingController nomeattivitacontroller = TextEditingController();
-  TextEditingController desccontroller = TextEditingController();
+  String email = '';
+  TextEditingController emailController = TextEditingController();
+  TextEditingController telefonoController = TextEditingController();
+  TextEditingController indirizzoController = TextEditingController();
+  TextEditingController nomeattivitaController = TextEditingController();
+  TextEditingController descController = TextEditingController();
 
 
 
@@ -43,10 +59,18 @@ class ModificaProfiloDatoreState extends State<ModificaProfiloDatore>{
 
   }
 
-  void inputData() {
-    //  final User? user = auth.currentUser;
-    // uid = user!.uid;
+  inputData()  async {
+    final User? user = auth.currentUser;
+    uid = user!.uid;
+    email = user.email!;
+    entity =  await _cubit.me();
+    emailController.text = entity!.email!;
+    telefonoController.text = entity!.phoneNumber!;
+    indirizzoController.text = 'entity!.address!';
+    nomeattivitaController.text = entity!.companyName!;
+    descController.text = entity!.description!;
   }
+
 
 
   openGallery() async {
@@ -164,8 +188,49 @@ class ModificaProfiloDatoreState extends State<ModificaProfiloDatore>{
         });
   }
 
+
+
+  Future downloadUrlImage() async {
+    var fileList = await FirebaseStorage.instance.ref('UID:$uid/image_profile/').listAll();
+
+    if (fileList.items.isEmpty) {
+      var fileList = await FirebaseStorage.instance.ref('default_profile_image/').listAll();
+      var file = fileList.items[0];
+      var result = await file.getDownloadURL();
+      return result;
+    }
+
+    var file = fileList.items[0];
+    var result = await file.getDownloadURL();
+    return result;
+  }
+
+
+
+
   @override
   Widget build(BuildContext context) {
+    return Scaffold(
+      body:
+      BlocBuilder<UserCubit, UserState>(
+          builder: (_, state) {
+            if (state is UserLoading) {
+              return const Center(child: CircularProgressIndicator());
+            } else if (state is UserLoaded) {
+              return everyContent();
+            } else if (state is UserEmpty) {
+              // @todo insert an empty state element
+              return Container();
+            } else {
+              return const Center(child: Text('Errore di caricamento'));
+            }
+          }),
+    );
+  }
+
+
+  @override
+  Widget everyContent() {
     return Scaffold(
       appBar: appbarSenzaActions(context, 'Modifica profilo'),
       body: SingleChildScrollView(
@@ -195,8 +260,19 @@ class ModificaProfiloDatoreState extends State<ModificaProfiloDatore>{
                           clipBehavior: Clip.none,
                           fit: StackFit.expand,
                           children: [
-                            CircleAvatar(
-                              backgroundImage: AssetImage("assets/images/avatar_image.png"),
+                            ClipOval(
+                              child: SizedBox.fromSize(
+                                size: Size.fromRadius(48), // Image radius
+                                child: FutureBuilder(
+                                  future: downloadUrlImage(),
+                                  builder: (context, snapshot) {
+                                    var result = (snapshot.data);
+                                    return result == null
+                                        ? const CircularProgressIndicator()
+                                        : Image.network(result, fit: BoxFit.cover);
+                                  },
+                                ),
+                              ),
                             ),
                             Positioned(
                                 bottom: -5,
@@ -324,27 +400,27 @@ class ModificaProfiloDatoreState extends State<ModificaProfiloDatore>{
                   ),
                   Container(padding: EdgeInsets.only(top: 30)),
 
-                  InputWidget(labeltext: 'Nome attività', hinttext: 'Inserisci il nome della tua attività', controller: nomeattivitacontroller,),
+                  InputWidget(labeltext: 'Nome attività', hinttext: 'Inserisci il nome della tua attività', controller: nomeattivitaController,),
 
                   Container(padding: EdgeInsets.only(top: 25)),
 
-                  InputWidget(labeltext: 'Email', hinttext: 'Inserisci una email', controller: emailcontroller,validator: validaemail),
+                  InputWidget(labeltext: 'Email', hinttext: 'Inserisci una email', controller: emailController,validator: validaemail),
 
                   Container(padding: EdgeInsets.only(top: 25)),
 
-                  InputWidget(labeltext: 'Telefono', hinttext: 'Inserisci un numero di telefono', controller: telefonocontroller,),
+                  InputWidget(labeltext: 'Telefono', hinttext: 'Inserisci un numero di telefono', controller: telefonoController,),
 
                   Container(padding: EdgeInsets.only(top: 25)),
 
-                  InputWidget(labeltext: 'Indirizzo', hinttext: 'Inserisci un indirizzo', controller: indirizzocontroller,),
+                  InputWidget(labeltext: 'Indirizzo', hinttext: 'Inserisci un indirizzo', controller: indirizzoController,),
 
                   Container(padding: EdgeInsets.only(top: 25)),
 
-                  InputWidget(labeltext: 'Descrizione', hinttext: 'Inserisci una descrizione', controller: desccontroller,),
+                  InputWidget(labeltext: 'Descrizione', hinttext: 'Inserisci una descrizione', controller: descController,),
 
                   Container(padding: EdgeInsets.only(top: 25)),
 
-                  ActionButton('Salva cambiamenti', context, (){Navigator.pop(context);}, 200, azzurroscuro, Colors.white),
+                  ActionButton('Salva cambiamenti', (){Navigator.pop(context);}, 200, azzurroscuro, Colors.white),
                 ],
               ),
             ),

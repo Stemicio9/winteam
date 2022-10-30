@@ -18,14 +18,13 @@ class AnnunciUserListCubit extends Cubit<AnnunciUserListState> {
   final List<UserEntity> _utenti = [];
   List<UserEntity> get utenti => _utenti;
 
-  void listCandidati(AnnunciEntity annuncio) async {
+  Future<void> listCandidati(AnnunciEntity annuncio) async {
     emit(AnnunciUserListLoading());
     try {
       HttpResponse<dynamic> result = await annunciListApiService
           .listUserAnnuncio(annuncio);
 
-      print("LA RISPOSTA ALLA REST ");
-      print(result.response);
+
 
       var encoded = jsonEncode(result.data);
       print("HO ENCODATO");
@@ -39,6 +38,27 @@ class AnnunciUserListCubit extends Cubit<AnnunciUserListState> {
     } catch (e) {
       print(e.toString());
       emit(AnnunciUserListError());
+    }
+  }
+
+  void matchUser(String userId, String advertisementId) async {
+    emit(AnnunciUserListLoading());
+    try {
+      HttpResponse<dynamic> result = await annunciListApiService
+          .matchUser(userId, advertisementId);
+      emit(AnnunciListReloadAll());
+    } catch (e) {
+      print(e.toString());
+      emit(AnnunciUserListError());
+    }
+  }
+
+  Future<void> candidate(String advertisementId) async {
+    emit(AnnunciUserListLoading());
+    try{
+      HttpResponse<dynamic> result = await annunciListApiService.candidate(advertisementId);
+    }catch(e) {
+       print(e);
     }
   }
 

@@ -13,7 +13,6 @@ import 'package:winteam/widgets/action_buttons.dart';
 import 'package:winteam/widgets/appbars.dart';
 import 'package:winteam/widgets/inputs.dart';
 
-
 class ModificaProfiloLavoratoreWidget extends StatelessWidget {
   const ModificaProfiloLavoratoreWidget({super.key});
 
@@ -26,16 +25,15 @@ class ModificaProfiloLavoratoreWidget extends StatelessWidget {
   }
 }
 
-class ModificaProfiloLavoratore extends StatefulWidget{
+class ModificaProfiloLavoratore extends StatefulWidget {
   @override
-  State<ModificaProfiloLavoratore> createState() => ModificaProfiloLavoratoreState();
+  State<ModificaProfiloLavoratore> createState() =>
+      ModificaProfiloLavoratoreState();
 }
-
 
 String imageDefaultName = "profileImage";
 
-
-class ModificaProfiloLavoratoreState extends State<ModificaProfiloLavoratore>{
+class ModificaProfiloLavoratoreState extends State<ModificaProfiloLavoratore> {
   UserCubit get _cubit => context.read<UserCubit>();
   UserEntity? entity;
   final FirebaseAuth auth = FirebaseAuth.instance;
@@ -53,18 +51,18 @@ class ModificaProfiloLavoratoreState extends State<ModificaProfiloLavoratore>{
     super.initState();
     inputData();
   }
-  inputData()  async {
+
+  inputData() async {
     final User? user = auth.currentUser;
     uid = user!.uid;
     email = user.email!;
-    entity =  await _cubit.me();
+    entity = await _cubit.me();
     emailController.text = entity!.email!;
     telefonoController.text = entity!.phoneNumber!;
     cognomeController.text = entity!.lastName!;
     nomeController.text = entity!.firstName!;
     descController.text = entity!.description!;
   }
-
 
   openGallery() async {
     var image = await ImagePicker().pickImage(source: ImageSource.gallery);
@@ -76,17 +74,20 @@ class ModificaProfiloLavoratoreState extends State<ModificaProfiloLavoratore>{
     var file = File(imageFile!.path);
     Uint8List bytes = file.readAsBytesSync();
 
-    var fileList = await FirebaseStorage.instance.ref('UID:$uid/image_profile/').listAll();
+    var fileList =
+        await FirebaseStorage.instance.ref('UID:$uid/image_profile/').listAll();
     if (fileList.items.isNotEmpty) {
       var fileesistente = fileList.items[0];
       fileesistente.delete();
     }
 
-    FirebaseStorage.instance.ref('UID:$uid/image_profile/$imageDefaultName').putData(bytes);
+    FirebaseStorage.instance
+        .ref('UID:$uid/image_profile/$imageDefaultName')
+        .putData(bytes);
 
     setState(() {});
 
-    print('STAMPOOOOOOOOOOOOOOOO');
+
     print(FirebaseStorage.instance.ref('UID:$uid/image_profile/').listAll());
 
     Navigator.of(context).pop();
@@ -103,13 +104,17 @@ class ModificaProfiloLavoratoreState extends State<ModificaProfiloLavoratore>{
     Uint8List bytes = file.readAsBytesSync();
 
     var fileList =
-    await FirebaseStorage.instance.ref('UID:$uid/image_profile/').listAll();
+        await FirebaseStorage.instance.ref('UID:$uid/image_profile/').listAll();
     if (fileList.items.isNotEmpty) {
       var fileesistente = fileList.items[0];
       fileesistente.delete();
     }
 
-    FirebaseStorage.instance.ref('UID:$uid/image_profile/$imageDefaultName').putData(bytes);
+    FirebaseStorage.instance
+        .ref('UID:$uid/image_profile/$imageDefaultName')
+        .putData(bytes);
+
+
 
     setState(() {});
 
@@ -123,7 +128,7 @@ class ModificaProfiloLavoratoreState extends State<ModificaProfiloLavoratore>{
           return AlertDialog(
               title: const Text('Carica foto da:',
                   style:
-                  TextStyle(fontSize: 25, fontWeight: FontWeight.normal)),
+                      TextStyle(fontSize: 25, fontWeight: FontWeight.normal)),
               content: SingleChildScrollView(
                 child: ListBody(
                   children: <Widget>[
@@ -180,12 +185,14 @@ class ModificaProfiloLavoratoreState extends State<ModificaProfiloLavoratore>{
         });
   }
 
-
   Future downloadUrlImage() async {
-    var fileList = await FirebaseStorage.instance.ref('UID:$uid/image_profile/').listAll();
+    var fileList =
+        await FirebaseStorage.instance.ref('UID:$uid/image_profile/').listAll();
 
     if (fileList.items.isEmpty) {
-      var fileList = await FirebaseStorage.instance.ref('default_profile_image/').listAll();
+      var fileList = await FirebaseStorage.instance
+          .ref('default_profile_image/')
+          .listAll();
       var file = fileList.items[0];
       var result = await file.getDownloadURL();
       return result;
@@ -199,232 +206,253 @@ class ModificaProfiloLavoratoreState extends State<ModificaProfiloLavoratore>{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body:
-      BlocBuilder<UserCubit, UserState>(
-          builder: (_, state) {
-            if (state is UserLoading) {
-              return const Center(child: CircularProgressIndicator());
-            } else if (state is UserLoaded) {
-              return everyContent();
-            } else if (state is UserEmpty) {
-              // @todo insert an empty state element
-              return Container();
-            } else {
-              return const Center(child: Text('Errore di caricamento'));
-            }
-          }),
+      body: BlocBuilder<UserCubit, UserState>(builder: (_, state) {
+        if (state is UserLoading) {
+          return const Center(child: CircularProgressIndicator());
+        } else if (state is UserLoaded) {
+          return everyContent(state);
+        } else if (state is UserEmpty) {
+          // @todo insert an empty state element
+          return Container();
+        } else {
+          return const Center(child: Text('Errore di caricamento'));
+        }
+      }),
     );
   }
 
-
-
   @override
-  Widget everyContent() {
+  Widget everyContent(UserLoaded state) {
     return Scaffold(
         appBar: appbarSenzaActions(context, 'Modifica profilo'),
         body: SingleChildScrollView(
             child: Column(
-              children: [
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 10),
-                  child: Column(
+          children: [
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 10),
+              child: Column(
+                children: [
+                  Container(padding: EdgeInsets.only(top: 20)),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Container(padding: EdgeInsets.only(top: 20)),
-
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Container(
-                            height: 150,
-                            width: 150,
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                  color: azzurroscuro,
-                                  width: 3
-                              ),
-                              shape: BoxShape.circle,
-
-                            ),
-                            child: Stack(
-                              clipBehavior: Clip.none,
-                              fit: StackFit.expand,
-                              children: [
-                                ClipOval(
-                                  child: SizedBox.fromSize(
-                                    size: Size.fromRadius(48), // Image radius
-                                    child: FutureBuilder(
-                                      future: downloadUrlImage(),
-                                      builder: (context, snapshot) {
-                                        var result = (snapshot.data);
-                                        return result == null
-                                            ? const CircularProgressIndicator()
-                                            : Image.network(result, fit: BoxFit.cover);
-                                      },
-                                    ),
-                                  ),
+                      Container(
+                        height: 150,
+                        width: 150,
+                        decoration: BoxDecoration(
+                          border: Border.all(color: azzurroscuro, width: 3),
+                          shape: BoxShape.circle,
+                        ),
+                        child: Stack(
+                          clipBehavior: Clip.none,
+                          fit: StackFit.expand,
+                          children: [
+                            ClipOval(
+                              child: SizedBox.fromSize(
+                                size: Size.fromRadius(48), // Image radius
+                                child: FutureBuilder(
+                                  future: downloadUrlImage(),
+                                  builder: (context, snapshot) {
+                                    var result = (snapshot.data);
+                                    return result == null
+                                        ? const CircularProgressIndicator()
+                                        : Image.network(result,
+                                            fit: BoxFit.cover);
+                                  },
                                 ),
-                                Positioned(
-                                    bottom: -5,
-                                    right: -20,
-                                    child: RawMaterialButton(
-                                      onPressed: () {
-                                        showModalBottomSheet<void>(
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.vertical(
-                                              top: Radius.circular(15),
+                              ),
+                            ),
+                            Positioned(
+                                bottom: -5,
+                                right: -20,
+                                child: RawMaterialButton(
+                                  onPressed: () {
+                                    showModalBottomSheet<void>(
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.vertical(
+                                          top: Radius.circular(15),
+                                        ),
+                                      ),
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return Container(
+                                          decoration: BoxDecoration(
+                                              color: Colors.white,
+                                              borderRadius:
+                                                  BorderRadius.circular(90)),
+                                          height: 150,
+                                          child: Center(
+                                            child: Column(
+                                              mainAxisSize: MainAxisSize.min,
+                                              children: <Widget>[
+                                                MaterialButton(
+                                                    onPressed: () {
+                                                      openGallery();
+                                                    },
+                                                    height: 60,
+                                                    child: Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        Container(
+                                                            child: SizedBox(
+                                                                height: 50,
+                                                                width: 50,
+                                                                child: Card(
+                                                                  shape:
+                                                                      RoundedRectangleBorder(
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
+                                                                            80),
+                                                                  ),
+                                                                  color: Colors
+                                                                      .white70,
+                                                                  child: Icon(
+                                                                    Icons.image,
+                                                                    color: Colors
+                                                                        .black,
+                                                                    size: 25,
+                                                                  ),
+                                                                ))),
+                                                        Padding(
+                                                            padding:
+                                                                EdgeInsets.only(
+                                                                    left: 10)),
+                                                        const Text(
+                                                          'Seleziona foto dalla galleria',
+                                                          style: TextStyle(
+                                                              color:
+                                                                  Colors.black,
+                                                              fontSize: 20,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .normal),
+                                                        ),
+                                                      ],
+                                                    )),
+                                                MaterialButton(
+                                                    onPressed: () {
+                                                      openCamera();
+                                                    },
+                                                    height: 60,
+                                                    child: Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        Container(
+                                                            child: SizedBox(
+                                                                height: 50,
+                                                                width: 50,
+                                                                child: Card(
+                                                                  shape:
+                                                                      RoundedRectangleBorder(
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
+                                                                            80),
+                                                                  ),
+                                                                  color: Colors
+                                                                      .white70,
+                                                                  child: Icon(
+                                                                    Icons
+                                                                        .camera_alt_rounded,
+                                                                    color: Colors
+                                                                        .black,
+                                                                    size: 25,
+                                                                  ),
+                                                                ))),
+                                                        Padding(
+                                                            padding:
+                                                                EdgeInsets.only(
+                                                                    left: 10)),
+                                                        const Text(
+                                                          'Scatta una foto',
+                                                          style: TextStyle(
+                                                              color:
+                                                                  Colors.black,
+                                                              fontSize: 20,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .normal),
+                                                        ),
+                                                      ],
+                                                    )),
+                                              ],
                                             ),
                                           ),
-
-                                          context: context,
-                                          builder: (BuildContext context) {
-                                            return Container(
-                                              decoration: BoxDecoration(
-                                                  color: Colors.white,
-                                                  borderRadius: BorderRadius.circular(90)
-                                              ),
-                                              height: 150,
-                                              child: Center(
-                                                child: Column(
-                                                  mainAxisSize: MainAxisSize.min,
-                                                  children: <Widget>[
-
-                                                    MaterialButton(
-                                                        onPressed: () {
-                                                          openGallery();
-                                                        },
-                                                        height: 60,
-                                                        child: Row(
-                                                          mainAxisAlignment: MainAxisAlignment.start,
-                                                          children: [
-                                                            Container(
-                                                                child: SizedBox(
-                                                                    height: 50,
-                                                                    width: 50,
-                                                                    child:Card(
-                                                                      shape: RoundedRectangleBorder(
-                                                                        borderRadius: BorderRadius.circular(80),
-                                                                      ),
-                                                                      color: Colors.white70,
-                                                                      child: Icon(
-                                                                        Icons.image,
-                                                                        color: Colors.black,
-                                                                        size: 25,
-                                                                      ),
-                                                                    )
-                                                                )
-                                                            ),
-
-                                                            Padding(padding: EdgeInsets.only(left: 10)),
-                                                            const Text(
-                                                              'Seleziona foto dalla galleria',
-                                                              style: TextStyle(
-                                                                  color: Colors.black,
-                                                                  fontSize: 20,
-                                                                  fontWeight: FontWeight.normal),
-                                                            ),
-                                                          ],
-                                                        )
-                                                    ),
-
-
-
-                                                    MaterialButton(
-                                                        onPressed: () {
-                                                          openCamera();
-                                                        },
-                                                        height: 60,
-                                                        child: Row(
-                                                          mainAxisAlignment: MainAxisAlignment.start,
-                                                          children: [
-                                                            Container(
-                                                                child: SizedBox(
-                                                                    height: 50,
-                                                                    width: 50,
-                                                                    child:Card(
-                                                                      shape: RoundedRectangleBorder(
-                                                                        borderRadius: BorderRadius.circular(80),
-                                                                      ),
-                                                                      color: Colors.white70,
-                                                                      child: Icon(
-                                                                        Icons.camera_alt_rounded,
-                                                                        color: Colors.black,
-                                                                        size: 25,
-                                                                      ),
-                                                                    )
-                                                                )
-                                                            ),
-
-                                                            Padding(padding: EdgeInsets.only(left: 10)),
-                                                            const Text(
-                                                              'Scatta una foto',
-                                                              style: TextStyle(
-                                                                  color: Colors.black,
-                                                                  fontSize: 20,
-                                                                  fontWeight: FontWeight.normal),
-                                                            ),
-                                                          ],
-                                                        )
-                                                    ),
-
-
-                                                  ],
-                                                ),
-                                              ),
-                                            );
-                                          },
                                         );
                                       },
-
-                                      elevation: 2.0,
-                                      fillColor: Color(0xFFF5F6F9),
-                                      child: Icon(Icons.camera_alt_rounded, color: giallo),
-                                      padding: EdgeInsets.all(5.0),
-                                      shape: CircleBorder(),
-                                    )
-                                ),
-                              ],
-                            ),
-                          )
-                        ],
-                      ),
-                      Container(padding: EdgeInsets.only(top: 30)),
-
-                      InputWidget(labeltext: 'Nome', hinttext: 'Inserisci il tuo nome', controller: nomeController,),
-
-                      Container(padding: EdgeInsets.only(top: 25)),
-
-                      InputWidget(labeltext: 'Cognome', hinttext: 'Inserisci il tuo cognome', controller: cognomeController,),
-
-                      Container(padding: EdgeInsets.only(top: 25)),
-
-                      InputWidget(labeltext:'Email', hinttext: 'Inserisci una email', controller: emailController,validator: validaemail),
-
-                      Container(padding: EdgeInsets.only(top: 25)),
-
-                      InputWidget(labeltext: 'Telefono', hinttext: 'Inserisci un numero di telefono', controller: telefonoController,),
-
-                      Container(padding: EdgeInsets.only(top: 25)),
-
-                      InputWidget(labeltext: 'Descrizione', hinttext: 'Inserisci una descrizione', controller: descController,),
-
-                      Container(padding: EdgeInsets.only(top: 25)),
-
-                      ActionButton('Salva cambiamenti', context, (){Navigator.pop(context);}, 200, azzurroscuro, Colors.white),
-
+                                    );
+                                  },
+                                  elevation: 2.0,
+                                  fillColor: Color(0xFFF5F6F9),
+                                  child: Icon(Icons.camera_alt_rounded,
+                                      color: giallo),
+                                  padding: EdgeInsets.all(5.0),
+                                  shape: CircleBorder(),
+                                )),
+                          ],
+                        ),
+                      )
                     ],
                   ),
-                ),
-              ],
-            )
-        )
-    );
+                  Container(padding: EdgeInsets.only(top: 30)),
+                  InputWidget(
+                    labeltext: 'Nome',
+                    hinttext: 'Inserisci il tuo nome',
+                    controller: nomeController,
+                  ),
+                  Container(padding: EdgeInsets.only(top: 25)),
+                  InputWidget(
+                    labeltext: 'Cognome',
+                    hinttext: 'Inserisci il tuo cognome',
+                    controller: cognomeController,
+                  ),
+                  Container(padding: EdgeInsets.only(top: 25)),
+                  InputWidget(
+                      labeltext: 'Email',
+                      hinttext: 'Inserisci una email',
+                      controller: emailController,
+                      validator: validaemail),
+                  Container(padding: EdgeInsets.only(top: 25)),
+                  InputWidget(
+                    labeltext: 'Telefono',
+                    hinttext: 'Inserisci un numero di telefono',
+                    controller: telefonoController,
+                  ),
+                  Container(padding: EdgeInsets.only(top: 25)),
+                  InputWidget(
+                    labeltext: 'Descrizione',
+                    hinttext: 'Inserisci una descrizione',
+                    controller: descController,
+                  ),
+                  Container(padding: EdgeInsets.only(top: 25)),
+                  ActionButton('Salva cambiamenti', () async {
+                    var fileList =
+                        await FirebaseStorage.instance.ref('UID:$uid/image_profile/').listAll();
+                    var file = await fileList.items.first.getDownloadURL();
+                    Navigator.pop(context);
+                    _cubit.update(state.user.copyWith(
+                        email: emailController.text,
+                        phoneNumber: telefonoController.text,
+                        lastName: cognomeController.text,
+                        firstName: nomeController.text,
+                        description: descController.text,
+                        imageLink: file));
+                  }, 200, azzurroscuro, Colors.white),
+                ],
+              ),
+            ),
+          ],
+        )));
   }
 
-  String validaemail (String value) {
+  String validaemail(String value) {
     if (value.isEmpty) {
       return 'Inserire username';
     }
-    if(!value.isValidEmail()){
+    if (!value.isValidEmail()) {
       return "Inserire un indirizzo email valido";
     }
     return null!;

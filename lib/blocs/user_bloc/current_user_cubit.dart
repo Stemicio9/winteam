@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:retrofit/retrofit.dart';
+import 'package:winteam/blocs/annunci_api_service/annunci_api_service.dart';
 import 'package:winteam/blocs/user_api_service/user_api_service.dart';
 import 'package:winteam/entities/user_entity.dart';
 
@@ -16,7 +17,7 @@ const String DUMMY_EMAIL = "s.miceli90@gmail.com";
 class UserCubit extends Cubit<UserState> {
   UserCubit() : super(UserLoading());
 
-  final UserEntity _user = UserEntity(email: "dummy@dummy.it", firstName: "dummy");
+  late UserEntity _user;
   UserEntity get user => _user;
 
   Future<UserEntity?> me() async {
@@ -24,13 +25,13 @@ class UserCubit extends Cubit<UserState> {
     try {
       // TODO: fetch users
       // Qui bisog na creare la nostra a
-      print("CHIAMO LA REST PER CAPIRE LE MIE INFO");
+
       HttpResponse<dynamic> result = await userListApiService.me();
-      print("Risultato result");
-      print(result);
+
       var encoded = jsonEncode(result.data);
       var decoded = jsonDecode(encoded);
       var json = UserEntity.fromJson(decoded);
+      _user = json;
       emit(UserLoaded(json));
       return json;
     } catch (e) {
@@ -38,6 +39,25 @@ class UserCubit extends Cubit<UserState> {
       emit(UserError());
     }
   }
+
+
+  Future<void> update(UserEntity userEntity) async {
+    emit(UserLoading());
+    try{
+      var a = await userListApiService.updateUser(userEntity);
+      me();
+    }catch(e){
+      print(e);
+      emit(UserError());
+    }
+
+
+
+
+  }
+
+
+
 
 
 

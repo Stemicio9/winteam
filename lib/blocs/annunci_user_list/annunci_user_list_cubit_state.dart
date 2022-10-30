@@ -11,3 +11,5 @@ class AnnunciUserListLoaded extends AnnunciUserListState {
   AnnunciUserListLoaded(this.utenti);
 }
 class AnnunciUserListError extends AnnunciUserListState {}
+
+class AnnunciListReloadAll extends AnnunciUserListState {}

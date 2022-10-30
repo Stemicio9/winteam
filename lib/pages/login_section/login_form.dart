@@ -83,17 +83,17 @@ class LoginFormState extends State<LoginForm> {
                       return Container();
                     } else {
                       // @todo insert here button that calls login
-                      return ActionButton('Lavoratore', context, (){ formsubmit();
+                      return ActionButton('Lavoratore', (){ formsubmit();
                         },250);
                     }
                   }), */
-              ActionButton('Normal Login', context, (){formsubmit();}, 125,azzurroscuro, Colors.white),
+              ActionButton('Normal Login', (){formsubmit();}, 125,azzurroscuro, Colors.white),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
 
-                  ActionButton('Datore', context, (){Navigator.pushNamed(context, '/dashboarddatore');}, 125,azzurroscuro, Colors.white),
-                  ActionButton('Lavoratore', context, (){Navigator.pushNamed(context, '/dashboardlavoratore');}, 125,azzurroscuro, Colors.white),
+                  ActionButton('Datore', (){Navigator.pushNamed(context, '/dashboarddatore');}, 125,azzurroscuro, Colors.white),
+                  ActionButton('Lavoratore', (){Navigator.pushNamed(context, '/dashboardlavoratore');}, 125,azzurroscuro, Colors.white),
                 ],
               )
 
@@ -166,7 +166,6 @@ extension EmailValidator on String {
 
         if(log == null || log.user == null){
           // @todo avvisare che il login è sbagliato
-          print("UTENTE NULLO");
           return;
         }
         print("token");

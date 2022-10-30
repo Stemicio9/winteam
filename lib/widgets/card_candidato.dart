@@ -3,6 +3,8 @@ import 'package:flutter/rendering.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:winteam/constants/colors.dart';
 import 'package:winteam/entities/user_entity.dart';
+import 'package:winteam/widgets/Expandable_fab.dart';
+import 'package:winteam/widgets/action_buttons.dart';
 import 'package:winteam/widgets/skill_chip.dart';
 
 
@@ -10,17 +12,24 @@ import 'package:winteam/widgets/skill_chip.dart';
 class CardCandidato extends StatelessWidget {
 
   final UserEntity user;
+  final bool match;
 
-  CardCandidato({required this.user});
+  Function(String)? matchUser;
+
+  CardCandidato({required this.user, required this.match, this.matchUser});
 
 
   @override
   Widget build(BuildContext context) {
+
+    print("IL CAZZO DELL'UTENTE");
+    print(user.toJson());
+
      return Card(
         margin: EdgeInsets.all(10),
         elevation: 10,
         child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 20),
+            padding: EdgeInsets.symmetric(horizontal: 10),
             child: Column(
               children: [
                 Container(margin: EdgeInsets.only(top: 10)),
@@ -32,15 +41,9 @@ class CardCandidato extends StatelessWidget {
                 skillSection(),
 
                 Padding(padding: EdgeInsets.only(top: 10)),
-                Row(
-                  children: [
-                    Icon(Icons.info_rounded, color: azzurroscuro),
-                    Container(padding: EdgeInsets.only(right: 7),),
-                    const Text('Contatti candidato', style: TextStyle(color: azzurroscuro,fontSize: 16),),
-                  ],
-                ),
 
-               contactSession()
+
+               footer()
 
               ],
             )
@@ -65,8 +68,9 @@ class CardCandidato extends StatelessWidget {
                     width: 2
                 ),
                 shape: BoxShape.circle,
-                image: const DecorationImage(
-                    image: AssetImage('assets/images/avatar_image.png'),
+                image:  DecorationImage(
+                    image: (user.imageLink != null && user.imageLink!.isNotEmpty) ?
+                    NetworkImage(user.imageLink!) as ImageProvider : AssetImage('assets/images/avatar_image.png'),
                     fit: BoxFit.fill
                 ),
               ),
@@ -78,9 +82,9 @@ class CardCandidato extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children:  [
-                  Text( "${user.firstName} ${user.lastName}", style:  TextStyle(color: azzurroscuro, fontSize: 16),),
-                  Text( "${user.city}", textAlign: TextAlign.left,
-                  ),
+                  Text( "${user.firstName} ${user.lastName}",
+                    style:  TextStyle(color: azzurroscuro, fontSize: 16),),
+                  //Text( "${user.city}", textAlign: TextAlign.left,),
                 ],
               ),
             ),
@@ -130,6 +134,13 @@ class CardCandidato extends StatelessWidget {
   Widget contactSession(){
     return  Column(
       children: [
+        Row(
+          children: [
+            Icon(Icons.info_rounded, color: azzurroscuro),
+            Container(padding: EdgeInsets.only(right: 7),),
+            const Text('Contatti candidato', style: TextStyle(color: azzurroscuro,fontSize: 16),),
+          ],
+        ),
         Padding(padding: EdgeInsets.only(top: 8)),
         Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -152,6 +163,17 @@ class CardCandidato extends StatelessWidget {
     );
   }
 
-
+  Widget footer(){
+    if(match){
+      return contactSession();
+    }else {
+      return ActionButton(
+          'Scegli candidato', () {
+            if(matchUser != null){
+              matchUser!(user.id ?? "");
+            }
+           }, 200, azzurroscuro, Colors.white);
+    }
+  }
 }
 

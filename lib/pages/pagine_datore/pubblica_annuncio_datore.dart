@@ -8,6 +8,7 @@ import 'package:intl/intl.dart';
 import 'package:winteam/blocs/subscription_bloc/subscription_cubit.dart';
 import 'package:winteam/constants/language.dart';
 import 'package:winteam/entities/annunci_entity.dart';
+import 'package:winteam/widgets/action_buttons.dart';
 import 'package:winteam/widgets/texts.dart';
 import '../../constants/StateConstants.dart';
 import '../../constants/colors.dart';
@@ -30,6 +31,12 @@ class PubblicaAnnuncioDatoreState extends State<PubblicaAnnuncioDatore> {
   String title = "";
   String description = "";
   String paymentAmount = "";
+  final _formKey = GlobalKey<FormState>();
+  TextEditingController dataController = TextEditingController();
+  TextEditingController titleController = TextEditingController();
+  TextEditingController descController = TextEditingController();
+  TextEditingController pagamentoController = TextEditingController();
+
 
   @override
   void initState() {
@@ -43,10 +50,6 @@ class PubblicaAnnuncioDatoreState extends State<PubblicaAnnuncioDatore> {
         child: Expanded(
             child: Column(
       children: [
-
-        SizedBox(
-          height: 5,
-        ),
         BlocBuilder<SubscriptionCubit, SubscriptionState>(
             builder: (_, state) {
 
@@ -82,36 +85,37 @@ class PubblicaAnnuncioDatoreState extends State<PubblicaAnnuncioDatore> {
 
 
   Widget canIPart(){
-    return Column(
-      children: [
-        SizedBox(
-          height: 5,
-        ),
-        MaterialButton(
-            child: (_cubit.selectedEntity.name != null &&
-                _cubit.selectedEntity.name!.isNotEmpty)
-                ? SkillChip(
-              skillName: _cubit.selectedEntity.name!,
-              hexColorText: _cubit.selectedEntity.hexColorText!,
-              hexColorBackground:
-              _cubit.selectedEntity.hexColorBackground!,
-              imageLink: _cubit.selectedEntity.imageLink!,
-            )
-                : SkillChip(
-              skillName: "NESSUNA MANSIONE SELEZIONATA",
-              hexColorText: "0000ff",
-              hexColorBackground: 'ffffff',
-              imageLink: '',
-            ),
-            onPressed: goToSelectSkill),
-        datePicker,
-        hourSlotSelector,
-        getTitleWidget(),
-        getDescriptionWidget(),
-        getPaymentAmount(),
-        ElevatedButton(child: Text("Crea Annuncio"), onPressed: publishAnnuncio)
-      ],
-    );
+    return Form(
+      key: _formKey,
+      child: Column(
+        children: [
+          SizedBox(
+            height: 5,
+          ),
+          MaterialButton(
+              child: (_cubit.selectedEntity.name != null && _cubit.selectedEntity.name!.isNotEmpty)
+                  ? SkillChip(
+                skillName: _cubit.selectedEntity.name!,
+                hexColorText: _cubit.selectedEntity.hexColorText!,
+                hexColorBackground: _cubit.selectedEntity.hexColorBackground!,
+                imageLink: _cubit.selectedEntity.imageLink!,
+              )
+                  : SkillChip(
+                skillName: "Nessuna mansione selezionata",
+                hexColorText: "0000ff",
+                hexColorBackground: 'ffffff',
+                imageLink: 'assets/images/avatar_image.png',
+              ),
+              onPressed: goToSelectSkill),
+          datePicker,
+          hourSlotSelector,
+          getTitleWidget(),
+          getDescriptionWidget(),
+          getPaymentAmount(),
+          ActionButton('Crea annuncio', publishAnnuncio, 150, azzurroscuro, Colors.white),
+        ],
+      )
+    ) ;
   }
 
   void goToSelectSkill() {
@@ -133,7 +137,7 @@ class PubblicaAnnuncioDatoreState extends State<PubblicaAnnuncioDatore> {
             border: OutlineInputBorder(
                 borderRadius: BorderRadius.all(Radius.circular(20)),
                 borderSide: BorderSide(
-                  color: Colors.greenAccent,
+
                   width: 30,
                 )),
             labelText: 'Titolo',
@@ -155,7 +159,6 @@ class PubblicaAnnuncioDatoreState extends State<PubblicaAnnuncioDatore> {
             border: OutlineInputBorder(
                 borderRadius: BorderRadius.all(Radius.circular(20)),
                 borderSide: BorderSide(
-                  color: Colors.greenAccent,
                   width: 30,
                 )),
             labelText: 'Descrizione',
@@ -167,10 +170,18 @@ class PubblicaAnnuncioDatoreState extends State<PubblicaAnnuncioDatore> {
     return Padding(
       padding: EdgeInsets.all(16.0),
       child: TextField(
+
         onChanged: (text) {
           paymentAmount = text;
         },
-        decoration: InputDecoration(labelText: 'Importo pagamento'),
+        decoration: InputDecoration(
+          border: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(20)),
+              borderSide: BorderSide(
+                width: 30,
+              )),
+          labelText: 'Importo pagamento',
+        ),
         inputFormatters: <TextInputFormatter>[
           CurrencyTextInputFormatter(
             locale: 'it',
@@ -370,9 +381,14 @@ class _DatePicker extends State<DatePicker> {
             child: TextField(
           controller: widget.dateInput,
           //editing controller of this TextField
-          decoration: InputDecoration(
-              icon: Icon(Icons.calendar_today), //icon of text field
-              labelText: "Enter Date" //label text of field
+              decoration: InputDecoration(
+                labelText: 'Seleziona data',
+                prefixIcon: Icon(Icons.date_range,color: azzurroscuro,),
+                hintText: 'Seleziona una data di inizio e una di fine',
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(20)),
+                ),
+
               ),
           readOnly: true,
           //set it true, so that user will not able to edit text
@@ -433,7 +449,7 @@ class ChipsWidgetState extends State<ChipsWidget> {
           label: Text(_choicesList[index]),
           selected: defaultChoiceIndex == index,
           shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(20),
               side: BorderSide(color: azzurroscuro)),
           selectedColor: azzurroscuro,
           labelStyle: TextStyle(
