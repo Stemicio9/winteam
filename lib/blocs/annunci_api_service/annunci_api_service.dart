@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:retrofit/retrofit.dart';
 import 'package:winteam/constants/StateConstants.dart';
 import 'package:winteam/entities/annunci_entity.dart';
+import 'package:winteam/main.dart';
 
 part  'annunci_api_service_impl.dart';
 

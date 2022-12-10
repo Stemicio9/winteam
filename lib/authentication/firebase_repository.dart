@@ -5,6 +5,7 @@
 
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:winteam/main.dart';
 
 Future createUser(String email, String password) async{
   try{
@@ -28,6 +29,7 @@ Future<UserCredential?> signIn(String email, String password) async {
         email: email,
         password: password
     );
+    await fetchBaseUrl();
     return credential;
   } on FirebaseAuthException catch (e) {
     if (e.code == 'user-not-found') {

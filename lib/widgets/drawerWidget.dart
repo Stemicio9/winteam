@@ -41,12 +41,14 @@ class DrawerWidget extends StatelessWidget {
     String v3 = getCurrentLanguageValue(CONTATTACI)!;
     String v4 = getCurrentLanguageValue(EVENTI)!;
     String v5 = getCurrentLanguageValue(LOGOUT)!;
+    String v6 = getCurrentLanguageValue(REMOVE_ACCOUNT)!;
 
     listaelementimenu.add(v1);
     listaelementimenu.add(v2);
     listaelementimenu.add(v3);
     listaelementimenu.add(v4);
     listaelementimenu.add(v5);
+    listaelementimenu.add(v6);
 
     List<Widget> lista =  List.empty(growable: true);
 
@@ -77,18 +79,47 @@ class DrawerWidget extends StatelessWidget {
 
     );
 
-    lista.add(creatile(v1, (){raccoglitore.policyprivacy(context);}, context, const IconData(0xf2d0, fontFamily: 'MaterialIcons')));
-    lista.add(creatile(v2, (){raccoglitore.comefunziona(context);}, context, const IconData(0xf669, fontFamily: 'MaterialIcons')));
-    lista.add(creatile(v3, (){raccoglitore.contattaci(context);}, context, const IconData(0xf01b2, fontFamily: 'MaterialIcons')));
-    lista.add(creatile(v4, (){raccoglitore.eventi();}, context, const IconData(0xf06ae, fontFamily: 'MaterialIcons'), comingsoon: true));
+    // lista.add(creatile(v1, (){raccoglitore.policyprivacy(context);}, context, const IconData(0xf2d0, fontFamily: 'MaterialIcons')));
+    // lista.add(creatile(v2, (){raccoglitore.comefunziona(context);}, context, const IconData(0xf669, fontFamily: 'MaterialIcons')));
+    // lista.add(creatile(v3, (){raccoglitore.contattaci(context);}, context, const IconData(0xf01b2, fontFamily: 'MaterialIcons')));
+    // lista.add(creatile(v4, (){raccoglitore.eventi();}, context, const IconData(0xf06ae, fontFamily: 'MaterialIcons'), comingsoon: true));
     lista.add(creatile(v5, (){ FirebaseAuth.instance.signOut();Navigator.pushNamed(context, RouteConstants.login);}, context, const IconData(0xf88b, fontFamily: 'MaterialIcons')));
+    lista.add(creatile(v6, () async {
+      var result = await _showMyDialog(context);
+      if(result == 'OK'){
+        // FirebaseAuth.instance.currentUser!.delete();
+        // Navigator.pushNamed(context, RouteConstants.login);
+      }
+    }, context, const IconData(0xe1b9, fontFamily: 'MaterialIcons')));
     listaelementimenu.clear();
 
     return lista;
 
   }
 
-
+  Future<dynamic> _showMyDialog(context) async {
+    var a = await showDialog(
+      context: context,
+      barrierDismissible: true,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Rimuovi account'),
+          content: const Text('Sicuro di voler rimuovere il tuo account?'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () => Navigator.pop(context, 'Cancel'),
+              child: const Text('Annulla'),
+            ),
+            TextButton(
+              onPressed: () => Navigator.pop(context, 'OK'),
+              child: Text('OK', style: TextStyle(color: rossoopaco),),
+            ),
+          ],
+        );
+      },
+    );
+    return a;
+  }
 
 
 

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:winteam/blocs/annunci_bloc/annunci_cubit.dart';
 import 'package:winteam/constants/StateConstants.dart';
 import 'package:winteam/constants/colors.dart';
+
 class ChipsWidget extends StatefulWidget{
 
   @override
@@ -14,8 +15,8 @@ class ChipsWidgetState extends State<ChipsWidget>{
   AnnunciCubit get _cubit => context.read<AnnunciCubit>();
 
   late int defaultChoiceIndex;
-  List<String> _choicesList = ['Tutti', 'In Corso', 'Accettati', 'Storico'];
-  List<String> _choicesListQuery = ['all', 'current', 'accepted', 'history'];
+  final List<String> _choicesList = ['Tutti', 'In Corso', 'Accettati', 'Storico'];
+  final List<String> _choicesListQuery = ['all', 'current', 'accepted', 'history'];
 
   //accettati lavoratore -> se lavoratore è matched e la data attuale è inferiore a quella dell'annuncio
   //storico lavoratore -> tutti annunci in cui lavoratore è candidato e data attuale è maggiore a quella dell'annuncio
@@ -40,7 +41,7 @@ class ChipsWidgetState extends State<ChipsWidget>{
          selected: defaultChoiceIndex == index,
          shape: RoundedRectangleBorder(
              borderRadius: BorderRadius.circular(10),
-             side: BorderSide(color: azzurroscuro)
+             side: const BorderSide(color: azzurroscuro)
          ),
          selectedColor: azzurroscuro,
          labelStyle: TextStyle(

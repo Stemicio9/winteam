@@ -17,6 +17,7 @@ const String COME_FUNZIONA = "Come funziona?";
 const String CONTATTACI = "Contattaci";
 const String EVENTI = "Eventi";
 const String LOGOUT = "Logout";
+const String REMOVE_ACCOUNT = "Elimina il tuo account";
 
 
 // Stati degli annunci
@@ -81,6 +82,7 @@ final Map<String,String> LANG_IT = {
   GESTISCI_ABBONAMENTO:"Gestisci abbonamento",
   INFORMAZIONI_DI_CONTATTO:"Informazioni di contatto",
   CHI_SIAMO:"Chi siamo",
+  REMOVE_ACCOUNT: "Elimina il tuo account",
   "":"",
   "":"",
   "":"",

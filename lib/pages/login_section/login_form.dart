@@ -73,7 +73,7 @@ class LoginFormState extends State<LoginForm> {
                 labeltext: "Password",
               ),
 
-              spaziotrawidgetinaltezza(context, 20),
+              spaziotrawidgetinaltezza(context, 50),
 
            /*   BlocBuilder<UserCubit, UserState>(
                   builder: (_, state) {
@@ -87,15 +87,15 @@ class LoginFormState extends State<LoginForm> {
                         },250);
                     }
                   }), */
-              ActionButton('Normal Login', (){formsubmit();}, 125,azzurroscuro, Colors.white),
-              Row(
+              ActionButton('Entra', (){formsubmit();}, 125,azzurroscuro, Colors.white),
+         /*     Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
 
                   ActionButton('Datore', (){Navigator.pushNamed(context, '/dashboarddatore');}, 125,azzurroscuro, Colors.white),
                   ActionButton('Lavoratore', (){Navigator.pushNamed(context, '/dashboardlavoratore');}, 125,azzurroscuro, Colors.white),
                 ],
-              )
+              ) */
 
 
 

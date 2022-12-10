@@ -5,7 +5,9 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:winteam/blocs/user_bloc/current_user_cubit.dart';
 import 'package:winteam/constants/route_constants.dart';
+import 'package:winteam/entities/skill_entity.dart';
 import 'package:winteam/entities/user_entity.dart';
+import 'package:winteam/widgets/action_buttons.dart';
 import 'package:winteam/widgets/texts.dart';
 import '../../constants/colors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -49,17 +51,16 @@ class ProfiloLavoratoreState extends State<ProfiloLavoratore> {
     uid = user!.uid;
     email = user.email!;
     entity = await _cubit.me();
-
-    print('STAMPO USER SKILL');
-    print(entity!.skillList!.length);
   }
 
   Future downloadUrlImage() async {
     var fileList =
-    await FirebaseStorage.instance.ref('UID:$uid/image_profile/').listAll();
+        await FirebaseStorage.instance.ref('UID:$uid/image_profile/').listAll();
 
     if (fileList.items.isEmpty) {
-      var fileList = await FirebaseStorage.instance.ref('default_profile_image/').listAll();
+      var fileList = await FirebaseStorage.instance
+          .ref('default_profile_image/')
+          .listAll();
       var file = fileList.items[0];
       var result = await file.getDownloadURL();
       return result;
@@ -73,17 +74,17 @@ class ProfiloLavoratoreState extends State<ProfiloLavoratore> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<UserCubit, UserState>(builder: (_, state) {
-        if (state is UserLoading) {
-          return const Center(child: CircularProgressIndicator());
-        } else if (state is UserLoaded) {
-          return everyContent();
-        } else if (state is UserEmpty) {
-          // @todo insert an empty state element
-          return Container();
-        } else {
-          return const Center(child: Text('Errore di caricamento'));
-        }
-      });
+      if (state is UserLoading) {
+        return const Center(child: CircularProgressIndicator());
+      } else if (state is UserLoaded) {
+        return everyContent();
+      } else if (state is UserEmpty) {
+        // @todo insert an empty state element
+        return Container();
+      } else {
+        return const Center(child: Text('Errore di caricamento'));
+      }
+    });
   }
 
   Widget everyContent() {
@@ -135,7 +136,7 @@ class ProfiloLavoratoreState extends State<ProfiloLavoratore> {
                                 padding: EdgeInsets.all(5.0),
                                 shape: CircleBorder(),
                                 child:
-                                Icon(Icons.edit_rounded, color: giallo))),
+                                    Icon(Icons.edit_rounded, color: giallo))),
                       ],
                     ),
                   )
@@ -168,7 +169,7 @@ class ProfiloLavoratoreState extends State<ProfiloLavoratore> {
                 )
               ]),
               Container(padding: EdgeInsets.only(top: 10)),
-              Container(
+              SizedBox(
                 width: double.infinity,
                 child: SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
@@ -178,59 +179,59 @@ class ProfiloLavoratoreState extends State<ProfiloLavoratore> {
                       Wrap(
                         spacing: 10,
                         children: [
-                          GestureDetector(
-                            child: Chip(
-                              labelPadding: const EdgeInsets.only(top: 4,bottom: 4),
-                              label: Text(
-                                entity!.skillList!.isEmpty ? 'Aggiungi le tue skill' : '',
-                                style: TextStyle(color: grigio),
-                              ),
-                              avatar: Icon(Icons.add_rounded, color: grigio),
-                              backgroundColor: grigioopaco,
-                              shape: StadiumBorder(
-                                  side: BorderSide(color: grigio)),
-                            ),
-                            onTap: () {
-                              Navigator.pushNamed(
-                                  context, RouteConstants.aggiungiSkill);
-                            },
-                          ),
-
-
-                          SizedBox(
+                          ActionButton('Add Mansione', () async {
+                            var a = await Navigator.pushNamed(context, RouteConstants.aggiungiSkill);
+                            setState(() {
+                              entity!.skillList!.add(a as SkillEntity);
+                            });
+                          }, MediaQuery.of(context).size.width / 3, grigioopaco,
+                              grigio),
+                          Container(
                               height: 48,
+                              margin: const EdgeInsets.symmetric(vertical: 10),
                               child: ListView.builder(
                                 shrinkWrap: true,
                                 scrollDirection: Axis.horizontal,
                                 itemCount: entity!.skillList!.length,
                                 itemBuilder: (context, index) {
-                                  return Row(
-                                    children: [
-                                      Container(padding: EdgeInsets.only(right: 7)),
-                                      Chip(
-                                        labelPadding: const EdgeInsets.only(right: 10,left: 10,top: 4,bottom: 4),
-                                        label: Text(entity!.skillList![index].name!, style: TextStyle(color: HexColor(entity!.skillList![index].hexColorText!))),
-                                        avatar: ClipOval(
-                                          child: SizedBox.fromSize(
-                                            size: Size.fromRadius(48), // Image radius
-                                            child:Image.asset('assets/images/avatar_image.png', fit: BoxFit.cover)
+                                  return
+                                      Container(
+                                        margin: const EdgeInsets.symmetric(horizontal: 5),
+                                        child: Chip(
+                                          labelPadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                                          label: Text(
+                                              entity!.skillList![index].name!,
+                                              style: TextStyle(
+                                                  color: HexColor(entity!
+                                                      .skillList![index]
+                                                      .hexColorText!))),
+                                          avatar: ClipOval(
+                                            child: SizedBox.fromSize(
+                                                size: Size.fromRadius(48),
+                                                // Image radius
+                                                child: Image.asset(
+                                                    'assets/images/avatar_image.png',
+                                                    fit: BoxFit.cover)),
                                           ),
+                                          backgroundColor: HexColor(entity!
+                                              .skillList![index]
+                                              .hexColorBackground!),
+                                          shape: StadiumBorder(
+                                              side: BorderSide(
+                                                  color: HexColor(entity!
+                                                      .skillList![index]
+                                                      .hexColorText!))),
                                         ),
-                                        backgroundColor: HexColor(entity!.skillList![index].hexColorBackground!),
-                                        shape: StadiumBorder(side: BorderSide(color: HexColor(entity!.skillList![index].hexColorText!))),
-                                      )
-                                    ],
-                                  );
+                                      );
+
                                 },
-                              )
-                          ),
+                              )),
                         ],
                       )
                     ],
                   ),
                 ),
               ),
-
               Container(padding: EdgeInsets.only(top: 20)),
               Row(
                 children: [

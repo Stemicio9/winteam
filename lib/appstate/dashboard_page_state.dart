@@ -1,4 +1,4 @@
 // INDEX DELLA PAGINA CORRENTE DELLA DASHBOARD
-int selectedIndex = 3;
+int selectedIndex = 1;
 
-int selectedIndexLavoratore = 3;
+int selectedIndexLavoratore = 1;

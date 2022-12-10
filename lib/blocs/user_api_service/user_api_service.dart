@@ -5,6 +5,7 @@ import 'package:retrofit/retrofit.dart';
 import 'package:winteam/blocs/annunci_api_service/annunci_api_service.dart';
 import 'package:winteam/constants/StateConstants.dart';
 import 'package:winteam/entities/user_entity.dart';
+import 'package:winteam/main.dart';
 
 part  'user_api_service_impl.dart';
 

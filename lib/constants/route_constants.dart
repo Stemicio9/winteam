@@ -4,12 +4,12 @@ import 'package:winteam/pages/login_section/register_page.dart';
 import 'package:winteam/pages/pagine_datore/dettaglio_annuncio_datore.dart';
 import 'package:winteam/pages/pagine_datore/lista_candidati.dart';
 import 'package:winteam/pages/pagine_datore/modifica_profilo_datore.dart';
-import 'package:winteam/pages/pagine_lavoratore/aggiungi_skill.dart';
 import 'package:winteam/pages/pagine_lavoratore/dettaglio_annuncio_lavoratore.dart';
 import 'package:winteam/pages/pagine_lavoratore/filtri_annunci_lavoratore.dart';
 
 import 'package:winteam/pages/pagine_datore/dashboard_datore.dart';
 import 'package:winteam/pages/pagine_lavoratore/modifica_profilo_lavoratore.dart';
+import 'package:winteam/widgets/select_skill_page.dart';
 
 import '../pages/login_section/login.dart';
 import '../pages/pagine_datore/pubblica_annuncio_datore.dart';
@@ -41,7 +41,7 @@ class RouteConstants {
   static dynamic route(context) => {
     '/': (context) =>  Login(),
     dashboardLavoratore: (context) => DashboardLavoratore(),
-    comeFunziona: (context) => ComeFunziona(),
+    //comeFunziona: (context) => ComeFunziona(),
     registrazione: (context) => RegisterPage(),
     login: (context) => Login(),
     passDimenticata: (context) => PasswordDimenticata(),
@@ -51,7 +51,7 @@ class RouteConstants {
     dettaglioAnnuncioDatore: (context) => DettaglioAnnuncioDatoreWidget(),
     listaCandidati: (context) => ListaCandidatiWidget(),
     aggiungiAnnuncio: (context) => PubblicaAnnuncioDatore(),
-    aggiungiSkill: (context) => AggiungiSkill(),
+    aggiungiSkill: (context) => SelectSkillPage(),
     modificaProfiloLavoratore: (context) => ModificaProfiloLavoratore(),
     modificaProfiloDatore: (context) => ModificaProfiloDatore(),
 

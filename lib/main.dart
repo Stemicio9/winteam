@@ -1,7 +1,9 @@
 
 import 'dart:convert';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -17,6 +19,32 @@ import 'package:winteam/constants/route_constants.dart';
 import 'package:winteam/entities/user_entity.dart';
 import 'package:winteam/firebase_options.dart';
 
+
+var url_base;
+
+Future<bool> fetchBaseUrl() async {
+
+
+  try {
+    DocumentSnapshot element = await FirebaseFirestore.instance.collection(
+        'rest_base_url').doc("rest_url").get();
+
+    if (kDebugMode) {
+      url_base = element['debug'];
+      print("URL BASE ${url_base}");
+      return true;
+    } else {
+      url_base = element['production'];
+      print("URL BASE ${url_base}");
+      return true;
+    }
+  }catch(e) {
+    print(e);
+    return false;
+  }
+
+}
+
 void main() async{
 
   WidgetsFlutterBinding.ensureInitialized();
@@ -28,6 +56,7 @@ void main() async{
   var user = auth.currentUser;
   String initialRoute = "/";
   if(user != null){
+    await fetchBaseUrl();
     var me = await userListApiService.me();
     var encoded = jsonEncode(me.data);
     var decoded = jsonDecode(encoded);

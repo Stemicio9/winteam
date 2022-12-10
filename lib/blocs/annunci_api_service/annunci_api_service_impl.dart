@@ -1,8 +1,8 @@
 part of 'annunci_api_service.dart';
 
 
-const url_base = "http://192.168.1.89:8081";
-//const url_base = "http://192.168.1.74:8081";
+
+
 
 
 AnnunciListApiService annunciListApiService = AnnunciListApiService(Dio(),baseUrl: url_base);

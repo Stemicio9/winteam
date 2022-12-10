@@ -282,10 +282,7 @@ class ProfiloDatoreState extends State<ProfiloDatore> {
           Container(
             padding: const EdgeInsets.only(right: 7),
           ),
-          Text(entity!.phoneNumber!,
-              style: const TextStyle(
-                fontSize: 16,
-              ))
+          Text(entity!.phoneNumber ?? "", style: const TextStyle(fontSize: 16))
         ]),
         const Padding(padding: EdgeInsets.only(top: 8)),
         Row(mainAxisAlignment: MainAxisAlignment.start, children: [
@@ -296,12 +293,7 @@ class ProfiloDatoreState extends State<ProfiloDatore> {
           Container(
             padding: const EdgeInsets.only(right: 7),
           ),
-          const Text(
-              'entity.address!',
-              style: TextStyle(
-                fontSize: 16,
-              )
-          ),
+          Text(entity!.address ?? "", style: const TextStyle(fontSize: 16))
         ]),
         const Padding(padding: EdgeInsets.only(top: 8)),
         Row(mainAxisAlignment: MainAxisAlignment.start, children: [
