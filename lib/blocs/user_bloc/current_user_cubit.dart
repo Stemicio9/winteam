@@ -32,6 +32,7 @@ class UserCubit extends Cubit<UserState> {
       var decoded = jsonDecode(encoded);
       var json = UserEntity.fromJson(decoded);
       _user = json;
+      print("UserCubit: $_user");
       emit(UserLoaded(json));
       return json;
     } catch (e) {

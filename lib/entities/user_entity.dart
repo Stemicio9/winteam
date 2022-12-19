@@ -54,6 +54,12 @@ class UserEntity {
       this.email,
       this.companyName});
 
+  //toString
+  @override
+  String toString() {
+    return 'UserEntity{id: $id, firstName: $firstName, lastName: $lastName, roleId: $roleId, email: $email, description: $description, brief: $brief, skillList: $skillList, availabilityDays: $availabilityDays, availabilityHourSlots: $availabilityHourSlots, availabilityCities: $availabilityCities, address: $address, city: $city, province: $province, nation: $nation, phoneNumber: $phoneNumber, imageLink: $imageLink, contatoreAnnunci: $contatoreAnnunci, subscriptionId: $subscriptionId, lastSubscriptionDate: $lastSubscriptionDate, companyTypeId: $companyTypeId, verified: $verified, influencedUserList: $influencedUserList, enabledAnnunci: $enabledAnnunci, companyName: $companyName}';
+  }
+
   factory UserEntity.fromJson(Map<String, dynamic> json) => UserEntity(
       id: json["id"] ?? "",
       firstName: json["firstName"] ?? "",
@@ -69,7 +75,8 @@ class UserEntity {
       description: json["description"] ?? "",
       phoneNumber: json["phoneNumber"] ?? "",
       imageLink: json["imageLink"] ?? "",
-      companyName: json['companyName'] ?? ",");
+      companyName: json['companyName'] ?? "",
+      address: json['address'] ?? "");
 
   UserEntity copyWith({
       String? id,

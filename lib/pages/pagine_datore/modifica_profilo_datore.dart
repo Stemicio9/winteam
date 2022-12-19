@@ -50,25 +50,22 @@ class ModificaProfiloDatoreState extends State<ModificaProfiloDatore>{
   TextEditingController descController = TextEditingController();
 
 
-
-
   @override
   void initState() {
     super.initState();
-    inputData();
-
   }
 
-  inputData()  async {
+  inputData(UserEntity entity) {
     final User? user = auth.currentUser;
-    uid = user!.uid;
-    email = user.email!;
-    entity =  await _cubit.me();
-    emailController.text = entity!.email!;
-    telefonoController.text = entity!.phoneNumber!;
-    indirizzoController.text = 'entity!.address!';
-    nomeattivitaController.text = entity!.companyName!;
-    descController.text = entity!.description!;
+    uid = user?.uid ?? '';
+    email = user?.email ?? "";
+    print(entity);
+    emailController.text = entity.email! ?? "";
+    telefonoController.text = entity.phoneNumber! ?? "";
+    indirizzoController.text = entity.address! ?? "";
+    nomeattivitaController.text = entity.companyName! ?? "";
+    descController.text = entity.description! ?? "";
+
   }
 
 
@@ -147,7 +144,7 @@ class ModificaProfiloDatoreState extends State<ModificaProfiloDatore>{
                                 Icons.image,
                                 color: Theme.of(context).colorScheme.primary,
                               ),
-                              Padding(padding: EdgeInsets.only(left: 10)),
+                              const Padding(padding: EdgeInsets.only(left: 10)),
                               const Text(
                                 'Galleria',
                                 style: TextStyle(
@@ -158,7 +155,7 @@ class ModificaProfiloDatoreState extends State<ModificaProfiloDatore>{
                           )
                       ),
                     ),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     SizedBox(
                       height: 50,
                       child: MaterialButton(
@@ -172,7 +169,7 @@ class ModificaProfiloDatoreState extends State<ModificaProfiloDatore>{
                                 Icons.photo_camera,
                                 color: Theme.of(context).colorScheme.primary,
                               ),
-                              Padding(padding: EdgeInsets.only(left: 10)),
+                              const Padding(padding: EdgeInsets.only(left: 10)),
                               const Text(
                                 'Fotocamera',
                                 style: TextStyle(
@@ -187,8 +184,6 @@ class ModificaProfiloDatoreState extends State<ModificaProfiloDatore>{
               ));
         });
   }
-
-
 
   Future downloadUrlImage() async {
     var fileList = await FirebaseStorage.instance.ref('UID:$uid/image_profile/').listAll();
@@ -205,9 +200,6 @@ class ModificaProfiloDatoreState extends State<ModificaProfiloDatore>{
     return result;
   }
 
-
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -217,7 +209,8 @@ class ModificaProfiloDatoreState extends State<ModificaProfiloDatore>{
             if (state is UserLoading) {
               return const Center(child: CircularProgressIndicator());
             } else if (state is UserLoaded) {
-              return everyContent();
+              inputData(state.user);
+              return everyContent(state.user);
             } else if (state is UserEmpty) {
               // @todo insert an empty state element
               return Container();
@@ -229,18 +222,17 @@ class ModificaProfiloDatoreState extends State<ModificaProfiloDatore>{
   }
 
 
-  @override
-  Widget everyContent() {
+  Widget everyContent(UserEntity entity) {
     return Scaffold(
       appBar: appbarSenzaActions(context, 'Modifica profilo'),
       body: SingleChildScrollView(
         child: Column(
           children: [
             Container(
-              padding: EdgeInsets.symmetric(horizontal: 10),
+              padding: const EdgeInsets.symmetric(horizontal: 10),
               child: Column(
                 children: [
-                  Container(padding: EdgeInsets.only(top: 20)),
+                  Container(padding: const EdgeInsets.only(top: 20)),
 
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -262,7 +254,7 @@ class ModificaProfiloDatoreState extends State<ModificaProfiloDatore>{
                           children: [
                             ClipOval(
                               child: SizedBox.fromSize(
-                                size: Size.fromRadius(48), // Image radius
+                                size: const Size.fromRadius(48), // Image radius
                                 child: FutureBuilder(
                                   future: downloadUrlImage(),
                                   builder: (context, snapshot) {
@@ -280,7 +272,7 @@ class ModificaProfiloDatoreState extends State<ModificaProfiloDatore>{
                                 child: RawMaterialButton(
                                   onPressed: () {
                                     showModalBottomSheet<void>(
-                                      shape: RoundedRectangleBorder(
+                                      shape: const RoundedRectangleBorder(
                                         borderRadius: BorderRadius.vertical(
                                           top: Radius.circular(15),
                                         ),
@@ -307,25 +299,23 @@ class ModificaProfiloDatoreState extends State<ModificaProfiloDatore>{
                                                       child: Row(
                                                         mainAxisAlignment: MainAxisAlignment.start,
                                                         children: [
-                                                          Container(
-                                                              child: SizedBox(
-                                                                  height: 50,
-                                                                  width: 50,
-                                                                  child:Card(
-                                                                    shape: RoundedRectangleBorder(
-                                                                      borderRadius: BorderRadius.circular(80),
-                                                                    ),
-                                                                    color: Colors.white70,
-                                                                    child: Icon(
-                                                                      Icons.image,
-                                                                      color: Colors.black,
-                                                                      size: 25,
-                                                                    ),
-                                                                  )
+                                                          SizedBox(
+                                                              height: 50,
+                                                              width: 50,
+                                                              child:Card(
+                                                                shape: RoundedRectangleBorder(
+                                                                  borderRadius: BorderRadius.circular(80),
+                                                                ),
+                                                                color: Colors.white70,
+                                                                child: const Icon(
+                                                                  Icons.image,
+                                                                  color: Colors.black,
+                                                                  size: 25,
+                                                                ),
                                                               )
                                                           ),
 
-                                                          Padding(padding: EdgeInsets.only(left: 10)),
+                                                          const Padding(padding: EdgeInsets.only(left: 10)),
                                                           const Text(
                                                             'Seleziona foto dalla galleria',
                                                             style: TextStyle(
@@ -356,7 +346,7 @@ class ModificaProfiloDatoreState extends State<ModificaProfiloDatore>{
                                                                       borderRadius: BorderRadius.circular(80),
                                                                     ),
                                                                     color: Colors.white70,
-                                                                    child: Icon(
+                                                                    child: const Icon(
                                                                       Icons.camera_alt_rounded,
                                                                       color: Colors.black,
                                                                       size: 25,
@@ -365,7 +355,7 @@ class ModificaProfiloDatoreState extends State<ModificaProfiloDatore>{
                                                               )
                                                           ),
 
-                                                          Padding(padding: EdgeInsets.only(left: 10)),
+                                                          const Padding(padding: EdgeInsets.only(left: 10)),
                                                           const Text(
                                                             'Scatta una foto',
                                                             style: TextStyle(
@@ -387,10 +377,10 @@ class ModificaProfiloDatoreState extends State<ModificaProfiloDatore>{
                                   },
 
                                   elevation: 2.0,
-                                  fillColor: Color(0xFFF5F6F9),
-                                  child: Icon(Icons.camera_alt_rounded, color: giallo),
-                                  padding: EdgeInsets.all(5.0),
-                                  shape: CircleBorder(),
+                                  fillColor: const Color(0xFFF5F6F9),
+                                  padding: const EdgeInsets.all(5.0),
+                                  shape: const CircleBorder(),
+                                  child: const Icon(Icons.camera_alt_rounded, color: giallo),
                                 )
                             ),
                           ],
@@ -398,29 +388,40 @@ class ModificaProfiloDatoreState extends State<ModificaProfiloDatore>{
                       )
                     ],
                   ),
-                  Container(padding: EdgeInsets.only(top: 30)),
+                  Container(padding: const EdgeInsets.only(top: 30)),
 
-                  InputWidget(labeltext: 'Nome attività', hinttext: 'Inserisci il nome della tua attività', controller: nomeattivitaController,),
+                  InputWidget(labeltext: 'Nome attività', hinttext: 'Inserisci il nome della tua attività', controller: nomeattivitaController),
 
-                  Container(padding: EdgeInsets.only(top: 25)),
+                  Container(padding: const EdgeInsets.only(top: 25)),
 
                   InputWidget(labeltext: 'Email', hinttext: 'Inserisci una email', controller: emailController,validator: validaemail),
 
-                  Container(padding: EdgeInsets.only(top: 25)),
+                  Container(padding: const EdgeInsets.only(top: 25)),
 
                   InputWidget(labeltext: 'Telefono', hinttext: 'Inserisci un numero di telefono', controller: telefonoController,),
 
-                  Container(padding: EdgeInsets.only(top: 25)),
+                  Container(padding: const EdgeInsets.only(top: 25)),
 
                   InputWidget(labeltext: 'Indirizzo', hinttext: 'Inserisci un indirizzo', controller: indirizzoController,),
 
-                  Container(padding: EdgeInsets.only(top: 25)),
+                  Container(padding: const EdgeInsets.only(top: 25)),
 
                   InputWidget(labeltext: 'Descrizione', hinttext: 'Inserisci una descrizione', controller: descController,),
 
-                  Container(padding: EdgeInsets.only(top: 25)),
+                  Container(padding: const EdgeInsets.only(top: 25)),
 
-                  ActionButton('Salva cambiamenti', (){Navigator.pop(context);}, 200, azzurroscuro, Colors.white),
+                  ActionButton('Salva cambiamenti', (){
+                    _cubit.update(
+                      entity.copyWith(
+                        companyName: nomeattivitaController.text,
+                        email: emailController.text,
+                        phoneNumber: telefonoController.text,
+                        address: indirizzoController.text,
+                        description: descController.text,
+                      )
+                    );
+                    Navigator.pop(context);
+                    }, 200, azzurroscuro, Colors.white),
                 ],
               ),
             ),
@@ -429,6 +430,8 @@ class ModificaProfiloDatoreState extends State<ModificaProfiloDatore>{
       )
     );
   }
+
+
 
   String validaemail (String value) {
     if (value.isEmpty) {

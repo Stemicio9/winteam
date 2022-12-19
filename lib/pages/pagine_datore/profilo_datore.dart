@@ -8,7 +8,6 @@ import 'package:winteam/blocs/subscription_bloc/subscription_info_cubit.dart';
 import 'package:winteam/blocs/user_bloc/current_user_cubit.dart';
 import 'package:winteam/constants/language.dart';
 import 'package:winteam/constants/route_constants.dart';
-import 'package:winteam/entities/subscription.dart';
 import 'package:winteam/entities/user_entity.dart';
 import 'package:winteam/pages/pagine_datore/subscription_info_widget.dart';
 import 'package:winteam/widgets/action_buttons.dart';
@@ -52,9 +51,8 @@ String imageDefaultName = "profileImage";
 class ProfiloDatoreState extends State<ProfiloDatore> {
 
   UserCubit get _cubit => context.read<UserCubit>();
-  SubscriptionInfoCubit get _subscription_info_cubit => context.read<SubscriptionInfoCubit>();
 
-  UserEntity? entity;
+
   final FirebaseAuth auth = FirebaseAuth.instance;
   XFile? imageFile;
   String uid = '';
@@ -62,9 +60,8 @@ class ProfiloDatoreState extends State<ProfiloDatore> {
 
   @override
   void initState() {
-    _cubit.me();
-    super.initState();
     inputData();
+    super.initState();
   }
 
 
@@ -72,7 +69,7 @@ class ProfiloDatoreState extends State<ProfiloDatore> {
     final User? user = auth.currentUser;
     uid = user!.uid;
     email = user.email!;
-    entity = await _cubit.me();
+    _cubit.me();
   }
 
   Future downloadUrlImage() async {
@@ -134,9 +131,24 @@ class ProfiloDatoreState extends State<ProfiloDatore> {
 
                   ActionButton(getCurrentLanguageValue(GESTISCI_ABBONAMENTO)!,
                           () {
-
+                              showDialog(
+                                context: context,
+                                barrierDismissible: true,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    title: const Text('Gestisci abbonamento'),
+                                    content: const Text('Per maggiori informazioni, visita il sito www.workonenight.it !'),
+                                    actions: <Widget>[
+                                      TextButton(
+                                        onPressed: () => Navigator.pop(context, 'Cancel'),
+                                        child: const Text('OK'),
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
                              },
-                      200,
+                      MediaQuery.of(context).size.width * 0.8,
                       azzurroscuro, Colors.white),
 
 
@@ -154,11 +166,11 @@ class ProfiloDatoreState extends State<ProfiloDatore> {
                       ),
                     ],
                   ),
-                  personalInfo(),
+                  personalInfo(entity),
 
                   const Padding(padding: EdgeInsets.only(top: 20)),
 
-                  footer(),
+                  footer(entity),
                 ]
             ),
           ),
@@ -259,7 +271,7 @@ class ProfiloDatoreState extends State<ProfiloDatore> {
     );
   }
 
-  Widget personalInfo(){
+  Widget personalInfo(UserEntity entity){
     return Column(
       children: [
         const Padding(padding: EdgeInsets.only(top: 8)),
@@ -282,7 +294,7 @@ class ProfiloDatoreState extends State<ProfiloDatore> {
           Container(
             padding: const EdgeInsets.only(right: 7),
           ),
-          Text(entity!.phoneNumber ?? "", style: const TextStyle(fontSize: 16))
+          Text(entity?.phoneNumber ?? "", style: const TextStyle(fontSize: 16))
         ]),
         const Padding(padding: EdgeInsets.only(top: 8)),
         Row(mainAxisAlignment: MainAxisAlignment.start, children: [
@@ -316,7 +328,7 @@ class ProfiloDatoreState extends State<ProfiloDatore> {
   }
 
 
-  Widget footer(){
+  Widget footer(UserEntity entity){
     return Column(
       children: [
         Row(

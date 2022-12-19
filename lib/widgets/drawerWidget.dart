@@ -87,6 +87,7 @@ class DrawerWidget extends StatelessWidget {
     lista.add(creatile(v6, () async {
       var result = await _showMyDialog(context);
       if(result == 'OK'){
+        FirebaseAuth.instance.signOut();Navigator.pushNamed(context, RouteConstants.login);
         // FirebaseAuth.instance.currentUser!.delete();
         // Navigator.pushNamed(context, RouteConstants.login);
       }

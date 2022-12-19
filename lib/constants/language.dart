@@ -79,7 +79,7 @@ final Map<String,String> LANG_IT = {
   CONFERMA:"Conferma",
   BANNER_CANNOT_SEARCH_USER:"IL TUO ABBONAMENTO NON TI PERMETTE DI VEDERE TUTTI I DATI DEI RISULTATI DI RICERCA, AGGIORNA IL TUO ABBONAMENTO",
   CANNOT_LOAD_SUBSCRIPTION_INFO:"Non riesco a caricare i dati dell'abbonamento",
-  GESTISCI_ABBONAMENTO:"Gestisci abbonamento",
+  GESTISCI_ABBONAMENTO:"Vedi abbonamento",
   INFORMAZIONI_DI_CONTATTO:"Informazioni di contatto",
   CHI_SIAMO:"Chi siamo",
   REMOVE_ACCOUNT: "Elimina il tuo account",
