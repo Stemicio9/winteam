@@ -55,8 +55,5 @@ class RouteConstants {
     modificaProfiloLavoratore: (context) => ModificaProfiloLavoratore(),
     modificaProfiloDatore: (context) => ModificaProfiloDatore(),
 
-
-
-
   };
 }
