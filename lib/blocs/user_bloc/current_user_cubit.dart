@@ -23,9 +23,6 @@ class UserCubit extends Cubit<UserState> {
   Future<UserEntity?> me() async {
     emit(UserLoading());
     try {
-      // TODO: fetch users
-      // Qui bisog na creare la nostra a
-
       HttpResponse<dynamic> result = await userListApiService.me();
 
       var encoded = jsonEncode(result.data);
@@ -51,10 +48,6 @@ class UserCubit extends Cubit<UserState> {
       print(e);
       emit(UserError());
     }
-
-
-
-
   }
 
 

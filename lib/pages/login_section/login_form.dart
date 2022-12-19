@@ -168,17 +168,15 @@ extension EmailValidator on String {
           // @todo avvisare che il login è sbagliato
           return;
         }
-        print("token");
+
         var a = await log!.user!.getIdToken();
-        print(a);
+
         // DATORE, LAVORATORE, INFLUENCER
         UserEntity? entity = await _cubit.me();
-        print("STAMPO LA ENTITY");
-        print(entity);
+
         if(entity == null) return;
 
-        print("USERENTITY CREATA");
-        print(entity.roleId);
+
         if(entity.roleId == "DATORE"){
           Navigator.pushNamed(context, '/dashboarddatore');
         }else if(entity.roleId == "LAVORATORE"){

@@ -9,6 +9,7 @@ import 'package:winteam/pages/pagine_lavoratore/filtri_annunci_lavoratore.dart';
 
 import 'package:winteam/pages/pagine_datore/dashboard_datore.dart';
 import 'package:winteam/pages/pagine_lavoratore/modifica_profilo_lavoratore.dart';
+import 'package:winteam/pages_v2/login/login_v2.dart';
 import 'package:winteam/widgets/select_skill_page.dart';
 
 import '../pages/login_section/login.dart';
@@ -39,7 +40,8 @@ class RouteConstants {
 
 
   static dynamic route(context) => {
-    '/': (context) =>  Login(),
+//    '/': (context) =>  Login(),
+    '/': (context) =>  LoginV2(),
     dashboardLavoratore: (context) => DashboardLavoratore(),
     //comeFunziona: (context) => ComeFunziona(),
     registrazione: (context) => RegisterPage(),

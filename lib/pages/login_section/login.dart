@@ -38,8 +38,6 @@ class _LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height;
-    double width = MediaQuery.of(context).size.width;
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -107,10 +105,7 @@ class _LoginState extends State<Login> {
                     ),)
 
               ),
-
               ActionButton("Registrati", vaiapaginaregistrati,250,azzurroscuro, Colors.white),
-
-
             ],
           )
       );
@@ -122,7 +117,7 @@ class _LoginState extends State<Login> {
   }
 
   vaiapaginaregistrati(){
-    Navigator.of(context).pushNamed("/registrazione");
+    Navigator.of(context).pushNamed(RouteConstants.registrazione);
   }
 
 }
