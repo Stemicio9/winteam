@@ -9,7 +9,9 @@ import 'package:winteam/pages/pagine_lavoratore/filtri_annunci_lavoratore.dart';
 
 import 'package:winteam/pages/pagine_datore/dashboard_datore.dart';
 import 'package:winteam/pages/pagine_lavoratore/modifica_profilo_lavoratore.dart';
+import 'package:winteam/pages_v2/forgot_password/forgot_password_v2.dart';
 import 'package:winteam/pages_v2/login/login_v2.dart';
+import 'package:winteam/pages_v2/register/register_v2.dart';
 import 'package:winteam/widgets/select_skill_page.dart';
 
 import '../pages/login_section/login.dart';
@@ -39,14 +41,25 @@ class RouteConstants {
 
 
 
+
   static dynamic route(context) => {
 //    '/': (context) =>  Login(),
-    '/': (context) =>  LoginV2(),
+    '/': (context) =>  LoginPageV2(),
+
     dashboardLavoratore: (context) => DashboardLavoratore(),
     //comeFunziona: (context) => ComeFunziona(),
-    registrazione: (context) => RegisterPage(),
-    login: (context) => Login(),
-    passDimenticata: (context) => PasswordDimenticata(),
+
+    //registrazione: (context) => RegisterPage(),
+    registrazione: (context) => RegisterPageV2(),
+
+    //login: (context) => Login(),
+    login: (context) => LoginPageV2(),
+
+   // passDimenticata: (context) => PasswordDimenticata(),
+    passDimenticata: (context) => ForgotPasswordV2(),
+
+
+
     filtriAnnunciLavoratore: (context) => FiltriAnnunci(),
     dashboardDatore: (context) => DashboardDatore(),
     dettaglioAnnuncioLavoratore: (context) => DettaglioAnnuncioLavoratore(),

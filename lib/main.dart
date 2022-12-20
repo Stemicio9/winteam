@@ -14,6 +14,7 @@ import 'package:winteam/blocs/subscription_bloc/subscription_cubit.dart';
 import 'package:winteam/blocs/user_api_service/user_api_service.dart';
 import 'package:winteam/blocs/user_bloc/current_user_cubit.dart';
 import 'package:winteam/blocs/user_bloc/user_list_cubit.dart';
+import 'package:winteam/constants/colors.dart';
 import 'package:winteam/constants/language.dart';
 import 'package:winteam/constants/route_constants.dart';
 import 'package:winteam/entities/user_entity.dart';
@@ -102,8 +103,10 @@ class MyApp extends StatelessWidget {
         ],
         child: MaterialApp(
           title: APP_TITLE,
-          theme: ThemeData(
-            primarySwatch: Colors.blue,
+           theme: ThemeData(
+              fontFamily: 'Montserrat',
+              primarySwatch: Colors.blue,
+              backgroundColor: background
           ),
           routes: RouteConstants.route(context) ,
           initialRoute: initialRoute,

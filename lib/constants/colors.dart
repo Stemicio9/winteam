@@ -12,8 +12,12 @@ const Color arancio = Color(0xFFE07400);
 const Color blunotte = Color(0xFF010392);
 const Color giallochiaro = Color(0xFFFFCD00);
 const Color grigio = Color(0xFF6C6969);
+const Color black = Color(0xFF000000);
+const Color white = Color(0xFFFFFFFF);
 
-
+//theme colors
+const Color green = Color(0xFF4EA699);
+const Color background = Color(0xFF223D64);
 
 final Color rossoopaco = Color(0xFFFF0000).withOpacity(0.6);
 final Color rossomoltoopaco = Color(0xFFFF0000).withOpacity(0.1);
@@ -25,7 +29,6 @@ final Color grigioopaco = Color(0xFF6C6969).withOpacity(0.1);
 final Color grigiochiaro = Color(0xFFD3D3D3).withOpacity(0.1);
 
 final Color verdeChip = Colors.green;
-
 
 
 
