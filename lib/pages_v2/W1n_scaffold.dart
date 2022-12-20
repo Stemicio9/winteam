@@ -9,14 +9,16 @@ import 'package:winteam/widgets/utilities/close_on_tap.dart';
 class W1NScaffold extends StatelessWidget {
 
   final Widget body;
+  final Widget? bottomNavigationBar;
 
-  const W1NScaffold({Key? key, required this.body}) : super(key: key);
+  const W1NScaffold({Key? key, required this.body, this.bottomNavigationBar}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: CloseOnTapUtility(child: body),
+      bottomNavigationBar: bottomNavigationBar ?? Container(),
     );
   }
 }

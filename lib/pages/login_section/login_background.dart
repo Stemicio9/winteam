@@ -30,7 +30,7 @@ class Background extends StatelessWidget {
   bool logo = true;
 
 
-  Background({this.logo = true});
+  Background({super.key, this.logo = true});
 
 
   @override

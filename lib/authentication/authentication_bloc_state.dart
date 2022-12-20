@@ -14,6 +14,7 @@ class UserAuthenticated extends UserAuthenticationState {
   UserAuthenticated(this.token);
 }
 
-class UserErrorAuthentication extends UserAuthenticationState {}
+class UserErrorAuthentication extends UserAuthenticationState {
+}
 
 class UserAuthenticationLoading extends UserAuthenticationState {}
