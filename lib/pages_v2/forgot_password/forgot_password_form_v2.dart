@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:winteam/constants/colors.dart';
 import 'package:winteam/constants/language.dart';
+import 'package:winteam/constants/route_constants.dart';
+import 'package:winteam/constants/validators.dart';
 import 'package:winteam/widgets/utilities/image_utility.dart';
 import 'package:winteam/widgets_v2/action_buttons_v2.dart';
 import 'package:winteam/widgets_v2/inputs_v2.dart';
@@ -61,8 +63,17 @@ class ForgotPasswordFormV2State extends State<ForgotPasswordFormV2> {
         InputsV2Widget(
           hinttext: INSERT_EMAIL,
           controller: _emailTextController,
+          isPassword:false,
+          validator: validateEmail,
         ),
-        ActionButtonV2(CONFIRM, () {}, 190),
+        ActionButtonV2(
+            text:CONFIRM,
+            action:formSubmit,
+            maxWidth:190,
+            color:green,
+            textColor:white,
+            margin:10
+        ),
       ],
     );
   }
@@ -77,5 +88,12 @@ class ForgotPasswordFormV2State extends State<ForgotPasswordFormV2> {
         underline: true,
       )
     );
+  }
+
+
+  formSubmit() async {
+    if (_formKey.currentState!.validate()) {
+      Navigator.pushNamed(context, RouteConstants.login);
+    }
   }
 }

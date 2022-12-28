@@ -25,7 +25,7 @@ class CheckboxV2WidgetState extends State<CheckboxV2Widget> {
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(5)),
               fillColor: MaterialStateProperty.all(white),
-              checkColor: background,
+              checkColor: green,
               value: isChecked,
               onChanged: (bool? value) {
                 setState(() {

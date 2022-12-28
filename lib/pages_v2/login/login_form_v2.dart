@@ -1,4 +1,3 @@
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -9,6 +8,7 @@ import 'package:winteam/blocs/user_bloc/user_list_cubit.dart';
 import 'package:winteam/constants/colors.dart';
 import 'package:winteam/constants/language.dart';
 import 'package:winteam/constants/route_constants.dart';
+import 'package:winteam/constants/validators.dart';
 import 'package:winteam/entities/user_entity.dart';
 import 'package:winteam/widgets/utilities/image_utility.dart';
 import 'package:winteam/widgets_v2/action_buttons_v2.dart';
@@ -28,8 +28,7 @@ class LoginWidget extends StatelessWidget {
   }
 }
 
-
-class LoginFormV2 extends StatefulWidget{
+class LoginFormV2 extends StatefulWidget {
   @override
   LoginFormV2State createState() {
     return LoginFormV2State();
@@ -37,7 +36,6 @@ class LoginFormV2 extends StatefulWidget{
 }
 
 class LoginFormV2State extends State<LoginFormV2> {
-
   UserCubit get _cubit => context.read<UserCubit>();
 
   final _formKey = GlobalKey<FormState>();
@@ -46,10 +44,9 @@ class LoginFormV2State extends State<LoginFormV2> {
 
   final TextEditingController _passwordTextController = TextEditingController();
 
-
   @override
   Widget build(BuildContext context) {
-   /* return BlocBuilder<UserCubit, UserState>(
+    /* return BlocBuilder<UserCubit, UserState>(
         builder: (_, state) {
           if (state is NotAuthenticated) {
             // todo
@@ -77,26 +74,19 @@ class LoginFormV2State extends State<LoginFormV2> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children:  [
-
+            children: [
               logoSection(),
-
               loginTextSection(),
-
               loginSection(),
-
               forgotPasswordSection(),
-
               registerSection()
-          ],
-        )
-      ),
+            ],
+          )),
     );
   }
 
-
-  Widget logoSection(){
-    return  Container(
+  Widget logoSection() {
+    return Container(
       width: MediaQuery.of(context).size.width,
       child: const ImagePlaceholder(
         name: LOGO_IMAGE_NAME,
@@ -104,73 +94,71 @@ class LoginFormV2State extends State<LoginFormV2> {
     );
   }
 
-  Widget loginTextSection(){
+  Widget loginTextSection() {
     return Texth1V2(
       testo: LOGIN,
       color: white,
       weight: FontWeight.w600,
-
     );
   }
 
-  Widget loginSection(){
+  Widget loginSection() {
+    final node = FocusScope.of(context);
+
     return Column(
       children: [
-
         InputsV2Widget(
           hinttext: EMAIL,
           controller: _emailTextController,
+          validator: validateEmail,
+          isPassword: false
         ),
-
         InputsV2Widget(
           hinttext: PASSWORD,
           controller: _passwordTextController,
-          ispassword: true,
+          validator: notEmptyValidate,
+          isPassword: true,
         ),
-
         CheckboxV2Widget(),
-
-        ActionButtonV2(LOGIN, (){}, 315),
+        ActionButtonV2(text:LOGIN,action: formSubmit,maxWidth: 315,color:green,textColor:white,margin:10),
       ],
     );
   }
 
-  Widget forgotPasswordSection(){
+  Widget forgotPasswordSection() {
     return GestureDetector(
-        onTap: vaiapaginapassworddimenticata,
+        onTap: navigateToForgotPassword,
         child: Texth3V2(
-      testo: FORGOT_PASSWORD,
-      color: white,
-      underline: true,
-        )
-    );
+          testo: FORGOT_PASSWORD,
+          color: white,
+          underline: true,
+        ));
   }
 
-  Widget registerSection(){
+  Widget registerSection() {
     return Column(
       children: [
-        Texth4V2(
-            testo: DONT_HAVE_AN_ACCOUNT,
-            color: white
-        ),
-
-        ActionButtonV2(
-            REGISTER,
-            vaiapaginaregistrati,
-            200
-        ),
+        Texth4V2(testo: DONT_HAVE_AN_ACCOUNT, color: white),
+        ActionButtonV2(text:REGISTER, action:navigateToRegister,maxWidth: 200,color:green,textColor:white,margin:10),
       ],
     );
   }
 
-  vaiapaginapassworddimenticata(){
+  formSubmit() async {
+    if (_formKey.currentState!.validate()) {
+     navigateToDashboard();
+    }
+  }
+
+  navigateToForgotPassword() {
     Navigator.of(context).pushNamed(RouteConstants.passDimenticata);
   }
 
-  vaiapaginaregistrati(){
-    Navigator.of(context).pushNamed(RouteConstants.registrazione);
+  navigateToDashboard() {
+    Navigator.of(context).pushNamed(RouteConstants.dashboard);
   }
 
+  navigateToRegister() {
+    Navigator.of(context).pushNamed(RouteConstants.registrazione);
+  }
 }
-
-

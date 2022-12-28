@@ -10,8 +10,12 @@ import 'package:winteam/pages/pagine_lavoratore/filtri_annunci_lavoratore.dart';
 import 'package:winteam/pages/pagine_datore/dashboard_datore.dart';
 import 'package:winteam/pages/pagine_lavoratore/modifica_profilo_lavoratore.dart';
 import 'package:winteam/pages_v2/forgot_password/forgot_password_v2.dart';
+import 'package:winteam/pages_v2/layout/dashboard_layout.dart';
 import 'package:winteam/pages_v2/login/login_v2.dart';
 import 'package:winteam/pages_v2/register/register_v2.dart';
+import 'package:winteam/pages_v2/worker_pages/ads/ads_detail.dart';
+import 'package:winteam/pages_v2/worker_pages/profile/add_skills.dart';
+import 'package:winteam/pages_v2/worker_pages/profile/worker_profile_edit_v2.dart';
 import 'package:winteam/widgets/select_skill_page.dart';
 
 import '../pages/login_section/login.dart';
@@ -38,30 +42,37 @@ class RouteConstants {
 
 
 
+  //new page
+  static const String dashboard = "/dashboard";
+  static const String workerProfileEdit = "/workeredit";
+  static const String addSkills = "/addskills";
+  static const String ads_detail = "/adsdetail";
+
+
 
 
 
 
   static dynamic route(context) => {
-//    '/': (context) =>  Login(),
+//  '/': (context) =>  Login(),
     '/': (context) =>  LoginPageV2(),
 
-    dashboardLavoratore: (context) => DashboardLavoratore(),
-    //comeFunziona: (context) => ComeFunziona(),
 
-    //registrazione: (context) => RegisterPage(),
-    registrazione: (context) => RegisterPageV2(),
-
-    //login: (context) => Login(),
-    login: (context) => LoginPageV2(),
-
-   // passDimenticata: (context) => PasswordDimenticata(),
+    //new page
     passDimenticata: (context) => ForgotPasswordV2(),
+    dashboard: (context) => DashboardWidget(),
+    login: (context) => LoginPageV2(),
+    registrazione: (context) => RegisterPageV2(),
+    workerProfileEdit: (context) => WorkerProfileEditV2(),
+    addSkills: (context) => AddSkills(),
+    ads_detail: (context) => AdsDetail(),
 
 
 
+    //old page
     filtriAnnunciLavoratore: (context) => FiltriAnnunci(),
     dashboardDatore: (context) => DashboardDatore(),
+    dashboardLavoratore: (context) => DashboardLavoratore(),
     dettaglioAnnuncioLavoratore: (context) => DettaglioAnnuncioLavoratore(),
     dettaglioAnnuncioDatore: (context) => DettaglioAnnuncioDatoreWidget(),
     listaCandidati: (context) => ListaCandidatiWidget(),
@@ -69,6 +80,10 @@ class RouteConstants {
     aggiungiSkill: (context) => SelectSkillPage(),
     modificaProfiloLavoratore: (context) => ModificaProfiloLavoratore(),
     modificaProfiloDatore: (context) => ModificaProfiloDatore(),
+    //comeFunziona: (context) => ComeFunziona(),
+    //registrazione: (context) => RegisterPage(),
+    //login: (context) => Login(),
+    // passDimenticata: (context) => PasswordDimenticata(),
 
   };
 }

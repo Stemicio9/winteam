@@ -9,6 +9,9 @@ const String APP_TITLE = "W1N";
 const String DASHBOARD_CONST = "DASHBOARD";
 const String POLICY_PRIVACY = "Policy privacy";
 const String COME_FUNZIONA = "Come funziona?";
+const String CHI_SONO = "Chi sono";
+const String I_MIEI_DATI = "I miei dati";
+const String MANSIONI = "Mansioni";
 const String CONTATTACI = "Contattaci";
 const String EVENTI = "Eventi";
 const String LOGOUT = "Logout";
@@ -25,9 +28,42 @@ const String PASSWORD_RECOVERY = "Recupera password";
 const String INSERT_EMAIL= "Inserisci la tua email";
 const String BACK= "Torna indietro";
 const String I_ALREADY_HAVE_ACCOUNT= "Ho già un account";
-
-
 const String REMOVE_ACCOUNT = "Elimina il tuo account";
+const String PROFILE_NAME_PLACEHOLDER = "Inserisci nome e cognome";
+const String PROFILE_DESCRIPTION_PLACEHOLDER = "Inserisci una breve descrizione";
+const String PHONE_PLACEHOLDER = "Inserisci una numero di telefono";
+const String POSITION_PLACEHOLDER = "Inserisci la tua posizione";
+const String ADD_SKILLS = "Aggiungi mansione";
+const String GALLERY = "Seleziona foto dalla galleria";
+const String ADS_AUTOCOMPLETE = "Mansione o Azienda";
+const String CAMERA = "Scatta una foto";
+const String FILTER = "Filtra";
+const String OFFERS = "offerte";
+const String ANNUNCIO = "Annuncio";
+const String APPLY = "Candidati";
+
+
+const String SAVE= "Salva";
+const String CANCEL= "Annulla";
+
+const String DESCRIPTION= "Inserisci una descrizione";
+const SEARCH_SKILL="Cerca la mansione";
+
+
+
+
+
+
+
+//Pagine bottombar
+const String HOME = "Home";
+const String SEARCH = "Cerca";
+const String PROFILE = "Profilo";
+const String NOTIFICATIONS = "Notifiche";
+const String DASHBOARD = "Dashboard";
+
+
+
 
 // Stati degli annunci
 const String ACTIVE = "active";
@@ -63,6 +99,7 @@ const String GESTISCI_ABBONAMENTO = "GESTISCI_ABBONAMENTO";
 const String INFORMAZIONI_DI_CONTATTO = "INFORMAZIONI_DI_CONTATTO";
 const String CHI_SIAMO = "CHI_SIAMO";
 
+
 final Map<String, String> LANG_IT = {
   DASHBOARD_CONST: "Dashboard",
   POLICY_PRIVACY: "Policy privacy",
@@ -81,10 +118,14 @@ final Map<String, String> LANG_IT = {
   INSERT_EMAIL: "Inserisci la tua email",
   BACK:"Torna indietro",
   I_ALREADY_HAVE_ACCOUNT: "Ho già un account",
-
   RICORDAMI:"Ricordami",
   CONTATTACI: "Contattaci",
   ACTIVE: "ATTIVO",
+  HOME: "Home",
+  PROFILE: "Profilo",
+  SEARCH: "Cerca",
+  ANNUNCIO: "Annuncio",
+  NOTIFICATIONS: "Notifiche",
   ACCEPTED: "ACCETTATO",
   HISTORY: "ARCHIVIATO",
   CURRENT: "IN CORSO",
@@ -99,7 +140,28 @@ final Map<String, String> LANG_IT = {
   GESTISCI_ABBONAMENTO: "Vedi abbonamento",
   INFORMAZIONI_DI_CONTATTO: "Informazioni di contatto",
   CHI_SIAMO: "Chi siamo",
+  CHI_SONO: "Chi sono",
+  I_MIEI_DATI: "I miei dati",
+  MANSIONI: "Mansioni",
+  PROFILE_NAME_PLACEHOLDER: "Inserisci nome e cognome",
+  PROFILE_DESCRIPTION_PLACEHOLDER: "Inserisci una breve descrizione",
+  PHONE_PLACEHOLDER: "Inserisci un numero di telefono",
+  POSITION_PLACEHOLDER: "Inserisci la tua posizione",
+  ADD_SKILLS:"Aggiungi mansione",
+  SEARCH_SKILL:"Cerca la mansione",
+  SAVE: "Salva",
+  DESCRIPTION: "Inserisci una descrizione",
+  CAMERA:"Scatta una foto",
+  GALLERY:"Seleziona una foto dalla galleria",
+  CANCEL:"Annulla",
+  ADS_AUTOCOMPLETE:"Mansione o Azienda",
+  FILTER: "Filtra",
   REMOVE_ACCOUNT: "Elimina il tuo account",
+  OFFERS: "offerte",
+  DASHBOARD: "Dashboard",
+  APPLY: "Candidati",
+
+
   "": "",
   "": "",
   "": "",

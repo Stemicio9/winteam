@@ -57,7 +57,9 @@ dependencies:
   chips_choice: ^3.0.0
   hexcolor: ^3.0.1
   currency_text_input_formatter: ^2.1.7
-  animated_notch_bottom_bar: ^0.0.6
+  cached_network_image: ^3.2.3
+  flutter_svg: ^1.1.6
+  circle_nav_bar:
 
 
 dev_dependencies:

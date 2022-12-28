@@ -377,7 +377,8 @@ class ModificaProfiloLavoratoreState extends State<ModificaProfiloLavoratore> {
                                                                       .normal),
                                                         ),
                                                       ],
-                                                    )),
+                                                    )
+                                                ),
                                               ],
                                             ),
                                           ),
@@ -391,7 +392,8 @@ class ModificaProfiloLavoratoreState extends State<ModificaProfiloLavoratore> {
                                       color: giallo),
                                   padding: EdgeInsets.all(5.0),
                                   shape: CircleBorder(),
-                                )),
+                                )
+                            ),
                           ],
                         ),
                       )

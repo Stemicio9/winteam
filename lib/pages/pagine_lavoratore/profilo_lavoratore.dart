@@ -136,7 +136,9 @@ class ProfiloLavoratoreState extends State<ProfiloLavoratore> {
                                 padding: EdgeInsets.all(5.0),
                                 shape: CircleBorder(),
                                 child:
-                                    Icon(Icons.edit_rounded, color: giallo))),
+                                    Icon(Icons.edit_rounded, color: giallo)
+                            )
+                        ),
                       ],
                     ),
                   )

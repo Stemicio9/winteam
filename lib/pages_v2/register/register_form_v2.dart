@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:winteam/constants/colors.dart';
 import 'package:winteam/constants/language.dart';
+import 'package:winteam/constants/route_constants.dart';
+import 'package:winteam/constants/validators.dart';
 import 'package:winteam/widgets/texts.dart';
 import 'package:winteam/widgets/utilities/image_utility.dart';
 import 'package:winteam/widgets_v2/action_buttons_v2.dart';
@@ -67,17 +69,21 @@ class RegisterFormV2State extends State<RegisterFormV2> {
         InputsV2Widget(
           hinttext: EMAIL,
           controller: _emailTextController,
+          isPassword: false,
+          validator: validateEmail,
         ),
         InputsV2Widget(
           hinttext: PASSWORD,
           controller: _passwordTextController,
-          ispassword: true,
+          isPassword: true,
+          validator: validatePassword,
 
         ),
         InputsV2Widget(
           hinttext: PASSWORD_CONFIRM,
           controller: _passwordConfirmTextController,
-          ispassword: true,
+          isPassword: true,
+          validator: validatePassword,
 
         ),
       ],
@@ -85,7 +91,14 @@ class RegisterFormV2State extends State<RegisterFormV2> {
   }
 
   Widget buttonSection() {
-    return ActionButtonV2(REGISTER, () {}, 315);
+    return ActionButtonV2(
+        text:REGISTER,
+        action:formSubmit,
+        maxWidth:315,
+        color:green,
+        textColor:white,
+        margin: 10
+    );
   }
 
   Widget backSection() {
@@ -99,5 +112,12 @@ class RegisterFormV2State extends State<RegisterFormV2> {
         underline: true,
       ),
     );
+  }
+
+
+  formSubmit() async {
+    if (_formKey.currentState!.validate()) {
+      Navigator.pushNamed(context, RouteConstants.login);
+    }
   }
 }
