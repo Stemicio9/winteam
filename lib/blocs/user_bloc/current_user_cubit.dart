@@ -13,9 +13,10 @@ part 'current_user_cubit_state.dart';
 
 const String DUMMY_NAME = "EGG";
 const String DUMMY_EMAIL = "s.miceli90@gmail.com";
+var globalUser;
 
 class UserCubit extends Cubit<UserState> {
-  UserCubit() : super(UserLoading());
+  UserCubit() : super(globalUser == null ? UserEmpty() : UserLoaded(globalUser));
 
   late UserEntity _user;
   UserEntity get user => _user;
@@ -38,6 +39,23 @@ class UserCubit extends Cubit<UserState> {
     }
   }
 
+  Future<void> saveLoggedUser() async{
+    emit(UserLoading());
+    try {
+      HttpResponse<dynamic> result = await userListApiService.me();
+
+      var encoded = jsonEncode(result.data);
+      var decoded = jsonDecode(encoded);
+      var json = UserEntity.fromJson(decoded);
+      _user = json;
+      //todo inserire token, role e user dentro authentication state
+     emit(UserLoaded(json));
+    } catch (e) {
+      print(e);
+      emit(UserError());
+    }
+  }
+
 
   Future<void> update(UserEntity userEntity) async {
     emit(UserLoading());
@@ -50,6 +68,10 @@ class UserCubit extends Cubit<UserState> {
     }
   }
 
+
+  clearUser(){
+    emit(UserEmpty());
+  }
 
 
 

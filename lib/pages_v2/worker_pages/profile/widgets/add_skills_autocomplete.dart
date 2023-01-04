@@ -11,7 +11,6 @@ class AddSkillsAutocomplete extends StatelessWidget {
     'Five',
     'Six',
     'Seven',
-
   ];
   final TextEditingController skillsController;
 
@@ -25,7 +24,9 @@ class AddSkillsAutocomplete extends StatelessWidget {
           return const Iterable<String>.empty();
         }
         return _kOptions.where((String option) {
-          return option.contains(textEditingValue.text.toLowerCase());
+          return option.contains(
+              textEditingValue.text.toLowerCase(),
+          );
         });
       },
       onSelected: (String selection) {

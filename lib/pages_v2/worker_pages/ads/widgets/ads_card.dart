@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:just_the_tooltip/just_the_tooltip.dart';
 import 'package:winteam/constants/colors.dart';
 import 'package:winteam/constants/language.dart';
-import 'package:winteam/pages_v2/worker_pages/ads/data/annuncio.dart';
 import 'package:winteam/theme/app_style.dart';
 import 'package:winteam/utils/image_constant.dart';
 import 'package:winteam/utils/size_utils.dart';
@@ -21,33 +21,42 @@ class AdsCard extends StatelessWidget {
   final String title;
   final String subtitle;
   final String price;
+  final String candidates;
+  final String message;
   final skillIcon;
   final image;
+  final bool isVisible;
+  final goToList;
 
 
-
-
-  AdsCard(
-      {this.innerImageRadius = 77,
-      this.imageWidth = 90,
-      this.imageHeight = 90,
-      this.innerImageWidth = 90,
-      this.innerImageHeight = 90,
-      required this.onTap,
-        this.title ='Pizzaiolo',
-        this.subtitle ='Azienda srl',
-        this.hours ='18:00 - 01:00',
-        this.price ='70',
-        this.date ='24/12/2022',
-        this.position ='Cosenza',
-        this.skillIcon,
-        this.image,
-      });
+  AdsCard({
+    this.innerImageRadius = 77,
+    this.imageWidth = 90,
+    this.imageHeight = 90,
+    this.innerImageWidth = 90,
+    this.innerImageHeight = 90,
+    required this.onTap,
+    required this.title,
+    required this.subtitle,
+    required this.hours,
+    required this.price,
+    required this.date,
+    required this.position,
+    required this.skillIcon,
+    required this.image,
+    this.message ='',
+    this.candidates = '',
+    this.isVisible = true,
+    this.goToList,
+  });
 
   @override
   Widget build(BuildContext context) {
+
+    final GlobalKey<TooltipState> tooltipkey = GlobalKey<TooltipState>();
+
     return Padding(
-      padding: getPadding(bottom: 20, left: 16, right: 16),
+      padding: getPadding(bottom: 20, left: 15, right: 15),
       child: Card(
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
           elevation: 0,
@@ -75,6 +84,7 @@ class AdsCard extends StatelessWidget {
                                   alignment: Alignment.bottomRight,
                                   children: [
                                     CustomImageView(
+                                      onTap: () {},
                                       imagePath: image,
                                       height: getSize(
                                         innerImageHeight,
@@ -102,7 +112,7 @@ class AdsCard extends StatelessWidget {
                                   style: AppStyle.txtMontserratBold24,
                                 ),
                                 Padding(
-                                  padding:getPadding(left: 5),
+                                  padding: getPadding(left: 5),
                                   child: CustomImageView(
                                     svgPath: skillIcon,
                                     height: getSize(
@@ -115,9 +125,12 @@ class AdsCard extends StatelessWidget {
                                 ),
                               ],
                             ),
-                            Text(
-                              subtitle,
-                              style: AppStyle.txtMontserratRegularUnderline20,
+                            GestureDetector(
+                              onTap: () {},
+                              child: Text(
+                                subtitle,
+                                style: AppStyle.txtMontserratRegularUnderline20,
+                              ),
                             ),
                             Padding(
                               padding: getPadding(top: 15),
@@ -126,12 +139,12 @@ class AdsCard extends StatelessWidget {
                                   Padding(
                                     padding: getPadding(right: 10),
                                     child: CustomImageView(
-                                      imagePath: ImageConstant.imgMapsandflags,
+                                      svgPath: ImageConstant.imgPosition,
                                       height: getSize(
-                                        20,
+                                        24,
                                       ),
                                       width: getSize(
-                                        20,
+                                        18,
                                       ),
                                     ),
                                   ),
@@ -192,6 +205,71 @@ class AdsCard extends StatelessWidget {
                         ),
                       ],
                     ),
+
+
+              isVisible ?  Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+
+                        JustTheTooltip(
+                          elevation: 5,
+                          preferredDirection: AxisDirection.left,
+                          tailLength: 10,
+                          tailBaseWidth: 12,
+                          isModal: true,
+                          backgroundColor: black,
+                          content: Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: Text(
+                                message,
+                                style: const TextStyle(
+                                color: white
+                               ),
+                            ),
+                          ),
+                          child: Material(
+                              elevation: 5,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10)),
+                              child: Container(
+                                width: 17,
+                                height: 17,
+                                decoration: BoxDecoration(
+                                  color: lightGreen,
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                              )),
+                        ),
+
+
+
+
+                        Padding(
+                          padding: getPadding(top: 25),
+                          child: GestureDetector(
+                            onTap: goToList,
+                            child: Row(
+                              children: [
+                                CustomImageView(
+                                  imagePath: ImageConstant.imgPeople,
+                                  height: 18,
+                                  width: 18,
+                                ),
+
+                                Padding(
+                                  padding:  getPadding(left: 5),
+                                  child: Text(
+                                    candidates,
+                                    style: AppStyle.txtMontserratRegular16,
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                        )
+                      ],
+                    ) : Container()
+
                   ],
                 ),
                 Padding(
@@ -221,7 +299,7 @@ class AdsCard extends StatelessWidget {
                       ),
                       ActionButtonV2(
                         action: onTap,
-                        text: APPLY,
+                        text: DETAILS,
                         color: background,
                         maxWidth: 200,
                         textColor: white,

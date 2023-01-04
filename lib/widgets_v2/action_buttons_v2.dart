@@ -9,8 +9,25 @@ class ActionButtonV2 extends StatelessWidget {
   final String text;
   final color;
   final double maxWidth;
+  final double maxHeight;
+  final double fontSize;
+
+  final double positionedRight;
+  final double positionedLeft;
+  final double positionedTop;
+  final double positionedBottom;
+
+
+  final double containerHeight;
+
   final textColor;
-  final icon;
+  final prefixIcon;
+  final suffixIcon;
+  final borderColor;
+  final double borderWidth;
+  final bool hasBorder;
+  final FontWeight weight;
+
 
   ActionButtonV2({
     this.margin = 0,
@@ -18,43 +35,80 @@ class ActionButtonV2 extends StatelessWidget {
     required this.text,
     required this.color,
     required this.maxWidth,
+    this.maxHeight = 100,
+    this.weight = FontWeight.w600,
     required this.textColor,
-    this.icon,
+    this.borderColor,
+    this.borderWidth = 0.5,
+    this.hasBorder = false,
+    this.fontSize = 18,
+    this.prefixIcon,
+    this.suffixIcon,
+    this.containerHeight = 50,
+    this.positionedRight =20,
+    this.positionedLeft=20,
+    this.positionedTop=0,
+    this.positionedBottom=0,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 50.0,
+      height: containerHeight,
       margin: EdgeInsets.all(margin),
       child: MaterialButton(
         elevation: 10,
         onPressed: () {
           action();
         },
-        shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(80.0)),
-        padding: EdgeInsets.all(0.0),
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(80.0)
+        ),
+        padding: const EdgeInsets.all(0.0),
         child: Ink(
           decoration: BoxDecoration(
-              color: color, borderRadius: BorderRadius.circular(30.0)),
+              color: color,
+              border: hasBorder ? Border.all(
+                color: borderColor,
+                width: borderWidth
+              ):
+              null,
+              borderRadius: BorderRadius.circular(30.0),
+
+          ),
+
           child: Container(
-              constraints: BoxConstraints(maxWidth: maxWidth, minHeight: 50.0),
+              constraints: BoxConstraints(
+                  maxWidth: maxWidth,
+                  maxHeight: maxHeight
+              ),
               alignment: Alignment.center,
               child: IntrinsicHeight(
                 child: Stack(
                   children: [
                     Positioned(
-                      left: 20,
-                      child: Icon(icon),
+                      left: positionedLeft,
+                      top: positionedTop,
+                      bottom: positionedBottom,
+                      child: Icon(prefixIcon),
                     ),
                     Align(
-                      child: Texth2V2(
-                        testo: text,
-                        color: textColor,
-                        weight: FontWeight.w600,
-                        textalign: TextAlign.center,
+                      child: Text(
+                        text,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: fontSize,
+                          color: textColor,
+                          fontWeight: weight,
+                        ),
+
                       ),
+                    ),
+                    Positioned(
+                      right: positionedRight,
+                      top: positionedTop,
+                      bottom: positionedBottom,
+                      child: Icon(suffixIcon),
                     ),
                   ],
                 ),

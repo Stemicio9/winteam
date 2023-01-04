@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:winteam/authentication/authentication_bloc.dart';
 import 'package:winteam/authentication/firebase_repository.dart';
 import 'package:winteam/blocs/user_bloc/current_user_cubit.dart';
 import 'package:winteam/blocs/user_bloc/user_list_cubit.dart';
@@ -9,7 +8,6 @@ import 'package:winteam/constants/colors.dart';
 import 'package:winteam/constants/language.dart';
 import 'package:winteam/constants/route_constants.dart';
 import 'package:winteam/constants/validators.dart';
-import 'package:winteam/entities/user_entity.dart';
 import 'package:winteam/widgets/utilities/image_utility.dart';
 import 'package:winteam/widgets_v2/action_buttons_v2.dart';
 import 'package:winteam/widgets_v2/checkbox_v2.dart';
@@ -46,27 +44,29 @@ class LoginFormV2State extends State<LoginFormV2> {
 
   @override
   Widget build(BuildContext context) {
-    /* return BlocBuilder<UserCubit, UserState>(
-        builder: (_, state) {
-          if (state is NotAuthenticated) {
-            // todo
-            // here insert login form
-            return Container();
-          } else if (state is UserAuthenticated) {
-            // todo
-            // navigare verso la pagina corretta
-            return Container();
-          } else if (state is UserAuthenticationLoading) {
-            return const Center(child: CircularProgressIndicator());
-          } else {
-            // UserErrorAuthentication
-            // todo
-            // restituire form con errori in evidenza
-            return Container();
-          }
-        }); */
+    return BlocBuilder<UserCubit, UserState>(builder: (_, state) {
+      if (state is UserEmpty) {
+        // todo
+        // here insert login form
+        return allContent();
+      } else if (state is UserLoaded) {
+        // todo
+        // navigare verso la pagina corretta
+        return Container();
+      } else if (state is UserLoading) {
+        return const Center(child: CircularProgressIndicator());
+      } else {
+        // UserErrorAuthentication
+        // todo
+        // restituire form con errori in evidenza
+        return Container();
+      }
+    });
 
     // for testing purpose, insert here Login form
+  }
+
+  Widget allContent() {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 50.0),
       child: Form(
@@ -108,11 +108,10 @@ class LoginFormV2State extends State<LoginFormV2> {
     return Column(
       children: [
         InputsV2Widget(
-          hinttext: EMAIL,
-          controller: _emailTextController,
-          validator: validateEmail,
-          isPassword: false
-        ),
+            hinttext: EMAIL,
+            controller: _emailTextController,
+            validator: validateEmail,
+            isPassword: false),
         InputsV2Widget(
           hinttext: PASSWORD,
           controller: _passwordTextController,
@@ -120,7 +119,13 @@ class LoginFormV2State extends State<LoginFormV2> {
           isPassword: true,
         ),
         CheckboxV2Widget(),
-        ActionButtonV2(text:LOGIN,action: formSubmit,maxWidth: 315,color:green,textColor:white,margin:10),
+        ActionButtonV2(
+            text: LOGIN,
+            action: formSubmit,
+            maxWidth: 315,
+            color: green,
+            textColor: white,
+            margin: 10),
       ],
     );
   }
@@ -139,14 +144,44 @@ class LoginFormV2State extends State<LoginFormV2> {
     return Column(
       children: [
         Texth4V2(testo: DONT_HAVE_AN_ACCOUNT, color: white),
-        ActionButtonV2(text:REGISTER, action:navigateToRegister,maxWidth: 200,color:green,textColor:white,margin:10),
+        ActionButtonV2(
+            text: REGISTER,
+            action: navigateToRegister,
+            maxWidth: 200,
+            color: green,
+            textColor: white,
+            margin: 10),
       ],
     );
   }
 
   formSubmit() async {
     if (_formKey.currentState!.validate()) {
-     navigateToDashboard();
+      UserCredential? log =
+          await signIn(_emailTextController.text, _passwordTextController.text);
+
+      if (log == null || log.user == null) {
+        // @todo avvisare che il login è sbagliato
+        return;
+      }
+
+      //todo complete this method
+      _cubit.saveLoggedUser();
+      navigateToDashboard();
+
+      // var a = await log.user!.getIdToken();
+
+      // if (entity == null) return;
+      //
+      // if (entity.roleId == "DATORE") {
+      //   Navigator.pushNamed(context, '/dashboarddatore');
+      // } else if (entity.roleId == "LAVORATORE") {
+      //   Navigator.pushNamed(context, '/dashboardlavoratore');
+      // } else {}
+
+      /*  if (_formKey.currentState!.validate()) {
+       navigateToDashboard();
+     } */
     }
   }
 

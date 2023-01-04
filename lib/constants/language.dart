@@ -7,8 +7,8 @@ String? getCurrentLanguageValue(String field) {
 const String APP_TITLE = "W1N";
 
 const String DASHBOARD_CONST = "DASHBOARD";
-const String POLICY_PRIVACY = "Policy privacy";
-const String COME_FUNZIONA = "Come funziona?";
+const String POLICY_PRIVACY = "Privacy Policy";
+const String COME_FUNZIONA = "Come funziona";
 const String CHI_SONO = "Chi sono";
 const String I_MIEI_DATI = "I miei dati";
 const String MANSIONI = "Mansioni";
@@ -25,12 +25,13 @@ const String PASSWORD_CONFIRM = "Conferma password";
 const String FORGOT_PASSWORD = "Hai dimenticato la password?";
 const String DONT_HAVE_AN_ACCOUNT = "Non hai un account?";
 const String PASSWORD_RECOVERY = "Recupera password";
-const String INSERT_EMAIL= "Inserisci la tua email";
-const String BACK= "Torna indietro";
-const String I_ALREADY_HAVE_ACCOUNT= "Ho già un account";
-const String REMOVE_ACCOUNT = "Elimina il tuo account";
+const String INSERT_EMAIL = "Inserisci la tua email";
+const String BACK = "Torna indietro";
+const String I_ALREADY_HAVE_ACCOUNT = "Ho già un account";
+const String REMOVE_ACCOUNT = "Rimuovi account";
 const String PROFILE_NAME_PLACEHOLDER = "Inserisci nome e cognome";
-const String PROFILE_DESCRIPTION_PLACEHOLDER = "Inserisci una breve descrizione";
+const String PROFILE_DESCRIPTION_PLACEHOLDER =
+    "Inserisci una breve descrizione";
 const String PHONE_PLACEHOLDER = "Inserisci una numero di telefono";
 const String POSITION_PLACEHOLDER = "Inserisci la tua posizione";
 const String ADD_SKILLS = "Aggiungi mansione";
@@ -39,20 +40,44 @@ const String ADS_AUTOCOMPLETE = "Mansione o Azienda";
 const String CAMERA = "Scatta una foto";
 const String FILTER = "Filtra";
 const String OFFERS = "offerte";
-const String ANNUNCIO = "Annuncio";
+const String ANNUNCIO = "Dettaglio annuncio";
 const String APPLY = "Candidati";
+const String ADS_DESCRIPTION = "Descrizione";
+const String CANDIDATES = "Si sono già candidate";
+const String CANDIDATE = "Si è già candidata";
+const String NO_CANDIDATE = "Nessuno si è ancora candidato per questo lavoro.";
+const String FILTERS = "Filtri";
 
-
-const String SAVE= "Salva";
-const String CANCEL= "Annulla";
-
-const String DESCRIPTION= "Inserisci una descrizione";
-const SEARCH_SKILL="Cerca la mansione";
-
-
-
-
-
+const String USERS = "Utenti";
+const String DETAILS = "Dettagli";
+const String SAVE = "Salva";
+const String CANCEL = "Annulla";
+const String DESCRIPTION = "Inserisci una descrizione";
+const String SEARCH_SKILL = "Cerca la mansione";
+const String PEOPLE = "Persone";
+const String PERSON = "Persona";
+const String REMOVE_ALL = "Rimuovi tutto";
+const String LOWEST_PRICE = "Prezzo minimo";
+const String DATE = "Data";
+const String RANGE_TIME = "Fascia oraria";
+const String FILTER_APPLY = "Applica";
+const String CREATE_ADS = "Crea annuncio";
+const String SEARCH_WORKER = "Cerca lavoratore";
+const String MANSIONE = "Mansione";
+const String POSTED_ADS = "Annunci pubblicati";
+const String COMPENSO = "Compenso";
+const String PLACE = "Luogo";
+const String POST = "Pubblica";
+const String MANAGE_SUBSCRIPTION = "Gestisci abbonamento";
+const String SELECT_DATE = "Seleziona una data";
+const String INSERT_POSITION = "Inserisci la tua posizione";
+const String INSERT_SKILL = "Inserisci una mansione";
+const String OUR_CONTACTS = "I nostri contatti";
+const String ABOUT_US = "Chi siamo";
+const String VIEW_PROFILE = "Visualizza profilo";
+const String CANDIDATES_LIST = "Lista candidati";
+const String VIEW = "Visualizza";
+const String HIRE = "Assumi!";
 
 
 //Pagine bottombar
@@ -60,10 +85,8 @@ const String HOME = "Home";
 const String SEARCH = "Cerca";
 const String PROFILE = "Profilo";
 const String NOTIFICATIONS = "Notifiche";
-const String DASHBOARD = "Dashboard";
-
-
-
+const String ADS = "Annunci";
+const String CREATE = "Crea";
 
 // Stati degli annunci
 const String ACTIVE = "active";
@@ -99,11 +122,10 @@ const String GESTISCI_ABBONAMENTO = "GESTISCI_ABBONAMENTO";
 const String INFORMAZIONI_DI_CONTATTO = "INFORMAZIONI_DI_CONTATTO";
 const String CHI_SIAMO = "CHI_SIAMO";
 
-
 final Map<String, String> LANG_IT = {
   DASHBOARD_CONST: "Dashboard",
-  POLICY_PRIVACY: "Policy privacy",
-  COME_FUNZIONA: "Come funziona?",
+  POLICY_PRIVACY: "Privacy Policy",
+  COME_FUNZIONA: "Come funziona",
   EVENTI: "Eventi",
   LOGOUT: "Logout",
   LOGIN: "Login",
@@ -116,15 +138,15 @@ final Map<String, String> LANG_IT = {
   PASSWORD: "Password",
   PASSWORD_CONFIRM: "Conferma password",
   INSERT_EMAIL: "Inserisci la tua email",
-  BACK:"Torna indietro",
+  BACK: "Torna indietro",
   I_ALREADY_HAVE_ACCOUNT: "Ho già un account",
-  RICORDAMI:"Ricordami",
+  RICORDAMI: "Ricordami",
   CONTATTACI: "Contattaci",
   ACTIVE: "ATTIVO",
   HOME: "Home",
   PROFILE: "Profilo",
   SEARCH: "Cerca",
-  ANNUNCIO: "Annuncio",
+  ANNUNCIO: " Dettaglio annuncio",
   NOTIFICATIONS: "Notifiche",
   ACCEPTED: "ACCETTATO",
   HISTORY: "ARCHIVIATO",
@@ -147,20 +169,52 @@ final Map<String, String> LANG_IT = {
   PROFILE_DESCRIPTION_PLACEHOLDER: "Inserisci una breve descrizione",
   PHONE_PLACEHOLDER: "Inserisci un numero di telefono",
   POSITION_PLACEHOLDER: "Inserisci la tua posizione",
-  ADD_SKILLS:"Aggiungi mansione",
-  SEARCH_SKILL:"Cerca la mansione",
+  ADD_SKILLS: "Aggiungi mansione",
+  SEARCH_SKILL: "Cerca la mansione",
   SAVE: "Salva",
   DESCRIPTION: "Inserisci una descrizione",
-  CAMERA:"Scatta una foto",
-  GALLERY:"Seleziona una foto dalla galleria",
-  CANCEL:"Annulla",
-  ADS_AUTOCOMPLETE:"Mansione o Azienda",
+  CAMERA: "Scatta una foto",
+  GALLERY: "Seleziona una foto dalla galleria",
+  CANCEL: "Annulla",
+  ADS_AUTOCOMPLETE: "Mansione o Azienda",
   FILTER: "Filtra",
-  REMOVE_ACCOUNT: "Elimina il tuo account",
+  REMOVE_ACCOUNT: "Romuovi account",
   OFFERS: "offerte",
-  DASHBOARD: "Dashboard",
+  ADS: "Annunci",
   APPLY: "Candidati",
-
+  ADS_DESCRIPTION: 'Descrizione',
+  CANDIDATES: 'Si sono già candidate',
+  CANDIDATE: 'Si è già candidata',
+  NO_CANDIDATE: 'Nessuno si è ancora candidato per questo lavoro.',
+  USERS: 'Utenti',
+  DETAILS: 'Dettagli',
+  PERSON: 'Persona',
+  PEOPLE: 'Persone',
+  FILTERS: 'Filtri',
+  REMOVE_ALL: "Rimuovi tutto",
+  REMOVE_ALL: "Rimuovi tutto",
+  LOWEST_PRICE: "Prezzo minimo",
+  DATE: "Data",
+  RANGE_TIME: "Fascia oraria",
+  FILTER_APPLY: "Applica",
+  CREATE: "Crea",
+  CREATE_ADS: "Crea annuncio",
+  SEARCH: "Ricerca lavoratore",
+  MANSIONE:"Mansione",
+  POSTED_ADS:"Annunci pubblicati",
+  COMPENSO:"Compenso",
+  PLACE:"Luogo",
+  POST:"Pubblica",
+  MANAGE_SUBSCRIPTION:"Gestisci abbonamento",
+  SELECT_DATE:"Seleziona una data",
+  INSERT_POSITION:"Inserisci la tua posizionr",
+  INSERT_SKILL:"Inserisci una mansione",
+  OUR_CONTACTS:"I nostri contatti",
+  ABOUT_US:"Chi siamo",
+  VIEW_PROFILE:"Visualizza profilo",
+  CANDIDATES_LIST:"Lista candidati",
+  VIEW:"Visualizza",
+  HIRE:"Assumi!",
 
   "": "",
   "": "",

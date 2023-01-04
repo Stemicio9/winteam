@@ -11,13 +11,14 @@ class ProfileDescription extends StatelessWidget{
   final double horizontalSize; //310
   final double getMarginTop; //15
   final String description;
+  final String title;
 
 
 
   const ProfileDescription({Key? key, this.paddingRight = 35,
     this.padddingTop = 55, this.padddingLeft = 35,
-    this.getMarginTop = 15, this.description = '',
-    this.horizontalSize = 310}) : super(key: key);
+    this.getMarginTop = 15,required this.description,
+    this.horizontalSize = 310, required this.title}) : super(key: key);
 
 
   @override
@@ -35,7 +36,7 @@ class ProfileDescription extends StatelessWidget{
         children: [
 
         Text(
-              CHI_SONO,
+              title,
               overflow: TextOverflow.ellipsis,
               textAlign: TextAlign.left,
               style: AppStyle.txtMontserratSemiBold24,

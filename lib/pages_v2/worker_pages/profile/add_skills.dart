@@ -17,7 +17,8 @@ class AddSkillsState extends State<AddSkills>{
 
   @override
   Widget build(BuildContext context) {
-    return W1NScaffoldSenzaAction(
+    return W1nScaffold(
+      appBar: 1,
       title: ADD_SKILLS,
       body: AddSkillsAutocomplete(
         skillsController: skillsController,

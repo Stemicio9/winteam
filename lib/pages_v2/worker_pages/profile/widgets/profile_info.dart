@@ -22,6 +22,7 @@ class ProfileInfo extends StatelessWidget {
   final String phone;
   final String email;
   final String position;
+  final String title;
 
 
 
@@ -34,7 +35,8 @@ class ProfileInfo extends StatelessWidget {
     this.customImageViewWidht = 26, this.getPaddingInfoBottom = 2,
     this.getPaddingInfoTop = 1, this.getPaddingInfoLeft= 16,
     this.getVerticalSizeHeight = 26, this.getHorizontalalSizeWidth = 26,
-    this.email = '', this.phone = '', this.position = ''}) : super(key: key);
+    required this.email,required this.phone,required this.position,required this.title
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +53,7 @@ class ProfileInfo extends StatelessWidget {
         children: [
 
            Text(
-              I_MIEI_DATI,
+              title,
               overflow: TextOverflow.ellipsis,
               textAlign: TextAlign.left,
               style: AppStyle.txtMontserratSemiBold24,
@@ -64,12 +66,12 @@ class ProfileInfo extends StatelessWidget {
             child: Row(
               children: [
                 CustomImageView(
-                  imagePath: ImageConstant.imgPhonereceiversilhouette,
+                  svgPath: ImageConstant.imgPhoneSvg,
                   height: getSize(
-                    customImageViewHeight,
+                    21,
                   ),
                   width: getSize(
-                    customImageViewWidht,
+                    21,
                   ),
                 ),
                 Padding(
@@ -94,12 +96,12 @@ class ProfileInfo extends StatelessWidget {
             child: Row(
               children: [
                 CustomImageView(
-                  imagePath: ImageConstant.imgEmail,
+                  svgPath: ImageConstant.imgEmailSvg,
                   height: getVerticalSize(
-                    getVerticalSizeHeight,
+                    16,
                   ),
                   width: getHorizontalSize(
-                    getHorizontalalSizeWidth,
+                    20,
                   ),
                 ),
                 Padding(
@@ -124,12 +126,12 @@ class ProfileInfo extends StatelessWidget {
             child: Row(
               children: [
                 CustomImageView(
-                  imagePath: ImageConstant.imgMapsandflags,
+                  svgPath: ImageConstant.imgPosition,
                   height: getSize(
-                    customImageViewHeight,
+                    26,
                   ),
                   width: getSize(
-                    customImageViewWidht,
+                    19,
                   ),
                 ),
                 Padding(

@@ -19,9 +19,13 @@ class ProfileSkillsEdit extends StatelessWidget{
   final double internalPaddingTop; //12
   final double internalPaddingBottom; //12
   final Function ontap;
+  final Function deleteSkill;
+
 
   final double getVerticalSizeHeight; //26
-  final double customImageViewHeightClose; //28
+  final double customImageViewHeightClose; //22
+  final double customImageViewWidthClose; //22
+
 
   final double getHorizontalSizeWidth; //26
   final double getPaddingSkillTop; //12
@@ -38,14 +42,14 @@ class ProfileSkillsEdit extends StatelessWidget{
 
   const ProfileSkillsEdit({Key? key, this.paddingRight = 35,
     this.paddingTop = 55, this.paddingLeft = 35,
-    this.getPaddingTop = 15, this.customImageViewHeight = 26,
-    this.customImageViewWidth = 26, this.getPaddingSkillBottom = 12,
+    this.getPaddingTop = 15, this.customImageViewHeight = 22,
+    this.customImageViewWidth = 22, this.getPaddingSkillBottom = 12,
     this.getPaddingSkillTop = 12, this.getPaddingSkillLeft= 16,
     this.getVerticalSizeHeight = 26, this.getHorizontalSizeWidth = 26,
     required this.mansioni,this.borderRadius = 5,
     this.internalPaddingBottom = 12, this.internalPaddingTop = 12,
-    this.elevation = 5, this.customImageViewHeightClose = 28,
-    required this.ontap
+    this.elevation = 5, this.customImageViewHeightClose = 25,this.customImageViewWidthClose =22,
+    required this.ontap,required this.deleteSkill
   }) : super(key: key);
 
 
@@ -81,20 +85,21 @@ class ProfileSkillsEdit extends StatelessWidget{
                 children: mansioni.map((e) => mansione(e)).toList(),
               )
           ),
-        Container(
-          alignment: Alignment.center,
-          width: size.width,
+        Padding(
+
           padding: getPadding(
             top: getVerticalSizeHeight,
+            left: paddingLeft,
+            right: paddingRight
           ),
           child: ActionButtonV2(
               text:ADD_SKILLS,
               action:ontap,
-              maxWidth:330,
+              maxWidth:MediaQuery.of(context).size.width,
               color:lightGrey,
               textColor:black,
               margin:0,
-              icon: Icons.add_rounded,
+              prefixIcon: Icons.add_rounded,
 
           )
         )
@@ -146,18 +151,19 @@ class ProfileSkillsEdit extends StatelessWidget{
                         mansione.text,
                         overflow: TextOverflow.ellipsis,
                         textAlign: TextAlign.start,
-                        style: AppStyle.txtMontserratRegular20,
+                        style: AppStyle.txtMontserratRegular16,
                       ),
                     ),
                   ],
                 ),
                 CustomImageView(
+                  onTap: (){deleteSkill(mansioni.indexOf(mansione));},
                   svgPath: ImageConstant.imgClose,
                   height: getVerticalSize(
                     customImageViewHeightClose,
                   ),
                   width: getHorizontalSize(
-                    customImageViewWidth,
+                    customImageViewWidthClose,
                   ),
                 ),
               ],

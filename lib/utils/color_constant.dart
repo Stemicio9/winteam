@@ -14,7 +14,7 @@ class ColorConstant {
 
   static Color whiteA700 = fromHex('#ffffff');
 
-  static Color indigoA200 = fromHex('#5077FF');
+  static Color indigoA200 = fromHex('#3366BB');
 
 
 

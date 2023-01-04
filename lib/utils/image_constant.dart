@@ -27,7 +27,35 @@ class ImageConstant {
 
   static String imgHours = 'assets/images/hours.svg';
 
+  static String imgPeople = 'assets/images/people_icon.png';
+
+  static String imgSearch = 'assets/images/search_icon.png';
+
+  static String imgCancel = 'assets/images/close_icon.png';
+
+  static String imgEuro = 'assets/images/euro_icon.png';
+
+  static String imgMoney = 'assets/images/money_icon.svg';
+
+  static String imgDate = 'assets/images/IconCalendar.png';
+
+  static String imgDateInput = 'assets/images/IconCalendarInput.png';
+
   static String imgPizza = 'assets/images/PizzaIcon.svg';
+
+  static String imgComeFunziona = 'assets/images/come_funziona.svg';
+  static String imgContattaci = 'assets/images/contattaci.svg';
+  static String imgLogout = 'assets/images/logout.svg';
+  static String imgBuilding = 'assets/images/IconBuilding.svg';
+  static String imgPrivacyPolicy = 'assets/images/privacy_policy.svg';
+  static String imgRemoveAccount = 'assets/images/remove_account.svg';
+
+
+
+  static String imgPosition = 'assets/images/position.svg';
+  static String imgPhoneSvg = 'assets/images/phone.svg';
+  static String imgEmailSvg = 'assets/images/email.svg';
+
 
 
 

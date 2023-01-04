@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:winteam/constants/colors.dart';
 import 'package:winteam/constants/validators.dart';
+import 'package:winteam/utils/size_utils.dart';
+import 'package:winteam/widgets_v2/custom_image_view.dart';
 
 class InputsV2Widget extends StatelessWidget {
   final double round = 30.0;
@@ -13,10 +15,24 @@ class InputsV2Widget extends StatelessWidget {
   TextInputType keyboard;
   bool? enabled = true;
   final textInputAction;
-  final prefixIcon;
-  final prefixIconColor;
-  final double prefixIconSize; //35
 
+
+  final prefixIcon;
+  final bool isPrefixIcon;
+  final double prefixIconWidth;
+  final double prefixIconHeight;
+
+  final suffixIcon;
+  final String svgPath;
+
+  final double suffixIconWidth;
+  final double suffixIconHeight;
+  final bool isSuffixIcon;
+
+
+  final bool readOnly;
+
+  final onTap;
   final bool multiline;
   final int maxLine;
   final double fontSize; //14
@@ -25,6 +41,8 @@ class InputsV2Widget extends StatelessWidget {
   final TextAlign? textAlign;
   final dynamic focusNode;
   final double contentPaddingLeft; //20
+  final double contentPaddingRight; //0
+
   final double contentPaddingTop; //0
 
   final double elevation; //0
@@ -35,7 +53,6 @@ class InputsV2Widget extends StatelessWidget {
   final double paddingTop; //10
   final double paddingBottom; //10
 
-  final bool isPrefixIcon;
 
   InputsV2Widget(
       {required hinttext,
@@ -46,6 +63,7 @@ class InputsV2Widget extends StatelessWidget {
       this.textAlign = TextAlign.start,
       this.contentPaddingLeft = 20,
       this.contentPaddingTop = 0,
+      this.contentPaddingRight = 0,
       this.validator = defaultValidator,
       this.onChanged = funzioneCostante,
       this.autofocus = false,
@@ -62,9 +80,19 @@ class InputsV2Widget extends StatelessWidget {
       this.paddingLeft = 40,
       this.paddingBottom = 10,
       this.focusNode,
-      this.prefixIconColor,
-      this.prefixIconSize = 35,
-      this.isPrefixIcon = false})
+        this.onTap,
+        this.readOnly = false,
+
+        this.isPrefixIcon = false,
+        this.prefixIconHeight = 25,
+        this.prefixIconWidth = 25,
+
+        this.isSuffixIcon = false,
+        this.suffixIconHeight = 25,
+        this.suffixIconWidth = 25,
+        this.suffixIcon,
+        this.svgPath ='',
+      })
       : hintText = hinttext;
 
   @override
@@ -82,6 +110,8 @@ class InputsV2Widget extends StatelessWidget {
             elevation: elevation,
             shadowColor: blackTransparent,
             child: TextFormField(
+              readOnly: readOnly,
+              onTap: onTap,
               focusNode: focusNode,
               textAlign: textAlign!,
               validator: validator,
@@ -121,15 +151,41 @@ class InputsV2Widget extends StatelessWidget {
                     ? Align(
                         widthFactor: 1.0,
                         heightFactor: 1.0,
-                        child: Icon(
-                          prefixIcon,
-                          size: prefixIconSize,
-                          color: prefixIconColor,
+                        child: CustomImageView(
+                          imagePath: prefixIcon,
+                          svgPath:svgPath,
+                          height: getSize(
+                            prefixIconHeight,
+                          ),
+                          width: getSize(
+                            prefixIconWidth,
+                          ),
                         ),
                       )
                     : null,
+
+                suffixIcon: isSuffixIcon
+                    ? Align(
+                  widthFactor: 1.0,
+                  heightFactor: 1.0,
+                  child: CustomImageView(
+
+                    imagePath: suffixIcon,
+                    height: getSize(
+                      suffixIconHeight,
+                    ),
+                    width: getSize(
+                      suffixIconWidth,
+                    ),
+
+                    svgPath: svgPath,
+
+                  ),
+                )
+                    : null,
                 contentPadding: EdgeInsets.only(
                     left: contentPaddingLeft,
+                    right: contentPaddingRight,
                     top: multiline ? 40 : contentPaddingTop),
                 fillColor: white,
                 floatingLabelBehavior: FloatingLabelBehavior.never,

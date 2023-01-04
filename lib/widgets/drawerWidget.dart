@@ -16,7 +16,8 @@ class DrawerWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      child: MediaQuery.removePadding(context: context,
+      child: MediaQuery.removePadding(
+          context: context,
           child: Container(
               decoration: const BoxDecoration(
                 /*   gradient: LinearGradient(

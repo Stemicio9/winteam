@@ -74,7 +74,7 @@ class ProfileNameHeader extends StatelessWidget {
                     description,
                     overflow: TextOverflow.ellipsis,
                     textAlign: TextAlign.left,
-                    style: AppStyle.txtMontserratRegular24,
+                    style: AppStyle.txtMontserratRegular22,
                   ),
                 ),
               ],

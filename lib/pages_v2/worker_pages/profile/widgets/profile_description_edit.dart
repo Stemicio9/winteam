@@ -21,7 +21,7 @@ class ProfileDescriptionEdit extends StatelessWidget {
       this.paddingTop = 55,
       this.paddingLeft = 35,
       this.getMarginTop = 15,
-      this.description = '',
+      required this.description,
       this.horizontalSize = 310,
       required this.descriptionTextController,
       required hinttext})
@@ -41,7 +41,7 @@ class ProfileDescriptionEdit extends StatelessWidget {
           Container(
             padding: getPadding(left: paddingLeft),
             child: Text(
-              CHI_SONO,
+              description,
               overflow: TextOverflow.ellipsis,
               textAlign: TextAlign.left,
               style: AppStyle.txtMontserratSemiBold24,
@@ -59,6 +59,7 @@ class ProfileDescriptionEdit extends StatelessWidget {
               maxLine: 8,
               elevation: 5,
               borderRadius: 5,
+              contentPaddingRight: 20,
             ),
           )
         ],

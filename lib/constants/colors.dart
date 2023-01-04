@@ -33,7 +33,7 @@ const Color green = Color(0xFF4EA699);
 const Color background = Color(0xFF223D64);
 const Color lightGrey = Color(0xFFE8E8E8);
 const Color darkGrey = Color(0xFFA7A7A7);
-
+const Color lightGreen = Color(0xFF45C439);
 
 Color blackTransparent = Color(0xFF000000).withOpacity(0.65);
 Color blackDialog = Color(0xFF000000).withOpacity(0.95);

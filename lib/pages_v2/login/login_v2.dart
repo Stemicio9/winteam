@@ -15,7 +15,8 @@ class LoginPageV2 extends StatefulWidget {
 class _LoginPageV2State extends State<LoginPageV2> {
   @override
   Widget build(BuildContext context) {
-     return W1NScaffoldWithBackground(
+     return W1nScaffold(
+         hasBackgroundColor: true,
          body: LoginFormV2()
      );
   }

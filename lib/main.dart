@@ -62,11 +62,13 @@ void main() async{
     var encoded = jsonEncode(me.data);
     var decoded = jsonDecode(encoded);
     var json = UserEntity.fromJson(decoded);
-    if(json.roleId == getCurrentLanguageValue(USER_DATORE)){
+   /* if(json.roleId == getCurrentLanguageValue(USER_DATORE)){
       initialRoute = RouteConstants.dashboardDatore;
     } else if(json.roleId == getCurrentLanguageValue(USER_LAVORATORE)) {
       initialRoute = RouteConstants.dashboardLavoratore;
-    }
+    } */
+    globalUser = json;
+    initialRoute = RouteConstants.dashboard;
   }
   runApp(MyApp(initialRoute: initialRoute));
 }

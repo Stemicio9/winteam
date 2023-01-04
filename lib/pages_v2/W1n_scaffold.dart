@@ -1,98 +1,59 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:winteam/constants/colors.dart';
 import 'package:winteam/pages_v2/background/background.dart';
 import 'package:winteam/widgets/utilities/close_on_tap.dart';
 import 'package:winteam/widgets_v2/appbars_v2.dart';
+import 'package:winteam/widgets_v2/drawer_widget_v2.dart';
+
+enum Appbars {
+  noAppBar,
+  appbarWithoutActions,
+  appbarWithActions
+}
 
 
-class W1NScaffoldDashboard extends StatelessWidget {
-
+class W1nScaffold extends StatelessWidget {
   final Widget body;
+  // 0 = no appBar, 1 = Appbar without actions, 2 = Appbar with actions
+  final int appBar;
   final Widget? bottomNavigationBar;
-
-  const W1NScaffoldDashboard({Key? key, required this.body, this.bottomNavigationBar}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      body: CloseOnTapUtility(
-          child: body
-      ),
-      bottomNavigationBar: bottomNavigationBar ?? Container(),
-    );
-  }
-}
-
-
-class W1NScaffoldWithBackground extends StatelessWidget {
-
-  final Widget body;
-
-  const W1NScaffoldWithBackground({Key? key, required this.body}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      backgroundColor: Theme.of(context).backgroundColor,
-      body: CloseOnTapUtility(
-          child: Stack(
-            children: [
-              BackgroundV2(),
-              body
-            ],
-          )
-      ),
-    );
-  }
-}
-
-
-
-class W1NScaffold extends StatelessWidget {
-
-  final Widget body;
   final String title;
-  final backgroundColor;
+  final Color backgroundColor;
+//  final bool hasBottomNavigationBar;
+  final bool hasBackgroundColor;
 
-  const W1NScaffold({Key? key, required this.body,required this.title, this.backgroundColor}) : super(key: key);
+  const W1nScaffold({
+    Key? key,
+    required this.body,
+    this.bottomNavigationBar,
+    this.title = "",
+    this.appBar = 0,
+    this.backgroundColor = white,
+//    this.hasBottomNavigationBar = false,
+    this.hasBackgroundColor = false,
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: backgroundColor,
-      appBar: appbarConActionsV2(title, context),
-      resizeToAvoidBottomInset: false,
-      body: CloseOnTapUtility(
-          child: body
-      ),
-    );
-  }
-}
-
-
-
-
-class W1NScaffoldSenzaAction extends StatelessWidget {
-
-  final Widget body;
-  final String title;
-
-  const W1NScaffoldSenzaAction({Key? key, required this.body,required this.title}) : super(key: key);
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appbarSenzaActionsV2(context, title),
-      resizeToAvoidBottomInset: false,
-      body: CloseOnTapUtility(
-          child: body
-      ),
-    );
+        drawer: appBar >= 2 ? DrawerWidgetV2() : null,
+        appBar: appBar == 0
+            ? null
+            : appBar == 1
+                ? appbarSenzaActionsV2(context, title)
+                : appbarConActionsV2(title, context),
+        backgroundColor: hasBackgroundColor == true
+            ? Theme.of(context).backgroundColor
+            : backgroundColor,
+        bottomNavigationBar: bottomNavigationBar,
+        resizeToAvoidBottomInset: false,
+        body: CloseOnTapUtility(
+            child: Stack(
+          children: [
+             hasBackgroundColor == true ? const BackgroundV2() : Container(),
+            body,
+          ],
+        )));
   }
 }
-
-

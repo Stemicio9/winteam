@@ -6,11 +6,17 @@ import 'package:winteam/widgets_v2/action_buttons_v2.dart';
 
 class CancelButton extends StatelessWidget{
   final double paddingTop; //55
+  final double paddingLeft; //35
+  final double paddingRight; //35
+
   final Function onTap;
 
   const CancelButton({
     Key? key,
     this.paddingTop = 55,
+    this.paddingLeft = 35,
+    this.paddingRight = 35,
+
     required this.onTap,
   }) : super(key: key);
 
@@ -19,6 +25,8 @@ class CancelButton extends StatelessWidget{
     return Container(
         padding: getPadding(
           top: paddingTop,
+          right: paddingRight,
+          left: paddingLeft
         ),
         child: ActionButtonV2(
             text:CANCEL,

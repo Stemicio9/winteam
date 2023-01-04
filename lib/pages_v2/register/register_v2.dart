@@ -15,7 +15,8 @@ class RegisterPageV2 extends StatefulWidget {
 class _RegisterPageV2State extends State<RegisterPageV2> {
   @override
   Widget build(BuildContext context) {
-    return W1NScaffoldWithBackground(
+    return W1nScaffold(
+        hasBackgroundColor: true,
         body: RegisterFormV2()
     );
   }

@@ -12,12 +12,8 @@ import 'package:winteam/pages_v2/worker_pages/profile/widgets/profile_header_edi
 import 'package:winteam/pages_v2/worker_pages/profile/widgets/profile_info_edit.dart';
 import 'package:winteam/pages_v2/worker_pages/profile/widgets/profile_skills_edit.dart';
 import 'package:winteam/pages_v2/worker_pages/profile/widgets/save_button.dart';
-import 'package:winteam/theme/app_decoration.dart';
-import 'package:winteam/theme/app_style.dart';
 import 'package:winteam/utils/image_constant.dart';
-import 'package:winteam/utils/size_utils.dart';
-import 'package:winteam/widgets_v2/action_buttons_v2.dart';
-import 'package:winteam/widgets_v2/custom_image_view.dart';
+
 
 class WorkerProfileEditV2 extends StatefulWidget {
   @override
@@ -52,10 +48,13 @@ class WorkerProfileEditV2State extends State<WorkerProfileEditV2> {
 
 
   @override
-  Widget build(BuildContext context) {
+  void initState() {
     fillDummyMansioni();
+    super.initState();
+  }
 
-
+  @override
+  Widget build(BuildContext context) {
     nameTextController.text = name;
     headerDescriptionTextController.text = headerDescription;
     phoneTextController.text = phone;
@@ -63,11 +62,12 @@ class WorkerProfileEditV2State extends State<WorkerProfileEditV2> {
     positionTextController.text = position;
     descriptionTextController.text = description;
 
-    return W1NScaffold(
+    return W1nScaffold(
+        appBar: 2,
         title: PROFILE,
         body: SingleChildScrollView(
             child: Padding(
-                padding: const EdgeInsets.only(bottom: 30),
+                padding: const EdgeInsets.only(bottom: 35),
                 child: Form(
                     key: _formKey,
                     child: Column(
@@ -90,17 +90,20 @@ class WorkerProfileEditV2State extends State<WorkerProfileEditV2> {
 
                         ProfileSkillsEdit(
                           mansioni: mansioni,
+                          deleteSkill: deleteDummySkill,
                           ontap:() {Navigator.pushNamed(context, RouteConstants.addSkills);},
                         ),
 
 
                         ProfileDescriptionEdit(
+                          description: CHI_SONO,
                           hinttext: DESCRIPTION,
                           descriptionTextController: descriptionTextController,
                         ),
 
 
                         ProfileInfoEdit(
+                          info: I_MIEI_DATI,
                           phoneController: phoneTextController,
                           emailController: emailTextController,
                           positionController: positionTextController,
@@ -132,4 +135,12 @@ class WorkerProfileEditV2State extends State<WorkerProfileEditV2> {
       mansioni.add(Mansione(icon: ImageConstant.imgBag, text: '$Mansione $i'));
     }
   }
+
+
+  deleteDummySkill(int index){
+      setState(() {
+        mansioni.removeAt(index);
+      });
+  }
+
 }

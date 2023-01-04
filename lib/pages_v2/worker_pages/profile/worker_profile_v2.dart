@@ -39,11 +39,12 @@ class WorkerProfileV2State extends State<WorkerProfileV2> {
   Widget build(BuildContext context) {
     fillDummyMansioni();
 
-    return W1NScaffold(
+    return W1nScaffold(
+        appBar: 2,
         title: PROFILE,
         body: SingleChildScrollView(
             child: Padding(
-             padding: getPadding(bottom: 30),
+             padding: getPadding(bottom: 35),
              child: Column(
                children: [
                ImageProfile(
@@ -71,9 +72,11 @@ class WorkerProfileV2State extends State<WorkerProfileV2> {
                 mansioni: mansioni,
               ),
               ProfileDescription(
+                title: CHI_SONO,
                 description: description,
               ),
               ProfileInfo(
+                title: I_MIEI_DATI,
                 phone: phone,
                 email: email,
                 position: position,
@@ -89,9 +92,6 @@ class WorkerProfileV2State extends State<WorkerProfileV2> {
       mansioni.add(Mansione(icon: ImageConstant.imgBag, text: '$Mansione $i'));
     }
   }
-
-
-
 
   openGallery() async{
     var image = await ImagePicker().pickImage(source: ImageSource.gallery);

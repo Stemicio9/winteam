@@ -7,9 +7,10 @@ import 'package:winteam/widgets_v2/texts_v2.dart';
 class AdsHeader extends StatelessWidget{
 
   final int offers;
+  final onTap;
 
 
-  const AdsHeader({super.key, this.offers = 20});
+  const AdsHeader({super.key, this.offers = 20,required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -24,22 +25,26 @@ class AdsHeader extends StatelessWidget{
               weight: FontWeight.bold,
 
           ),
-          Row(
-            children: [
-              Texth2V2(
-                  testo: FILTER,
-                  color: background,
-                  weight: FontWeight.bold,
-              ),
-              Padding(
-                padding:getPadding(left: 10,bottom: 2),
-                child: const Icon(
-                  Icons.filter_alt_rounded,
-                  color: background,
-                ),
-              )
 
-            ],
+          GestureDetector(
+            onTap: onTap,
+            child: Row(
+              children: [
+                Texth2V2(
+                    testo: FILTER,
+                    color: background,
+                    weight: FontWeight.bold,
+                ),
+                Padding(
+                  padding:getPadding(left: 10,bottom: 2),
+                  child: const Icon(
+                    Icons.filter_alt_rounded,
+                    color: background,
+                  ),
+                )
+
+              ],
+            ),
           ),
         ],
       ),

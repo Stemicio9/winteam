@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:winteam/constants/colors.dart';
 import 'package:winteam/constants/language.dart';
+import 'package:winteam/utils/image_constant.dart';
 import 'package:winteam/utils/size_utils.dart';
 import 'package:winteam/widgets_v2/inputs_v2.dart';
 
@@ -12,14 +13,10 @@ class AdsAutocomplete extends StatelessWidget {
 
 
   static const List<String> _kOptions = <String>[
-    'One',
-    'Two',
-    'Three',
-    'Four',
-    'Five',
-    'Six',
-    'Seven',
-
+    'Pizzaiolo',
+    'Barman',
+    'Cameriere',
+    'Promoter',
   ];
 
 
@@ -60,7 +57,8 @@ class AdsAutocomplete extends StatelessWidget {
                         return const Iterable<String>.empty();
                       }
                       return _kOptions.where((String option) {
-                        return option.contains(textEditingValue.text.toLowerCase());
+                        return option.toLowerCase().contains(textEditingValue.text.toLowerCase()
+                        );
                       });
                     },
                     onSelected: (String selection) {
@@ -82,10 +80,7 @@ class AdsAutocomplete extends StatelessWidget {
                           borderRadius: 50,
                           contentPaddingTop: 30,
                           isPrefixIcon: true,
-                          prefixIcon: Icons.search_rounded,
-                          prefixIconColor: background,
-
-
+                          prefixIcon: ImageConstant.imgSearch
                         ))
                 ),
               )
