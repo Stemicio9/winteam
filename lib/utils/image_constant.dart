@@ -44,10 +44,15 @@ class ImageConstant {
   static String imgPizza = 'assets/images/PizzaIcon.svg';
 
   static String imgComeFunziona = 'assets/images/come_funziona.svg';
+
   static String imgContattaci = 'assets/images/contattaci.svg';
+
   static String imgLogout = 'assets/images/logout.svg';
+
   static String imgBuilding = 'assets/images/IconBuilding.svg';
+
   static String imgPrivacyPolicy = 'assets/images/privacy_policy.svg';
+
   static String imgRemoveAccount = 'assets/images/remove_account.svg';
 
   static String imgLogoBlack = 'assets/images/logo_w1n_black.png';
@@ -57,7 +62,11 @@ class ImageConstant {
   static String imgAssumi= 'assets/images/assumi_Icon.svg';
 
   static String imgPosition = 'assets/images/position.svg';
+
   static String imgPhoneSvg = 'assets/images/phone.svg';
+
+  static String imgTickSuccess = 'assets/images/IconTickSuccess.svg';
+
   static String imgEmailSvg = 'assets/images/email.svg';
 
 

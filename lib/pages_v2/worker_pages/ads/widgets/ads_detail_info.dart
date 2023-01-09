@@ -5,6 +5,7 @@ import 'package:winteam/utils/image_constant.dart';
 import 'package:winteam/utils/size_utils.dart';
 import 'package:winteam/widgets_v2/custom_image_view.dart';
 import 'package:winteam/widgets_v2/divider_v2.dart';
+import 'package:winteam/widgets_v2/tooltip_widget.dart';
 
 class AdsDetailInfo extends StatelessWidget {
   final double innerImageRadius; // 77
@@ -20,6 +21,7 @@ class AdsDetailInfo extends StatelessWidget {
   final String hours;
   final String subtitle;
   final image;
+  final String message;
 
   AdsDetailInfo({
     this.innerImageRadius = 77,
@@ -33,7 +35,8 @@ class AdsDetailInfo extends StatelessWidget {
     required this.date,
     required this.position,
     required this.image,
-    required this.rating
+    required this.rating,
+    required this.message,
   });
 
   @override
@@ -83,25 +86,27 @@ class AdsDetailInfo extends StatelessWidget {
                         style: AppStyle.txtMontserratBoldUnderline24,
                       ),
                     ),
-                    RatingBar.builder(
-                      ignoreGestures: true,
-                      initialRating: rating,
-                      minRating: 0,
-                      direction: Axis.horizontal,
-                      allowHalfRating: true,
-                      itemCount: 5,
-                      itemSize: 20,
-                      itemPadding: EdgeInsets.symmetric(horizontal:2),
-                      itemBuilder: (context, _) => const Icon(
-                        Icons.star_rounded,
-                        color: Colors.amber,
-
-
+                    TooltipWidget(
+                      message: message,
+                      direction: AxisDirection.down,
+                      child: RatingBar.builder(
+                        ignoreGestures: true,
+                        initialRating: rating,
+                        minRating: 0,
+                        direction: Axis.horizontal,
+                        allowHalfRating: true,
+                        itemCount: 5,
+                        itemSize: 19,
+                        itemPadding: EdgeInsets.symmetric(horizontal: 2),
+                        itemBuilder: (context, _) => const Icon(
+                          Icons.star_rounded,
+                          color: Colors.amber,
+                        ),
+                        onRatingUpdate: (rating) {
+                          print(rating);
+                        },
                       ),
-                      onRatingUpdate: (rating) {
-                        print(rating);
-                      },
-                    )
+                    ),
                   ],
                 ),
               )

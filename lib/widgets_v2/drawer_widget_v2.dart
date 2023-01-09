@@ -4,6 +4,7 @@ import 'package:winteam/constants/colors.dart';
 import 'package:winteam/constants/language.dart';
 import 'package:winteam/constants/route_constants.dart';
 import 'package:winteam/entities/drawer_element.dart';
+import 'package:winteam/pages_v2/logout/logout_dialog.dart';
 import 'package:winteam/theme/app_style.dart';
 import 'package:winteam/utils/size_utils.dart';
 import 'package:winteam/widgets_v2/custom_image_view.dart';
@@ -26,49 +27,45 @@ class DrawerWidgetV2 extends StatelessWidget {
 
   // final String username;
 
-  DrawerWidgetV2(
-      {super.key,
-      this.innerImageRadius = 77,
-      this.imageWidth = 90,
-      this.imageHeight = 90,
-      this.innerImageWidth = 90,
-      this.innerImageHeight = 90,
-      this.customImageViewHeight = 26,
-      this.customImageViewWidth = 26,
-      //  required this.username,
-      //this.elementList = const []
-      });
+  DrawerWidgetV2({
+    super.key,
+    this.innerImageRadius = 77,
+    this.imageWidth = 90,
+    this.imageHeight = 90,
+    this.innerImageWidth = 90,
+    this.innerImageHeight = 90,
+    this.customImageViewHeight = 26,
+    this.customImageViewWidth = 26,
+    //  required this.username,
+    //this.elementList = const []
+  });
 
   @override
   Widget build(BuildContext context) {
     return Drawer(
       //  width: 260,
 
-        child: Column(
-          children: [
-            Expanded(
-              child: ListView(
-                        padding: EdgeInsets.zero,
-                        children: createElementList(context)
-                    ),
-            ),
-            drawerFooter(context)
-          ],
-        ),
-
+      child: Column(
+        children: [
+          Expanded(
+            child: ListView(
+                padding: EdgeInsets.zero, children: createElementList(context)),
+          ),
+          drawerFooter(context)
+        ],
+      ),
     );
   }
 
   drawerHeader() {
     return Padding(
-      padding:getPadding(bottom: 20),
+      padding: getPadding(bottom: 20),
       child: DrawerHeader(
           decoration: const BoxDecoration(
             color: background,
-
           ),
           child: Padding(
-            padding: getPadding(left: 10,top: 20),
+            padding: getPadding(left: 10, top: 20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -79,9 +76,7 @@ class DrawerWidgetV2 extends StatelessWidget {
                   width: getSize(
                     imageWidth,
                   ),
-                  child: Stack(
-                      alignment: Alignment.bottomRight,
-                      children: [
+                  child: Stack(alignment: Alignment.bottomRight, children: [
                     CustomImageView(
                       onTap: () {},
                       imagePath: ImageConstant.imgPexelsphotoby,
@@ -109,15 +104,11 @@ class DrawerWidgetV2 extends StatelessWidget {
                     weight: FontWeight.bold,
                   ),
                 ),
-
               ],
             ),
-          )
-      ),
+          )),
     );
   }
-
-
 
   createElementList(context) {
     String comeFunziona = COME_FUNZIONA;
@@ -135,44 +126,58 @@ class DrawerWidgetV2 extends StatelessWidget {
     List<Widget> lista = List.empty(growable: true);
 
     lista.add(drawerHeader());
-    lista.add(createTile(comeFunziona, () {}, context, ImageConstant.imgComeFunziona,22,26));
-    lista.add(createTile(contattaci, () {}, context, ImageConstant.imgContattaci,25,22));
-    lista.add(createTile(privacyPolicy, () {}, context, ImageConstant.imgPrivacyPolicy,26,18));
-    lista.add(createTile(rimuoviAccount, () {}, context, ImageConstant.imgRemoveAccount,27,26));
-    lista.add(createTile(logout, () {Navigator.pushNamed(context, RouteConstants.login);}, context, ImageConstant.imgLogout,27,19));
 
+    lista.add(createTile(
+        comeFunziona, () {}, context, ImageConstant.imgComeFunziona, 22, 26));
 
+    lista.add(createTile(
+        contattaci, () {}, context, ImageConstant.imgContattaci, 25, 22));
+
+    lista.add(createTile(
+        privacyPolicy, () {}, context, ImageConstant.imgPrivacyPolicy, 26, 18));
+
+    lista.add(createTile(rimuoviAccount, () {}, context,
+        ImageConstant.imgRemoveAccount, 27, 26));
+
+    lista.add(createTile(logout, () {
+      showDialog(
+          context: context,
+          barrierColor: blackDialog,
+          builder: (ctx) => LogoutDialog(
+            cancelOnTap: (){Navigator.pop(context);},
+            confirmOnTap: (){
+              Navigator.pushNamed(context, RouteConstants.login);
+              },
+          ));
+    }, context, ImageConstant.imgLogout, 27, 19));
     elementList.clear();
     return lista;
   }
 
-  ListTile createTile(String testo, Function funzione, context, String svgPath, double height, double width) {
+  ListTile createTile(String testo, funzione, context, String svgPath,
+      double height, double width) {
     return ListTile(
-      horizontalTitleGap: 4,
-      leading: Padding(
-        padding:getPadding(left: 10),
-        child: CustomImageView(
-          svgPath: svgPath,
-          height: getVerticalSize(
-            height,
-          ),
-          width: getHorizontalSize(
-            width,
+        horizontalTitleGap: 4,
+        leading: Padding(
+          padding: getPadding(left: 10),
+          child: CustomImageView(
+            svgPath: svgPath,
+            height: getVerticalSize(
+              height,
+            ),
+            width: getHorizontalSize(
+              width,
+            ),
           ),
         ),
-      ),
-      title: Text(
-        testo,
-        style: AppStyle.txtMontserratMediumBlack20,
-      ),
-      onTap: () {
-        funzione;
-      },
-    );
+        title: Text(
+          testo,
+          style: AppStyle.txtMontserratMediumBlack20,
+        ),
+        onTap: funzione);
   }
 
-
- drawerFooter(context){
+  drawerFooter(context) {
     return Container(
       width: 150,
       height: 150,
@@ -182,12 +187,9 @@ class DrawerWidgetV2 extends StatelessWidget {
         children: [
           CustomImageView(
             imagePath: ImageConstant.imgLogo,
-
           ),
         ],
       ),
     );
   }
-
-
 }

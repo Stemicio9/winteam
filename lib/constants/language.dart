@@ -77,7 +77,7 @@ const String ABOUT_US = "Chi siamo";
 const String VIEW_PROFILE = "Visualizza profilo";
 const String CANDIDATES_LIST = "Lista candidati";
 const String VIEW = "Visualizza";
-const String HIRE = "Assumi!";
+const String CHOOSE = "Scegli!";
 
 
 //Pagine bottombar
@@ -214,7 +214,7 @@ final Map<String, String> LANG_IT = {
   VIEW_PROFILE:"Visualizza profilo",
   CANDIDATES_LIST:"Lista candidati",
   VIEW:"Visualizza",
-  HIRE:"Assumi!",
+  CHOOSE:"Scegli!",
 
   "": "",
   "": "",

@@ -16,7 +16,7 @@ class SearchWorkerCard extends StatelessWidget {
   final double imageHeight; // 90
   final Function? onTap;
   final Function? view;
-  final Function? hire;
+  final Function? choose;
 
   final String phone;
   final String email;
@@ -42,7 +42,7 @@ class SearchWorkerCard extends StatelessWidget {
     required this.phone,
     required this.skillIcon,
     required this.image,
-    this.hire,
+    this.choose,
     this.view,
     this.isSearch = true,
     this.isCandidatesList = false,
@@ -231,8 +231,8 @@ class SearchWorkerCard extends StatelessWidget {
                    ),
 
                    ActionButtonV2(
-                       action:hire,
-                       text: HIRE,
+                       action:choose,
+                       text: CHOOSE,
                        color: green,
                        maxWidth: 150,
                        textColor: white,

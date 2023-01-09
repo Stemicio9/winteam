@@ -8,6 +8,7 @@ class CancelButton extends StatelessWidget{
   final double paddingTop; //55
   final double paddingLeft; //35
   final double paddingRight; //35
+  final double maxWidth; //330
 
   final Function onTap;
 
@@ -16,6 +17,7 @@ class CancelButton extends StatelessWidget{
     this.paddingTop = 55,
     this.paddingLeft = 35,
     this.paddingRight = 35,
+    this.maxWidth = 330,
 
     required this.onTap,
   }) : super(key: key);
@@ -31,7 +33,7 @@ class CancelButton extends StatelessWidget{
         child: ActionButtonV2(
             text:CANCEL,
             action:onTap,
-            maxWidth:330,
+            maxWidth:maxWidth,
             color:lightGrey,
             textColor:black,
             margin:0

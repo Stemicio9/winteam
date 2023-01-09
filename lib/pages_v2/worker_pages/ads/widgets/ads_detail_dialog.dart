@@ -2,11 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:winteam/constants/colors.dart';
 import 'package:winteam/constants/language.dart';
 import 'package:winteam/theme/app_style.dart';
+import 'package:winteam/utils/image_constant.dart';
 import 'package:winteam/utils/size_utils.dart';
+import 'package:winteam/widgets_v2/custom_image_view.dart';
 import 'package:winteam/widgets_v2/dialog_back_text.dart';
 import 'package:winteam/widgets_v2/dialog_card.dart';
 
-class ManageSubscriptionDialog extends StatelessWidget {
+class AdsDetailDialog extends StatelessWidget {
+  const AdsDetailDialog({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -18,25 +22,17 @@ class ManageSubscriptionDialog extends StatelessWidget {
             cardTitle: 'Avviso',
             child: Column(
               children: [
-                Wrap(alignment: WrapAlignment.start, children: [
-                  Text(
-                    'Per accedere alla sezione',
-                    style: AppStyle.txtMontserratRegular20,
-                  ),
-                  Text(
-                    ' Gestione abbonamento',
-                    style: AppStyle.txtMontserratSemiBoldBlack20,
-                  ),
-                  Text(
-                    ' accedi al seguente link:',
-                    style: AppStyle.txtMontserratRegular20,
-                  ),
-                ]),
+                Text(
+                  'La tua candidatura è avvenuta con successo!',
+                  style: AppStyle.txtMontserratRegular20,
+                  textAlign: TextAlign.center,
+                ),
                 Padding(
-                  padding: getPadding(top: 30),
-                  child: Text(
-                    'http://w1n.web.app.it',
-                    style: AppStyle.txtMontserratRegularGrey20,
+                  padding: getPadding(top: 20),
+                  child: CustomImageView(
+                    svgPath: ImageConstant.imgTickSuccess,
+                    height: 50,
+                    width: 50,
                   ),
                 )
               ],

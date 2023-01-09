@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:winteam/constants/colors.dart';
 import 'package:winteam/constants/language.dart';
 import 'package:winteam/pages_v2/W1n_scaffold.dart';
 import 'package:winteam/pages_v2/worker_pages/ads/widgets/ads_detail_description.dart';
+import 'package:winteam/pages_v2/worker_pages/ads/widgets/ads_detail_dialog.dart';
 import 'package:winteam/pages_v2/worker_pages/ads/widgets/ads_detail_footer.dart';
 import 'package:winteam/pages_v2/worker_pages/ads/widgets/ads_detail_info.dart';
 import 'package:winteam/pages_v2/worker_pages/ads/widgets/ads_detail_skill.dart';
@@ -17,6 +19,7 @@ class AdsDetail extends StatefulWidget {
 
 class AdsDetailState extends State<AdsDetail> {
   final candidates = '3';
+  final message = 'Valutazione: 4/5';
   final rating = 4.00;
   final pizzaiolo = 'Pizzaiolo';
   final price = '70';
@@ -37,7 +40,6 @@ class AdsDetailState extends State<AdsDetail> {
             child: Padding(
           padding: getPadding(bottom: 35),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               AdsDetailSkill(
                 skillIcon: ImageConstant.imgPizza,
@@ -45,6 +47,7 @@ class AdsDetailState extends State<AdsDetail> {
                 price: price,
               ),
               AdsDetailInfo(
+                message: message,
                 onTap: () {},
                 image: image,
                 subtitle: subtitle,
@@ -57,9 +60,16 @@ class AdsDetailState extends State<AdsDetail> {
                 description: description,
               ),
               AdsDetailFooter(
-                candidates: candidates,
-                onTap: () {},
                 text: APPLY,
+                candidates: candidates,
+                onTap: () {
+                  showDialog(
+                      context: context,
+                      barrierColor: blackDialog,
+                      builder: (ctx) => AdsDetailDialog()
+                  );
+                },
+
               ),
             ],
           ),

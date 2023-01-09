@@ -7,6 +7,7 @@ import 'package:winteam/utils/image_constant.dart';
 import 'package:winteam/utils/size_utils.dart';
 import 'package:winteam/widgets_v2/action_buttons_v2.dart';
 import 'package:winteam/widgets_v2/custom_image_view.dart';
+import 'package:winteam/widgets_v2/tooltip_widget.dart';
 
 class AdsCard extends StatelessWidget {
   final double innerImageRadius; // 77
@@ -210,24 +211,10 @@ class AdsCard extends StatelessWidget {
               isVisible ?  Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
-
-                        JustTheTooltip(
-                          elevation: 5,
-                          preferredDirection: AxisDirection.left,
-                          tailLength: 10,
-                          tailBaseWidth: 10,
-                          isModal: true,
-                          backgroundColor: black,
-                          content: Padding(
-                            padding: EdgeInsets.all(8.0),
-                            child: Text(
-                                message,
-                                style: const TextStyle(
-                                color: white
-                               ),
-                            ),
-                          ),
-                          child: Material(
+                        TooltipWidget(
+                            message: message,
+                            direction: AxisDirection.left,
+                            child: Material(
                               elevation: 4,
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(10)),
@@ -240,9 +227,6 @@ class AdsCard extends StatelessWidget {
                                 ),
                               )),
                         ),
-
-
-
 
                         Padding(
                           padding: getPadding(top: 25),

@@ -26,6 +26,7 @@ class EmployerProfile extends StatefulWidget{
 
 class EmployerProfileState extends State<EmployerProfile>{
 
+  final message = 'Valutazione: 4/5';
   final String name = "Azienda srl";
   final double rating = 4.0;
   final String headerDescription = "Società di servizi";
@@ -60,6 +61,7 @@ class EmployerProfileState extends State<EmployerProfile>{
                 ),
 
                  EmployerNameHeader(
+                   message: message,
                    rating: rating,
                    name: name,
                    description: headerDescription,

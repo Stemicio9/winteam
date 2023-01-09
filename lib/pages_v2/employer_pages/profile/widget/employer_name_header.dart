@@ -7,6 +7,7 @@ import 'package:winteam/utils/image_constant.dart';
 import 'package:winteam/utils/size_utils.dart';
 import 'package:winteam/widgets_v2/action_buttons_v2.dart';
 import 'package:winteam/widgets_v2/custom_image_view.dart';
+import 'package:winteam/widgets_v2/tooltip_widget.dart';
 
 class EmployerNameHeader extends StatelessWidget {
   final double sectionHeight;
@@ -18,6 +19,7 @@ class EmployerNameHeader extends StatelessWidget {
   final VoidCallback? onTap;
   final double rating;
   final buttonOntap;
+  final String message;
 
   const EmployerNameHeader({
     Key? key,
@@ -30,6 +32,7 @@ class EmployerNameHeader extends StatelessWidget {
     required this.onTap,
     required this.rating,
     required this.buttonOntap,
+    required this.message,
   }) : super(key: key);
 
   @override
@@ -103,24 +106,28 @@ class EmployerNameHeader extends StatelessWidget {
         ),
         Padding(
           padding: getPadding(top: 10),
-          child: RatingBar.builder(
-            ignoreGestures: true,
-            initialRating: rating,
-            minRating: 0,
-            direction: Axis.horizontal,
-            allowHalfRating: true,
-            itemCount: 5,
-            itemSize: 28,
-            itemPadding: EdgeInsets.symmetric(horizontal: 2),
-            itemBuilder: (context, _) => const Icon(
-              Icons.star_rounded,
-              color: Colors.amber,
+          child: TooltipWidget(
+            message: message,
+            direction: AxisDirection.down,
+            child: RatingBar.builder(
+                ignoreGestures: true,
+                initialRating: rating,
+                minRating: 0,
+                direction: Axis.horizontal,
+                allowHalfRating: true,
+                itemCount: 5,
+                itemSize: 28,
+                itemPadding: EdgeInsets.symmetric(horizontal: 2),
+                itemBuilder: (context, _) => const Icon(
+                  Icons.star_rounded,
+                  color: Colors.amber,
+                ),
+                onRatingUpdate: (rating) {
+                  print(rating);
+                },
+              ),
             ),
-            onRatingUpdate: (rating) {
-              print(rating);
-            },
           ),
-        ),
 
         Padding(
             padding: getPadding(top: 25),
@@ -129,9 +136,7 @@ class EmployerNameHeader extends StatelessWidget {
                 text: MANAGE_SUBSCRIPTION,
                 color: green,
                 maxWidth: 280,
-                textColor: white
-            )
-        )
+                textColor: white))
       ],
     );
   }
