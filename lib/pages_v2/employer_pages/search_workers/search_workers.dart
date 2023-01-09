@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:winteam/constants/colors.dart';
 import 'package:winteam/constants/language.dart';
-import 'package:winteam/constants/route_constants.dart';
 import 'package:winteam/pages_v2/W1n_scaffold.dart';
-import 'package:winteam/pages_v2/employer_pages/search_workers/widget/search_worker_autocomplete.dart';
 import 'package:winteam/pages_v2/employer_pages/search_workers/widget/search_workers_card.dart';
+import 'package:winteam/pages_v2/employer_pages/search_workers/widget/subscription_dialog.dart';
 import 'package:winteam/pages_v2/worker_pages/ads/data/annuncio.dart';
+import 'package:winteam/pages_v2/worker_pages/ads/widgets/ads_autocomplete.dart';
 import 'package:winteam/utils/size_utils.dart';
-
-import '../../../theme/app_style.dart';
 
 class SearchWorkers extends StatefulWidget {
   @override
@@ -34,9 +32,22 @@ class SearchWorkersState extends State<SearchWorkers> {
             padding: getPadding(bottom: 30),
             child: Column(
               children: [
-                SearchWorkerAutocomplete(filterController: filterController),
+
+                AdsAutocomplete(
+                    paddingBottom: 30,
+                    filterController: filterController
+                ),
+
+
                 ...annunci.map((e) => SearchWorkerCard(
-                  onTap: () {},
+                  onTap: () {
+
+                    showDialog(
+                        context: context,
+                        barrierColor: blackDialog,
+                        builder: (ctx) => SubscriptionDialog()
+                    );
+                  },
                   title: e.title,
                   subtitle: e.subtitle,
                   position: e.position,

@@ -74,6 +74,9 @@ class EmployerAdsState extends State<EmployerAds>{
 
 
   void selectElement(int index, bool value) {
+    if(!value){
+      return;
+    }
     indexes = [false, false, false, false];
     setState(() {
       indexes[index] = value;

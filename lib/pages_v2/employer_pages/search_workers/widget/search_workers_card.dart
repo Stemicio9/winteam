@@ -236,6 +236,12 @@ class SearchWorkerCard extends StatelessWidget {
                        color: green,
                        maxWidth: 150,
                        textColor: white,
+                       isVisible: true,
+                       imgPath: ImageConstant.imgAssumi,
+                       iconWidth: 30,
+                       iconHeight: 30,
+
+
                    ),
                  ],
 

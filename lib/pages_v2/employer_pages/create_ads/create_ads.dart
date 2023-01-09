@@ -50,6 +50,7 @@ class CreateAdsState extends State<CreateAds>{
               children: [
                 CreateAdsSkill(
                   skillController: skillController,
+
                 ),
 
                 CreateAdsPrice(

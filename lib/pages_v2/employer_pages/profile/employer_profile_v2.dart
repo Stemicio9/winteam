@@ -3,10 +3,12 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:winteam/constants/colors.dart';
 import 'package:winteam/constants/language.dart';
 import 'package:winteam/constants/route_constants.dart';
 import 'package:winteam/pages_v2/W1n_scaffold.dart';
 import 'package:winteam/pages_v2/employer_pages/profile/widget/employer_name_header.dart';
+import 'package:winteam/pages_v2/employer_pages/profile/widget/manage_subscription_dialog.dart';
 import 'package:winteam/pages_v2/worker_pages/profile/widgets/image_profile.dart';
 import 'package:winteam/pages_v2/worker_pages/profile/widgets/profile_description.dart';
 import 'package:winteam/pages_v2/worker_pages/profile/widgets/profile_info.dart';
@@ -62,7 +64,13 @@ class EmployerProfileState extends State<EmployerProfile>{
                    name: name,
                    description: headerDescription,
                    sectionHeight: 110,
-                   buttonOntap: (){},
+                   buttonOntap: (){
+                     showDialog(
+                         context: context,
+                         barrierColor: blackDialog,
+                         builder: (ctx) => ManageSubscriptionDialog()
+                     );
+                   },
                    onTap: (){Navigator.pushNamed(context, RouteConstants.employerProfileEdit);}
                  ),
 

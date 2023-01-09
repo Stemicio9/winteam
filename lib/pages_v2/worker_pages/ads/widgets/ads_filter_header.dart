@@ -59,6 +59,8 @@ class AdsFilterHeader extends StatelessWidget {
                   ],
                 ),
                 ActionButtonV2(
+                  isVisible: true,
+                  imgPath: ImageConstant.imgCancel,
                   containerHeight: 34,
                   action: onTap,
                   text: REMOVE_ALL,
@@ -71,8 +73,7 @@ class AdsFilterHeader extends StatelessWidget {
                   borderWidth: 0.5,
                   maxHeight: 34,
                   fontSize: 14,
-                 // suffixIcon: Icons.add,
-
+                //  suffixIcon: Icons.add,
                 )
               ],
             ),

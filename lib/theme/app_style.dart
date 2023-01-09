@@ -55,6 +55,26 @@ class AppStyle {
     fontWeight: FontWeight.w400,
   );
 
+
+  static TextStyle txtMontserratRegularItalic20 = TextStyle(
+    color: ColorConstant.black900,
+    fontSize: getFontSize(
+      20,
+    ),
+    fontFamily: 'Montserrat',
+    fontStyle: FontStyle.italic,
+    fontWeight: FontWeight.w400,
+  );
+
+  static TextStyle txtMontserratRegularGrey20 = TextStyle(
+    color: ColorConstant.greyA500,
+    fontSize: getFontSize(
+      20,
+    ),
+    fontFamily: 'Montserrat',
+    fontWeight: FontWeight.w400,
+  );
+
   static TextStyle txtMontserratRegular22 = TextStyle(
     color: ColorConstant.black900,
     fontSize: getFontSize(
@@ -63,6 +83,8 @@ class AppStyle {
     fontFamily: 'Montserrat',
     fontWeight: FontWeight.w400,
   );
+
+
 
 
   static TextStyle txtMontserratRegular24 = TextStyle(
@@ -144,6 +166,8 @@ class AppStyle {
     fontWeight: FontWeight.w800,
   );
 
+
+
   static TextStyle txtMontserratSemiBold20 = TextStyle(
     color: ColorConstant.blueGray800,
     fontSize: getFontSize(
@@ -152,6 +176,32 @@ class AppStyle {
     fontFamily: 'Montserrat',
     fontWeight: FontWeight.w600,
   );
+
+
+  static TextStyle txtMontserratSemiBoldWhite22 = TextStyle(
+    color: ColorConstant.whiteA700,
+    fontSize: getFontSize(
+      22,
+    ),
+    fontFamily: 'Montserrat',
+    fontWeight: FontWeight.w600,
+  );
+
+
+
+  static TextStyle txtMontserratSemiBoldWhiteUnderline22 = TextStyle(
+    color: ColorConstant.whiteA700,
+    fontSize: getFontSize(
+      22,
+    ),
+
+    fontFamily: 'Montserrat',
+    fontWeight: FontWeight.w600,
+    decoration: TextDecoration.underline,
+
+  );
+
+
 
   static TextStyle txtMontserratSemiBoldBlack20 = TextStyle(
     color: ColorConstant.black900,

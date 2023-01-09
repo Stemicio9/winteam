@@ -23,12 +23,9 @@ import '../pages/pagine_lavoratore/dashboard_lavoratore.dart';
 class RouteConstants {
   static const String dashboardLavoratore = "/dashboardlavoratore";
   static const String dashboardDatore = "/dashboarddatore";
-  static const String login = "/login";
   static const String contatti = "/contattaci";
   static const String privacypolicy = "/privacypolicy";
-  static const String registrazione = "/registrazione";
   static const String comeFunziona = "/comefunziona";
-  static const String passDimenticata = "/passworddimenticata";
   static const String filtriAnnunciLavoratore = "/filtriannunci";
   static const String dettaglioAnnuncioLavoratore = "/dettaglioannunciolavoratore";
   static const String dettaglioAnnuncioDatore = "/dettaglioannunciodatore";
@@ -48,6 +45,9 @@ class RouteConstants {
   static const String adsFilter = "/adsfilter";
   static const String candidatesList = "/candidateslist";
   static const String employerProfileEdit = "/employeredit";
+  static const String login = "/login";
+  static const String registrazione = "/registrazione";
+  static const String passDimenticata = "/passworddimenticata";
 
 
 

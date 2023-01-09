@@ -111,12 +111,15 @@ class LoginFormV2State extends State<LoginFormV2> {
             hinttext: EMAIL,
             controller: _emailTextController,
             validator: validateEmail,
-            isPassword: false),
+            isPassword: false,
+        ),
+
         InputsV2Widget(
           hinttext: PASSWORD,
           controller: _passwordTextController,
           validator: notEmptyValidate,
           isPassword: true,
+
         ),
         CheckboxV2Widget(),
         ActionButtonV2(

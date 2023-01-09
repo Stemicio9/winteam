@@ -50,7 +50,11 @@ class ImageConstant {
   static String imgPrivacyPolicy = 'assets/images/privacy_policy.svg';
   static String imgRemoveAccount = 'assets/images/remove_account.svg';
 
+  static String imgLogoBlack = 'assets/images/logo_w1n_black.png';
 
+  static String imgLogo= 'assets/images/logo_black.png';
+
+  static String imgAssumi= 'assets/images/assumi_Icon.svg';
 
   static String imgPosition = 'assets/images/position.svg';
   static String imgPhoneSvg = 'assets/images/phone.svg';

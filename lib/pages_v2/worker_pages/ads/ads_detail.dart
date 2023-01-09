@@ -16,7 +16,7 @@ class AdsDetail extends StatefulWidget {
 }
 
 class AdsDetailState extends State<AdsDetail> {
-  final candidates = '0';
+  final candidates = '3';
   final rating = 4.00;
   final pizzaiolo = 'Pizzaiolo';
   final price = '70';
@@ -25,10 +25,8 @@ class AdsDetailState extends State<AdsDetail> {
   final date = '24/12/2022';
   final position = 'Cosenza';
   final image = 'assets/images/img_pexelsphotoby.png';
-  final String description = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut et massa mi. Aliquam in hendrerit urna. Pellentesque sit amet sapien fringilla, mattis ligula consectetur, ultrices ';
-
-
-
+  final String description =
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut et massa mi. Aliquam in hendrerit urna. Pellentesque sit amet sapien fringilla, mattis ligula consectetur, ultrices ';
 
   @override
   Widget build(BuildContext context) {
@@ -63,12 +61,8 @@ class AdsDetailState extends State<AdsDetail> {
                 onTap: () {},
                 text: APPLY,
               ),
-
-
-
             ],
           ),
         )));
   }
-
 }

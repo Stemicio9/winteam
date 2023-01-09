@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:winteam/constants/colors.dart';
 import 'package:winteam/constants/language.dart';
+import 'package:winteam/constants/route_constants.dart';
 import 'package:winteam/entities/drawer_element.dart';
 import 'package:winteam/theme/app_style.dart';
 import 'package:winteam/utils/size_utils.dart';
@@ -42,10 +43,19 @@ class DrawerWidgetV2 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Drawer(
       //  width: 260,
-        child: ListView(
-            padding: EdgeInsets.zero,
-            children: createElementList(context)
-        )
+
+        child: Column(
+          children: [
+            Expanded(
+              child: ListView(
+                        padding: EdgeInsets.zero,
+                        children: createElementList(context)
+                    ),
+            ),
+            drawerFooter(context)
+          ],
+        ),
+
     );
   }
 
@@ -55,6 +65,7 @@ class DrawerWidgetV2 extends StatelessWidget {
       child: DrawerHeader(
           decoration: const BoxDecoration(
             color: background,
+
           ),
           child: Padding(
             padding: getPadding(left: 10,top: 20),
@@ -106,6 +117,8 @@ class DrawerWidgetV2 extends StatelessWidget {
     );
   }
 
+
+
   createElementList(context) {
     String comeFunziona = COME_FUNZIONA;
     String contattaci = CONTATTACI;
@@ -126,17 +139,16 @@ class DrawerWidgetV2 extends StatelessWidget {
     lista.add(createTile(contattaci, () {}, context, ImageConstant.imgContattaci,25,22));
     lista.add(createTile(privacyPolicy, () {}, context, ImageConstant.imgPrivacyPolicy,26,18));
     lista.add(createTile(rimuoviAccount, () {}, context, ImageConstant.imgRemoveAccount,27,26));
-    lista.add(createTile(logout, () {}, context, ImageConstant.imgLogout,27,19));
+    lista.add(createTile(logout, () {Navigator.pushNamed(context, RouteConstants.login);}, context, ImageConstant.imgLogout,27,19));
 
 
-
-  //  lista.add(drawerFooter(context));
     elementList.clear();
     return lista;
   }
 
   ListTile createTile(String testo, Function funzione, context, String svgPath, double height, double width) {
     return ListTile(
+      horizontalTitleGap: 4,
       leading: Padding(
         padding:getPadding(left: 10),
         child: CustomImageView(
@@ -154,32 +166,28 @@ class DrawerWidgetV2 extends StatelessWidget {
         style: AppStyle.txtMontserratMediumBlack20,
       ),
       onTap: () {
-        funzione();
+        funzione;
       },
     );
   }
 
 
-
-
- /* drawerFooter(context){
+ drawerFooter(context){
     return Container(
+      width: 150,
+      height: 150,
+      padding: getPadding(bottom: 30),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.end,
         children: [
           CustomImageView(
-            svgPath: ImageConstant.imgCalendar,
-            height: getVerticalSize(
-              40,
-            ),
-            width: getHorizontalSize(
-              40,
-            ),
+            imagePath: ImageConstant.imgLogo,
+
           ),
         ],
       ),
     );
-  }*/
+  }
 
 
 }

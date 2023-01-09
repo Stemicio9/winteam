@@ -16,7 +16,7 @@ class ColorConstant {
 
   static Color indigoA200 = fromHex('#3366BB');
 
-
+  static Color greyA500 = fromHex('#9B9B9B');
 
   static Color fromHex(String hexString) {
     final buffer = StringBuffer();

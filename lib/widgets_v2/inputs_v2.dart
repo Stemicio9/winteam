@@ -16,7 +16,6 @@ class InputsV2Widget extends StatelessWidget {
   bool? enabled = true;
   final textInputAction;
 
-
   final prefixIcon;
   final bool isPrefixIcon;
   final double prefixIconWidth;
@@ -28,7 +27,6 @@ class InputsV2Widget extends StatelessWidget {
   final double suffixIconWidth;
   final double suffixIconHeight;
   final bool isSuffixIcon;
-
 
   final bool readOnly;
 
@@ -53,47 +51,43 @@ class InputsV2Widget extends StatelessWidget {
   final double paddingTop; //10
   final double paddingBottom; //10
 
-
-  InputsV2Widget(
-      {required hinttext,
-      required this.controller,
-      this.isPassword = false,
-      this.borderRadius = 3,
-      this.elevation = 0,
-      this.textAlign = TextAlign.start,
-      this.contentPaddingLeft = 20,
-      this.contentPaddingTop = 0,
-      this.contentPaddingRight = 0,
-      this.validator = defaultValidator,
-      this.onChanged = funzioneCostante,
-      this.autofocus = false,
-      this.keyboard = TextInputType.text,
-      this.enabled,
-      this.textInputAction = TextInputAction.next,
-      this.prefixIcon,
-      this.multiline = false,
-      this.maxLine = 4,
-      this.fontSize = 14,
-      this.fontHintSize = 14,
-      this.paddingRight = 40,
-      this.paddingTop = 10,
-      this.paddingLeft = 40,
-      this.paddingBottom = 10,
-      this.focusNode,
-        this.onTap,
-        this.readOnly = false,
-
-        this.isPrefixIcon = false,
-        this.prefixIconHeight = 25,
-        this.prefixIconWidth = 25,
-
-        this.isSuffixIcon = false,
-        this.suffixIconHeight = 25,
-        this.suffixIconWidth = 25,
-        this.suffixIcon,
-        this.svgPath ='',
-      })
-      : hintText = hinttext;
+  InputsV2Widget({
+    required hinttext,
+    required this.controller,
+    this.isPassword = false,
+    this.borderRadius = 3,
+    this.elevation = 0,
+    this.textAlign = TextAlign.start,
+    this.contentPaddingLeft = 20,
+    this.contentPaddingTop = 0,
+    this.contentPaddingRight = 0,
+    this.validator = defaultValidator,
+    this.onChanged = funzioneCostante,
+    this.autofocus = false,
+    this.keyboard = TextInputType.text,
+    this.enabled,
+    this.textInputAction = TextInputAction.next,
+    this.prefixIcon,
+    this.multiline = false,
+    this.maxLine = 4,
+    this.fontSize = 14,
+    this.fontHintSize = 14,
+    this.paddingRight = 40,
+    this.paddingTop = 10,
+    this.paddingLeft = 40,
+    this.paddingBottom = 10,
+    this.focusNode,
+    this.onTap,
+    this.readOnly = false,
+    this.isPrefixIcon = false,
+    this.prefixIconHeight = 25,
+    this.prefixIconWidth = 25,
+    this.isSuffixIcon = false,
+    this.suffixIconHeight = 25,
+    this.suffixIconWidth = 25,
+    this.suffixIcon,
+    this.svgPath = '',
+  }) : hintText = hinttext;
 
   @override
   Widget build(BuildContext context) {
@@ -146,14 +140,14 @@ class InputsV2Widget extends StatelessWidget {
                 hintText: hintText,
                 hintStyle: TextStyle(color: darkGrey, fontSize: fontHintSize),
                 filled: false,
-                errorStyle: const TextStyle(color: Colors.yellow),
+                errorStyle: TextStyle(color: rossoopaco),
                 prefixIcon: isPrefixIcon
                     ? Align(
                         widthFactor: 1.0,
                         heightFactor: 1.0,
                         child: CustomImageView(
                           imagePath: prefixIcon,
-                          svgPath:svgPath,
+                          svgPath: svgPath,
                           height: getSize(
                             prefixIconHeight,
                           ),
@@ -163,25 +157,21 @@ class InputsV2Widget extends StatelessWidget {
                         ),
                       )
                     : null,
-
                 suffixIcon: isSuffixIcon
                     ? Align(
-                  widthFactor: 1.0,
-                  heightFactor: 1.0,
-                  child: CustomImageView(
-
-                    imagePath: suffixIcon,
-                    height: getSize(
-                      suffixIconHeight,
-                    ),
-                    width: getSize(
-                      suffixIconWidth,
-                    ),
-
-                    svgPath: svgPath,
-
-                  ),
-                )
+                        widthFactor: 1.0,
+                        heightFactor: 1.0,
+                        child: CustomImageView(
+                          imagePath: suffixIcon,
+                          height: getSize(
+                            suffixIconHeight,
+                          ),
+                          width: getSize(
+                            suffixIconWidth,
+                          ),
+                          svgPath: svgPath,
+                        ),
+                      )
                     : null,
                 contentPadding: EdgeInsets.only(
                     left: contentPaddingLeft,

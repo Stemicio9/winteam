@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:winteam/constants/colors.dart';
+import 'package:winteam/utils/image_constant.dart';
 import 'package:winteam/utils/size_utils.dart';
+import 'package:winteam/widgets_v2/custom_image_view.dart';
 import 'package:winteam/widgets_v2/texts_v2.dart';
 
 class ActionButtonV2 extends StatelessWidget {
@@ -17,7 +19,7 @@ class ActionButtonV2 extends StatelessWidget {
   final double positionedTop;
   final double positionedBottom;
 
-
+  final TextAlign align;
   final double containerHeight;
 
   final textColor;
@@ -27,6 +29,10 @@ class ActionButtonV2 extends StatelessWidget {
   final double borderWidth;
   final bool hasBorder;
   final FontWeight weight;
+  final String imgPath;
+  final bool isVisible;
+  final double iconWidth;
+  final double iconHeight;
 
 
   ActionButtonV2({
@@ -45,10 +51,15 @@ class ActionButtonV2 extends StatelessWidget {
     this.prefixIcon,
     this.suffixIcon,
     this.containerHeight = 50,
-    this.positionedRight =20,
-    this.positionedLeft=20,
-    this.positionedTop=0,
-    this.positionedBottom=0,
+    this.positionedRight = 20,
+    this.positionedLeft = 20,
+    this.positionedTop = 0,
+    this.positionedBottom = 0,
+    this.align = TextAlign.center,
+    this.isVisible = false,
+    this.imgPath = '',
+    this.iconWidth = 10,
+    this.iconHeight = 10
   });
 
   @override
@@ -92,24 +103,33 @@ class ActionButtonV2 extends StatelessWidget {
                       bottom: positionedBottom,
                       child: Icon(prefixIcon),
                     ),
-                    Align(
-                      child: Text(
-                        text,
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: fontSize,
-                          color: textColor,
-                          fontWeight: weight,
-                        ),
+                     Row(
+                       mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            text,
+                          //  textAlign: align,
+                            style: TextStyle(
+                              fontSize: fontSize,
+                              color: textColor,
+                              fontWeight: weight,
+                            ),
 
+                          ),
+
+                        isVisible ? Padding(
+                            padding: getPadding(left: 15),
+                            child: CustomImageView(
+                              imagePath: imgPath,
+                              svgPath: imgPath,
+                              height: iconHeight,
+                              width: iconWidth,
+                            ),
+                          ): Container()
+                        ],
                       ),
-                    ),
-                    Positioned(
-                      right: positionedRight,
-                      top: positionedTop,
-                      bottom: positionedBottom,
-                      child: Icon(suffixIcon),
-                    ),
+
+
                   ],
                 ),
               )),

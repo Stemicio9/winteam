@@ -51,8 +51,9 @@ class AdsDetailFooter extends StatelessWidget{
          ) :
 
          Padding(
-           padding: getPadding(top: 30,right: 35,left: 20),
+           padding: getPadding(top: 30,right: 20,left: 20),
            child: ListTile(
+               horizontalTitleGap: 0,
                leading: CustomImageView(
                  imagePath: ImageConstant.imgPeople,
                  height: getSize(

@@ -137,7 +137,7 @@ class AdsCard extends StatelessWidget {
                               child: Row(
                                 children: [
                                   Padding(
-                                    padding: getPadding(right: 10),
+                                    padding: getPadding(right: 12),
                                     child: CustomImageView(
                                       svgPath: ImageConstant.imgPosition,
                                       height: getSize(
@@ -215,7 +215,7 @@ class AdsCard extends StatelessWidget {
                           elevation: 5,
                           preferredDirection: AxisDirection.left,
                           tailLength: 10,
-                          tailBaseWidth: 12,
+                          tailBaseWidth: 10,
                           isModal: true,
                           backgroundColor: black,
                           content: Padding(
@@ -228,7 +228,7 @@ class AdsCard extends StatelessWidget {
                             ),
                           ),
                           child: Material(
-                              elevation: 5,
+                              elevation: 4,
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(10)),
                               child: Container(
