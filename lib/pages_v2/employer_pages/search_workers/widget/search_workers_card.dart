@@ -162,7 +162,7 @@ class SearchWorkerCard extends StatelessWidget {
                                       14,
                                     ),
                                     width: getSize(
-                                      20,
+                                      18,
                                     ),
                                   ),
                                 ),
@@ -186,10 +186,10 @@ class SearchWorkerCard extends StatelessWidget {
                                   child: CustomImageView(
                                     svgPath: ImageConstant.imgPosition,
                                     height: getSize(
-                                      22,
+                                      23,
                                     ),
                                     width: getSize(
-                                      16,
+                                      18,
                                     ),
                                   ),
                                 ),

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:winteam/constants/colors.dart';
 import 'package:winteam/constants/language.dart';
 import 'package:winteam/theme/app_style.dart';
 import 'package:winteam/utils/size_utils.dart';
@@ -15,7 +14,7 @@ class ManageSubscriptionDialog extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           DialogCard(
-            cardTitle: 'Avviso',
+            cardTitle: NOTICE,
             child: Column(
               children: [
                 Wrap(alignment: WrapAlignment.start, children: [

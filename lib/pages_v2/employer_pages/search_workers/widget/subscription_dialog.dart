@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:winteam/constants/language.dart';
 import 'package:winteam/theme/app_style.dart';
 import 'package:winteam/utils/size_utils.dart';
 import 'package:winteam/widgets_v2/dialog_back_text.dart';
@@ -13,7 +14,7 @@ class SubscriptionDialog extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           DialogCard(
-            cardTitle: 'Avviso',
+            cardTitle: NOTICE,
             child: Text(
               'La tipologia di piano di cui disponi non ti permette di visualizzare le informazioni relative ai profili ricercati',
               style: AppStyle.txtMontserratRegular20,

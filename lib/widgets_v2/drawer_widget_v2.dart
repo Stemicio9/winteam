@@ -48,7 +48,8 @@ class DrawerWidgetV2 extends StatelessWidget {
         children: [
           Expanded(
             child: ListView(
-                padding: EdgeInsets.zero, children: createElementList(context)),
+                padding: EdgeInsets.zero,
+                children: createElementList(context)),
           ),
           drawerFooter(context)
         ],

@@ -11,7 +11,6 @@ class CreateAdsPrice extends StatelessWidget {
 
   final double paddingTop; //30
 
-
   final double customImageViewHeight; //26
   final double customImageViewWidth; //26
 
@@ -21,7 +20,6 @@ class CreateAdsPrice extends StatelessWidget {
 
   CreateAdsPrice({
     Key? key,
-
     this.paddingTop = 30,
     this.paddingLeft = 20,
     this.paddingRight = 20,
@@ -34,8 +32,8 @@ class CreateAdsPrice extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: getPadding(
-          top: paddingTop, right: paddingRight, left: paddingLeft),
+      padding:
+          getPadding(top: paddingTop, right: paddingRight, left: paddingLeft),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -45,19 +43,19 @@ class CreateAdsPrice extends StatelessWidget {
             textAlign: TextAlign.left,
             style: AppStyle.txtMontserratSemiBold24,
           ),
-         InputsV2Widget(
-                isPrefixIcon: true,
-                svgPath: ImageConstant.imgMoney,
-                hinttext: '€',
-                controller: priceController,
-                validator: priceValidator,
-                elevation: 5,
-                borderRadius: 5,
-                paddingRight: 0,
-                paddingLeft: 0,
-                prefixIconHeight: 20,
-                prefixIconWidth: 25,
-              )
+          InputsV2Widget(
+            isPrefixIcon: true,
+            svgPath: ImageConstant.imgMoney,
+            hinttext: '€',
+            controller: priceController,
+            validator: priceValidator,
+            elevation: 5,
+            borderRadius: 5,
+            paddingRight: 0,
+            paddingLeft: 0,
+            prefixIconHeight: 20,
+            prefixIconWidth: 25,
+          )
         ],
       ),
     );

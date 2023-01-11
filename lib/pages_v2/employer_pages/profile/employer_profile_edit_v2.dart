@@ -46,7 +46,7 @@ class EmployerProfileV2EditState extends State<EmployerProfileEditV2> {
     descriptionTextController.text = description;
     return W1nScaffold(
         title: PROFILE,
-        appBar: 2,
+        appBar: 1,
         body: SingleChildScrollView(
           child: Padding(
             padding: getPadding(bottom: 35),

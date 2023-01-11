@@ -154,7 +154,7 @@ class AdsCard extends StatelessWidget {
                                     child: CustomImageView(
                                       svgPath: ImageConstant.imgPosition,
                                       height: getSize(
-                                        24,
+                                        23,
                                       ),
                                       width: getSize(
                                         18,
@@ -243,7 +243,7 @@ class AdsCard extends StatelessWidget {
                         Padding(
                           padding: getPadding(top: 25),
                           child: GestureDetector(
-                            onTap: goToList,
+                            onTap: candidates != '0' ? goToList : (){},
                             child: Row(
                               children: [
                                 CustomImageView(

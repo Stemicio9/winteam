@@ -131,7 +131,7 @@ class AdsDetailInfo extends StatelessWidget {
                       25,
                     ),
                     width: getSize(
-                      20,
+                      19,
                     ),
                   ),
                 ),

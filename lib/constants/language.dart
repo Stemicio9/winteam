@@ -49,6 +49,7 @@ const String NO_CANDIDATE = "Nessuno si è ancora candidato per questo lavoro";
 const String FILTERS = "Filtri";
 const String CANCEL_APPLICATION = "Annulla candidatura";
 const String VIEW_APPLIES = "Visualizza candidati";
+const String NOTICE = "Avviso";
 
 
 
@@ -57,7 +58,7 @@ const String DETAILS = "Dettagli";
 const String SAVE = "Salva";
 const String CANCEL = "Annulla";
 const String DESCRIPTION = "Inserisci una descrizione";
-const String SEARCH_SKILL = "Cerca la mansione";
+const String SEARCH_SKILL = "Cerca una mansione";
 const String PEOPLE = "Persone";
 const String PERSON = "Persona";
 const String REMOVE_ALL = "Rimuovi tutto";
@@ -174,7 +175,7 @@ final Map<String, String> LANG_IT = {
   PHONE_PLACEHOLDER: "Inserisci un numero di telefono",
   POSITION_PLACEHOLDER: "Inserisci la tua posizione",
   ADD_SKILLS: "Aggiungi mansione",
-  SEARCH_SKILL: "Cerca la mansione",
+  SEARCH_SKILL: "Cerca una mansione",
   SAVE: "Salva",
   DESCRIPTION: "Inserisci una descrizione",
   CAMERA: "Scatta una foto",
@@ -221,6 +222,7 @@ final Map<String, String> LANG_IT = {
   CHOOSE:"Scegli!",
   CANCEL_APPLICATION:"Annulla candidatura",
   VIEW_APPLIES:"Visualizza candidati",
+  NOTICE:"Avviso",
 
   "": "",
   "": "",

@@ -47,7 +47,7 @@ class CreateAdsPosition extends StatelessWidget {
           ),
           InputsV2Widget(
             isPrefixIcon: true,
-            prefixIcon: ImageConstant.imgMapsandflags,
+            svgPath: ImageConstant.imgPosition,
             hinttext: INSERT_POSITION,
             controller: positionController,
             validator: positionValidator,
@@ -55,8 +55,8 @@ class CreateAdsPosition extends StatelessWidget {
             borderRadius: 5,
             paddingRight: 0,
             paddingLeft: 0,
-            prefixIconHeight: 25,
-            prefixIconWidth: 25,
+            prefixIconHeight: 26,
+            prefixIconWidth: 19,
           )
         ],
       ),

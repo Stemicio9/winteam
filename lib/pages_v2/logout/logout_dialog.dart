@@ -7,8 +7,7 @@ import 'package:winteam/utils/size_utils.dart';
 import 'package:winteam/widgets_v2/action_buttons_v2.dart';
 import 'package:winteam/widgets_v2/dialog_card.dart';
 
-class LogoutDialog extends StatelessWidget{
-
+class LogoutDialog extends StatelessWidget {
   final cancelOnTap;
   final confirmOnTap;
 
@@ -37,9 +36,7 @@ class LogoutDialog extends StatelessWidget{
               paddingLeft: 0,
               paddingRight: 0,
               maxWidth: MediaQuery.of(context).size.width,
-              onTap: cancelOnTap
-          ),
-
+              onTap: cancelOnTap),
           Padding(
             padding: getPadding(top: 20),
             child: ActionButtonV2(
@@ -47,12 +44,10 @@ class LogoutDialog extends StatelessWidget{
                 text: CONFIRM,
                 color: background,
                 maxWidth: MediaQuery.of(context).size.width,
-                textColor: white
-            ),
+                textColor: white),
           )
         ],
       ),
     );
   }
-
 }

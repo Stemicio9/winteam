@@ -7,13 +7,11 @@ import 'package:winteam/utils/size_utils.dart';
 import 'package:winteam/widgets_v2/action_buttons_v2.dart';
 import 'package:winteam/widgets_v2/dialog_card.dart';
 
-class CandidatesListDialog extends StatelessWidget{
-
+class CandidatesListDialog extends StatelessWidget {
   final cancelOnTap;
   final confirmOnTap;
 
   CandidatesListDialog({required this.cancelOnTap, required this.confirmOnTap});
-
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +21,7 @@ class CandidatesListDialog extends StatelessWidget{
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           DialogCard(
-            cardTitle: 'Avviso',
+            cardTitle: NOTICE,
             child: Column(
               children: [
                 Text(
@@ -36,7 +34,6 @@ class CandidatesListDialog extends StatelessWidget{
                   style: AppStyle.txtMontserratSemiBoldBlack20,
                   textAlign: TextAlign.center,
                 ),
-
               ],
             ),
           ),
@@ -46,7 +43,6 @@ class CandidatesListDialog extends StatelessWidget{
               maxWidth: MediaQuery.of(context).size.width,
               onTap: cancelOnTap
           ),
-
           Padding(
             padding: getPadding(top: 20),
             child: ActionButtonV2(
@@ -57,10 +53,8 @@ class CandidatesListDialog extends StatelessWidget{
                 textColor: white
             ),
           )
-
         ],
       ),
     );
   }
-
 }

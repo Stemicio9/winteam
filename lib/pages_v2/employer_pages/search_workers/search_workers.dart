@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:winteam/constants/colors.dart';
 import 'package:winteam/constants/language.dart';
+import 'package:winteam/constants/route_constants.dart';
 import 'package:winteam/pages_v2/W1n_scaffold.dart';
 import 'package:winteam/pages_v2/employer_pages/search_workers/widget/search_workers_card.dart';
 import 'package:winteam/pages_v2/employer_pages/search_workers/widget/subscription_dialog.dart';
@@ -39,12 +40,17 @@ class SearchWorkersState extends State<SearchWorkers> {
                 ),
 
                 ...annunci.map((e) => SearchWorkerCard(
-                  onTap: () {
-                    showDialog(
+                  onTap: () { Navigator.pushNamed(context, RouteConstants.candidateProfileChoose, arguments:{
+                  'isVisible':'false',
+                  });
+
+
+
+                   /* showDialog(
                         context: context,
                         barrierColor: blackDialog,
                         builder: (ctx) => SubscriptionDialog()
-                    );
+                    ); */
                   },
                   title: e.title,
                   subtitle: e.subtitle,

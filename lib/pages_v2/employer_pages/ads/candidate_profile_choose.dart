@@ -11,12 +11,24 @@ import 'package:winteam/utils/size_utils.dart';
 
 class CandidateProfileChoose extends StatelessWidget {
 
-  final bool isVisible;
+  bool isVisible = true;
 
-  CandidateProfileChoose({this.isVisible = true});
+
+  CandidateProfileChoose();
 
   @override
   Widget build(BuildContext context) {
+
+    try {
+      final arguments = ModalRoute
+          .of(context)
+          ?.settings
+          .arguments as Map<String, String>;
+      isVisible = arguments['isVisible'] == "true";
+    }catch(e){
+      isVisible = true;
+    }
+
     return W1nScaffold(
       title: PROFILE,
       appBar: 1,

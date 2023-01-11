@@ -92,6 +92,7 @@ class ProfileInfoEdit extends StatelessWidget {
               InputsV2Widget(
                 prefixIconHeight: 26,
                 prefixIconWidth: 19,
+
                 isPrefixIcon: true,
                 svgPath: ImageConstant.imgPosition,
                 hinttext: POSITION_PLACEHOLDER,

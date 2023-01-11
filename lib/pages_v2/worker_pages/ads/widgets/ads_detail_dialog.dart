@@ -10,12 +10,11 @@ import 'package:winteam/widgets_v2/dialog_back_text.dart';
 import 'package:winteam/widgets_v2/dialog_card.dart';
 
 class AdsDetailDialog extends StatelessWidget {
-
   final bool isApplicantDialog;
   final confirmOnTap;
 
-
-  const AdsDetailDialog({super.key,this.isApplicantDialog = false, this.confirmOnTap});
+  const AdsDetailDialog(
+      {super.key, this.isApplicantDialog = false, this.confirmOnTap});
 
   @override
   Widget build(BuildContext context) {
@@ -25,43 +24,44 @@ class AdsDetailDialog extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           DialogCard(
-            cardTitle: 'Avviso',
+            cardTitle: NOTICE,
             child: Column(
               children: [
-                !isApplicantDialog ? Text(
-                  'La tua candidatura è avvenuta con successo!',
-                  style: AppStyle.txtMontserratRegular20,
-                  textAlign: TextAlign.center,
-                ) : Text(
-                  'Sei sicuro di voler annullare la tua candidatura?',
-                  style: AppStyle.txtMontserratRegular20,
-                  textAlign: TextAlign.center,
-                ),
-                !isApplicantDialog ? Padding(
-                  padding: getPadding(top: 20),
-                  child: CustomImageView(
-                    svgPath: ImageConstant.imgTickSuccess,
-                    height: 50,
-                    width: 50,
-                  ),
-                ) :Container()
+                !isApplicantDialog
+                    ? Text(
+                        'La tua candidatura è avvenuta con successo!',
+                        style: AppStyle.txtMontserratRegular20,
+                        textAlign: TextAlign.center,
+                      )
+                    : Text(
+                        'Sei sicuro di voler annullare la tua candidatura?',
+                        style: AppStyle.txtMontserratRegular20,
+                        textAlign: TextAlign.center,
+                      ),
+                !isApplicantDialog
+                    ? Padding(
+                        padding: getPadding(top: 20),
+                        child: CustomImageView(
+                          svgPath: ImageConstant.imgTickSuccess,
+                          height: 50,
+                          width: 50,
+                        ),
+                      )
+                    : Container()
               ],
             ),
           ),
-
-
-          !isApplicantDialog ? Container() :  Padding(
-                    padding: getPadding(top: 30),
-                    child: ActionButtonV2(
-                        action: confirmOnTap,
-                        text: CONFIRM,
-                        color: background,
-                        maxWidth: MediaQuery.of(context).size.width,
-                        textColor: white
-                    ),
-                  ),
-
-
+          !isApplicantDialog
+              ? Container()
+              : Padding(
+                  padding: getPadding(top: 30),
+                  child: ActionButtonV2(
+                      action: confirmOnTap,
+                      text: CONFIRM,
+                      color: background,
+                      maxWidth: MediaQuery.of(context).size.width,
+                      textColor: white),
+                ),
           DialogBackText()
         ],
       ),

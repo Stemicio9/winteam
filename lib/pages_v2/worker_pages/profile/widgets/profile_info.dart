@@ -68,10 +68,10 @@ class ProfileInfo extends StatelessWidget {
                 CustomImageView(
                   svgPath: ImageConstant.imgPhoneSvg,
                   height: getSize(
-                    21,
+                    20,
                   ),
                   width: getSize(
-                    21,
+                    19,
                   ),
                 ),
                 Padding(
@@ -98,10 +98,10 @@ class ProfileInfo extends StatelessWidget {
                 CustomImageView(
                   svgPath: ImageConstant.imgEmailSvg,
                   height: getVerticalSize(
-                    16,
+                    15,
                   ),
                   width: getHorizontalSize(
-                    20,
+                    18,
                   ),
                 ),
                 Padding(
