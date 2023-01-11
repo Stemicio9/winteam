@@ -47,9 +47,12 @@ class EmployerAdsState extends State<EmployerAds>{
                   texts: texts,
                 ),
 
+
+
                 ...annunci.map((e) => AdsCard(
+                  isWorkerCard: false,
                   onTap: () {
-                    Navigator.pushNamed(context, RouteConstants.adsDetail);
+                    Navigator.pushNamed(context, RouteConstants.employerAdsDetail);
                   },
                   title: e.title,
                   subtitle: e.subtitle,
@@ -61,6 +64,7 @@ class EmployerAdsState extends State<EmployerAds>{
                   skillIcon: e.skillIcon,
                   message: message,
                   candidates:candidates ,
+                  state: e.state ?? '',
                   goToList: (){Navigator.pushNamed(context, RouteConstants.candidatesList);},
 
                 ),),
@@ -87,14 +91,34 @@ class EmployerAdsState extends State<EmployerAds>{
 
   List<Annuncio> dummyAnnunci(){
     List<Annuncio> result = List.empty(growable: true);
-    for(int i = 0; i< 5; i++){
+    for(int i = 0; i< 2; i++){
       result.add(
           const Annuncio(
             title: "Pizzaiolo", subtitle: 'Azienda srl', position: 'Cosenza',
             date: '24/12/2022', hours: 'Mattina', price: "70",
             skillIcon: 'assets/images/PizzaIcon.svg', image: 'assets/images/img_pexelsphotoby.png',
-            phone: '',email: '',
+            phone: '',email: '', state: 'Active'
 
+          )
+      );
+    }
+    for(int i = 0; i< 1; i++){
+      result.add(
+          const Annuncio(
+              title: "Pizzaiolo", subtitle: 'Azienda srl', position: 'Cosenza',
+              date: '24/12/2022', hours: 'Mattina', price: "70",
+              skillIcon: 'assets/images/PizzaIcon.svg', image: 'assets/images/img_pexelsphotoby.png',
+              phone: '',email: '', state: 'History'
+          )
+      );
+    }
+    for(int i = 0; i< 3; i++){
+      result.add(
+          const Annuncio(
+            title: "Pizzaiolo", subtitle: 'Azienda srl', position: 'Cosenza',
+            date: '24/12/2022', hours: 'Mattina', price: "70",
+            skillIcon: 'assets/images/PizzaIcon.svg', image: 'assets/images/img_pexelsphotoby.png',
+            phone: '',email: '', state: 'Accepted'
           )
       );
     }

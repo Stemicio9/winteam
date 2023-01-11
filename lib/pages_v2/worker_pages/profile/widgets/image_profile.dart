@@ -24,7 +24,8 @@ class ImageProfile extends StatelessWidget {
   final Function? openGallery;
 
 
-   const ImageProfile(
+
+  const ImageProfile(
       {Key? key,
       this.topColorHeight = 150,
       this.topMargin = 65,
@@ -37,7 +38,8 @@ class ImageProfile extends StatelessWidget {
       this.iconWidth = 34,
       this.iconHeight = 34,
       this.openCamera,
-      this.openGallery})
+      this.openGallery,
+      })
       : super(key: key);
 
 

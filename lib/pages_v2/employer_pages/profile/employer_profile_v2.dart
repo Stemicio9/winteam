@@ -15,11 +15,16 @@ import 'package:winteam/pages_v2/worker_pages/profile/widgets/profile_info.dart'
 import 'package:winteam/utils/size_utils.dart';
 
 class EmployerProfile extends StatefulWidget{
+
+
+  final bool isOnlyView;
+
+  EmployerProfile({this.isOnlyView = false});
+
   @override
   State<StatefulWidget> createState() {
     return EmployerProfileState();
   }
-
 }
 
 
@@ -40,7 +45,7 @@ class EmployerProfileState extends State<EmployerProfile>{
   @override
   Widget build(BuildContext context) {
     return W1nScaffold(
-        appBar: 2,
+        appBar: widget.isOnlyView ? 1 : 2,
         title: PROFILE,
         body: SingleChildScrollView(
           child: Padding(
@@ -56,16 +61,18 @@ class EmployerProfileState extends State<EmployerProfile>{
                   topMargin: 46,
                   iconHeight: 45,
                   iconWidth: 45,
-                  openCamera: openCamera,
+                  openCamera: widget.isOnlyView ? null : openCamera,
                   openGallery: openGallery,
                 ),
 
                  EmployerNameHeader(
+                   isOnlyView: widget.isOnlyView,
                    message: message,
                    rating: rating,
                    name: name,
                    description: headerDescription,
                    sectionHeight: 110,
+
                    buttonOntap: (){
                      showDialog(
                          context: context,
@@ -73,6 +80,7 @@ class EmployerProfileState extends State<EmployerProfile>{
                          builder: (ctx) => ManageSubscriptionDialog()
                      );
                    },
+
                    onTap: (){Navigator.pushNamed(context, RouteConstants.employerProfileEdit);}
                  ),
 

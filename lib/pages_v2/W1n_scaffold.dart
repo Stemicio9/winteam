@@ -11,7 +11,6 @@ enum Appbars {
   appbarWithActions
 }
 
-
 class W1nScaffold extends StatelessWidget {
   final Widget body;
   // 0 = no appBar, 1 = Appbar without actions, 2 = Appbar with actions
@@ -28,6 +27,7 @@ class W1nScaffold extends StatelessWidget {
     this.bottomNavigationBar,
     this.title = "",
     this.appBar = 0,
+
     this.backgroundColor = white,
 //    this.hasBottomNavigationBar = false,
     this.hasBackgroundColor = false,
@@ -54,6 +54,8 @@ class W1nScaffold extends StatelessWidget {
              hasBackgroundColor == true ? const BackgroundV2() : Container(),
             body,
           ],
-        )));
+        )
+        )
+    );
   }
 }

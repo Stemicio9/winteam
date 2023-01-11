@@ -7,7 +7,7 @@ class DialogBackText extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: getPadding(top: 30),
+      padding: getPadding(top: 55),
       child: GestureDetector(
         onTap: () {
           Navigator.pop(context);

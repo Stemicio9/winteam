@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:winteam/constants/colors.dart';
 import 'package:winteam/constants/language.dart';
 import 'package:winteam/constants/route_constants.dart';
-import 'package:winteam/entities/drawer_element.dart';
 import 'package:winteam/pages_v2/logout/logout_dialog.dart';
 import 'package:winteam/theme/app_style.dart';
 import 'package:winteam/utils/size_utils.dart';
@@ -127,17 +126,13 @@ class DrawerWidgetV2 extends StatelessWidget {
 
     lista.add(drawerHeader());
 
-    lista.add(createTile(
-        comeFunziona, () {}, context, ImageConstant.imgComeFunziona, 22, 26));
+  //  lista.add(createTile(comeFunziona, () {}, context, ImageConstant.imgComeFunziona, 22, 26));
 
-    lista.add(createTile(
-        contattaci, () {}, context, ImageConstant.imgContattaci, 25, 22));
+  //  lista.add(createTile(contattaci, () {}, context, ImageConstant.imgContattaci, 25, 22));
 
-    lista.add(createTile(
-        privacyPolicy, () {}, context, ImageConstant.imgPrivacyPolicy, 26, 18));
+  //  lista.add(createTile(privacyPolicy, () {}, context, ImageConstant.imgPrivacyPolicy, 26, 18));
 
-    lista.add(createTile(rimuoviAccount, () {}, context,
-        ImageConstant.imgRemoveAccount, 27, 26));
+    lista.add(createTile(rimuoviAccount, () {}, context, ImageConstant.imgRemoveAccount, 27, 26));
 
     lista.add(createTile(logout, () {
       showDialog(
@@ -146,6 +141,7 @@ class DrawerWidgetV2 extends StatelessWidget {
           builder: (ctx) => LogoutDialog(
             cancelOnTap: (){Navigator.pop(context);},
             confirmOnTap: (){
+              FirebaseAuth.instance.signOut();
               Navigator.pushNamed(context, RouteConstants.login);
               },
           ));

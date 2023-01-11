@@ -8,7 +8,6 @@ class ProfileDescription extends StatelessWidget{
   final double padddingLeft; //35
   final double paddingRight; //35
   final double padddingTop; //55
-  final double horizontalSize; //310
   final double getMarginTop; //15
   final String description;
   final String title;
@@ -18,13 +17,13 @@ class ProfileDescription extends StatelessWidget{
   const ProfileDescription({Key? key, this.paddingRight = 35,
     this.padddingTop = 55, this.padddingLeft = 35,
     this.getMarginTop = 15,required this.description,
-    this.horizontalSize = 310, required this.title}) : super(key: key);
+    required this.title}) : super(key: key);
 
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: size.width,
+      width: MediaQuery.of(context).size.width,
       padding: getPadding(
         left: padddingLeft,
         right: paddingRight,
@@ -32,7 +31,6 @@ class ProfileDescription extends StatelessWidget{
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.end,
         children: [
 
         Text(
@@ -44,7 +42,7 @@ class ProfileDescription extends StatelessWidget{
 
           Container(
             width: getHorizontalSize(
-              horizontalSize,
+                MediaQuery.of(context).size.width,
             ),
             margin: getMargin(
               top: getMarginTop,

@@ -20,6 +20,7 @@ class EmployerNameHeader extends StatelessWidget {
   final double rating;
   final buttonOntap;
   final String message;
+  final bool isOnlyView;
 
   const EmployerNameHeader({
     Key? key,
@@ -33,6 +34,7 @@ class EmployerNameHeader extends StatelessWidget {
     required this.rating,
     required this.buttonOntap,
     required this.message,
+    this.isOnlyView = false
   }) : super(key: key);
 
   @override
@@ -69,7 +71,7 @@ class EmployerNameHeader extends StatelessWidget {
                     ],
                   ),
                 ),
-                GestureDetector(
+              !isOnlyView ? GestureDetector(
                   onTap: onTap,
                   child: Container(
                     height: getSize(
@@ -90,7 +92,7 @@ class EmployerNameHeader extends StatelessWidget {
                       alignment: Alignment.topRight,
                     ),
                   ),
-                ),
+                ) : Container(),
                 Align(
                   alignment: Alignment.bottomCenter,
                   child: Text(
@@ -129,14 +131,15 @@ class EmployerNameHeader extends StatelessWidget {
             ),
           ),
 
-        Padding(
+       !isOnlyView ? Padding(
             padding: getPadding(top: 25),
             child: ActionButtonV2(
                 action: buttonOntap,
                 text: MANAGE_SUBSCRIPTION,
                 color: green,
                 maxWidth: 280,
-                textColor: white))
+                textColor: white)
+       ): Container()
       ],
     );
   }

@@ -6,8 +6,11 @@ import 'package:winteam/pages/pagine_lavoratore/dettaglio_annuncio_lavoratore.da
 import 'package:winteam/pages/pagine_lavoratore/filtri_annunci_lavoratore.dart';
 import 'package:winteam/pages/pagine_datore/dashboard_datore.dart';
 import 'package:winteam/pages/pagine_lavoratore/modifica_profilo_lavoratore.dart';
+import 'package:winteam/pages_v2/employer_pages/ads/candidate_profile_choose.dart';
 import 'package:winteam/pages_v2/employer_pages/ads/candidates_list.dart';
+import 'package:winteam/pages_v2/employer_pages/ads/widget/emplyer_ads_detail.dart';
 import 'package:winteam/pages_v2/employer_pages/profile/employer_profile_edit_v2.dart';
+import 'package:winteam/pages_v2/employer_pages/profile/employer_profile_only_view.dart';
 import 'package:winteam/pages_v2/forgot_password/forgot_password_v2.dart';
 import 'package:winteam/pages_v2/layout/dashboard_layout.dart';
 import 'package:winteam/pages_v2/login/login_v2.dart';
@@ -45,9 +48,12 @@ class RouteConstants {
   static const String adsFilter = "/adsfilter";
   static const String candidatesList = "/candidateslist";
   static const String employerProfileEdit = "/employeredit";
+  static const String employerProfileOnlyView = "/employerview";
   static const String login = "/login";
   static const String registrazione = "/registrazione";
   static const String passDimenticata = "/passworddimenticata";
+  static const String candidateProfileChoose = "/profilechoose";
+  static const String employerAdsDetail = "/employerdetail";
 
 
 
@@ -70,7 +76,9 @@ class RouteConstants {
     adsFilter: (context) => AdsFilter(),
     candidatesList: (context) => CandidatesList(),
     employerProfileEdit: (context) => EmployerProfileEditV2(),
-
+    candidateProfileChoose: (context) => CandidateProfileChoose(),
+    employerProfileOnlyView: (context) => EmployerProfileOnlyView(),
+    employerAdsDetail: (context) => EmployerAdsDetail(),
 
 
     //old page

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:just_the_tooltip/just_the_tooltip.dart';
 import 'package:winteam/constants/colors.dart';
 import 'package:winteam/constants/language.dart';
 import 'package:winteam/theme/app_style.dart';
@@ -23,11 +22,16 @@ class AdsCard extends StatelessWidget {
   final String subtitle;
   final String price;
   final String candidates;
-  final String message;
+  String message;
+  Color? statusColor;
+  final String? state;
   final skillIcon;
   final image;
   final bool isVisible;
   final goToList;
+  final goToProfile;
+  final bool isWorkerCard;
+
 
 
   AdsCard({
@@ -45,16 +49,22 @@ class AdsCard extends StatelessWidget {
     required this.position,
     required this.skillIcon,
     required this.image,
+    this.state,
     this.message ='',
+    this.statusColor = lightGreen,
     this.candidates = '',
     this.isVisible = true,
     this.goToList,
+    this.goToProfile,
+    this.isWorkerCard = true,
   });
 
   @override
   Widget build(BuildContext context) {
 
     final GlobalKey<TooltipState> tooltipkey = GlobalKey<TooltipState>();
+
+    initializeAds();
 
     return Padding(
       padding: getPadding(bottom: 20, left: 15, right: 15),
@@ -85,7 +95,7 @@ class AdsCard extends StatelessWidget {
                                   alignment: Alignment.bottomRight,
                                   children: [
                                     CustomImageView(
-                                      onTap: () {},
+                                      onTap: goToProfile,
                                       imagePath: image,
                                       height: getSize(
                                         innerImageHeight,
@@ -127,12 +137,14 @@ class AdsCard extends StatelessWidget {
                               ],
                             ),
                             GestureDetector(
-                              onTap: () {},
+                              onTap: goToProfile,
                               child: Text(
                                 subtitle,
-                                style: AppStyle.txtMontserratRegularUnderline20,
+                                style: isWorkerCard ? AppStyle.txtMontserratRegularUnderline20 : AppStyle.txtMontserratRegular20,
                               ),
                             ),
+
+
                             Padding(
                               padding: getPadding(top: 15),
                               child: Row(
@@ -222,7 +234,7 @@ class AdsCard extends StatelessWidget {
                                 width: 17,
                                 height: 17,
                                 decoration: BoxDecoration(
-                                  color: lightGreen,
+                                  color: statusColor,
                                   borderRadius: BorderRadius.circular(10),
                                 ),
                               )),
@@ -295,5 +307,28 @@ class AdsCard extends StatelessWidget {
             ),
           )),
     );
+  }
+
+  initializeAds(){
+    switch (state) {
+      case 'Active':{
+        message = 'Status annuncio: Attivo';
+        statusColor = lightGreen;
+        break;
+      }
+      case 'Accepted': {
+        message = 'Status annuncio: Accettato';
+        statusColor = blueState;
+        break;
+      }
+      case 'History': {
+        message = 'Status annuncio: Storico';
+        statusColor = greyState;
+        break;
+      }
+      default: {
+        print('stato annuncio non trovato');
+      }
+    }
   }
 }

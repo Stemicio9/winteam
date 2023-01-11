@@ -61,6 +61,8 @@ class AdsFilterHeader extends StatelessWidget {
                 ActionButtonV2(
                   isVisible: true,
                   imgPath: ImageConstant.imgCancel,
+                  iconHeight: 10,
+                  iconWidth: 10,
                   containerHeight: 34,
                   action: onTap,
                   text: REMOVE_ALL,

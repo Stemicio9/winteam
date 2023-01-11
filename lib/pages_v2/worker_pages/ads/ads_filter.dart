@@ -24,6 +24,9 @@ class AdsFilterState extends State<AdsFilter> {
 
   final format = DateFormat('dd/MM/yyyy');
 
+  DateTime toDateMinTime = DateTime.now();
+  DateTime fromDateMaxTime = DateTime.now().add(const Duration(days: 365));
+
   @override
   Widget build(BuildContext context) {
     return W1nScaffold(
@@ -59,24 +62,19 @@ class AdsFilterState extends State<AdsFilter> {
                 },
                 fromDateOnConfirm: (date) {
                   fromDateController.text = format.format(date);
-                  print('confirm $date');
+                  setDateValue(date, true);
                 },
                 toDateOnChanged: (date) {
                   print('change $date');
                 },
                 toDateOnConfirm: (date) {
-                  toDateController.text = format.format(date) ;
-                  print('confirm $date');
+                  toDateController.text = format.format(date);
+                  setDateValue(date, false);
                 },
-
-                fromDateMaxTime: toDateController.text == '' ?
-                DateTime.now().add(const Duration(days: 365)) :
-                DateTime.now().add(const Duration(days: 365)),
-
-                fromDateMinTime:  DateTime.now(),
-
-                toDateMaxTime:  DateTime.now().add(const Duration(days: 365)),
-                toDateMinTime:  DateTime.now(),
+                fromDateMaxTime: fromDateMaxTime,
+                fromDateMinTime: DateTime.now(),
+                toDateMaxTime: DateTime.now().add(const Duration(days: 365)),
+                toDateMinTime: toDateMinTime,
               ),
               AdsFilterChips(
                 indexes: indexes,
@@ -92,6 +90,11 @@ class AdsFilterState extends State<AdsFilter> {
     setState(() {
       indexes[index] = value;
     });
+  }
 
+  void setDateValue(date, isFrom) {
+    setState(() {
+      isFrom ? toDateMinTime = date : fromDateMaxTime = date;
+    });
   }
 }

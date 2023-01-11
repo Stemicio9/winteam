@@ -12,10 +12,15 @@ import 'package:winteam/pages_v2/worker_pages/profile/widgets/profile_skills.dar
 import 'package:winteam/utils/image_constant.dart';
 import 'dart:io';
 import 'dart:typed_data';
-
 import 'package:winteam/utils/size_utils.dart';
 
 class WorkerProfileV2 extends StatefulWidget {
+  final bool isOnlyView;
+  final bool hasScaffold;
+
+  WorkerProfileV2({this.isOnlyView = false, this.hasScaffold = true
+  });
+
   @override
   State<StatefulWidget> createState() {
     return WorkerProfileV2State();
@@ -33,57 +38,21 @@ class WorkerProfileV2State extends State<WorkerProfileV2> {
   final String mansione = "Mansione";
   XFile? imageFile;
 
+
+
+
   final List<Mansione> mansioni = List.empty(growable: true);
 
   @override
   Widget build(BuildContext context) {
     fillDummyMansioni();
+    return !widget.hasScaffold ? content() :
+        W1nScaffold(
+            appBar: 2,
+            title: PROFILE,
+            body: content()
+        );
 
-    return W1nScaffold(
-        appBar: 2,
-        title: PROFILE,
-        body: SingleChildScrollView(
-            child: Padding(
-             padding: getPadding(bottom: 35),
-             child: Column(
-               children: [
-               ImageProfile(
-                imageHeight: 200,
-                imageWidth: 200,
-                innerImageHeight: 190,
-                innerImageWidth: 190,
-                innerImageRadius: 100,
-                topMargin: 46,
-                iconHeight: 45,
-                iconWidth: 45,
-                openCamera: openCamera,
-                openGallery: openGallery,
-              ),
-              ProfileNameHeader(
-                name: name,
-                description: headerDescription,
-                sectionHeight: 100,
-                onTap: () {
-                  Navigator.pushNamed(
-                      context, RouteConstants.workerProfileEdit);
-                },
-              ),
-              ProfileSkill(
-                mansioni: mansioni,
-              ),
-              ProfileDescription(
-                title: CHI_SONO,
-                description: description,
-              ),
-              ProfileInfo(
-                title: I_MIEI_DATI,
-                phone: phone,
-                email: email,
-                position: position,
-              )
-            ],
-          ),
-        )));
   }
 
   fillDummyMansioni() {
@@ -93,7 +62,7 @@ class WorkerProfileV2State extends State<WorkerProfileV2> {
     }
   }
 
-  openGallery() async{
+  openGallery() async {
     var image = await ImagePicker().pickImage(source: ImageSource.gallery);
 
     setState(() {
@@ -106,8 +75,7 @@ class WorkerProfileV2State extends State<WorkerProfileV2> {
     Navigator.of(context).pop();
   }
 
-
-  openCamera() async{
+  openCamera() async {
     var image = await ImagePicker().pickImage(source: ImageSource.camera);
 
     setState(() {
@@ -119,4 +87,55 @@ class WorkerProfileV2State extends State<WorkerProfileV2> {
 
     Navigator.of(context).pop();
   }
+
+
+
+  Widget content(){
+    return SingleChildScrollView(
+            child: Padding(
+              padding: getPadding(bottom: 35),
+              child: Column(
+                children: [
+                  ImageProfile(
+                    imageHeight: 200,
+                    imageWidth: 200,
+                    innerImageHeight: 190,
+                    innerImageWidth: 190,
+                    innerImageRadius: 100,
+                    topMargin: 46,
+                    iconHeight: 45,
+                    iconWidth: 45,
+                    openCamera: widget.isOnlyView ? null : openCamera,
+                    openGallery: openGallery,
+                  ),
+                  ProfileNameHeader(
+                    isOnlyView: widget.isOnlyView,
+                    name: name,
+                    description: headerDescription,
+                    sectionHeight: 100,
+                    onTap: () {
+                      Navigator.pushNamed(context, RouteConstants.workerProfileEdit);
+                    },
+                  ),
+                  ProfileSkill(
+                    mansioni: mansioni,
+                  ),
+                  ProfileDescription(
+                    title: CHI_SONO,
+                    description: description,
+                  ),
+                  ProfileInfo(
+                    title: I_MIEI_DATI,
+                    phone: phone,
+                    email: email,
+                    position: position,
+                  ),
+
+                ],
+              ),
+            ));
+  }
 }
+
+
+

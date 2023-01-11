@@ -10,7 +10,6 @@ class AddSkills extends StatefulWidget{
   }
 }
 
-
 class AddSkillsState extends State<AddSkills>{
 
   final TextEditingController skillsController = TextEditingController();

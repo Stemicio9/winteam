@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:winteam/constants/colors.dart';
 import 'package:winteam/constants/language.dart';
+import 'package:winteam/pages_v2/employer_pages/ads/widget/button_choose.dart';
 import 'package:winteam/utils/image_constant.dart';
 import 'package:winteam/widgets_v2/action_buttons_v2.dart';
 import 'package:winteam/widgets_v2/custom_image_view.dart';
@@ -14,7 +15,7 @@ class SearchWorkerCard extends StatelessWidget {
   final double innerImageHeight; // 90
   final double imageWidth; // 90
   final double imageHeight; // 90
-  final Function? onTap;
+  final onTap;
   final Function? view;
   final Function? choose;
 
@@ -26,6 +27,7 @@ class SearchWorkerCard extends StatelessWidget {
   final skillIcon;
   final image;
   final bool isSearch;
+  final bool isSelected;
   final bool isCandidatesList;
 
   SearchWorkerCard({
@@ -46,6 +48,7 @@ class SearchWorkerCard extends StatelessWidget {
     this.view,
     this.isSearch = true,
     this.isCandidatesList = false,
+    this.isSelected = false
   });
 
   @override
@@ -79,7 +82,7 @@ class SearchWorkerCard extends StatelessWidget {
                                 alignment: Alignment.bottomRight,
                                 children: [
                                   CustomImageView(
-                                    onTap: () {},
+                                    onTap: onTap,
                                     imagePath: image,
                                     height: getSize(
                                       innerImageHeight,
@@ -230,19 +233,14 @@ class SearchWorkerCard extends StatelessWidget {
                        textColor: white
                    ),
 
-                   ActionButtonV2(
-                       action:choose,
-                       text: CHOOSE,
-                       color: green,
-                       maxWidth: 150,
-                       textColor: white,
-                       isVisible: true,
-                       imgPath: ImageConstant.imgAssumi,
-                       iconWidth: 30,
-                       iconHeight: 30,
-
-
+                 isSelected ?  Text(
+                     'egg'
+                 ) :ButtonChoose(
+                     choose: choose,
+                     maxWidth: 150,
                    ),
+
+
                  ],
 
                 ),

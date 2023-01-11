@@ -30,6 +30,7 @@ class ActionButtonV2 extends StatelessWidget {
   final bool hasBorder;
   final FontWeight weight;
   final String imgPath;
+  final String svgPath;
   final bool isVisible;
   final double iconWidth;
   final double iconHeight;
@@ -58,6 +59,7 @@ class ActionButtonV2 extends StatelessWidget {
     this.align = TextAlign.center,
     this.isVisible = false,
     this.imgPath = '',
+    this.svgPath = '',
     this.iconWidth = 10,
     this.iconHeight = 10
   });
@@ -103,31 +105,32 @@ class ActionButtonV2 extends StatelessWidget {
                       bottom: positionedBottom,
                       child: Icon(prefixIcon),
                     ),
-                     Row(
-                       mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            text,
-                          //  textAlign: align,
-                            style: TextStyle(
-                              fontSize: fontSize,
-                              color: textColor,
-                              fontWeight: weight,
+                      Row(
+                         mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              text,
+                            //  textAlign: align,
+                              style: TextStyle(
+                                fontSize: fontSize,
+                                color: textColor,
+                                fontWeight: weight,
+                              ),
+
                             ),
 
-                          ),
+                          isVisible ? Padding(
+                              padding: getPadding(left: 15),
+                              child: CustomImageView(
+                                imagePath: imgPath,
+                                svgPath: svgPath,
+                                height: iconHeight,
+                                width: iconWidth,
+                              ),
+                            ): Container()
+                          ],
+                        ),
 
-                        isVisible ? Padding(
-                            padding: getPadding(left: 15),
-                            child: CustomImageView(
-                              imagePath: imgPath,
-                              svgPath: imgPath,
-                              height: iconHeight,
-                              width: iconWidth,
-                            ),
-                          ): Container()
-                        ],
-                      ),
 
 
                   ],

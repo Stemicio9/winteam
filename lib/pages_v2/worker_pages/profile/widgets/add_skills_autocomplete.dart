@@ -32,6 +32,9 @@ class AddSkillsAutocomplete extends StatelessWidget {
         });
       },
       onSelected: (Mansione selection) {
+
+
+
         Navigator.pop(context);
         debugPrint('You just selected $selection');
       },

@@ -1,4 +1,3 @@
-
 class Annuncio {
   final String title;
   final String subtitle;
@@ -8,22 +7,24 @@ class Annuncio {
   final String price;
   final String email;
   final String phone;
+  final String? state;
   final skillIcon;
+
   //final profileUrl;
   final image;
 
-
-  const Annuncio({
-    required this.title,
-    required this.subtitle,
-    required this.position,
-    required this.date,
-    required this.hours,
-    required this.price,
-    required this.skillIcon,
-    required this.image,
-    required this.phone,
-    required this.email
-  //  required this.profileUrl
-  });
+  const Annuncio(
+      {required this.title,
+      required this.subtitle,
+      required this.position,
+      required this.date,
+      required this.hours,
+      required this.price,
+      required this.skillIcon,
+      required this.image,
+      required this.phone,
+      required this.email,
+      this.state
+      //  required this.profileUrl
+      });
 }

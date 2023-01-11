@@ -22,6 +22,7 @@ class AdsDetailInfo extends StatelessWidget {
   final String subtitle;
   final image;
   final String message;
+  final bool isVisible;
 
   AdsDetailInfo({
     this.innerImageRadius = 77,
@@ -37,6 +38,7 @@ class AdsDetailInfo extends StatelessWidget {
     required this.image,
     required this.rating,
     required this.message,
+    this.isVisible = true,
   });
 
   @override
@@ -45,76 +47,81 @@ class AdsDetailInfo extends StatelessWidget {
       padding: getPadding(top: 30, right: 35, left: 35),
       child: Column(
         children: [
-          Row(
-            children: [
-              Padding(
-                  padding: getPadding(right: 10),
-                  child: Container(
-                    height: getSize(
-                      imageHeight,
-                    ),
-                    width: getSize(
-                      imageWidth,
-                    ),
-                    child: Stack(alignment: Alignment.bottomRight, children: [
-                      CustomImageView(
-                        imagePath: image,
-                        height: getSize(
-                          innerImageHeight,
-                        ),
-                        width: getSize(
-                          innerImageWidth,
-                        ),
-                        radius: BorderRadius.circular(
-                          getHorizontalSize(
-                            innerImageRadius,
-                          ),
-                        ),
-                        alignment: Alignment.center,
-                        fit: BoxFit.cover,
-                      ),
-                    ]),
-                  )),
-              GestureDetector(
-                onTap: onTap,
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: getPadding(bottom: 5),
-                      child: Text(
-                        subtitle,
-                        style: AppStyle.txtMontserratBoldUnderline24,
-                      ),
-                    ),
-                    TooltipWidget(
-                      message: message,
-                      direction: AxisDirection.down,
-                      child: RatingBar.builder(
-                        ignoreGestures: true,
-                        initialRating: rating,
-                        minRating: 0,
-                        direction: Axis.horizontal,
-                        allowHalfRating: true,
-                        itemCount: 5,
-                        itemSize: 19,
-                        itemPadding: EdgeInsets.symmetric(horizontal: 2),
-                        itemBuilder: (context, _) => const Icon(
-                          Icons.star_rounded,
-                          color: Colors.amber,
-                        ),
-                        onRatingUpdate: (rating) {
-                          print(rating);
-                        },
-                      ),
-                    ),
-                  ],
-                ),
-              )
-            ],
-          ),
-          Padding(
-            padding: getPadding(top: 30),
+          isVisible ?   Padding(
+            padding:getPadding(bottom: 30),
             child: Row(
+              children: [
+                Padding(
+                    padding: getPadding(right: 10),
+                    child: Container(
+                      height: getSize(
+                        imageHeight,
+                      ),
+                      width: getSize(
+                        imageWidth,
+                      ),
+                      child: Stack(alignment: Alignment.bottomRight, children: [
+                        CustomImageView(
+                          onTap: onTap,
+                          imagePath: image,
+                          height: getSize(
+                            innerImageHeight,
+                          ),
+                          width: getSize(
+                            innerImageWidth,
+                          ),
+                          radius: BorderRadius.circular(
+                            getHorizontalSize(
+                              innerImageRadius,
+                            ),
+                          ),
+                          alignment: Alignment.center,
+                          fit: BoxFit.cover,
+                        ),
+                      ]),
+                    )
+                ),
+               GestureDetector(
+                  onTap: onTap,
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: getPadding(bottom: 5),
+                        child: Text(
+                          subtitle,
+                          style: AppStyle.txtMontserratBoldUnderline24,
+                        ),
+                      ),
+                      TooltipWidget(
+                        message: message,
+                        direction: AxisDirection.down,
+                        child: RatingBar.builder(
+                          ignoreGestures: true,
+                          initialRating: rating,
+                          minRating: 0,
+                          direction: Axis.horizontal,
+                          allowHalfRating: true,
+                          itemCount: 5,
+                          itemSize: 19,
+                          itemPadding: EdgeInsets.symmetric(horizontal: 2),
+                          itemBuilder: (context, _) => const Icon(
+                            Icons.star_rounded,
+                            color: Colors.amber,
+                          ),
+                          onRatingUpdate: (rating) {
+                            print(rating);
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                )
+              ],
+            ),
+          ) : Container(),
+
+
+            Row(
               children: [
                 Padding(
                   padding: getPadding(right: 20),
@@ -134,7 +141,7 @@ class AdsDetailInfo extends StatelessWidget {
                 ),
               ],
             ),
-          ),
+
           Padding(
             padding: getPadding(top: 15),
             child: Row(

@@ -42,6 +42,7 @@ class WorkerAdsV2State extends State<WorkerAdsV2> {
 
 
                     ...annunci.map((e) => AdsCard(
+                      goToProfile: (){Navigator.pushNamed(context, RouteConstants.employerProfileOnlyView);},
                       onTap: () {
                         Navigator.pushNamed(context, RouteConstants.adsDetail);
                       },

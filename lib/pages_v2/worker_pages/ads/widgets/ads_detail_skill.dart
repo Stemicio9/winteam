@@ -20,6 +20,10 @@ class AdsDetailSkill extends StatelessWidget {
 
   final String skillName;
   final String price;
+  final String message;
+  final String state;
+  final bool isVisible;
+
 
 
 
@@ -36,6 +40,9 @@ class AdsDetailSkill extends StatelessWidget {
     this.columnPadding = 50,
     this.textPadding = 10,
     this.dividerPadding = 20,
+    this.state = '',
+    this.message = '',
+    this.isVisible = false,
 
   });
 
@@ -82,6 +89,44 @@ class AdsDetailSkill extends StatelessWidget {
               )
           ),
         ),
+
+
+      isVisible ? Padding(
+            padding: getPadding(top: 20),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                message,
+                style: AppStyle.txtMontserratRegular20,
+              ),
+              Text(
+                state,
+                style: AppStyle.txtMontserratBold20
+              ),
+
+
+              Padding(
+                padding:getPadding(left: 8),
+                child: Material(
+                    elevation: 4,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10)),
+                    child: Container(
+                      width: 17,
+                      height: 17,
+                      decoration: BoxDecoration(
+                        color: lightGreen,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    )),
+              ),
+            ],
+          ),
+        ) : Container(),
+
+
+
 
         Padding(
           padding: getPadding(top: dividerPadding),

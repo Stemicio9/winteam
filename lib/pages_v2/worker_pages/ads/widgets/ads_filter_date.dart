@@ -81,7 +81,6 @@ class AdsFilterDate extends StatelessWidget{
                          onConfirm: fromDateOnConfirm,
                          currentTime: DateTime.now(), locale: LocaleType.it);
                    },
-
                    readOnly: true,
                    isSuffixIcon: true,
                    suffixIcon: ImageConstant.imgDateInput,

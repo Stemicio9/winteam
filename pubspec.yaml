@@ -60,7 +60,7 @@ dependencies:
   cached_network_image: ^3.2.3
   flutter_svg: ^1.1.6
   intl: ^0.17.0
-  flutter_datetime_picker: ^1.5.1
+  flutter_datetime_picker: ^1.5.1 
   just_the_tooltip: ^0.0.12
   circle_nav_bar:
 

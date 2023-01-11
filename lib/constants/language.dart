@@ -45,8 +45,12 @@ const String APPLY = "Candidati";
 const String ADS_DESCRIPTION = "Descrizione";
 const String CANDIDATES = "Si sono già candidate";
 const String CANDIDATE = "Si è già candidata";
-const String NO_CANDIDATE = "Nessuno si è ancora candidato per questo lavoro.";
+const String NO_CANDIDATE = "Nessuno si è ancora candidato per questo lavoro";
 const String FILTERS = "Filtri";
+const String CANCEL_APPLICATION = "Annulla candidatura";
+const String VIEW_APPLIES = "Visualizza candidati";
+
+
 
 const String USERS = "Utenti";
 const String DETAILS = "Dettagli";
@@ -185,7 +189,7 @@ final Map<String, String> LANG_IT = {
   ADS_DESCRIPTION: 'Descrizione',
   CANDIDATES: 'Si sono già candidate',
   CANDIDATE: 'Si è già candidata',
-  NO_CANDIDATE: 'Nessuno si è ancora candidato per questo lavoro.',
+  NO_CANDIDATE: 'Nessuno si è ancora candidato per questo lavoro',
   USERS: 'Utenti',
   DETAILS: 'Dettagli',
   PERSON: 'Persona',
@@ -215,6 +219,8 @@ final Map<String, String> LANG_IT = {
   CANDIDATES_LIST:"Lista candidati",
   VIEW:"Visualizza",
   CHOOSE:"Scegli!",
+  CANCEL_APPLICATION:"Annulla candidatura",
+  VIEW_APPLIES:"Visualizza candidati",
 
   "": "",
   "": "",

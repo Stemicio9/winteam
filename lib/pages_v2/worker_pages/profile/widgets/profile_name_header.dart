@@ -16,9 +16,13 @@ class ProfileNameHeader extends StatelessWidget {
   final double iconWidth;  // 40
   final double iconHeight;  // 40
   final VoidCallback? onTap;
+  final bool isOnlyView;
 
-  const ProfileNameHeader({Key? key, this.sectionHeight = 54, this.widthFactor = 0.8,
-  this.name = "", this.description = "", this.iconWidth = 400, this.iconHeight = 400, this.onTap,
+  const ProfileNameHeader({Key? key,
+    this.sectionHeight = 54, this.widthFactor = 0.8,
+    this.name = "", this.description = "",
+    this.iconWidth = 400, this.iconHeight = 400, this.onTap,
+    this.isOnlyView = false
    }) : super(key: key);
 
   @override
@@ -45,7 +49,7 @@ class ProfileNameHeader extends StatelessWidget {
                     style: AppStyle.txtMontserratBold28,
                   ),
                 ),
-             GestureDetector(
+            !isOnlyView ? GestureDetector(
                onTap: onTap,
                child: Container(
                  height: getSize(
@@ -66,7 +70,7 @@ class ProfileNameHeader extends StatelessWidget {
                         alignment: Alignment.topRight,
                       ),
                ),
-             ),
+             ) : Container(),
 
                 Align(
                   alignment: Alignment.bottomCenter,

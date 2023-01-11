@@ -38,10 +38,8 @@ class SearchWorkersState extends State<SearchWorkers> {
                     filterController: filterController
                 ),
 
-
                 ...annunci.map((e) => SearchWorkerCard(
                   onTap: () {
-
                     showDialog(
                         context: context,
                         barrierColor: blackDialog,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:winteam/constants/colors.dart';
 import 'package:winteam/constants/language.dart';
+import 'package:winteam/constants/route_constants.dart';
 import 'package:winteam/pages_v2/W1n_scaffold.dart';
 import 'package:winteam/pages_v2/employer_pages/ads/widget/candidates_list_dialog.dart';
 import 'package:winteam/pages_v2/employer_pages/search_workers/widget/search_workers_card.dart';
@@ -8,6 +9,11 @@ import 'package:winteam/pages_v2/worker_pages/ads/data/annuncio.dart';
 import 'package:winteam/utils/size_utils.dart';
 
 class CandidatesList extends StatefulWidget{
+
+  late bool isSelected;
+
+  CandidatesList({this.isSelected = false});
+
   @override
   State<StatefulWidget> createState() {
     return CandidatesListState();
@@ -34,16 +40,25 @@ class CandidatesListState extends State<CandidatesList>{
             child: Column(
               children: [
                 ...annunci.map((e) => SearchWorkerCard(
+                  isSelected: widget.isSelected,
+                  view: (){Navigator.pushNamed(context, RouteConstants.candidateProfileChoose);},
                   choose: (){
                     showDialog(
                         context: context,
                         barrierColor: blackDialog,
                         builder: (ctx) => CandidatesListDialog(
                           cancelOnTap: (){Navigator.pop(context);},
-                          confirmOnTap: (){Navigator.pop(context);},
+                          confirmOnTap: (){
+                        /*    setState(() {
+                              widget.isSelected = true;
+
+                            }); */
+                            Navigator.pop(context);
+                            },
                         )
                     );
                   },
+
                   isCandidatesList: true,
                   isSearch: false,
                   title: e.title,
@@ -53,7 +68,6 @@ class CandidatesListState extends State<CandidatesList>{
                   phone: e.phone,
                   image: e.image,
                   skillIcon: e.skillIcon,
-                  view: (){},
                 )),
               ],
             ),
