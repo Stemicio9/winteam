@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:winteam/constants/colors.dart';
 import 'package:winteam/constants/language.dart';
+import 'package:winteam/entities/annunci_entity.dart';
 import 'package:winteam/theme/app_style.dart';
 import 'package:winteam/utils/image_constant.dart';
 import 'package:winteam/utils/size_utils.dart';
@@ -15,24 +16,15 @@ class AdsCard extends StatelessWidget {
   final double imageWidth; // 90
   final double imageHeight; // 90
   final onTap;
-  final String position;
-  final String date;
-  final String hours;
-  final String title;
-  final String subtitle;
-  final String price;
+  final AnnunciEntity annunciEntity;
   final String candidates;
   String message;
   Color? statusColor;
-  final String? state;
   final skillIcon;
-  final image;
   final bool isVisible;
   final goToList;
   final goToProfile;
   final bool isWorkerCard;
-
-
 
   AdsCard({
     this.innerImageRadius = 77,
@@ -41,16 +33,9 @@ class AdsCard extends StatelessWidget {
     this.innerImageWidth = 90,
     this.innerImageHeight = 90,
     required this.onTap,
-    required this.title,
-    required this.subtitle,
-    required this.hours,
-    required this.price,
-    required this.date,
-    required this.position,
     required this.skillIcon,
-    required this.image,
-    this.state,
-    this.message ='',
+    required this.annunciEntity,
+    this.message = '',
     this.statusColor = lightGreen,
     this.candidates = '',
     this.isVisible = true,
@@ -61,7 +46,6 @@ class AdsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     final GlobalKey<TooltipState> tooltipkey = GlobalKey<TooltipState>();
 
     initializeAds();
@@ -96,7 +80,7 @@ class AdsCard extends StatelessWidget {
                                   children: [
                                     CustomImageView(
                                       onTap: goToProfile,
-                                      imagePath: image,
+                                      imagePath: annunciEntity.image,
                                       height: getSize(
                                         innerImageHeight,
                                       ),
@@ -119,7 +103,8 @@ class AdsCard extends StatelessWidget {
                             Row(
                               children: [
                                 Text(
-                                  title,
+                                  annunciEntity.title,
+                                  overflow: TextOverflow.ellipsis,
                                   style: AppStyle.txtMontserratBold24,
                                 ),
                                 Padding(
@@ -139,12 +124,13 @@ class AdsCard extends StatelessWidget {
                             GestureDetector(
                               onTap: goToProfile,
                               child: Text(
-                                subtitle,
-                                style: isWorkerCard ? AppStyle.txtMontserratRegularUnderline20 : AppStyle.txtMontserratRegular20,
+                                annunciEntity.description,
+                                overflow: TextOverflow.ellipsis,
+                                style: isWorkerCard
+                                    ? AppStyle.txtMontserratRegularUnderline20
+                                    : AppStyle.txtMontserratRegular18,
                               ),
                             ),
-
-
                             Padding(
                               padding: getPadding(top: 15),
                               child: Row(
@@ -162,7 +148,7 @@ class AdsCard extends StatelessWidget {
                                     ),
                                   ),
                                   Text(
-                                    position,
+                                    annunciEntity.position,
                                     style: AppStyle.txtMontserratRegular18,
                                   ),
                                 ],
@@ -185,7 +171,7 @@ class AdsCard extends StatelessWidget {
                                     ),
                                   ),
                                   Text(
-                                    date,
+                                    annunciEntity.date,
                                     style: AppStyle.txtMontserratRegular18,
                                   ),
                                 ],
@@ -208,7 +194,7 @@ class AdsCard extends StatelessWidget {
                                     ),
                                   ),
                                   Text(
-                                    hours,
+                                    annunciEntity.hourSlot,
                                     style: AppStyle.txtMontserratRegular18,
                                   ),
                                 ],
@@ -218,54 +204,52 @@ class AdsCard extends StatelessWidget {
                         ),
                       ],
                     ),
-
-
-              isVisible ?  Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        TooltipWidget(
+                    Visibility(
+                      visible: isVisible,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          TooltipWidget(
                             message: message,
                             direction: AxisDirection.left,
                             child: Material(
-                              elevation: 4,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10)),
-                              child: Container(
-                                width: 17,
-                                height: 17,
-                                decoration: BoxDecoration(
-                                  color: statusColor,
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                              )),
-                        ),
-
-                        Padding(
-                          padding: getPadding(top: 25),
-                          child: GestureDetector(
-                            onTap: candidates != '0' ? goToList : (){},
-                            child: Row(
-                              children: [
-                                CustomImageView(
-                                  imagePath: ImageConstant.imgPeople,
-                                  height: 18,
-                                  width: 18,
-                                ),
-
-                                Padding(
-                                  padding:  getPadding(left: 5),
-                                  child: Text(
-                                    candidates,
-                                    style: AppStyle.txtMontserratRegular16,
+                                elevation: 4,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10)),
+                                child: Container(
+                                  width: 17,
+                                  height: 17,
+                                  decoration: BoxDecoration(
+                                    color: statusColor,
+                                    borderRadius: BorderRadius.circular(10),
                                   ),
-                                )
-                              ],
-                            ),
+                                )),
                           ),
-                        )
-                      ],
-                    ) : Container()
-
+                          Padding(
+                            padding: getPadding(top: 25),
+                            child: GestureDetector(
+                              onTap: candidates != '0' ? goToList : (){},
+                              child: Row(
+                                children: [
+                                  CustomImageView(
+                                    imagePath: ImageConstant.imgPeople,
+                                    height: 18,
+                                    width: 18,
+                                  ),
+                                  Padding(
+                                    padding: getPadding(left: 5),
+                                    child: Text(
+                                      candidates,
+                                      style: AppStyle.txtMontserratRegular16,
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    )
                   ],
                 ),
                 Padding(
@@ -287,8 +271,8 @@ class AdsCard extends StatelessWidget {
                           Padding(
                             padding: getPadding(left: 10),
                             child: Text(
-                              '$price €',
-                              style: AppStyle.txtMontserratBold22,
+                              '${annunciEntity.payment} €',
+                              style: AppStyle.txtMontserratRegular16,
                             ),
                           )
                         ],
@@ -309,26 +293,30 @@ class AdsCard extends StatelessWidget {
     );
   }
 
-  initializeAds(){
-    switch (state) {
-      case 'Active':{
-        message = 'Status annuncio: Attivo';
-        statusColor = lightGreen;
-        break;
-      }
-      case 'Accepted': {
-        message = 'Status annuncio: Accettato';
-        statusColor = blueState;
-        break;
-      }
-      case 'History': {
-        message = 'Status annuncio: Storico';
-        statusColor = greyState;
-        break;
-      }
-      default: {
-        print('stato annuncio non trovato');
-      }
+  initializeAds() {
+    switch (annunciEntity.advertisementStatus) {
+      case 'active':
+        {
+          message = 'Status annuncio: Attivo';
+          statusColor = lightGreen;
+          break;
+        }
+      case 'accepted':
+        {
+          message = 'Status annuncio: Accettato';
+          statusColor = blueState;
+          break;
+        }
+      case 'history':
+        {
+          message = 'Status annuncio: Storico';
+          statusColor = greyState;
+          break;
+        }
+      default:
+        {
+          print('stato annuncio non trovato');
+        }
     }
   }
 }

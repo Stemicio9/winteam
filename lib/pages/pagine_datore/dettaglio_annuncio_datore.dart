@@ -94,7 +94,7 @@ class DettaglioAnnuncioDatoreState extends State<DettaglioAnnuncioDatore>{
                         }
                         return ActionButton(show ? "CANDIDATI" : "NON TI PUOI CANDIDARE" ,
                                 (){
-                                      annunciCubit.candidate(annuncio.id);
+                                      annunciCubit.candidate(annuncio.id ?? '');
 
                                   },
                             250,

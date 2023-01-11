@@ -33,7 +33,7 @@ class CardDettaglioDatore extends StatelessWidget {
                 ListTile(
                   title: Column(
                     children: [
-                      Texth5(testo: annuncio.skillDTO.name ?? "" ,color: Colors.black,),
+                      Texth5(testo: annuncio.skillDTO?.name ?? "" ,color: Colors.black,),
 
                       Container(padding: EdgeInsets.only(bottom: 10),),
 

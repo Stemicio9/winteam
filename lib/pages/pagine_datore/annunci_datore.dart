@@ -52,9 +52,9 @@ class AnnunciDatoreState extends State<AnnunciDatore>{
                       return
                       Expanded(
                           child: ListView.builder(
-                              itemCount: state.Annunci.length,
+                              itemCount: state.annunci.length,
                               itemBuilder: (context,index) =>
-                                  CardAnnuncioDatore(annuncio: state.Annunci[index])
+                                  CardAnnuncioDatore(annuncio: state.annunci[index])
 
                           )
                       );

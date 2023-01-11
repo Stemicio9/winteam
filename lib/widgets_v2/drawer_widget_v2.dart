@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:winteam/authentication/authentication_bloc.dart';
+import 'package:winteam/blocs/user_bloc/current_user_cubit.dart';
 import 'package:winteam/constants/colors.dart';
 import 'package:winteam/constants/language.dart';
 import 'package:winteam/constants/route_constants.dart';
@@ -11,7 +14,7 @@ import 'package:winteam/widgets_v2/texts_v2.dart';
 
 import '../utils/image_constant.dart';
 
-class DrawerWidgetV2 extends StatelessWidget {
+class DrawerWidgetV2 extends StatefulWidget {
   final double innerImageRadius; // 77
   final double innerImageWidth; // 90
   final double innerImageHeight; // 90
@@ -40,6 +43,55 @@ class DrawerWidgetV2 extends StatelessWidget {
   });
 
   @override
+  State<DrawerWidgetV2> createState() => DrawerWidgetV2State();
+}
+
+class DrawerWidgetV2State extends State<DrawerWidgetV2> {
+  UserAuthCubit get _authCubit => context.read<UserAuthCubit>();
+  UserCubit get _userCubit => context.read<UserCubit>();
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+        create: (_) => UserAuthCubit(),
+        child: ContentDrawerWidget(
+            authCubit: _authCubit,
+            userCubit: _userCubit,
+            innerImageRadius: widget.innerImageRadius,
+            innerImageWidth: widget.innerImageWidth,
+            innerImageHeight: widget.innerImageHeight,
+            imageWidth: widget.imageWidth,
+            imageHeight: widget.imageHeight,
+            customImageViewHeight: widget.customImageViewHeight,
+            customImageViewWidth: widget.customImageViewWidth));
+  }
+}
+
+class ContentDrawerWidget extends StatelessWidget {
+  final UserAuthCubit authCubit;
+  final UserCubit userCubit;
+  final double innerImageRadius; // 77
+  final double innerImageWidth; // 90
+  final double innerImageHeight; // 90
+  final double imageWidth; // 90
+  final double imageHeight; // 90
+  final double customImageViewHeight; //26
+  final double customImageViewWidth; //26
+
+  List<String> elementList = List.empty(growable: true);
+
+  ContentDrawerWidget(
+      {required this.authCubit,
+      required this.userCubit,
+      required this.innerImageRadius,
+      required this.innerImageWidth,
+      required this.innerImageHeight,
+      required this.imageWidth,
+      required this.imageHeight,
+      required this.customImageViewHeight,
+      required this.customImageViewWidth});
+
+  @override
   Widget build(BuildContext context) {
     return Drawer(
       //  width: 260,
@@ -48,8 +100,7 @@ class DrawerWidgetV2 extends StatelessWidget {
         children: [
           Expanded(
             child: ListView(
-                padding: EdgeInsets.zero,
-                children: createElementList(context)),
+                padding: EdgeInsets.zero, children: createElementList(context, userCubit, authCubit)),
           ),
           drawerFooter(context)
         ],
@@ -57,7 +108,7 @@ class DrawerWidgetV2 extends StatelessWidget {
     );
   }
 
-  drawerHeader() {
+  drawerHeader(String username) {
     return Padding(
       padding: getPadding(bottom: 20),
       child: DrawerHeader(
@@ -99,7 +150,7 @@ class DrawerWidgetV2 extends StatelessWidget {
                 Padding(
                   padding: getPadding(top: 20),
                   child: Texth3V2(
-                    testo: 'Gianmario De Paolini',
+                    testo: username,
                     color: white,
                     weight: FontWeight.bold,
                   ),
@@ -110,7 +161,7 @@ class DrawerWidgetV2 extends StatelessWidget {
     );
   }
 
-  createElementList(context) {
+  createElementList(context, userCubit, authCubit) {
     String comeFunziona = COME_FUNZIONA;
     String contattaci = CONTATTACI;
     String privacyPolicy = POLICY_PRIVACY;
@@ -125,27 +176,41 @@ class DrawerWidgetV2 extends StatelessWidget {
 
     List<Widget> lista = List.empty(growable: true);
 
-    lista.add(drawerHeader());
+    var username = 'Username';
+    if(authCubit.state is UserAuthenticated){
+      var u = (authCubit.state as UserAuthenticated).user;
+      username = '${u.firstName} ${u.lastName}';
+      if(username == ' '){
+        username = u.companyName!;
+      }
+    }
 
-  //  lista.add(createTile(comeFunziona, () {}, context, ImageConstant.imgComeFunziona, 22, 26));
+    lista.add(drawerHeader(username));
 
-  //  lista.add(createTile(contattaci, () {}, context, ImageConstant.imgContattaci, 25, 22));
+    //  lista.add(createTile(comeFunziona, () {}, context, ImageConstant.imgComeFunziona, 22, 26));
 
-  //  lista.add(createTile(privacyPolicy, () {}, context, ImageConstant.imgPrivacyPolicy, 26, 18));
+    //  lista.add(createTile(contattaci, () {}, context, ImageConstant.imgContattaci, 25, 22));
 
-    lista.add(createTile(rimuoviAccount, () {}, context, ImageConstant.imgRemoveAccount, 27, 26));
+    //  lista.add(createTile(privacyPolicy, () {}, context, ImageConstant.imgPrivacyPolicy, 26, 18));
+
+    lista.add(createTile(rimuoviAccount, () {}, context,
+        ImageConstant.imgRemoveAccount, 27, 26));
 
     lista.add(createTile(logout, () {
       showDialog(
           context: context,
           barrierColor: blackDialog,
           builder: (ctx) => LogoutDialog(
-            cancelOnTap: (){Navigator.pop(context);},
-            confirmOnTap: (){
-              FirebaseAuth.instance.signOut();
-              Navigator.pushNamed(context, RouteConstants.login);
-              },
-          ));
+                cancelOnTap: () {
+                  Navigator.pop(context);
+                },
+                confirmOnTap: () {
+                  FirebaseAuth.instance.signOut();
+                  userCubit.logout();
+                  authCubit.logout();
+                  Navigator.pushReplacementNamed(context, RouteConstants.login);
+                },
+              ));
     }, context, ImageConstant.imgLogout, 27, 19));
     elementList.clear();
     return lista;

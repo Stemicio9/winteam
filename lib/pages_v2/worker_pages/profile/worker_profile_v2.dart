@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:winteam/authentication/authentication_bloc.dart';
 import 'package:winteam/constants/language.dart';
 import 'package:winteam/constants/route_constants.dart';
+import 'package:winteam/entities/skill_entity.dart';
+import 'package:winteam/entities/user_entity.dart';
 import 'package:winteam/pages_v2/W1n_scaffold.dart';
 import 'package:winteam/pages_v2/worker_pages/profile/data/mansione.dart';
 import 'package:winteam/pages_v2/worker_pages/profile/widgets/image_profile.dart';
@@ -28,24 +32,44 @@ class WorkerProfileV2 extends StatefulWidget {
 }
 
 class WorkerProfileV2State extends State<WorkerProfileV2> {
-  final String name = "Mario Rossinettini";
-  final String headerDescription = "Digital Creator";
-  final String description =
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut et massa mi. Aliquam in hendrerit urna. Pellentesque sit amet sapien fringilla, mattis ligula consectetur, ultrices ';
-  final String phone = "+39 9876543210";
-  final String email = "mario.rossinettini@libeotto.com";
-  final String position = "Milan, Italy";
+
+  UserAuthCubit get _authCubit => context.read<UserAuthCubit>();
+  UserEntity currentUser = UserEntity();
+
+  String name = "Mario Rossinettini";
+  String headerDescription = "Digital Creator";
+  String description = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut et massa mi. Aliquam in hendrerit urna. Pellentesque sit amet sapien fringilla, mattis ligula consectetur, ultrices ';
+  String phone = "+39 9876543210";
+  String email = "mario.rossinettini@libeotto.com";
+  String position = "Milan, Italy";
   final String mansione = "Mansione";
   XFile? imageFile;
 
 
+  final List<SkillEntity> mansioni = List.empty(growable: true);
 
+  @override
+  void initState() {
+    inputData();
+    super.initState();
+  }
 
-  final List<Mansione> mansioni = List.empty(growable: true);
+  inputData(){
+    currentUser = (_authCubit.state as UserAuthenticated).user;
+
+    print(currentUser);
+    name = '${currentUser.firstName} ${currentUser.lastName}';
+    headerDescription = currentUser.brief ?? '';
+    phone = currentUser.phoneNumber ?? '';
+    email = currentUser.email ?? '';
+    position = currentUser.address ?? '';
+    description = currentUser.description ?? '';
+
+    fillMansioni();
+  }
 
   @override
   Widget build(BuildContext context) {
-    fillDummyMansioni();
     return !widget.hasScaffold ? content() :
         W1nScaffold(
             appBar: 2,
@@ -55,10 +79,10 @@ class WorkerProfileV2State extends State<WorkerProfileV2> {
 
   }
 
-  fillDummyMansioni() {
+  fillMansioni() {
     mansioni.clear();
-    for (int i = 0; i < 4; i++) {
-      mansioni.add(Mansione(icon: ImageConstant.imgBag, text: '$Mansione $i'));
+    for(int i = 0; i < currentUser.skillList!.length; i++){
+      mansioni.add(currentUser.skillList![i]);
     }
   }
 

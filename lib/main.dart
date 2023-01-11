@@ -1,4 +1,3 @@
-
 import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -7,6 +6,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:winteam/authentication/authentication_bloc.dart';
 import 'package:winteam/blocs/annunci_bloc/annunci_cubit.dart';
 import 'package:winteam/blocs/annunci_user_list/annunci_user_list_cubit.dart';
 import 'package:winteam/blocs/skill_bloc/skill_cubit.dart';
@@ -20,15 +20,14 @@ import 'package:winteam/constants/route_constants.dart';
 import 'package:winteam/entities/user_entity.dart';
 import 'package:winteam/firebase_options.dart';
 
-
 var url_base;
 
 Future<bool> fetchBaseUrl() async {
-
-
   try {
-    DocumentSnapshot element = await FirebaseFirestore.instance.collection(
-        'rest_base_url').doc("rest_url").get();
+    DocumentSnapshot element = await FirebaseFirestore.instance
+        .collection('rest_base_url')
+        .doc("rest_url")
+        .get();
 
     if (kDebugMode) {
       url_base = element['debug'];
@@ -39,30 +38,29 @@ Future<bool> fetchBaseUrl() async {
       print("URL BASE ${url_base}");
       return true;
     }
-  }catch(e) {
+  } catch (e) {
     print(e);
     return false;
   }
-
 }
 
-void main() async{
-
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  final auth = FirebaseAuth.instanceFor(app: Firebase.app(), persistence: Persistence.LOCAL);
+  final auth = FirebaseAuth.instanceFor(
+      app: Firebase.app(), persistence: Persistence.LOCAL);
   var user = auth.currentUser;
   String initialRoute = "/";
-  if(user != null){
+  if (user != null) {
     await fetchBaseUrl();
     var me = await userListApiService.me();
     var encoded = jsonEncode(me.data);
     var decoded = jsonDecode(encoded);
     var json = UserEntity.fromJson(decoded);
-   /* if(json.roleId == getCurrentLanguageValue(USER_DATORE)){
+    /* if(json.roleId == getCurrentLanguageValue(USER_DATORE)){
       initialRoute = RouteConstants.dashboardDatore;
     } else if(json.roleId == getCurrentLanguageValue(USER_LAVORATORE)) {
       initialRoute = RouteConstants.dashboardLavoratore;
@@ -74,19 +72,21 @@ void main() async{
 }
 
 class MyApp extends StatelessWidget {
-
   final String initialRoute;
 
-  const MyApp({super.key,required this.initialRoute});
+  const MyApp({super.key, required this.initialRoute});
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
         providers: [
-        BlocProvider(
+          BlocProvider(
             create: (context) => UserListCubit(),
-        ),
+          ),
+          BlocProvider(
+            create: (context) => UserAuthCubit(),
+          ),
           BlocProvider(
             create: (context) => SkillCubit(),
           ),
@@ -105,19 +105,12 @@ class MyApp extends StatelessWidget {
         ],
         child: MaterialApp(
           title: APP_TITLE,
-           theme: ThemeData(
+          theme: ThemeData(
               fontFamily: 'Montserrat',
               primarySwatch: Colors.blue,
-              backgroundColor: background
-          ),
-          routes: RouteConstants.route(context) ,
+              backgroundColor: background),
+          routes: RouteConstants.route(context),
           initialRoute: initialRoute,
-        )
-    );
-
+        ));
   }
-
-
 }
-
- 

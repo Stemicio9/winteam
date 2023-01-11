@@ -9,8 +9,8 @@ abstract class AnnunciState {}
 class AnnunciLoading extends AnnunciState {}
 
 class AnnunciLoaded extends AnnunciState {
-  final List<AnnunciEntity> Annunci;
-  AnnunciLoaded(this.Annunci);
+  final List<AnnunciEntity> annunci;
+  AnnunciLoaded(this.annunci);
 }
 
 class AnnunciEmpty extends AnnunciState {}

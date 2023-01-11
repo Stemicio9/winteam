@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:winteam/constants/colors.dart';
 import 'package:winteam/constants/language.dart';
+import 'package:winteam/entities/skill_entity.dart';
 import 'package:winteam/pages_v2/worker_pages/profile/data/mansione.dart';
 import 'package:winteam/theme/app_style.dart';
 import 'package:winteam/utils/size_utils.dart';
@@ -32,7 +33,7 @@ class ProfileSkillsEdit extends StatelessWidget {
   final double elevation; //5
   final double borderRadius; //5
 
-  final List<Mansione> mansioni;
+  final List<SkillEntity> mansioni;
 
   const ProfileSkillsEdit(
       {Key? key,
@@ -101,7 +102,7 @@ class ProfileSkillsEdit extends StatelessWidget {
     );
   }
 
-  Widget mansione(Mansione mansione) {
+  Widget mansione(SkillEntity mansione) {
     return Container(
         padding: getPadding(
           top: internalPaddingTop,
@@ -121,7 +122,7 @@ class ProfileSkillsEdit extends StatelessWidget {
                   Row(
                     children: [
                       CustomImageView(
-                        svgPath: mansione.icon,
+                        svgPath: mansione.imageLink,
                         height: getVerticalSize(
                           customImageViewHeight,
                         ),
@@ -136,7 +137,7 @@ class ProfileSkillsEdit extends StatelessWidget {
                           bottom: getPaddingSkillBottom,
                         ),
                         child: Text(
-                          mansione.text,
+                          mansione.name ?? 'Mansione Test',
                           overflow: TextOverflow.ellipsis,
                           textAlign: TextAlign.start,
                           style: AppStyle.txtMontserratRegular16,

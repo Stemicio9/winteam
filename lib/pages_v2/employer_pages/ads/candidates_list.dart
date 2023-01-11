@@ -21,7 +21,6 @@ class CandidatesList extends StatefulWidget{
 
 }
 
-
 class CandidatesListState extends State<CandidatesList>{
 
   List<Annuncio> annunci = List.empty(growable: true);
@@ -41,7 +40,9 @@ class CandidatesListState extends State<CandidatesList>{
               children: [
                 ...annunci.map((e) => SearchWorkerCard(
                   isSelected: widget.isSelected,
-                  view: (){Navigator.pushNamed(context, RouteConstants.candidateProfileChoose);},
+                  view: (){
+                    Navigator.pushNamed(context, RouteConstants.candidateProfileChoose);
+                    },
                   choose: (){
                     showDialog(
                         context: context,

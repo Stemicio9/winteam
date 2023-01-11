@@ -17,7 +17,11 @@ class _LoginPageV2State extends State<LoginPageV2> {
   Widget build(BuildContext context) {
      return W1nScaffold(
          hasBackgroundColor: true,
-         body: LoginFormV2()
+         body: WillPopScope(
+           onWillPop: () async => false,
+            child: LoginFormV2(),
+         )
+
      );
   }
 

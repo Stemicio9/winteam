@@ -39,7 +39,7 @@ class UserCubit extends Cubit<UserState> {
     }
   }
 
-  Future<void> saveLoggedUser() async{
+  Future<UserEntity> saveLoggedUser() async{
     emit(UserLoading());
     try {
       HttpResponse<dynamic> result = await userListApiService.me();
@@ -50,9 +50,11 @@ class UserCubit extends Cubit<UserState> {
       _user = json;
       //todo inserire token, role e user dentro authentication state
      emit(UserLoaded(json));
+     return json;
     } catch (e) {
       print(e);
       emit(UserError());
+      return UserEntity();
     }
   }
 
@@ -69,7 +71,7 @@ class UserCubit extends Cubit<UserState> {
   }
 
 
-  clearUser(){
+  logout(){
     emit(UserEmpty());
   }
 

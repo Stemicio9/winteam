@@ -93,7 +93,7 @@ class ListaCandidatiState extends State<ListaCandidati> {
 
 
   void matchUser(String userId){
-    _cubit.matchUser(userId, annuncio.id);
+    _cubit.matchUser(userId, annuncio.id ?? '');
   }
 
 

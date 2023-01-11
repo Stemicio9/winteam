@@ -54,11 +54,11 @@ class AnnunciLavoratoreState extends State<AnnunciLavoratore> {
               } else if (state is AnnunciLoaded) {
                 return Expanded(
                     child: ListView.builder(
-                        itemCount: state.Annunci.length,
+                        itemCount: state.annunci.length,
                         itemBuilder: (context, index) =>
                             //TODO se va bene cambiare nome al widget
                             CardAnnuncioDatore(
-                                annuncio: state.Annunci[index])));
+                                annuncio: state.annunci[index])));
               } else if (state is AnnunciEmpty) {
                 // @todo insert an empty state element
                 return Container(

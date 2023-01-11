@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:winteam/constants/language.dart';
+import 'package:winteam/entities/skill_entity.dart';
 import 'package:winteam/pages_v2/worker_pages/profile/data/mansione.dart';
 import 'package:winteam/theme/app_style.dart';
 import 'package:winteam/utils/size_utils.dart';
@@ -19,7 +20,7 @@ class ProfileSkill extends StatelessWidget{
   final double getPaddingSkillBottom; //12
   final double getPaddingSkillLeft; //16
 
-  final List<Mansione> mansioni;
+  final List<SkillEntity> mansioni;
 
 
   const ProfileSkill({Key? key, this.paddingRight = 35,
@@ -64,11 +65,11 @@ class ProfileSkill extends StatelessWidget{
     );
   }
 
-  Widget mansione(Mansione mansione){
+  Widget mansione(SkillEntity mansione){
     return Row(
       children: [
         CustomImageView(
-          svgPath: mansione.icon,
+          svgPath: mansione.imageLink,
           height: getVerticalSize(
             customImageViewHeight,
           ),
@@ -83,7 +84,7 @@ class ProfileSkill extends StatelessWidget{
             bottom: getPaddingSkillBottom,
           ),
           child: Text(
-            mansione.text,
+            mansione.name ?? 'Mansione Test',
             overflow: TextOverflow.ellipsis,
             textAlign: TextAlign.left,
             style: AppStyle.txtMontserratRegular20,

@@ -212,7 +212,7 @@ class PubblicaAnnuncioDatoreState extends State<PubblicaAnnuncioDatore> {
         publisherUserId: "",
         candidateUserList: [],
         matchedUserId: "",
-        advertisementStatus: "");
+        advertisementStatus: "", position: '', image: '');
 
     _cubitAnnunci.publishAnnuncio(annuncio);
     _cubit.selectedEntity = SkillEntity();

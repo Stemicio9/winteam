@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:winteam/authentication/authentication_bloc.dart';
 import 'package:winteam/constants/language.dart';
 import 'package:winteam/constants/route_constants.dart';
 import 'package:winteam/constants/validators.dart';
+import 'package:winteam/entities/skill_entity.dart';
+import 'package:winteam/entities/user_entity.dart';
 import 'package:winteam/pages_v2/W1n_scaffold.dart';
 import 'package:winteam/pages_v2/worker_pages/profile/data/mansione.dart';
 import 'package:winteam/pages_v2/worker_pages/profile/widgets/cancel_button.dart';
@@ -15,6 +19,8 @@ import 'package:winteam/utils/image_constant.dart';
 
 
 class WorkerProfileEditV2 extends StatefulWidget {
+
+
   @override
   State<StatefulWidget> createState() {
     return WorkerProfileEditV2State();
@@ -23,16 +29,10 @@ class WorkerProfileEditV2 extends StatefulWidget {
 
 class WorkerProfileEditV2State extends State<WorkerProfileEditV2> {
 
+  UserAuthCubit get _authCubit => context.read<UserAuthCubit>();
+  UserEntity currentUser = UserEntity();
 
   final _formKey = GlobalKey<FormState>();
-  var name = 'Mario Rossinettini';
-  var headerDescription = 'Digital Creator';
-  var phone = '+39 9876543210';
-  var email = 'mario.rossinettini@libeotto.com';
-  var position = 'Milan, Italy';
-  var description = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut et massa mi. Aliquam in hendrerit urna. Pellentesque sit amet sapien fringilla, mattis ligula consectetur, ultrices ';
-
-
 
   final TextEditingController nameTextController = TextEditingController();
   final TextEditingController headerDescriptionTextController = TextEditingController();
@@ -41,25 +41,29 @@ class WorkerProfileEditV2State extends State<WorkerProfileEditV2> {
   final TextEditingController positionTextController = TextEditingController();
   final TextEditingController descriptionTextController = TextEditingController();
 
-
-
-  final List<Mansione> mansioni = List.empty(growable: true);
+  final List<SkillEntity> mansioni = List.empty(growable: true);
 
 
   @override
   void initState() {
-    fillDummyMansioni();
+    inputData();
+    fillMansioni();
     super.initState();
+  }
+
+  inputData(){
+    currentUser = (_authCubit.state as UserAuthenticated).user;
+    nameTextController.text = '${currentUser.firstName} ${currentUser.lastName}';
+    headerDescriptionTextController.text = currentUser.brief ?? '';
+    phoneTextController.text = currentUser.phoneNumber ?? '';
+    emailTextController.text = currentUser.email ?? '';
+    positionTextController.text = currentUser.address ?? '';
+    descriptionTextController.text = currentUser.description ?? '';
   }
 
   @override
   Widget build(BuildContext context) {
-    nameTextController.text = name;
-    headerDescriptionTextController.text = headerDescription;
-    phoneTextController.text = phone;
-    emailTextController.text = email;
-    positionTextController.text = position;
-    descriptionTextController.text = description;
+
 
     return W1nScaffold(
         appBar: 2,
@@ -90,7 +94,14 @@ class WorkerProfileEditV2State extends State<WorkerProfileEditV2> {
                         ProfileSkillsEdit(
                           mansioni: mansioni,
                           deleteSkill: deleteDummySkill,
-                          ontap:() {Navigator.pushNamed(context, RouteConstants.addSkills);},
+                          ontap:() async {
+                            var newUser = await Navigator.pushNamed(context, RouteConstants.addSkills) as UserEntity;
+                            setState(() {
+
+                              currentUser = newUser;
+                              fillMansioni();
+                            });
+                          },
                         ),
 
 
@@ -109,9 +120,8 @@ class WorkerProfileEditV2State extends State<WorkerProfileEditV2> {
                           emailValidator: validateIsEmail,
                         ),
 
-                       CancelButton(onTap: (){Navigator.pop(context);}),
-
-                       SaveButton(onTap: formSubmit)
+                       SaveButton(onTap: formSubmit),
+                       CancelButton(onTap: (){Navigator.pop(context);})
                       ],
                     )
                 )
@@ -128,17 +138,23 @@ class WorkerProfileEditV2State extends State<WorkerProfileEditV2> {
   }
 
 
-  fillDummyMansioni() {
+  fillMansioni() {
     mansioni.clear();
-    for (int i = 0; i < 4; i++) {
-      mansioni.add(Mansione(icon: ImageConstant.imgBag, text: '$Mansione $i'));
+    //iterate over currentUser.skillList
+    print(currentUser);
+    if(currentUser.skillList != null){
+      for (var skill in currentUser.skillList!) {
+        mansioni.add(skill);
+      }
     }
   }
 
 
   deleteDummySkill(int index){
       setState(() {
-        mansioni.removeAt(index);
+        var currentUser = (_authCubit.state as UserAuthenticated).user;
+        currentUser.skillList!.removeAt(index);
+        fillMansioni();
       });
   }
 
