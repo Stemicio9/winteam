@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:winteam/constants/colors.dart';
 import 'package:winteam/constants/language.dart';
 import 'package:winteam/constants/route_constants.dart';
+import 'package:winteam/entities/skill_entity.dart';
 import 'package:winteam/pages_v2/W1n_scaffold.dart';
 import 'package:winteam/pages_v2/employer_pages/search_workers/widget/search_workers_card.dart';
 import 'package:winteam/pages_v2/employer_pages/search_workers/widget/subscription_dialog.dart';
@@ -36,7 +37,8 @@ class SearchWorkersState extends State<SearchWorkers> {
 
                 AdsAutocomplete(
                     paddingBottom: 30,
-                    filterController: filterController
+                    filterController: filterController,
+                    optionSelected: onSelectedAutocomplete,
                 ),
 
                 ...annunci.map((e) => SearchWorkerCard(
@@ -67,6 +69,11 @@ class SearchWorkersState extends State<SearchWorkers> {
             ),
           ),
         ));
+  }
+
+
+  void onSelectedAutocomplete(SkillEntity value){
+    print("Selected value ${value.name}");
   }
 
 

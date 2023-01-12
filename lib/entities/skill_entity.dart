@@ -1,17 +1,18 @@
-class SkillEntity {
+import 'package:winteam/utils/superclasses_and_mixins/autocomplete_element.dart';
+
+class SkillEntity extends AutocompleteElement{
   String? id;
-  String? name;
-  String? imageLink;
+
   String? hexColorText;
   String? hexColorBackground;
 
   SkillEntity({
     this.id,
-    this.name,
-    this.imageLink,
     this.hexColorText,
     this.hexColorBackground,
-  });
+    name = "",
+    imageLink = "",
+  }) : super(name: name, imageLink: imageLink);
 
   factory SkillEntity.fromJson(Map<String, dynamic> json) => SkillEntity(
         id: json["id"] ?? "",
@@ -28,4 +29,9 @@ class SkillEntity {
         "hexColorText": hexColorText,
         "hexColorBackground": hexColorBackground
       };
+
+  @override
+  String toString() {
+    return name ?? "";
+  }
 }

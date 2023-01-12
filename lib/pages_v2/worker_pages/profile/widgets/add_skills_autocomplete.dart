@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:winteam/constants/language.dart';
 import 'package:winteam/entities/skill_entity.dart';
 import 'package:winteam/pages_v2/worker_pages/profile/data/mansione.dart';
+import 'package:winteam/utils/image_constant.dart';
 import 'package:winteam/utils/size_utils.dart';
+import 'package:winteam/widgets_v2/autocomplete.dart';
 import 'package:winteam/widgets_v2/custom_image_view.dart';
 import 'package:winteam/widgets_v2/inputs_v2.dart';
 
@@ -20,7 +22,34 @@ class AddSkillsAutocomplete extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Autocomplete<SkillEntity>(
+    return W1NAutocomplete(
+      customFilter:(TextEditingValue textEditingValue) {
+        if (textEditingValue.text == '') {
+          return _kOptions;
+        }
+        return _kOptions.where((SkillEntity option) {
+          return option.name.toLowerCase().contains(
+            textEditingValue.text.toLowerCase(),
+          );
+        });
+      },
+      filterController: skillsController,
+      optionSelected: (){},
+      icon: true,
+      hintText: SEARCH_SKILL,
+      fontSize: 18,
+      fontHintSize: 18,
+      paddingRight: 0,
+      paddingLeft: 0,
+      paddingBottom: 0,
+      paddingTop: 0,
+      elevation: 5,
+      contentPaddingTop: 40,
+      prefixIcon: ImageConstant.imgSearch,
+    );
+
+
+      /*Autocomplete<SkillEntity>(
         optionsBuilder: (TextEditingValue textEditingValue) {
           if (textEditingValue.text == '') {
             return _kOptions;
@@ -88,6 +117,6 @@ class AddSkillsAutocomplete extends StatelessWidget {
                   paddingTop: 0,
                   elevation: 5,
                   contentPaddingTop: 40,
-                )));
+                ))); */
   }
 }

@@ -5,6 +5,7 @@ import 'package:winteam/entities/skill_entity.dart';
 import 'package:winteam/pages_v2/worker_pages/profile/data/mansione.dart';
 import 'package:winteam/utils/image_constant.dart';
 import 'package:winteam/utils/size_utils.dart';
+import 'package:winteam/widgets_v2/autocomplete.dart';
 import 'package:winteam/widgets_v2/custom_image_view.dart';
 import 'package:winteam/widgets_v2/inputs_v2.dart';
 
@@ -13,7 +14,8 @@ class AdsAutocomplete extends StatelessWidget {
   final double topColorHeight; // 110
   final double paddingBottom;
   final TextEditingController filterController;
-
+  final Function optionSelected;
+  final FocusNode focusNode = FocusNode();
 
 
   final List<SkillEntity> _kOptions = [
@@ -26,6 +28,7 @@ class AdsAutocomplete extends StatelessWidget {
     Key? key,
     this.topColorHeight = 110,
     required this.filterController,
+    required this.optionSelected,
     this.paddingBottom = 0,
   }) : super(key: key);
 
@@ -51,23 +54,43 @@ class AdsAutocomplete extends StatelessWidget {
                         topColorHeight,
                       ),
                       width: size.width,
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                         color: background,
                       ),
                     ),
                   ),
                 Padding(
                   padding: getPadding(top: 25),
-                  child: Autocomplete<SkillEntity>(
+                  child:
+                  W1NAutocomplete(
+                    customFilter:(TextEditingValue textEditingValue) {
+                      if (textEditingValue.text == '') {
+                        return const Iterable<SkillEntity>.empty();
+                      }
+                      return _kOptions.where((SkillEntity option) => option.name!.toLowerCase().contains(textEditingValue.text.toLowerCase()));
+                    },
+                    filterController: filterController,
+                    optionSelected: (){},
+                    icon: true,
+                    hintText: ADS_AUTOCOMPLETE,
+                    prefixIcon: ImageConstant.imgSearch,
+                  ),
+
+                  /*RawAutocomplete<SkillEntity>(
                       optionsBuilder: (TextEditingValue textEditingValue) {
                         if (textEditingValue.text == '') {
                           return const Iterable<SkillEntity>.empty();
                         }
                         return _kOptions.where((SkillEntity option) => option.name!.toLowerCase().contains(textEditingValue.text.toLowerCase()));
                       },
+                      textEditingController: filterController,
+                      focusNode: focusNode,
                       onSelected: (SkillEntity selection) {
-                        Navigator.pop(context);
-                        debugPrint('You just selected $selection');
+                        // Qui è il problema del crush on selected
+                        //Navigator.pop(context);
+                        //debugPrint('You just selected $selection');
+                        // Per il momento ci basta pulire la barra di ricerca
+                        //filterController.text = '';
                       },
                       optionsViewBuilder: (context, onSelected, options) => Align(
                         alignment: Alignment.topCenter,
@@ -85,7 +108,10 @@ class AdsAutocomplete extends StatelessWidget {
                               itemBuilder: (BuildContext context, int index) {
                                 final SkillEntity option = options.elementAt(index);
                                 return InkWell(
-                                  onTap: () => onSelected(option),
+                                  onTap: () {
+                                    optionSelected(option);
+                                    onSelected(option);
+                                  },
                                   child: Padding(
                                     padding: const EdgeInsets.all(16.0),
                                     child: Row(
@@ -107,7 +133,7 @@ class AdsAutocomplete extends StatelessWidget {
                           ),
                         ),
                       ),
-                      fieldViewBuilder: ((context, filterController, focusNode, onFieldSubmitted) =>
+                      fieldViewBuilder: ((context, thatFilterController, focusNode, onFieldSubmitted) =>
                           InputsV2Widget(
                             focusNode: focusNode,
                             hinttext: ADS_AUTOCOMPLETE,
@@ -124,7 +150,7 @@ class AdsAutocomplete extends StatelessWidget {
                             isPrefixIcon: true,
                             prefixIcon: ImageConstant.imgSearch
                           ))
-                  ),
+                  ), */
                 )
                 ])
             )

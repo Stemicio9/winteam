@@ -4,6 +4,7 @@ import 'package:winteam/pages_v2/worker_pages/profile/data/mansione.dart';
 import 'package:winteam/theme/app_style.dart';
 import 'package:winteam/utils/image_constant.dart';
 import 'package:winteam/utils/size_utils.dart';
+import 'package:winteam/widgets_v2/autocomplete.dart';
 import 'package:winteam/widgets_v2/custom_image_view.dart';
 import 'package:winteam/widgets_v2/inputs_v2.dart';
 
@@ -20,10 +21,10 @@ class CreateAdsSkill extends StatelessWidget {
   final dynamic skillValidator;
 
   static final List<Mansione> _kOptions = [
-    const Mansione(icon: 'assets/images/PizzaIcon.svg', text: 'Pizzaiolo'),
-    const Mansione(icon: 'assets/images/PizzaIcon.svg', text: 'Barman'),
-    const Mansione(icon: 'assets/images/PizzaIcon.svg', text: 'Cameriere'),
-    const Mansione(icon: 'assets/images/PizzaIcon.svg', text: 'Promoter'),
+     Mansione(icon: 'assets/images/PizzaIcon.svg', text: 'Pizzaiolo'),
+     Mansione(icon: 'assets/images/PizzaIcon.svg', text: 'Barman'),
+     Mansione(icon: 'assets/images/PizzaIcon.svg', text: 'Cameriere'),
+     Mansione(icon: 'assets/images/PizzaIcon.svg', text: 'Promoter'),
   ];
 
   CreateAdsSkill({
@@ -53,7 +54,34 @@ class CreateAdsSkill extends StatelessWidget {
           ),
           Padding(
             padding: getPadding(top: 10, bottom: 10),
-            child: Autocomplete<Mansione>(
+            child:
+            W1NAutocomplete(
+              customFilter: (TextEditingValue textEditingValue) {
+                if (textEditingValue.text == '') {
+                  return const Iterable<Mansione>.empty();
+                }
+                return _kOptions.where((Mansione option) {
+                  return option.text
+                      .toLowerCase()
+                      .contains(textEditingValue.text.toLowerCase());
+                });
+              },
+              filterController: skillController,
+              optionSelected: (){},
+              icon: false,
+              hintText: SEARCH_SKILL,
+              paddingRight: 0,
+              paddingLeft: 0,
+              paddingBottom: 0,
+              borderRadius: 5,
+              paddingTop: 0,
+              elevation: 5,
+              contentPaddingTop: 30,
+              prefixIcon: 'assets/images/SearchIcon.svg',
+              svgPath: ImageConstant.imgBag,
+            ),
+
+            /*Autocomplete<Mansione>(
                 optionsBuilder: (TextEditingValue textEditingValue) {
                   if (textEditingValue.text == '') {
                     return const Iterable<Mansione>.empty();
@@ -64,10 +92,7 @@ class CreateAdsSkill extends StatelessWidget {
                         .contains(textEditingValue.text.toLowerCase());
                   });
                 },
-                onSelected: (Mansione selection) {
-                  Navigator.pop(context);
-                  debugPrint('You just selected $selection');
-                },
+
                 optionsViewBuilder: (context, onSelected, options) => Align(
                       alignment: Alignment.topCenter,
                       child: Material(
@@ -110,7 +135,7 @@ class CreateAdsSkill extends StatelessWidget {
                             contentPaddingTop: 30,
                             isPrefixIcon: true,
                             svgPath: ImageConstant.imgBag,
-                        ))),
+                        ))),*/
           ),
         ],
       ),

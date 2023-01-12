@@ -15,7 +15,6 @@ import 'package:winteam/pages_v2/worker_pages/profile/widgets/profile_header_edi
 import 'package:winteam/pages_v2/worker_pages/profile/widgets/profile_info_edit.dart';
 import 'package:winteam/pages_v2/worker_pages/profile/widgets/profile_skills_edit.dart';
 import 'package:winteam/pages_v2/worker_pages/profile/widgets/save_button.dart';
-import 'package:winteam/utils/image_constant.dart';
 
 
 class WorkerProfileEditV2 extends StatefulWidget {

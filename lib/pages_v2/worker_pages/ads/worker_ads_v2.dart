@@ -34,7 +34,7 @@ class WorkerAdsV2State extends State<WorkerAdsV2> {
                 padding: getPadding(bottom: 35),
                 child: Column(
                   children: [
-                    AdsAutocomplete(filterController: filterController),
+                    AdsAutocomplete(filterController: filterController,  optionSelected: onSelectedAutocomplete,),
                     AdsHeader(
                       onTap: () {
                         Navigator.pushNamed(context, RouteConstants.adsFilter);
@@ -57,6 +57,11 @@ class WorkerAdsV2State extends State<WorkerAdsV2> {
                   ],
                 ))));
   }
+
+  void onSelectedAutocomplete(value){
+    print("Selected value ${value.name}");
+  }
+
 
   List<AnnunciEntity> dummyAnnunci() {
     List<AnnunciEntity> result = List.empty(growable: true);
