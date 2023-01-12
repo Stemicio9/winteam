@@ -17,15 +17,11 @@ class AdsDetailSkill extends StatelessWidget {
   final double textPadding; // 10
   final double dividerPadding; // 20
 
-
   final String skillName;
   final String price;
   final String message;
   final String state;
   final bool isVisible;
-
-
-
 
   AdsDetailSkill({
     required this.skillIcon,
@@ -43,7 +39,6 @@ class AdsDetailSkill extends StatelessWidget {
     this.state = '',
     this.message = '',
     this.isVisible = false,
-
   });
 
   @override
@@ -52,7 +47,7 @@ class AdsDetailSkill extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Padding(
-          padding:getPadding(top: columnPadding),
+          padding: getPadding(top: columnPadding),
           child: CustomImageView(
             svgPath: skillIcon,
             height: getSize(
@@ -63,77 +58,68 @@ class AdsDetailSkill extends StatelessWidget {
             ),
           ),
         ),
-
         Padding(
-          padding:getPadding(top: textPadding),
+          padding: getPadding(top: textPadding),
           child: Text(
             skillName,
             style: AppStyle.txtMontserratBold28,
           ),
         ),
-
-
         Padding(
-          padding:getPadding(top: textPadding),
+          padding: getPadding(top: textPadding),
           child: Chip(
-            padding: getPadding(
-                left: chipsPaddingLeft,
-                right: chipsPaddingRight,
-                top: chipsPaddingTop,
-                bottom: chipsPaddingBottom
-            ),
-            backgroundColor: green,
+              padding: getPadding(
+                  left: chipsPaddingLeft,
+                  right: chipsPaddingRight,
+                  top: chipsPaddingTop,
+                  bottom: chipsPaddingBottom),
+              backgroundColor: green,
               label: Text(
                 '$price €',
                 style: AppStyle.txtMontserratBold22White,
-              )
-          ),
+              )),
         ),
-
-
-      isVisible ? Padding(
-            padding: getPadding(top: 20),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                message,
-                style: AppStyle.txtMontserratRegular20,
-              ),
-              Text(
-                state,
-                style: AppStyle.txtMontserratBold20
-              ),
-
-
-              Padding(
-                padding:getPadding(left: 8),
-                child: Material(
-                    elevation: 4,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10)),
-                    child: Container(
-                      width: 17,
-                      height: 17,
-                      decoration: BoxDecoration(
-                        color: lightGreen,
-                        borderRadius: BorderRadius.circular(10),
+        isVisible
+            ? Padding(
+                padding: getPadding(top: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    RichText(
+                      text: TextSpan(
+                        text: message,
+                        style: AppStyle.txtMontserratRegular20,
+                        children: <TextSpan>[
+                          TextSpan(
+                            text: state,
+                            style: AppStyle.txtMontserratBold20,
+                          ),
+                        ],
                       ),
-                    )),
-              ),
-            ],
-          ),
-        ) : Container(),
-
-
-
-
+                    ),
+                    Padding(
+                      padding: getPadding(left: 8),
+                      child: Material(
+                          elevation: 4,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10)),
+                          child: Container(
+                            width: 17,
+                            height: 17,
+                            decoration: BoxDecoration(
+                              color: lightGreen,
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                          )),
+                    ),
+                  ],
+                ),
+              )
+            : Container(),
         Padding(
           padding: getPadding(top: dividerPadding),
           child: DividerV2(),
         ),
-
-
       ],
     );
   }

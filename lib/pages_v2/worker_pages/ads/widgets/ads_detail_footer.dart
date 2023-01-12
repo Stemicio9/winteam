@@ -52,16 +52,20 @@ class AdsDetailFooter extends StatelessWidget {
                         ),
                       ),
                     ),
-                    Text(
-                      candidates == "1" ? CANDIDATE : CANDIDATES,
-                      style: AppStyle.txtMontserratRegular20,
-                    ),
-                    Text(
-                      candidates == "1"
-                          ? ' $candidates $PERSON'
-                          : ' $candidates $PEOPLE',
-                      style: AppStyle.txtMontserratBold20,
-                    ),
+
+                    RichText(
+                      text: TextSpan(
+                        text: candidates == "1" ? CANDIDATE : CANDIDATES,
+                        style: AppStyle.txtMontserratRegular20,
+                        children: <TextSpan>[
+                          TextSpan(
+                              text: candidates == "1" ? ' $candidates $PERSON' : ' $candidates $PEOPLE',
+                              style: AppStyle.txtMontserratBold20,
+                          ),
+                        ],
+                      ),
+                    )
+
                   ],
                 ),
               )

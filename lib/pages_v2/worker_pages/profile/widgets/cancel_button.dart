@@ -14,7 +14,7 @@ class CancelButton extends StatelessWidget{
 
   const CancelButton({
     Key? key,
-    this.paddingTop = 55,
+    this.paddingTop = 20,
     this.paddingLeft = 35,
     this.paddingRight = 35,
     this.maxWidth = 330,

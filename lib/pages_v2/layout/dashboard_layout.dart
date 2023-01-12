@@ -104,14 +104,17 @@ class DashboardLayoutState extends State<DashboardLayout>
 
   @override
   Widget build(BuildContext context) {
-    return W1nScaffold(
-      body: PageView(
-          controller: _pageController,
-          physics: const NeverScrollableScrollPhysics(),
-          children: widget.pages),
-      bottomNavigationBar: widget.datore
-          ? bottomNavigationDatore()
-          : bottomNavigationLavoratore(),
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: W1nScaffold(
+        body: PageView(
+            controller: _pageController,
+            physics: const NeverScrollableScrollPhysics(),
+            children: widget.pages),
+        bottomNavigationBar: widget.datore
+            ? bottomNavigationDatore()
+            : bottomNavigationLavoratore(),
+      ),
     );
   }
 

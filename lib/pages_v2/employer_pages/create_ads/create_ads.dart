@@ -27,7 +27,7 @@ class CreateAds extends StatefulWidget{
 
 class CreateAdsState extends State<CreateAds>{
 
-  final TextEditingController skillController = TextEditingController();
+  final TextEditingController filterController = TextEditingController();
   final TextEditingController priceController = TextEditingController();
   final TextEditingController positionController = TextEditingController();
   final TextEditingController fromDateController = TextEditingController();
@@ -53,7 +53,7 @@ class CreateAdsState extends State<CreateAds>{
 
               children: [
                 CreateAdsSkill(
-                  skillController: skillController,
+                  filterController: filterController,
                   optionSelected: onSelectedAutocomplete,
 
 

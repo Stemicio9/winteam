@@ -65,7 +65,7 @@ class WorkerProfileEditV2State extends State<WorkerProfileEditV2> {
 
 
     return W1nScaffold(
-        appBar: 2,
+        appBar: 1,
         title: PROFILE,
         body: SingleChildScrollView(
             child: Padding(
@@ -119,7 +119,9 @@ class WorkerProfileEditV2State extends State<WorkerProfileEditV2> {
                           emailValidator: validateIsEmail,
                         ),
 
-                       SaveButton(onTap: formSubmit),
+                       SaveButton(
+                         onTap: formSubmit,
+                       ),
                        CancelButton(onTap: (){Navigator.pop(context);})
                       ],
                     )

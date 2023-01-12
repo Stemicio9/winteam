@@ -81,12 +81,13 @@ class EmployerProfileV2EditState extends State<EmployerProfileEditV2> {
                     positionController: positionTextController,
                     emailValidator: validateIsEmail,
                   ),
+                  SaveButton(
+                    onTap: formSubmit,
+                  ),
                   CancelButton(onTap: () {
                     Navigator.pop(context);
                   }),
-                  SaveButton(
-                    onTap: formSubmit,
-                  )
+
                 ],
               ),
             ),

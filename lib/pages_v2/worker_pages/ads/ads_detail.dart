@@ -23,7 +23,7 @@ class AdsDetail extends StatefulWidget {
 }
 
 class AdsDetailState extends State<AdsDetail> {
-  final candidates = '23';
+  final candidates = '0';
   final message = 'Valutazione: 4/5';
   final rating = 4.00;
   final pizzaiolo = 'Pizzaiolo';

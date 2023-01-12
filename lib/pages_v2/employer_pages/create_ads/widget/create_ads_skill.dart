@@ -4,7 +4,6 @@ import 'package:winteam/entities/skill_entity.dart';
 import 'package:winteam/theme/app_style.dart';
 import 'package:winteam/utils/image_constant.dart';
 import 'package:winteam/utils/size_utils.dart';
-import 'package:winteam/widgets_v2/autocomplete.dart';
 import 'package:winteam/widgets_v2/inputs_v2.dart';
 
 
@@ -12,7 +11,7 @@ class CreateAdsSkill extends StatelessWidget {
   final double paddingLeft; //20
   final double paddingRight; //20
   final double paddingTop; //40
-  final TextEditingController skillController;
+  final TextEditingController filterController;
   final Function optionSelected;
 
 
@@ -29,7 +28,7 @@ class CreateAdsSkill extends StatelessWidget {
     this.paddingTop = 40,
     this.paddingLeft = 20,
     this.paddingRight = 20,
-    required this.skillController,
+    required this.filterController,
     this.skillValidator,
     required this.optionSelected
   }) : super(key: key);
@@ -61,7 +60,7 @@ class CreateAdsSkill extends StatelessWidget {
                 return _kOptions.where((SkillEntity option) => option.name.toLowerCase().contains(textEditingValue.text.toLowerCase()));
               },
 
-              filterController: skillController,
+              filterController: filterController,
               optionSelected: (){},
               icon: false,
               hintText: SEARCH_SKILL,
@@ -93,7 +92,7 @@ class CreateAdsSkill extends StatelessWidget {
                           borderRadius: BorderRadius.vertical(
                               bottom: Radius.circular(4.0)),
                         ),
-                        child: Container(
+                        child: SizedBox(
                           height: 52.0 * options.length,
                           child: ListView.builder(
                             padding: EdgeInsets.zero,

@@ -24,6 +24,7 @@ class CandidatesListDialog extends StatelessWidget {
             cardTitle: NOTICE,
             child: Column(
               children: [
+
                 Text(
                   'Una volta effettuata la scelta, questa non sarà più revocabile.',
                   style: AppStyle.txtMontserratRegular20,
@@ -37,14 +38,8 @@ class CandidatesListDialog extends StatelessWidget {
               ],
             ),
           ),
-          CancelButton(
-              paddingLeft: 0,
-              paddingRight: 0,
-              maxWidth: MediaQuery.of(context).size.width,
-              onTap: cancelOnTap
-          ),
           Padding(
-            padding: getPadding(top: 20),
+            padding: getPadding(top: 55),
             child: ActionButtonV2(
                 action: confirmOnTap,
                 text: CONFIRM,
@@ -52,7 +47,15 @@ class CandidatesListDialog extends StatelessWidget {
                 maxWidth: MediaQuery.of(context).size.width,
                 textColor: white
             ),
-          )
+          ),
+
+          CancelButton(
+              paddingLeft: 0,
+              paddingRight: 0,
+              maxWidth: MediaQuery.of(context).size.width,
+              onTap: cancelOnTap
+          ),
+
         ],
       ),
     );

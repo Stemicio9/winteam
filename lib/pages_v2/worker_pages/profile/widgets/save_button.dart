@@ -12,7 +12,7 @@ class SaveButton extends StatelessWidget {
 
   const SaveButton({
     Key? key,
-    this.paddingTop = 20,
+    this.paddingTop = 55,
     this.paddingLeft = 35,
     this.paddingRight = 35,
     required this.onTap,

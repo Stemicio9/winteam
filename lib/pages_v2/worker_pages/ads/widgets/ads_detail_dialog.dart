@@ -54,7 +54,7 @@ class AdsDetailDialog extends StatelessWidget {
           !isApplicantDialog
               ? Container()
               : Padding(
-                  padding: getPadding(top: 30),
+                  padding: getPadding(top: 55),
                   child: ActionButtonV2(
                       action: confirmOnTap,
                       text: CONFIRM,

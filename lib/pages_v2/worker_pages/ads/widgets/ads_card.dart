@@ -272,7 +272,7 @@ class AdsCard extends StatelessWidget {
                             padding: getPadding(left: 10),
                             child: Text(
                               '${annunciEntity.payment} €',
-                              style: AppStyle.txtMontserratRegular16,
+                              style: AppStyle.txtMontserratBold20,
                             ),
                           )
                         ],
