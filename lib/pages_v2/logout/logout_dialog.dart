@@ -33,7 +33,7 @@ class LogoutDialog extends StatelessWidget {
             ),
           ),
           Padding(
-              padding: getPadding(top: 20),
+              padding: getPadding(top: 55),
               child: ActionButtonV2(
                   action: confirmOnTap,
                   text: CONFIRM,
@@ -42,6 +42,7 @@ class LogoutDialog extends StatelessWidget {
                   textColor: white)
           ),
           CancelButton(
+              paddingTop: 20,
               paddingLeft: 0,
               paddingRight: 0,
               maxWidth: MediaQuery.of(context).size.width,

@@ -1,30 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:winteam/constants/language.dart';
-import 'package:winteam/pages_v2/worker_pages/profile/data/mansione.dart';
+import 'package:winteam/entities/skill_entity.dart';
 import 'package:winteam/theme/app_style.dart';
 import 'package:winteam/utils/image_constant.dart';
 import 'package:winteam/utils/size_utils.dart';
 import 'package:winteam/widgets_v2/autocomplete.dart';
-import 'package:winteam/widgets_v2/custom_image_view.dart';
 import 'package:winteam/widgets_v2/inputs_v2.dart';
+
 
 class CreateAdsSkill extends StatelessWidget {
   final double paddingLeft; //20
   final double paddingRight; //20
   final double paddingTop; //40
-
-  final double customImageViewHeight; //26
-  final double customImageViewWidth; //26
-
   final TextEditingController skillController;
+  final Function optionSelected;
+
 
   final dynamic skillValidator;
 
-  static final List<Mansione> _kOptions = [
-     Mansione(icon: 'assets/images/PizzaIcon.svg', text: 'Pizzaiolo'),
-     Mansione(icon: 'assets/images/PizzaIcon.svg', text: 'Barman'),
-     Mansione(icon: 'assets/images/PizzaIcon.svg', text: 'Cameriere'),
-     Mansione(icon: 'assets/images/PizzaIcon.svg', text: 'Promoter'),
+
+  final List<SkillEntity> _kOptions = [
+    SkillEntity(id: '1', name: 'Carpenter', imageLink: 'assets/images/PizzaIcon.svg'),
+    SkillEntity(id: '2', name: 'Electrician', imageLink: 'assets/images/PizzaIcon.svg')
   ];
 
   CreateAdsSkill({
@@ -32,10 +29,9 @@ class CreateAdsSkill extends StatelessWidget {
     this.paddingTop = 40,
     this.paddingLeft = 20,
     this.paddingRight = 20,
-    this.customImageViewHeight = 26,
-    this.customImageViewWidth = 26,
     required this.skillController,
     this.skillValidator,
+    required this.optionSelected
   }) : super(key: key);
 
   @override
@@ -55,17 +51,16 @@ class CreateAdsSkill extends StatelessWidget {
           Padding(
             padding: getPadding(top: 10, bottom: 10),
             child:
-            W1NAutocomplete(
+          /*  W1NAutocomplete(
               customFilter: (TextEditingValue textEditingValue) {
+                print("RICERCO ");
+                print(textEditingValue.text);
                 if (textEditingValue.text == '') {
-                  return const Iterable<Mansione>.empty();
+                  return _kOptions;
                 }
-                return _kOptions.where((Mansione option) {
-                  return option.text
-                      .toLowerCase()
-                      .contains(textEditingValue.text.toLowerCase());
-                });
+                return _kOptions.where((SkillEntity option) => option.name.toLowerCase().contains(textEditingValue.text.toLowerCase()));
               },
+
               filterController: skillController,
               optionSelected: (){},
               icon: false,
@@ -77,21 +72,19 @@ class CreateAdsSkill extends StatelessWidget {
               paddingTop: 0,
               elevation: 5,
               contentPaddingTop: 30,
-              prefixIcon: 'assets/images/SearchIcon.svg',
               svgPath: ImageConstant.imgBag,
-            ),
 
-            /*Autocomplete<Mansione>(
+            ), */
+
+            Autocomplete<SkillEntity>(
                 optionsBuilder: (TextEditingValue textEditingValue) {
                   if (textEditingValue.text == '') {
-                    return const Iterable<Mansione>.empty();
+                    return _kOptions;
                   }
-                  return _kOptions.where((Mansione option) {
-                    return option.text
-                        .toLowerCase()
-                        .contains(textEditingValue.text.toLowerCase());
-                  });
+                  return _kOptions.where((SkillEntity option) => option.name.toLowerCase().contains(textEditingValue.text.toLowerCase()));
+
                 },
+
 
                 optionsViewBuilder: (context, onSelected, options) => Align(
                       alignment: Alignment.topCenter,
@@ -107,12 +100,12 @@ class CreateAdsSkill extends StatelessWidget {
                             itemCount: options.length,
                             shrinkWrap: false,
                             itemBuilder: (BuildContext context, int index) {
-                              final Mansione option = options.elementAt(index);
+                              final SkillEntity option = options.elementAt(index);
                               return InkWell(
                                 onTap: () => onSelected(option),
                                 child: Padding(
                                   padding: const EdgeInsets.all(16.0),
-                                  child: Text(option.text),
+                                  child: Text(option.name),
                                 ),
                               );
                             },
@@ -135,7 +128,7 @@ class CreateAdsSkill extends StatelessWidget {
                             contentPaddingTop: 30,
                             isPrefixIcon: true,
                             svgPath: ImageConstant.imgBag,
-                        ))),*/
+                        ))),
           ),
         ],
       ),

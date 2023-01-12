@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:winteam/constants/colors.dart';
 import 'package:winteam/constants/language.dart';
+import 'package:winteam/constants/route_constants.dart';
+import 'package:winteam/entities/skill_entity.dart';
 import 'package:winteam/pages_v2/W1n_scaffold.dart';
+import 'package:winteam/pages_v2/employer_pages/create_ads/widget/ads_published_dialog.dart';
 import 'package:winteam/pages_v2/employer_pages/create_ads/widget/create_ads_date.dart';
 import 'package:winteam/pages_v2/employer_pages/create_ads/widget/create_ads_description.dart';
 import 'package:winteam/pages_v2/employer_pages/create_ads/widget/create_ads_chips.dart';
@@ -50,6 +54,9 @@ class CreateAdsState extends State<CreateAds>{
               children: [
                 CreateAdsSkill(
                   skillController: skillController,
+                  optionSelected: onSelectedAutocomplete,
+
+
 
                 ),
 
@@ -102,7 +109,14 @@ class CreateAdsState extends State<CreateAds>{
                 ),
 
                 PublishButton(
-                    onTap: (){}
+                    onTap: (){
+                      showDialog(
+                          context: context,
+                          barrierColor: blackDialog,
+                          builder: (ctx) => AdsPublishedDialog(
+                            onTap: (){Navigator.pushNamed(context, RouteConstants.dashboard);},
+                          ));
+                    }
                 )
               ],
             ),
@@ -112,6 +126,11 @@ class CreateAdsState extends State<CreateAds>{
     );
   }
 
+
+
+  void onSelectedAutocomplete(SkillEntity value){
+    print("Selected value ${value.name}");
+  }
 
   void selectElement(int index, bool value) {
     indexes = [false, false, false, false];

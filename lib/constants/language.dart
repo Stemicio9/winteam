@@ -83,6 +83,9 @@ const String VIEW_PROFILE = "Visualizza profilo";
 const String CANDIDATES_LIST = "Lista candidati";
 const String VIEW = "Visualizza";
 const String CHOOSE = "Scegli!";
+const String VIEW_AD = "Visualizza annuncio";
+const String VIEW_ADS = "Visualizza annunci";
+
 
 
 //Pagine bottombar
@@ -223,6 +226,8 @@ final Map<String, String> LANG_IT = {
   CANCEL_APPLICATION:"Annulla candidatura",
   VIEW_APPLIES:"Visualizza candidati",
   NOTICE:"Avviso",
+  VIEW_AD:"Visualizza annuncio",
+  VIEW_ADS:"Visualizza annunci",
 
   "": "",
   "": "",

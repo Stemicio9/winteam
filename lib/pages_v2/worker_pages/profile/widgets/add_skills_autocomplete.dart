@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:winteam/constants/language.dart';
 import 'package:winteam/entities/skill_entity.dart';
-import 'package:winteam/pages_v2/worker_pages/profile/data/mansione.dart';
 import 'package:winteam/utils/image_constant.dart';
-import 'package:winteam/utils/size_utils.dart';
 import 'package:winteam/widgets_v2/autocomplete.dart';
-import 'package:winteam/widgets_v2/custom_image_view.dart';
-import 'package:winteam/widgets_v2/inputs_v2.dart';
 
 class AddSkillsAutocomplete extends StatelessWidget {
   final List<SkillEntity> _kOptions = [
@@ -40,6 +36,7 @@ class AddSkillsAutocomplete extends StatelessWidget {
       fontSize: 18,
       fontHintSize: 18,
       paddingRight: 0,
+      borderRadius: 5,
       paddingLeft: 0,
       paddingBottom: 0,
       paddingTop: 0,

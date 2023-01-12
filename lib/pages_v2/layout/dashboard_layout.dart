@@ -46,15 +46,7 @@ class DashboardWidgetState extends State<DashboardWidget> {
                   : LavoratoreLayout();
             });
 
-            if (state.user.roleId == getCurrentLanguageValue(USER_DATORE)) {
-              return DatoreLayout();
-            } else if (state.user.roleId ==
-                getCurrentLanguageValue(USER_LAVORATORE)) {
-              return LavoratoreLayout();
-            } else {
-              // TODO HERE INSERT THAT USER IS NEITHER DATORE OR LAVORATORE
-              return Container();
-            }
+
           } else if (state is UserLoading) {
             return const Center(child: CircularProgressIndicator());
           } else {
@@ -89,8 +81,8 @@ class DashboardLayout extends StatefulWidget {
 
 class DashboardLayoutState extends State<DashboardLayout>
     with SingleTickerProviderStateMixin {
-  final _pageController = PageController(initialPage: 1);
-  int _tabIndex = 1;
+  final _pageController = PageController(initialPage: 0);
+  int _tabIndex = 0;
 
   int get tabIndex => _tabIndex;
 

@@ -46,8 +46,6 @@ class SearchWorkersState extends State<SearchWorkers> {
                   'isVisible':'false',
                   });
 
-
-
                    /* showDialog(
                         context: context,
                         barrierColor: blackDialog,

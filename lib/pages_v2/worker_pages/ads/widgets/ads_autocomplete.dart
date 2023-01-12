@@ -15,7 +15,6 @@ class AdsAutocomplete extends StatelessWidget {
   final double paddingBottom;
   final TextEditingController filterController;
   final Function optionSelected;
-  final FocusNode focusNode = FocusNode();
 
 
   final List<SkillEntity> _kOptions = [
@@ -61,19 +60,25 @@ class AdsAutocomplete extends StatelessWidget {
                   ),
                 Padding(
                   padding: getPadding(top: 25),
-                  child:
-                  W1NAutocomplete(
+                  child: W1NAutocomplete(
                     customFilter:(TextEditingValue textEditingValue) {
                       if (textEditingValue.text == '') {
-                        return const Iterable<SkillEntity>.empty();
+                        return _kOptions;
                       }
-                      return _kOptions.where((SkillEntity option) => option.name!.toLowerCase().contains(textEditingValue.text.toLowerCase()));
+                      return _kOptions.where((SkillEntity option) => option.name.toLowerCase().contains(textEditingValue.text.toLowerCase()));
                     },
                     filterController: filterController,
                     optionSelected: (){},
                     icon: true,
                     hintText: ADS_AUTOCOMPLETE,
                     prefixIcon: ImageConstant.imgSearch,
+                    fontSize: 18,
+                    fontHintSize: 18,
+                    paddingRight: 18,
+                    paddingLeft: 18,
+                    contentPaddingTop: 30,
+
+
                   ),
 
                   /*RawAutocomplete<SkillEntity>(
