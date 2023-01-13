@@ -23,6 +23,7 @@ class UserEntity {
   DateTime? lastSubscriptionDate;
   List<String>? companyTypeId;
   bool? verified;
+  double? rating;
   List<String>? influencedUserList;
   bool? enabledAnnunci;
   String? companyName;
@@ -38,6 +39,7 @@ class UserEntity {
       this.availabilityHourSlots,
       this.availabilityCities,
       this.address,
+        this.rating,
       this.city,
       this.province,
       this.nation,
@@ -57,15 +59,17 @@ class UserEntity {
   //toString
   @override
   String toString() {
-    return 'UserEntity{id: $id, firstName: $firstName, lastName: $lastName, roleId: $roleId, email: $email, description: $description, brief: $brief, skillList: $skillList, availabilityDays: $availabilityDays, availabilityHourSlots: $availabilityHourSlots, availabilityCities: $availabilityCities, address: $address, city: $city, province: $province, nation: $nation, phoneNumber: $phoneNumber, imageLink: $imageLink, contatoreAnnunci: $contatoreAnnunci, subscriptionId: $subscriptionId, lastSubscriptionDate: $lastSubscriptionDate, companyTypeId: $companyTypeId, verified: $verified, influencedUserList: $influencedUserList, enabledAnnunci: $enabledAnnunci, companyName: $companyName}';
+    return 'UserEntity{id: $id, firstName: $firstName, lastName: $lastName, roleId: $roleId, email: $email, description: $description, brief: $brief, skillList: $skillList, availabilityDays: $availabilityDays, availabilityHourSlots: $availabilityHourSlots, availabilityCities: $availabilityCities, address: $address, city: $city, province: $province, nation: $nation, phoneNumber: $phoneNumber, imageLink: $imageLink, contatoreAnnunci: $contatoreAnnunci, subscriptionId: $subscriptionId, lastSubscriptionDate: $lastSubscriptionDate, companyTypeId: $companyTypeId, verified: $verified, influencedUserList: $influencedUserList, enabledAnnunci: $enabledAnnunci, companyName: $companyName, rating: $rating}';
   }
 
   factory UserEntity.fromJson(Map<String, dynamic> json) => UserEntity(
       id: json["id"] ?? "",
       firstName: json["firstName"] ?? "",
       lastName: json["lastName"] ?? "",
+      brief: json["brief"] ?? "",
       email: json["email"] ?? "",
       roleId: json["roleId"] ?? "",
+      rating: json["rating"] ?? 0.0,
       skillList: json["skillList"] != null
           ? (json["skillList"] as List<dynamic>)
               .map((e) =>
@@ -101,6 +105,7 @@ class UserEntity {
       DateTime? lastSubscriptionDate,
       List<String>? companyTypeId,
       bool? verified,
+      double? rating,
       List<String>? influencedUserList,
       bool? enabledAnnunci,
       String? companyName}) {
@@ -129,6 +134,7 @@ class UserEntity {
         verified: verified ?? this.verified,
         influencedUserList: influencedUserList ?? this.influencedUserList,
         enabledAnnunci: enabledAnnunci ?? this.enabledAnnunci,
+        rating: rating ?? this.rating,
         companyName: companyName ?? this.companyName);
   }
 
@@ -157,6 +163,7 @@ class UserEntity {
         "verified": verified,
         "influencedUserList": influencedUserList,
         "enabledAnnunci": enabledAnnunci,
-        "companyName": companyName
+        "companyName": companyName,
+        "rating": rating
       };
 }

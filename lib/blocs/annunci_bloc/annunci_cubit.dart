@@ -52,7 +52,8 @@ class AnnunciCubit extends Cubit<AnnunciState> {
     emit(AnnunciLoading());
     try {
       final queryParameters = filterAnnunciLavoratore.toFilter(page, size).toQueryParameters();
-      HttpResponse<dynamic> result = await annunciListApiService.getAnnunciPaged(queryParameters, filterAnnunciLavoratore.state!, page, size);
+
+      HttpResponse<dynamic> result = await annunciListApiService.getAnnunciPaged(queryParameters, filterAnnunciLavoratore.state ?? 'all', page, size);
 
       print("LA RISPOSTA ALLA REST ");
       print(result.response);

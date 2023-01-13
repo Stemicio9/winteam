@@ -57,8 +57,10 @@ class AnnunciUserListCubit extends Cubit<AnnunciUserListState> {
     emit(AnnunciUserListLoading());
     try{
       HttpResponse<dynamic> result = await annunciListApiService.candidate(advertisementId);
+      emit(AnnunciListReloadAll());
     }catch(e) {
-       print(e);
+      print(e.toString());
+      emit(AnnunciUserListError());
     }
   }
 

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:winteam/blocs/annunci_bloc/annunci_cubit.dart';
 import 'package:winteam/constants/colors.dart';
 import 'package:winteam/constants/language.dart';
+import 'package:winteam/constants/page_constants.dart';
 import 'package:winteam/constants/route_constants.dart';
 import 'package:winteam/entities/annunci_entity.dart';
 import 'package:winteam/pages_v2/W1n_scaffold.dart';
@@ -18,13 +21,23 @@ class WorkerAdsV2 extends StatefulWidget {
 }
 
 class WorkerAdsV2State extends State<WorkerAdsV2> {
+  AnnunciCubit get _cubit => context.read<AnnunciCubit>();
+
   final TextEditingController filterController = TextEditingController();
 
-  List<AnnunciEntity> annunci = List.empty(growable: true);
+  @override
+  void initState() {
+    super.initState();
+    inputData();
+  }
+
+  inputData() {
+    _cubit.fetchAnnunciLavoratore(
+        PageConstants.INIT_PAGE_NUMBER, PageConstants.PAGE_SIZE);
+  }
 
   @override
   Widget build(BuildContext context) {
-    annunci = dummyAnnunci();
     return W1nScaffold(
         appBar: 2,
         title: ADS,
@@ -34,50 +47,78 @@ class WorkerAdsV2State extends State<WorkerAdsV2> {
                 padding: getPadding(bottom: 35),
                 child: Column(
                   children: [
-                    AdsAutocomplete(filterController: filterController,  optionSelected: onSelectedAutocomplete,),
-                    AdsHeader(
-                      onTap: () {
-                        Navigator.pushNamed(context, RouteConstants.adsFilter);
+                    AdsAutocomplete(
+                      filterController: filterController,
+                      optionSelected: onSelectedAutocomplete,
+                    ),
+                    BlocBuilder<AnnunciCubit, AnnunciState>(
+                      builder: (context, state) {
+                        if (state is AnnunciLoading) {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        } else if (state is AnnunciLoaded) {
+                          return Column(
+                            children: [
+                              AdsHeader(
+                                offers: state.annunci.length,
+                                onTap: () {
+                                  Navigator.pushNamed(
+                                      context, RouteConstants.adsFilter);
+                                },
+                              ),
+                              ListView.builder(
+                                shrinkWrap: true,
+                                physics: const NeverScrollableScrollPhysics(),
+                                itemCount: state.annunci.length,
+                                itemBuilder: (context, index) {
+                                  return AdsCard(
+                                    goToProfile: () {
+                                      Navigator.of(context).pushNamed(
+                                          RouteConstants
+                                              .employerProfileOnlyView, arguments: {'company': state.annunci[index].publisherUserDTO});
+                                    },
+                                    onTap: () {
+
+                                      Navigator.of(context).pushNamed(RouteConstants.adsDetail, arguments: {
+                                        'annuncio': state.annunci[index]
+                                      });
+                                    },
+                                    isVisible: false,
+                                    annunciEntity: state.annunci[index],
+                                    skillIcon: null,
+                                  );
+                                },
+                              ),
+                            ],
+                          );
+                        } else if (state is AnnunciError) {
+                          return Container();
+                        } else {
+                          return Container();
+                        }
                       },
                     ),
-                    ...annunci.map(
-                      (e) => AdsCard(
-                        goToProfile: () {
-                          Navigator.pushNamed(
-                              context, RouteConstants.employerProfileOnlyView);
-                        },
-                        onTap: () {
-                          Navigator.pushNamed(
-                              context, RouteConstants.adsDetail);
-                        },
-                        isVisible: false,
-                        annunciEntity: e, skillIcon: null,
-                      ),
-                    )
+                    // ...annunci.map(
+                    //   (e) => AdsCard(
+                    //     goToProfile: () {
+                    //       Navigator.pushNamed(
+                    //           context, RouteConstants.employerProfileOnlyView);
+                    //     },
+                    //     onTap: () {
+                    //       Navigator.pushNamed(
+                    //           context, RouteConstants.adsDetail);
+                    //     },
+                    //     isVisible: false,
+                    //     annunciEntity: e, skillIcon: null,
+                    //   ),
+                    // )
                   ],
                 ))));
   }
 
-  void onSelectedAutocomplete(value){
+  void onSelectedAutocomplete(value) {
     print("Selected value ${value.name}");
   }
 
-
-  List<AnnunciEntity> dummyAnnunci() {
-    List<AnnunciEntity> result = List.empty(growable: true);
-    for (int i = 0; i < 5; i++) {
-      result.add(AnnunciEntity(
-          title: "Pizzaiolo",
-          description: 'Azienda srl',
-          position: 'Cosenza',
-          date: '24/12/2022',
-          payment: "70",
-          image: 'assets/images/img_pexelsphotoby.png',
-          advertisementStatus: 'active',
-          hourSlot: 'Mattina',
-          matchedUserId: '',
-          skillId: '', publisherUserId: '', candidateUserList: []));
-    }
-    return result;
-  }
 }

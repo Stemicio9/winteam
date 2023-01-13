@@ -1,8 +1,5 @@
-
-
-
-
 class AutocompleteElement {
+
   final String name;
   final String imageLink;
 

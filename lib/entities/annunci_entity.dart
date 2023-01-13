@@ -1,8 +1,8 @@
 import 'package:winteam/entities/skill_entity.dart';
+import 'package:winteam/entities/user_entity.dart';
 
 class AnnunciEntity {
   final String? id;
-  final String title;
   final String description;
   final String position;
   final String date;
@@ -12,14 +12,13 @@ class AnnunciEntity {
   final SkillEntity? skillDTO;
   final String payment;
   final String publisherUserId;
+  final UserEntity? publisherUserDTO;
   final List<dynamic> candidateUserList;
   final String matchedUserId;
   final String advertisementStatus;
 
   AnnunciEntity(
-      {
-        this.id,
-      required this.title,
+      {this.id,
       required this.description,
       required this.position,
       required this.date,
@@ -27,16 +26,21 @@ class AnnunciEntity {
       required this.hourSlot,
       required this.skillId,
       this.skillDTO,
+      this.publisherUserDTO,
       required this.payment,
-
       required this.publisherUserId,
       required this.candidateUserList,
       required this.matchedUserId,
       required this.advertisementStatus});
 
+  //write to String
+  @override
+  String toString() {
+    return 'AnnunciEntity{id: $id, description: $description, position: $position, date: $date, hourSlot: $hourSlot, image: $image, skillId: $skillId, skillDTO: $skillDTO, payment: $payment, publisherUserId: $publisherUserId, publisherUserDTO: $publisherUserDTO, candidateUserList: $candidateUserList, matchedUserId: $matchedUserId, advertisementStatus: $advertisementStatus}';
+  }
+
   factory AnnunciEntity.fromJson(Map<String, dynamic> json) => AnnunciEntity(
       id: json["id"] ?? "",
-      title: json["title"] ?? "",
       description: json["description"] ?? "",
       position: json["position"] ?? "",
       date: json["date"] ?? "",
@@ -48,13 +52,15 @@ class AnnunciEntity {
           : SkillEntity(),
       payment: json["payment"].toString() ?? "",
       publisherUserId: json["publisherUserId"] ?? "",
+      publisherUserDTO: json["publisherUserDTO"] != null
+          ? UserEntity.fromJson(json["publisherUserDTO"])
+          : UserEntity(),
       candidateUserList: json["candidateUserList"] ?? "",
       matchedUserId: json["matchedUserId"] ?? "",
       advertisementStatus: json["advertisementStatus"] ?? "");
 
   Map<String, dynamic> toJson() => {
         "id": id,
-        "title": title,
         "description": description,
         "position": position,
         "date": date,

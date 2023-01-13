@@ -192,7 +192,7 @@ class CardAnnuncioDatore extends StatelessWidget{
                             children:  [
                               Container(
                                 width: 150,
-                              child: Text(annuncio.title ?? "PER ORA COS",
+                                child: Text("TESTO DI PROVA",
                                 style:  TextStyle(color: azzurroscuro, fontSize: 16),
                                 overflow: TextOverflow.ellipsis,
                               ),

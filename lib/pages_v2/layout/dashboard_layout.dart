@@ -65,6 +65,9 @@ class DashboardLayout extends StatefulWidget {
   final int maxCount;
   final bool datore; // true = datore, false = lavoratore
 
+  //insert data to fill scaffold
+
+
   const DashboardLayout(
       {Key? key,
       required this.pages,

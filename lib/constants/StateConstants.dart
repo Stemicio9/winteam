@@ -57,7 +57,7 @@ class FilterAnnunciLavoratore {
   List<String>? fasceOrarie = [];
   DateTimeRange? dateRange = DateTimeRange(
       start: DateTime.now(),
-      end: DateTime.now().add(Duration(days: 5)));
+      end: DateTime.now().add(const Duration(days: 365)));
   String? state = 'all';
 
 

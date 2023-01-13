@@ -38,7 +38,7 @@ class AdsDetailFooter extends StatelessWidget {
         candidates != '0'
             ? Padding(
                 padding: getPadding(top: 30, right: 35, left: 35),
-                child: Row(
+                child: Wrap(
                   children: [
                     Padding(
                       padding: getPadding(right: 15),
@@ -88,6 +88,7 @@ class AdsDetailFooter extends StatelessWidget {
                   ),
                 ),
               ),
+        // In this point we are checking the NOT Employer section
         !isVisible
             ? !isApplicant
                 ? Padding(
@@ -109,6 +110,8 @@ class AdsDetailFooter extends StatelessWidget {
                         textColor: black),
                   )
             : Container(),
+
+        // In this point we are checking the Employer section
         candidates != '0'
             ? isVisible
                 ? Padding(
