@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:winteam/authentication/authentication_bloc.dart';
 import 'package:winteam/blocs/annunci_user_list/annunci_user_list_cubit.dart';
+import 'package:winteam/blocs/annuncio_detail.dart';
 import 'package:winteam/constants/colors.dart';
 import 'package:winteam/constants/language.dart';
 import 'package:winteam/constants/route_constants.dart';
@@ -14,6 +15,9 @@ import 'package:winteam/pages_v2/worker_pages/ads/widgets/ads_detail_info.dart';
 import 'package:winteam/pages_v2/worker_pages/ads/widgets/ads_detail_skill.dart';
 import 'package:winteam/utils/ad_status_utils.dart';
 import 'package:winteam/utils/size_utils.dart';
+
+
+// todo reorganize this page with cubits
 
 class AdsDetail extends StatefulWidget {
   final bool isEmployer;
@@ -29,6 +33,8 @@ class AdsDetail extends StatefulWidget {
 class AdsDetailState extends State<AdsDetail> {
   AnnunciUserListCubit get _annunciCubit =>
       context.read<AnnunciUserListCubit>();
+  AnnuncioDetailCubit get _annuncioDetailCubit =>
+      context.read<AnnuncioDetailCubit>();
   UserAuthCubit get _authCubit =>
       context.read<UserAuthCubit>();
 
@@ -42,11 +48,10 @@ class AdsDetailState extends State<AdsDetail> {
   String candidateNumber = '0';
   Color statusColor = Colors.transparent;
 
-  late AnnunciEntity annuncio;
+
 
   @override
   void initState() {
-
     super.initState();
   }
 
@@ -54,53 +59,72 @@ class AdsDetailState extends State<AdsDetail> {
   Widget build(BuildContext context) {
     final arguments = (ModalRoute.of(context)?.settings.arguments ??
         <String, dynamic>{}) as Map;
-    AnnunciEntity annuncio = arguments['annuncio'];
-    formatStatusLabel(annuncio);
-    _annunciCubit.listCandidati(annuncio);
-   return content(annuncio);
+    String id = arguments['annuncio'];
+    print("REFRESHO LA PAGINA CON ANNUNCIO ID $id");
+    _annuncioDetailCubit.getAnnuncioById(id);
+    _annunciCubit.listCandidati(id);
+   return content();
   }
 
 
-  Widget content(AnnunciEntity annuncio) {
+  Widget content() {
     return W1nScaffold(
         appBar: 1,
         title: ANNUNCIO,
-        body: SingleChildScrollView(
-            child: Padding(
-              padding: getPadding(bottom: 35),
-              child: Column(
-                children: [
-                  AdsDetailSkill(
-                    skillIcon: annuncio.skillDTO?.imageLink ?? '',
-                    skillName: annuncio.skillDTO?.name ?? 'TEST NAME',
-                    price: annuncio.payment,
-                    message: stateMessage,
-                    state: statusLabel,
-                    statusColor: statusColor,
-                    isVisible: widget.isEmployer,
-                  ),
-                  AdsDetailInfo(
-                    isVisible: !widget.isEmployer,
-                    message: message,
-                    onTap: () {
-                      Navigator.pushNamed(
-                          context, RouteConstants.employerProfileOnlyView,
-                          arguments: {'company': annuncio.publisherUserDTO});
-                    },
-                    image: image,
-                    subtitle: annuncio.publisherUserDTO?.companyName ?? '',
-                    position: annuncio.position,
-                    date: annuncio.date,
-                    hours: annuncio.hourSlot,
-                    rating: annuncio.publisherUserDTO?.rating ?? 0,
-                  ),
-                  AdsDetailDescription(
-                    description: annuncio.description,
-                  ),
-                  bottomButtonSection(annuncio)
-                ],
+        body: BlocBuilder<AnnuncioDetailCubit,AnnuncioDetailState>(
+          builder: (_,state) {
+
+            if (state is AnnuncioDetailLoading) {
+              return const CircularProgressIndicator();
+            }
+            else if (state is AnnuncioDetailLoaded) {
+              formatStatusLabel(state.annuncio);
+              return fullContent(state.annuncio);
+            } else {
+              return const Center(
+                child: Text("ERRORE NEL CARICAMENTO DELL'ANNUNCIO"),);
+            }
+          }
+        ));
+  }
+
+  Widget fullContent(AnnunciEntity annuncio){
+    return SingleChildScrollView(
+        child: Padding(
+          padding: getPadding(bottom: 35),
+          child: Column(
+            children: [
+              AdsDetailSkill(
+                skillIcon: annuncio.skillDTO?.imageLink ?? '',
+                skillName: annuncio.skillDTO?.name ?? 'TEST NAME',
+                price: annuncio.payment,
+                message: stateMessage,
+                state: statusLabel,
+                statusColor: statusColor,
+                isVisible: widget.isEmployer,
               ),
-            )));
+              AdsDetailInfo(
+                isVisible: !widget.isEmployer,
+                message: message,
+                onTap: () {
+                  Navigator.pushNamed(
+                      context, RouteConstants.employerProfileOnlyView,
+                      arguments: {'company': annuncio.publisherUserDTO});
+                },
+                image: image,
+                subtitle: annuncio.publisherUserDTO?.companyName ?? '',
+                position: annuncio.position,
+                date: annuncio.date,
+                hours: annuncio.hourSlot,
+                rating: annuncio.publisherUserDTO?.rating ?? 0,
+              ),
+              AdsDetailDescription(
+                description: annuncio.description,
+              ),
+              bottomButtonSection(annuncio)
+            ],
+          ),
+        ));
   }
 
   Widget bottomButtonSection(AnnunciEntity annuncio){
@@ -110,6 +134,8 @@ class AdsDetailState extends State<AdsDetail> {
             return const Center(child: CircularProgressIndicator());
           } else if(state is AnnunciUserListLoaded){
 
+            print("PERSONE CANDIDATE");
+            print(state.utenti);
             return BlocBuilder<UserAuthCubit,UserAuthenticationState>(
                 builder: (_ ,innerState){
                   if(innerState is UserAuthenticated){
@@ -132,10 +158,10 @@ class AdsDetailState extends State<AdsDetail> {
   }
 
 
-  Widget bottomButton(AnnunciEntity annuncio, bool isApplicant){
+  Widget bottomButton(AnnunciEntity annuncio, bool isApplicant) {
     return AdsDetailFooter(
       goToList: () {
-        Navigator.pushNamed(context, RouteConstants.candidatesList);
+        Navigator.pushNamed(context, RouteConstants.candidatesList, arguments: {'annuncio': annuncio});
       },
       viewApplies: VIEW_APPLIES,
       isVisible: widget.isEmployer,
@@ -149,23 +175,24 @@ class AdsDetailState extends State<AdsDetail> {
             barrierColor: blackDialog,
             builder: (ctx) => AdsDetailDialog(
               isApplicantDialog: isApplicant,
-              confirmOnTap: () {
-                _annunciCubit.candidate(annuncio.id ?? "");
+              confirmOnTap: () async {
+                AnnunciEntity newAnnuncio = await _annunciCubit.candidate(annuncio.id ?? "");
+                _annuncioDetailCubit.getAnnuncioById(annuncio.id ?? "");
+                _annunciCubit.listCandidati(annuncio.id ?? "");
                 Navigator.pop(context);
               },
             ));
       },
-      onTap: () {
-        _annunciCubit.candidate(annuncio.id ?? '');
+      onTap: () async {
         showDialog(
             context: context,
             barrierColor: blackDialog,
             builder: (ctx) => AdsDetailDialog(
               isApplicantDialog: isApplicant,
             ));
-        setState(() {
-          _annunciCubit.candidate(annuncio.id ?? "");
-        });
+        AnnunciEntity newAnnuncio = await _annunciCubit.candidate(annuncio.id ?? "");
+        _annuncioDetailCubit.getAnnuncioById(annuncio.id ?? "");
+        _annunciCubit.listCandidati(annuncio.id ?? "");
       },
     );
   }

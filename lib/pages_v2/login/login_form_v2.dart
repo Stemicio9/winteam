@@ -12,8 +12,6 @@ import 'package:winteam/constants/validators.dart';
 import 'package:winteam/utils/image_constant.dart';
 import 'package:winteam/widgets/utilities/image_utility.dart';
 import 'package:winteam/widgets_v2/action_buttons_v2.dart';
-import 'package:winteam/widgets_v2/checkbox_v2.dart';
-import 'package:winteam/widgets_v2/custom_image_view.dart';
 import 'package:winteam/widgets_v2/inputs_v2.dart';
 import 'package:winteam/widgets_v2/texts_v2.dart';
 

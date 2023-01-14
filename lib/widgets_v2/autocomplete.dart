@@ -68,8 +68,7 @@ class W1NAutocomplete extends StatelessWidget {
                     itemCount: options.length,
                     shrinkWrap: false,
                     itemBuilder: (BuildContext context, int index) {
-                      final AutocompleteElement option =
-                          options.elementAt(index);
+                      var option = options.elementAt(index);
                       return InkWell(
                         onTap: () {
                           optionSelected(option);

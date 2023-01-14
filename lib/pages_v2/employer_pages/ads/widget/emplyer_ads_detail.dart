@@ -6,7 +6,6 @@ class EmployerAdsDetail extends StatelessWidget{
   Widget build(BuildContext context) {
     return AdsDetail(
       isEmployer: true,
-
     );
   }
 

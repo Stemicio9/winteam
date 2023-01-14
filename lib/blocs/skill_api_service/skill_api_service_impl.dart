@@ -1,10 +1,7 @@
 part of 'skill_api_service.dart';
 
-
-
-
-
-SkillListApiService skillListApiService = SkillListApiService(Dio(),baseUrl: url_base);
+SkillListApiService skillListApiService =
+    SkillListApiService(Dio(), baseUrl: url_base);
 
 class _SkillListApiService implements SkillListApiService {
   _SkillListApiService(this._dio, {this.baseUrl});
@@ -13,28 +10,23 @@ class _SkillListApiService implements SkillListApiService {
 
   String? baseUrl;
 
-
   @override
   Future<HttpResponse<dynamic>> getSkillListByFilter(Filter filters) async {
     const _extra = <String, dynamic>{};
     final queryParameters = filters.toQueryParameters();
     var token = await FirebaseAuth.instance.currentUser!.getIdToken();
-    final _headers = <String, dynamic>{
-      "w1ntoken" : token
-    };
+    final _headers = <String, dynamic>{"w1ntoken": token};
     final _data = <String, dynamic>{};
 
     final _result = await _dio.fetch(_setStreamType<HttpResponse<dynamic>>(
         Options(method: 'GET', headers: _headers, extra: _extra)
             .compose(_dio.options, '/skill/list/filter',
-            queryParameters: queryParameters, data: _data)
+                queryParameters: queryParameters, data: _data)
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = _result.data;
     final httpResponse = HttpResponse(value, _result);
     return httpResponse;
   }
-
-
 
   RequestOptions _setStreamType<T>(RequestOptions requestOptions) {
     if (T != dynamic &&
@@ -49,9 +41,21 @@ class _SkillListApiService implements SkillListApiService {
     return requestOptions;
   }
 
+  @override
+  Future<HttpResponse> getSkillList() async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    var token = await FirebaseAuth.instance.currentUser!.getIdToken();
+    final _headers = <String, dynamic>{"w1ntoken": token};
+    final _data = <String, dynamic>{};
 
-
-
-
-
+    final _result = await _dio.fetch(_setStreamType<HttpResponse<dynamic>>(
+        Options(method: 'GET', headers: _headers, extra: _extra)
+            .compose(_dio.options, '/skill/list/all',
+                queryParameters: queryParameters, data: _data)
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = _result.data;
+    final httpResponse = HttpResponse(value, _result);
+    return httpResponse;
+  }
 }

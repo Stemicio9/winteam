@@ -1,8 +1,9 @@
 import 'dart:convert';
 
-import 'package:retrofit/retrofit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:retrofit/retrofit.dart';
+
 import '../../constants/StateConstants.dart';
 import '../../entities/skill_entity.dart';
 import '../skill_api_service/skill_api_service.dart';
@@ -23,6 +24,23 @@ class SkillCubit extends Cubit<SkillState> {
       HttpResponse<dynamic> result = await skillListApiService.getSkillListByFilter(filter);
       var encoded = jsonEncode(result.data);
       print(encoded);
+      var json = (jsonDecode(encoded) as List)
+          .map((data) => SkillEntity.fromJson(data))
+          .toList();
+
+      emit(SkillListLoaded(json));
+
+    } catch (e) {
+      print(e.toString());
+      emit(SkillListError());
+    }
+  }
+
+  void getSkillList() async {
+    emit(SkillListLoading());
+    try {
+      HttpResponse<dynamic> result = await skillListApiService.getSkillList();
+      var encoded = jsonEncode(result.data);
       var json = (jsonDecode(encoded) as List)
           .map((data) => SkillEntity.fromJson(data))
           .toList();

@@ -12,12 +12,7 @@ class AdsAutocomplete extends StatelessWidget {
   final TextEditingController filterController;
   final Function optionSelected;
 
-  final List<SkillEntity> _kOptions = [
-    SkillEntity(
-        id: '1', name: 'Carpenter', imageLink: 'assets/images/PizzaIcon.svg'),
-    SkillEntity(
-        id: '2', name: 'Electrician', imageLink: 'assets/images/PizzaIcon.svg')
-  ];
+  final List<SkillEntity> kOptions;
 
   AdsAutocomplete({
     Key? key,
@@ -25,6 +20,7 @@ class AdsAutocomplete extends StatelessWidget {
     required this.filterController,
     required this.optionSelected,
     this.paddingBottom = 0,
+    this.kOptions = const [],
   }) : super(key: key);
 
   @override
@@ -54,9 +50,9 @@ class AdsAutocomplete extends StatelessWidget {
                     child: W1NAutocomplete(
                       customFilter: (TextEditingValue textEditingValue) {
                         if (textEditingValue.text == '') {
-                          return _kOptions;
+                          return kOptions;
                         }
-                        return _kOptions.where((SkillEntity option) => option.name.toLowerCase().contains(textEditingValue.text.toLowerCase()));
+                        return kOptions.where((SkillEntity option) => option.name.toLowerCase().contains(textEditingValue.text.toLowerCase()));
                       },
                       filterController: filterController,
                       optionSelected: () {},

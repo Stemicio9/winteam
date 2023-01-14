@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:winteam/constants/colors.dart';
 import 'package:winteam/constants/language.dart';
+import 'package:winteam/entities/user_entity.dart';
 import 'package:winteam/pages_v2/employer_pages/ads/widget/button_choose.dart';
 import 'package:winteam/utils/image_constant.dart';
 import 'package:winteam/widgets_v2/action_buttons_v2.dart';
@@ -19,37 +20,26 @@ class SearchWorkerCard extends StatelessWidget {
   final Function? view;
   final Function? choose;
 
-  final String phone;
-  final String email;
-  final String position;
-  final String title;
-  final String subtitle;
+  final UserEntity? user;
   final skillIcon;
-  final image;
   final bool isSearch;
   final bool isSelected;
   final bool isCandidatesList;
 
-  SearchWorkerCard({
-    this.innerImageRadius = 77,
-    this.imageWidth = 90,
-    this.imageHeight = 90,
-    this.innerImageWidth = 90,
-    this.innerImageHeight = 90,
-    this.onTap,
-    required this.title,
-    required this.subtitle,
-    required this.email,
-    required this.position,
-    required this.phone,
-    required this.skillIcon,
-    required this.image,
-    this.choose,
-    this.view,
-    this.isSearch = true,
-    this.isCandidatesList = false,
-    this.isSelected = false
-  });
+  SearchWorkerCard(
+      {this.innerImageRadius = 77,
+      this.imageWidth = 90,
+      this.imageHeight = 90,
+      this.innerImageWidth = 90,
+      this.innerImageHeight = 90,
+      this.onTap,
+      required this.skillIcon,
+      this.user,
+      this.choose,
+      this.view,
+      this.isSearch = true,
+      this.isCandidatesList = false,
+      this.isSelected = false});
 
   @override
   Widget build(BuildContext context) {
@@ -71,7 +61,7 @@ class SearchWorkerCard extends StatelessWidget {
                     children: [
                       Padding(
                           padding: getPadding(right: 20),
-                          child: Container(
+                          child: SizedBox(
                             height: getSize(
                               imageHeight,
                             ),
@@ -83,7 +73,7 @@ class SearchWorkerCard extends StatelessWidget {
                                 children: [
                                   CustomImageView(
                                     onTap: onTap,
-                                    imagePath: image,
+                                    imagePath: user?.imageLink ?? 'assets/images/img_pexelsphotoby.png',
                                     height: getSize(
                                       innerImageHeight,
                                     ),
@@ -103,28 +93,24 @@ class SearchWorkerCard extends StatelessWidget {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            title,
-                            style: AppStyle.txtMontserratBoldBlue24,
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.53,
+                            child: Text(
+                              '${user?.firstName} ${user?.lastName}',
+                              overflow: TextOverflow.ellipsis,
+                              style: AppStyle.txtMontserratBoldBlue24,
+                            ),
                           ),
                           Row(
                             children: [
-                              Text(
-                                subtitle,
-                                style: AppStyle.txtMontserratSemiBoldBlack20,
-                              ),
-                              Padding(
-                                padding: getPadding(left: 5),
-                                child: CustomImageView(
-                                  svgPath: skillIcon,
-                                  height: getSize(
-                                    15,
-                                  ),
-                                  width: getSize(
-                                    15,
-                                  ),
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width * 0.49,
+                                child:  Text(
+                                  user?.brief ?? '',
+                                  overflow: TextOverflow.ellipsis,
+                                  style: AppStyle.txtMontserratSemiBoldBlack20,
                                 ),
-                              ),
+                              )
                             ],
                           ),
                           Padding(
@@ -144,7 +130,7 @@ class SearchWorkerCard extends StatelessWidget {
                                   ),
                                 ),
                                 Text(
-                                  phone,
+                                  user?.phoneNumber ?? '',
                                   style: AppStyle.txtMontserratRegular18,
                                 ),
                               ],
@@ -166,10 +152,10 @@ class SearchWorkerCard extends StatelessWidget {
                                     ),
                                   ),
                                 ),
-                                Container(
-                                  width: 205,
+                                SizedBox(
+                                  width: MediaQuery.of(context).size.width * 0.45,
                                   child: Text(
-                                    email,
+                                    user?.email ?? '',
                                     overflow: TextOverflow.ellipsis,
                                     style: AppStyle.txtMontserratRegular18,
                                   ),
@@ -194,57 +180,51 @@ class SearchWorkerCard extends StatelessWidget {
                                   ),
                                 ),
                                 Text(
-                                  position,
+                                  user?.address ?? '',
                                   style: AppStyle.txtMontserratRegular18,
                                 ),
                               ],
                             ),
                           ),
-
-
-                       isSearch ? Padding(
-                            padding: getPadding(top: 25),
-                            child: ActionButtonV2(
-                              action: onTap,
-                              text: VIEW_PROFILE,
-                              color: background,
-                              maxWidth: 230,
-                              textColor: white,
-                            ),
-                          ) :Container()
-                        ] ,
+                          Visibility(
+                              visible: isSearch,
+                              child: Padding(
+                                padding: getPadding(top: 25),
+                                child: ActionButtonV2(
+                                  action: onTap,
+                                  text: VIEW_PROFILE,
+                                  color: background,
+                                  maxWidth: 230,
+                                  textColor: white,
+                                ),
+                              ))
+                        ],
                       ),
                     ],
                   ),
                 ],
               ),
-
-
-             isCandidatesList ? Padding(
-               padding: getPadding(top: 25),
-               child: Row(
-                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                 children: [
-                   ActionButtonV2(
-                       action: view,
-                       text: VIEW,
-                       color: background,
-                       maxWidth: 150,
-                       textColor: white
-                   ),
-
-                 isSelected ?  Text(
-                     'egg'
-                 ) :ButtonChoose(
-                     choose: choose,
-                     maxWidth: 150,
-                   ),
-
-
-                 ],
-
-                ),
-             ): Container()
+              Visibility(
+                  visible: isCandidatesList,
+                  child: Padding(
+                      padding: getPadding(top: 25),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          ActionButtonV2(
+                              action: view,
+                              text: VIEW,
+                              color: background,
+                              maxWidth: 150,
+                              textColor: white),
+                          isSelected
+                              ? const Text('egg')
+                              : ButtonChoose(
+                                  choose: choose,
+                                  maxWidth: 150,
+                                ),
+                        ],
+                      )))
             ],
           ),
         ),

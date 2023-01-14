@@ -9,7 +9,6 @@ import 'package:winteam/constants/colors.dart';
 import 'package:winteam/constants/language.dart';
 import 'package:winteam/constants/route_constants.dart';
 import 'package:winteam/entities/user_entity.dart';
-import 'package:winteam/pages_v2/W1n_scaffold.dart';
 import 'package:winteam/pages_v2/employer_pages/profile/widget/employer_name_header.dart';
 import 'package:winteam/pages_v2/employer_pages/profile/widget/manage_subscription_dialog.dart';
 import 'package:winteam/pages_v2/worker_pages/profile/widgets/image_profile.dart';
@@ -73,11 +72,7 @@ class EmployerProfileState extends State<EmployerProfile> {
     UserEntity company = arguments['company'] ?? UserEntity();
     inputData(company);
 
-    return W1nScaffold(
-        appBar: widget.isOnlyView ? 1 : 2,
-        title: PROFILE,
-        body: SingleChildScrollView(
-          child: Padding(
+    return Padding(
             padding: getPadding(bottom: 35),
             child: Column(
               children: [
@@ -110,20 +105,27 @@ class EmployerProfileState extends State<EmployerProfile> {
                       Navigator.pushNamed(
                           context, RouteConstants.employerProfileEdit);
                     }),
-                ProfileDescription(
-                  title: ABOUT_US,
-                  description: description,
-                ),
-                ProfileInfo(
-                  title: OUR_CONTACTS,
-                  email: email,
-                  position: position,
-                  phone: phone,
+                Expanded(
+                  child: ListView(
+                    children: [
+
+                      ProfileDescription(
+                        title: ABOUT_US,
+                        description: description,
+                      ),
+                      ProfileInfo(
+                        title: OUR_CONTACTS,
+                        email: email,
+                        position: position,
+                        phone: phone,
+                      )
+                    ],
+                  ),
                 )
+
               ],
-            ),
-          ),
-        ));
+            )
+        );
   }
 
   openGallery() async {

@@ -1,4 +1,4 @@
-
+import 'package:expand_tap_area/expand_tap_area.dart';
 import 'package:flutter/material.dart';
 import 'package:winteam/constants/colors.dart';
 import 'package:winteam/constants/language.dart';
@@ -23,25 +23,21 @@ class ImageProfile extends StatelessWidget {
   final Function? openCamera;
   final Function? openGallery;
 
-
-
-  const ImageProfile(
-      {Key? key,
-      this.topColorHeight = 150,
-      this.topMargin = 65,
-      this.borderSize = 7,
-      this.imageHeight = 166,
-      this.imageWidth = 166,
-      this.innerImageHeight = 154,
-      this.innerImageWidth = 154,
-      this.innerImageRadius = 77,
-      this.iconWidth = 34,
-      this.iconHeight = 34,
-      this.openCamera,
-      this.openGallery,
-      })
-      : super(key: key);
-
+  const ImageProfile({
+    Key? key,
+    this.topColorHeight = 150,
+    this.topMargin = 65,
+    this.borderSize = 7,
+    this.imageHeight = 166,
+    this.imageWidth = 166,
+    this.innerImageHeight = 154,
+    this.innerImageWidth = 154,
+    this.innerImageRadius = 77,
+    this.iconWidth = 34,
+    this.iconHeight = 34,
+    this.openCamera,
+    this.openGallery,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +57,7 @@ class ImageProfile extends StatelessWidget {
                       topColorHeight,
                     ),
                     width: size.width,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       color: background,
                     ),
                   ),
@@ -114,121 +110,146 @@ class ImageProfile extends StatelessWidget {
                             alignment: Alignment.center,
                             fit: BoxFit.cover,
                           ),
-                          openCamera != null ? CustomImageView(
-                            onTap: () {
-                              print("premuto");
-                              showDialog(
-                                  context: context,
-                                  barrierColor: blackDialog,
-                                  builder: (ctx) =>
-                                      Column(
-                                          mainAxisAlignment: MainAxisAlignment.center,
-                                          children: [
-                                            GestureDetector(
-                                              onTap: (){
-                                                openGallery?.call();
-                                              },
-                                              child: Card(
-                                                  clipBehavior: Clip.antiAlias,
-                                                  elevation: 0,
-                                                  margin: EdgeInsets.all(0),
-                                                  color: ColorConstant.whiteA700,
-                                                  shape: RoundedRectangleBorder(
-                                                      borderRadius:
-                                                          BorderRadiusStyle
-                                                              .circleBorder70),
-                                                  child:  Container(
-                                                      height: getSize(140.00),
-                                                      width: getSize(140.00),
-                                                      padding:
-                                                          getPadding(all: 44),
-                                                      decoration: AppDecoration.outlineWhiteA70021.copyWith(
-                                                              borderRadius: BorderRadiusStyle.circleBorder70),
-                                                      child: Stack(children: [
-                                                        CustomImageView(
-
-                                                            svgPath: ImageConstant
-                                                                .imgVector,
-                                                            height:
-                                                                getSize(40.00),
-                                                            width: getSize(40.00),
-                                                            alignment:
-                                                                Alignment.center),
-
-                                                      ]))),
-                                            ),
-                                            Padding(
-                                                padding: getPadding(top: 33),
-                                                child: Text(GALLERY,
-                                                    overflow:
-                                                        TextOverflow.ellipsis,
-                                                    textAlign: TextAlign.left,
-                                                    style: AppStyle
-                                                        .txtMontserratMedium20)),
-                                            GestureDetector(
-                                              onTap: (){
-                                                openCamera?.call();
-                                              },
-                                              child: Card(
-                                                  clipBehavior: Clip.antiAlias,
-                                                  elevation: 0,
-                                                  margin: getMargin(top: 107),
-                                                  color: ColorConstant.whiteA700,
-                                                  shape: RoundedRectangleBorder(
-                                                      borderRadius:
-                                                          BorderRadiusStyle
-                                                              .circleBorder70),
-                                                  child: Container(
-                                                      height: getSize(140.00),
-                                                      width: getSize(140.00),
-                                                      padding: getPadding(
-                                                          left: 44,
-                                                          top: 47,
-                                                          right: 44,
-                                                          bottom: 47),
-                                                      decoration: AppDecoration
-                                                          .outlineWhiteA70021
-                                                          .copyWith(
-                                                              borderRadius:
-                                                                  BorderRadiusStyle
-                                                                      .circleBorder70),
-                                                      child: Stack(children: [
-                                                        CustomImageView(
-                                                          svgPath: ImageConstant
-                                                              .imgCamera,
-                                                          height: getVerticalSize(
-                                                              40.00),
+                          Visibility(
+                              visible: openCamera != null,
+                              child: ExpandTapWidget(
+                                onTap: () {
+                                  print("premuto");
+                                  showDialog(
+                                      context: context,
+                                      barrierColor: blackDialog,
+                                      builder: (ctx) => Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                GestureDetector(
+                                                  onTap: () {
+                                                    openGallery?.call();
+                                                  },
+                                                  child: Card(
+                                                      clipBehavior:
+                                                          Clip.antiAlias,
+                                                      elevation: 0,
+                                                      margin: EdgeInsets.all(0),
+                                                      color: ColorConstant
+                                                          .whiteA700,
+                                                      shape: RoundedRectangleBorder(
+                                                          borderRadius:
+                                                              BorderRadiusStyle
+                                                                  .circleBorder70),
+                                                      child: Container(
+                                                          height:
+                                                              getSize(140.00),
                                                           width:
-                                                              getHorizontalSize(40.00),
-                                                          alignment:
-                                                              Alignment.center,
-
-                                                        )
-                                                      ]))),
-                                            ),
-                                            Padding(
-                                                padding: getPadding(
-                                                  top: 32,
+                                                              getSize(140.00),
+                                                          padding: getPadding(
+                                                              all: 44),
+                                                          decoration: AppDecoration
+                                                              .outlineWhiteA70021
+                                                              .copyWith(
+                                                                  borderRadius:
+                                                                      BorderRadiusStyle
+                                                                          .circleBorder70),
+                                                          child:
+                                                              Stack(children: [
+                                                            CustomImageView(
+                                                                svgPath:
+                                                                    ImageConstant
+                                                                        .imgVector,
+                                                                height: getSize(
+                                                                    40.00),
+                                                                width: getSize(
+                                                                    40.00),
+                                                                alignment:
+                                                                    Alignment
+                                                                        .center),
+                                                          ]))),
                                                 ),
-                                                child: Text(
-                                                    CAMERA,
-                                                    overflow: TextOverflow.ellipsis,
-                                                    textAlign: TextAlign.left,
-                                                    style: AppStyle.txtMontserratMedium20)
-                                            )
-                                          ]));
-                            },
-                            radius: BorderRadius.circular(50),
-                            svgPath: ImageConstant.imgSettings,
-                            height: getSize(
-                              iconHeight,
-                            ),
-                            width: getSize(
-                              iconWidth,
-                            ),
-                          ) : Container(),
-
-
+                                                Padding(
+                                                    padding:
+                                                        getPadding(top: 33),
+                                                    child: Text(GALLERY,
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                        textAlign:
+                                                            TextAlign.left,
+                                                        style: AppStyle
+                                                            .txtMontserratMedium20)),
+                                                GestureDetector(
+                                                  onTap: () {
+                                                    openCamera?.call();
+                                                  },
+                                                  child: Card(
+                                                      clipBehavior:
+                                                          Clip.antiAlias,
+                                                      elevation: 0,
+                                                      margin:
+                                                          getMargin(top: 107),
+                                                      color: ColorConstant
+                                                          .whiteA700,
+                                                      shape: RoundedRectangleBorder(
+                                                          borderRadius:
+                                                              BorderRadiusStyle
+                                                                  .circleBorder70),
+                                                      child: Container(
+                                                          height:
+                                                              getSize(140.00),
+                                                          width:
+                                                              getSize(140.00),
+                                                          padding: getPadding(
+                                                              left: 44,
+                                                              top: 47,
+                                                              right: 44,
+                                                              bottom: 47),
+                                                          decoration: AppDecoration
+                                                              .outlineWhiteA70021
+                                                              .copyWith(
+                                                                  borderRadius:
+                                                                      BorderRadiusStyle
+                                                                          .circleBorder70),
+                                                          child:
+                                                              Stack(children: [
+                                                            CustomImageView(
+                                                              svgPath:
+                                                                  ImageConstant
+                                                                      .imgCamera,
+                                                              height:
+                                                                  getVerticalSize(
+                                                                      40.00),
+                                                              width:
+                                                                  getHorizontalSize(
+                                                                      40.00),
+                                                              alignment:
+                                                                  Alignment
+                                                                      .center,
+                                                            )
+                                                          ]))),
+                                                ),
+                                                Padding(
+                                                    padding: getPadding(
+                                                      top: 32,
+                                                    ),
+                                                    child: Text(CAMERA,
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                        textAlign:
+                                                            TextAlign.left,
+                                                        style: AppStyle
+                                                            .txtMontserratMedium20))
+                                              ]));
+                                },
+                                tapPadding: const EdgeInsets.all(150.0),
+                                child: CustomImageView(
+                                  radius: BorderRadius.circular(50),
+                                  svgPath: ImageConstant.imgSettings,
+                                  height: getSize(
+                                    iconHeight,
+                                  ),
+                                  width: getSize(
+                                    iconWidth,
+                                  ),
+                                ),
+                              ))
                         ],
                       ),
                     ),
@@ -241,6 +262,4 @@ class ImageProfile extends StatelessWidget {
       ],
     );
   }
-
-
 }

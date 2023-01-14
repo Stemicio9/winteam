@@ -1,12 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:winteam/constants/colors.dart';
-import 'package:winteam/constants/route_constants.dart';
-import 'package:winteam/widgets/texts.dart';
 import 'package:winteam/widgets/action_buttons.dart';
 import 'package:winteam/widgets/appbars.dart';
-import 'package:winteam/widgets/card_dettaglio_datore.dart';
-
-import '../../widgets/Expandable_fab.dart';
 
 class DettaglioAnnuncioLavoratore extends StatefulWidget{
   @override

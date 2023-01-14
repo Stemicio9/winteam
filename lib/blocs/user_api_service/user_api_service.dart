@@ -2,7 +2,6 @@
 import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:retrofit/retrofit.dart';
-import 'package:winteam/blocs/annunci_api_service/annunci_api_service.dart';
 import 'package:winteam/constants/StateConstants.dart';
 import 'package:winteam/entities/user_entity.dart';
 import 'package:winteam/main.dart';
@@ -14,8 +13,11 @@ abstract class UserListApiService {
   factory UserListApiService(Dio dio, {String baseUrl}) =
   _UserListApiService;
 
-  @GET('/users')
+  @GET('/user/list/all')
   Future<HttpResponse<dynamic>> getUserList();
+
+  @GET('/user/search/list')
+  Future<HttpResponse<dynamic>> searchUserFiltered(String search);
 
   @GET('/user/me')
   Future<HttpResponse<dynamic>> me();

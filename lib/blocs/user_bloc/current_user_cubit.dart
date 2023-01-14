@@ -4,7 +4,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:retrofit/retrofit.dart';
-import 'package:winteam/blocs/annunci_api_service/annunci_api_service.dart';
 import 'package:winteam/blocs/user_api_service/user_api_service.dart';
 import 'package:winteam/entities/user_entity.dart';
 

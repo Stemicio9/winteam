@@ -5,7 +5,7 @@ class ImageConstant {
 
   static String imageNotFound = 'assets/images/image_not_found.png';
 
-  static String imgArrowleft = 'assets/images/img_arrowleft.svg';
+  static String imgEditPencil = 'assets/images/img_arrowleft.svg';
 
   static String imgVector = 'assets/images/img_vector.svg';
 

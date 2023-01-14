@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:winteam/blocs/annunci_bloc/annunci_cubit.dart';
-import 'package:winteam/constants/colors.dart';
-import 'package:winteam/constants/language.dart';
 import 'package:winteam/constants/route_constants.dart';
-import 'package:winteam/pages_v2/W1n_scaffold.dart';
 import 'package:winteam/pages_v2/employer_pages/ads/widget/employer_ads_choicechip.dart';
 import 'package:winteam/pages_v2/worker_pages/ads/widgets/ads_card.dart';
 import 'package:winteam/utils/size_utils.dart';
@@ -44,13 +41,12 @@ class EmployerAdsState extends State<EmployerAds> {
   }
 
   inputData() {
-    _cubit.fetchAnnuncis('all');
+    _cubit.fetchAnnuncis(_choicesListQuery[calculateCurrentIndex()]);
   }
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-          child: Container(
+    return Container(
             width: MediaQuery.of(context).size.width,
             padding: getPadding(bottom: 30),
             child: Column(
@@ -65,26 +61,29 @@ class EmployerAdsState extends State<EmployerAds> {
                   if (state is AnnunciLoading) {
                     return const Center(child: CircularProgressIndicator());
                   } else if (state is AnnunciLoaded) {
-                    return Column(
-                      children: [
-                        ...state.annunci.map((e) => AdsCard(
-                              isWorkerCard: false,
-                              onTap: () {
-                                Navigator.pushNamed(
-                                    context, RouteConstants.employerAdsDetail, arguments: {'annuncio': e});
-                              },
-                              skillIcon:
-                                  e.skillDTO?.imageLink ??
-                                      'assets/images/PizzaIcon.svg',
-                              message: message,
-                              candidates: e.candidateUserList.length.toString(),
-                              annunciEntity: e,
-                              goToList: () {
-                                Navigator.pushNamed(
-                                    context, RouteConstants.candidatesList);
-                              },
-                            )).toList(),
-                      ],
+                    return Expanded(
+                      child: RefreshIndicator(
+                          onRefresh: () {
+                            return inputData();
+                          },
+                          child: ListView(
+                            children: [
+                              ...state.annunci.map((e) => AdsCard(
+                                isWorkerCard: false,
+                                onTap: () {
+                                  Navigator.pushNamed(
+                                      context, RouteConstants.employerAdsDetail, arguments: {'annuncio': e.id});
+                                },
+                                message: message,
+                                candidates: e.candidateUserList.length.toString(),
+                                annunciEntity: e,
+                                goToList: () {
+                                  Navigator.pushNamed(
+                                      context, RouteConstants.candidatesList, arguments: {'annuncio': e});
+                                },
+                              )).toList(),
+                            ],
+                          )),
                     );
                   } else if (state is AnnunciEmpty) {
                     // @todo insert an empty state element
@@ -97,7 +96,6 @@ class EmployerAdsState extends State<EmployerAds> {
                 }),
               ],
             ),
-          ),
         );
   }
 
@@ -110,5 +108,14 @@ class EmployerAdsState extends State<EmployerAds> {
     setState(() {
       indexes[index] = value;
     });
+  }
+
+  int calculateCurrentIndex(){
+    for(int i = 0; i < indexes.length; i++){
+      if(indexes[i]){
+        return i;
+      }
+    }
+    return -1;
   }
 }

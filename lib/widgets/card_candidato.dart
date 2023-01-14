@@ -3,7 +3,6 @@ import 'package:flutter/rendering.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:winteam/constants/colors.dart';
 import 'package:winteam/entities/user_entity.dart';
-import 'package:winteam/widgets/Expandable_fab.dart';
 import 'package:winteam/widgets/action_buttons.dart';
 import 'package:winteam/widgets/skill_chip.dart';
 

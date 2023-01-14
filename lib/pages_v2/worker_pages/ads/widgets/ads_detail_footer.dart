@@ -88,7 +88,7 @@ class AdsDetailFooter extends StatelessWidget {
                   ),
                 ),
               ),
-        // In this point we are checking the NOT Employer section
+        // In this point we are checking the NOT Employed section
         !isVisible
             ? !isApplicant
                 ? Padding(
@@ -111,7 +111,7 @@ class AdsDetailFooter extends StatelessWidget {
                   )
             : Container(),
 
-        // In this point we are checking the Employer section
+        // In this point we are checking the Employed section
         candidates != '0'
             ? isVisible
                 ? Padding(

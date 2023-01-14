@@ -6,7 +6,6 @@ import 'package:winteam/utils/image_constant.dart';
 import 'package:winteam/utils/size_utils.dart';
 import 'package:winteam/widgets_v2/action_buttons_v2.dart';
 import 'package:winteam/widgets_v2/custom_image_view.dart';
-import 'package:winteam/widgets_v2/dialog_back_text.dart';
 import 'package:winteam/widgets_v2/dialog_card.dart';
 
 class AdsPublishedDialog extends StatelessWidget{

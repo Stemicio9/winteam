@@ -1,12 +1,11 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter/material.dart';
 import 'package:retrofit/dio.dart';
 import 'package:winteam/blocs/user_api_service/user_api_service.dart';
 import 'package:winteam/entities/user_entity.dart';
-
 
 part 'users_matched_cubit_state.dart';
 

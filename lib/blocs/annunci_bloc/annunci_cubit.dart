@@ -1,14 +1,12 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter/material.dart';
 import 'package:retrofit/dio.dart';
 import 'package:winteam/blocs/annunci_api_service/annunci_api_service.dart';
+import 'package:winteam/constants/StateConstants.dart';
 import 'package:winteam/entities/annunci_entity.dart';
-import 'package:winteam/entities/user_entity.dart';
-
-import '../../constants/StateConstants.dart';
 
 part 'annunci_cubit_state.dart';
 
@@ -77,14 +75,10 @@ class AnnunciCubit extends Cubit<AnnunciState> {
   void publishAnnuncio(AnnunciEntity annuncio) async {
     emit(AnnunciPublishing());
     try {
-
       HttpResponse<dynamic> result = await annunciListApiService.publishAnnuncio(annuncio);
-
       print("LA RISPOSTA ALLA REST ");
       print(result.response);
-
       emit(AnnunciPublished());
-
     } catch (e) {
       print(e.toString());
       emit(AnnunciPublishingError());

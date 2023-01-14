@@ -39,6 +39,38 @@ class AnnunciEntity {
     return 'AnnunciEntity{id: $id, description: $description, position: $position, date: $date, hourSlot: $hourSlot, image: $image, skillId: $skillId, skillDTO: $skillDTO, payment: $payment, publisherUserId: $publisherUserId, publisherUserDTO: $publisherUserDTO, candidateUserList: $candidateUserList, matchedUserId: $matchedUserId, advertisementStatus: $advertisementStatus}';
   }
 
+  AnnunciEntity copyWith(
+      {String? id,
+      String? description,
+      String? position,
+      String? date,
+      String? hourSlot,
+      String? image,
+      String? skillId,
+      SkillEntity? skillDTO,
+      String? payment,
+      String? publisherUserId,
+      UserEntity? publisherUserDTO,
+      List<dynamic>? candidateUserList,
+      String? matchedUserId,
+      String? advertisementStatus}) {
+    return AnnunciEntity(
+        id: id ?? this.id,
+        description: description ?? this.description,
+        position: position ?? this.position,
+        date: date ?? this.date,
+        hourSlot: hourSlot ?? this.hourSlot,
+        image: image ?? this.image,
+        skillId: skillId ?? this.skillId,
+        skillDTO: skillDTO ?? this.skillDTO,
+        payment: payment ?? this.payment,
+        publisherUserId: publisherUserId ?? this.publisherUserId,
+        publisherUserDTO: publisherUserDTO ?? this.publisherUserDTO,
+        candidateUserList: candidateUserList ?? this.candidateUserList,
+        matchedUserId: matchedUserId ?? this.matchedUserId,
+        advertisementStatus: advertisementStatus ?? this.advertisementStatus);
+  }
+
   factory AnnunciEntity.fromJson(Map<String, dynamic> json) => AnnunciEntity(
       id: json["id"] ?? "",
       description: json["description"] ?? "",
@@ -72,4 +104,20 @@ class AnnunciEntity {
         "matchedUserId": matchedUserId,
         "advertisementStatus": advertisementStatus
       };
+
+  factory AnnunciEntity.defaultVal() => AnnunciEntity(
+      id: "",
+      description: "",
+      position: "",
+      date: "",
+      image: 'assets/images/img_pexelsphotoby.png',
+      hourSlot: "",
+      skillId: "",
+      skillDTO: SkillEntity(),
+      payment: "",
+      publisherUserId: "",
+      publisherUserDTO: UserEntity(),
+      candidateUserList: [],
+      matchedUserId: "",
+      advertisementStatus: "");
 }

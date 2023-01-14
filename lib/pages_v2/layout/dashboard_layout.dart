@@ -2,6 +2,7 @@ import 'package:circle_nav_bar/circle_nav_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:winteam/authentication/authentication_bloc.dart';
+import 'package:winteam/blocs/dashboard_tab_index_bloc/tab_index_bloc.dart';
 import 'package:winteam/blocs/user_bloc/current_user_cubit.dart';
 import 'package:winteam/blocs/user_bloc/user_list_cubit.dart';
 import 'package:winteam/constants/colors.dart';
@@ -45,8 +46,6 @@ class DashboardWidgetState extends State<DashboardWidget> {
                   ? DatoreLayout()
                   : LavoratoreLayout();
             });
-
-
           } else if (state is UserLoading) {
             return const Center(child: CircularProgressIndicator());
           } else {
@@ -68,7 +67,6 @@ class DashboardLayout extends StatefulWidget {
   final List<Color> backgroundColors;
   final List<String> titles;
 
-
   const DashboardLayout(
       {Key? key,
       required this.pages,
@@ -88,14 +86,10 @@ class DashboardLayout extends StatefulWidget {
 
 class DashboardLayoutState extends State<DashboardLayout>
     with SingleTickerProviderStateMixin {
-  final _pageController = PageController(initialPage: 0);
-  int _tabIndex = 0;
-  int get tabIndex => _tabIndex;
 
-  set tabIndex(int v) {
-    _tabIndex = v;
-    setState(() {});
-  }
+  TabIndexCubit get _tabIndexCubit => context.read<TabIndexCubit>();
+
+  var _pageController;
 
   @override
   void initState() {
@@ -110,25 +104,29 @@ class DashboardLayoutState extends State<DashboardLayout>
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async => false,
-      child: W1nScaffold(
-        title: widget.titles[_tabIndex],
-        backgroundColor: widget.backgroundColors[_tabIndex],
-        appBar: 2,
-        body: PageView(
-            controller: _pageController,
-            physics: const NeverScrollableScrollPhysics(),
-            children: widget.pages
-        ),
-        bottomNavigationBar: widget.datore
-            ? bottomNavigationDatore()
-            : bottomNavigationLavoratore(),
-      ),
+    return BlocBuilder<TabIndexCubit, TabIndexState>(
+      builder: (context, state) {
+        _pageController = PageController(initialPage: state.index);
+        return WillPopScope(
+          onWillPop: () async => false,
+          child: W1nScaffold(
+            title: widget.titles[state.index],
+            backgroundColor: widget.backgroundColors[state.index],
+            appBar: 2,
+            body: PageView(
+                controller: _pageController,
+                physics: const NeverScrollableScrollPhysics(),
+                children: widget.pages),
+            bottomNavigationBar: widget.datore
+                ? bottomNavigationDatore(state.index)
+                : bottomNavigationLavoratore(state.index),
+          ),
+        );
+      },
     );
   }
 
-  Widget bottomNavigationLavoratore() {
+  Widget bottomNavigationLavoratore(int currentTabIndex) {
     return CircleNavBar(
       activeIcons: const [
         Icon(Icons.newspaper_rounded, color: white),
@@ -142,10 +140,10 @@ class DashboardLayoutState extends State<DashboardLayout>
       color: background,
       height: 60,
       circleWidth: 60,
-      activeIndex: tabIndex,
+      activeIndex: currentTabIndex,
       onTap: (index) {
-        tabIndex = index;
-        _pageController.jumpToPage(tabIndex);
+        _tabIndexCubit.setTabIndex(index);
+        _pageController.jumpToPage(index);
       },
       padding: const EdgeInsets.only(left: 16, right: 16, bottom: 20),
       cornerRadius: const BorderRadius.only(
@@ -158,7 +156,7 @@ class DashboardLayoutState extends State<DashboardLayout>
     );
   }
 
-  Widget bottomNavigationDatore() {
+  Widget bottomNavigationDatore(int currentTabIndex) {
     return CircleNavBar(
       activeIcons: const [
         Icon(Icons.newspaper_rounded, color: white),
@@ -176,10 +174,10 @@ class DashboardLayoutState extends State<DashboardLayout>
       color: background,
       height: 60,
       circleWidth: 60,
-      activeIndex: tabIndex,
+      activeIndex: currentTabIndex,
       onTap: (index) {
-        tabIndex = index;
-        _pageController.jumpToPage(tabIndex);
+        _tabIndexCubit.setTabIndex(index);
+        _pageController.jumpToPage(index);
       },
       padding: const EdgeInsets.only(left: 16, right: 16, bottom: 20),
       cornerRadius: const BorderRadius.only(
@@ -204,12 +202,12 @@ class LavoratoreLayout extends StatelessWidget {
     var workerProfileColor = white;
 
     var button3 = BottomBarElement(
-      activeElement: Icon(Icons.newspaper_rounded, color: white),
+      activeElement: const Icon(Icons.newspaper_rounded, color: white),
       inactiveElement: Texth4V2(testo: ADS, color: white),
     );
 
     var button4 = BottomBarElement(
-      activeElement: Icon(Icons.person, color: white),
+      activeElement: const Icon(Icons.person, color: white),
       inactiveElement: Texth4V2(testo: PROFILE, color: white),
     );
 
@@ -241,7 +239,7 @@ class DatoreLayout extends StatelessWidget {
   Widget build(BuildContext context) {
     var employerAds = EmployerAds();
     var searchWorkers = SearchWorkers();
-    var createAds = CreateAds();
+    var createAds = CreateAdsWidget();
     var employerProfile = EmployerProfile();
 
     var employerAdsTitle = POSTED_ADS;
@@ -256,22 +254,22 @@ class DatoreLayout extends StatelessWidget {
 
 
     var button1 = BottomBarElement(
-      activeElement: Icon(Icons.newspaper_rounded, color: white),
+      activeElement: const Icon(Icons.newspaper_rounded, color: white),
       inactiveElement: Texth4V2(testo: ADS, color: white),
     );
 
     var button2 = BottomBarElement(
-      activeElement: Icon(Icons.search_rounded, color: white),
+      activeElement: const Icon(Icons.search_rounded, color: white),
       inactiveElement: Texth4V2(testo: SEARCH, color: white),
     );
 
     var button3 = BottomBarElement(
-      activeElement: Icon(Icons.add_circle_outline_rounded, color: white),
+      activeElement: const Icon(Icons.add_circle_outline_rounded, color: white),
       inactiveElement: Texth4V2(testo: CREATE, color: white),
     );
 
     var button4 = BottomBarElement(
-      activeElement: Icon(Icons.person, color: white),
+      activeElement: const Icon(Icons.person, color: white),
       inactiveElement: Texth4V2(testo: PROFILE, color: white),
     );
 
@@ -304,9 +302,4 @@ class DatoreLayout extends StatelessWidget {
       ],
     );
   }
-
-
-
-
-
 }

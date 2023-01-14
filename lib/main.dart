@@ -2,13 +2,15 @@ import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:winteam/authentication/authentication_bloc.dart';
 import 'package:winteam/blocs/annunci_bloc/annunci_cubit.dart';
 import 'package:winteam/blocs/annunci_user_list/annunci_user_list_cubit.dart';
+import 'package:winteam/blocs/annuncio_detail.dart';
+import 'package:winteam/blocs/dashboard_tab_index_bloc/tab_index_bloc.dart';
 import 'package:winteam/blocs/skill_bloc/skill_cubit.dart';
 import 'package:winteam/blocs/subscription_bloc/subscription_cubit.dart';
 import 'package:winteam/blocs/user_api_service/user_api_service.dart';
@@ -85,10 +87,16 @@ class MyApp extends StatelessWidget {
             create: (context) => UserListCubit(),
           ),
           BlocProvider(
+            create: (context) => TabIndexCubit(),
+          ),
+          BlocProvider(
             create: (context) => UserAuthCubit(),
           ),
           BlocProvider(
             create: (context) => SkillCubit(),
+          ),
+          BlocProvider(
+            create: (context) => AnnuncioDetailCubit(),
           ),
           BlocProvider(
             create: (context) => UserCubit(),

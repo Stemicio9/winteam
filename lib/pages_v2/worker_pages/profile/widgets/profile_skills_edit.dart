@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:winteam/constants/colors.dart';
 import 'package:winteam/constants/language.dart';
 import 'package:winteam/entities/skill_entity.dart';
-import 'package:winteam/pages_v2/worker_pages/profile/data/mansione.dart';
 import 'package:winteam/theme/app_style.dart';
-import 'package:winteam/utils/size_utils.dart';
 import 'package:winteam/utils/image_constant.dart';
+import 'package:winteam/utils/size_utils.dart';
 import 'package:winteam/widgets_v2/action_buttons_v2.dart';
 import 'package:winteam/widgets_v2/custom_image_view.dart';
 

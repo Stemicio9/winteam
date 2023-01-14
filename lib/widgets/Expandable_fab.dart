@@ -1,7 +1,6 @@
-import 'package:flutter/material.dart';
 import 'dart:math' as math;
 
-import 'package:winteam/constants/colors.dart';
+import 'package:flutter/material.dart';
 
 
 @immutable

@@ -82,17 +82,17 @@ class _AnnunciListApiService implements AnnunciListApiService {
   }
 
   @override
-  Future<HttpResponse<dynamic>> listUserAnnuncio(AnnunciEntity annuncio) async {
+  Future<HttpResponse<dynamic>> listUserAnnuncio(String annuncioid) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
-      "id" : annuncio.id
+      "id" : annuncioid
     };
     var token = await FirebaseAuth.instance.currentUser!.getIdToken();
 
     final _headers = <String, dynamic>{
       "w1ntoken" : token
     };
-    final _data = annuncio.toJson();
+    final _data = <String, dynamic>{};
 
     final _result = await _dio.fetch(_setStreamType<HttpResponse<dynamic>>(
         Options(method: 'GET', headers: _headers, extra: _extra)
@@ -148,6 +148,29 @@ class _AnnunciListApiService implements AnnunciListApiService {
     final _result = await _dio.fetch(_setStreamType<HttpResponse<dynamic>>(
         Options(method: 'POST', headers: _headers, extra: _extra)
             .compose(_dio.options, '/advertisement/candidate',
+            queryParameters: queryParameters, data: data)
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = _result.data;
+    final httpResponse = HttpResponse(value, _result);
+    return httpResponse;
+  }
+
+
+  @override
+  Future<HttpResponse<dynamic>> getAnnuncio(String id) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    var token = await FirebaseAuth.instance.currentUser!.getIdToken();
+
+    final _headers = <String, dynamic>{
+      "w1ntoken" : token
+    };
+
+    final data = <String, dynamic>{};
+
+    final _result = await _dio.fetch(_setStreamType<HttpResponse<dynamic>>(
+        Options(method: 'GET', headers: _headers, extra: _extra)
+            .compose(_dio.options, '/advertisement/list/$id',
             queryParameters: queryParameters, data: data)
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = _result.data;

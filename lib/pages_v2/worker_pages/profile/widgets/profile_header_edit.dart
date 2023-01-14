@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:winteam/constants/language.dart';
-import 'package:winteam/constants/validators.dart';
-import 'package:winteam/utils/image_constant.dart';
 import 'package:winteam/utils/size_utils.dart';
 import 'package:winteam/widgets_v2/inputs_v2.dart';
 

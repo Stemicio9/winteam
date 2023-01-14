@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:winteam/blocs/annunci_bloc/annunci_cubit.dart';
 import 'package:winteam/blocs/annunci_user_list/annunci_user_list_cubit.dart';
 import 'package:winteam/blocs/users_matched_bloc/users_matched_cubit.dart';
 import 'package:winteam/entities/annunci_entity.dart';
@@ -53,7 +52,7 @@ class ListaCandidatiState extends State<ListaCandidati> {
 
 
      annuncio = ModalRoute.of(context)!.settings.arguments as AnnunciEntity;
-    _cubit.listCandidati(annuncio);
+    _cubit.listCandidati(annuncio.id ?? "");
     print("HO FATTO LA BUILD ");
     print(annuncio.matchedUserId);
     matchCubit.getUserMatched(annuncio.matchedUserId);
@@ -87,7 +86,7 @@ class ListaCandidatiState extends State<ListaCandidati> {
 
 
   void reloadAll() async {
-    await _cubit.listCandidati(annuncio);
+    await _cubit.listCandidati(annuncio.id ?? "");
     matchCubit.getUserMatched(annuncio.matchedUserId);
   }
 

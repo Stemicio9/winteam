@@ -18,11 +18,11 @@ class AnnunciUserListCubit extends Cubit<AnnunciUserListState> {
   final List<UserEntity> _utenti = [];
   List<UserEntity> get utenti => _utenti;
 
-  Future<void> listCandidati(AnnunciEntity annuncio) async {
+  Future<void> listCandidati(String annuncioid) async {
     emit(AnnunciUserListLoading());
     try {
       HttpResponse<dynamic> result = await annunciListApiService
-          .listUserAnnuncio(annuncio);
+          .listUserAnnuncio(annuncioid);
 
 
 
@@ -53,15 +53,34 @@ class AnnunciUserListCubit extends Cubit<AnnunciUserListState> {
     }
   }
 
-  Future<void> candidate(String advertisementId) async {
+  Future<AnnunciEntity> candidate(String advertisementId) async {
     emit(AnnunciUserListLoading());
     try{
       HttpResponse<dynamic> result = await annunciListApiService.candidate(advertisementId);
+      var json =  AnnunciEntity.fromJson(result.data);
       emit(AnnunciListReloadAll());
+      return json;
     }catch(e) {
       print(e.toString());
       emit(AnnunciUserListError());
+      return AnnunciEntity.defaultVal();
     }
   }
+
+  // Get annuncio by id
+  Future<AnnunciEntity> getAnnuncioById(String id) async {
+    emit(AnnunciUserListLoading());
+    try{
+      HttpResponse<dynamic> result = await annunciListApiService.getAnnuncio(id);
+      var json =  AnnunciEntity.fromJson(result.data);
+      emit(AnnunciListReloadAll());
+      return json;
+    }catch(e) {
+      print(e.toString());
+      emit(AnnunciUserListError());
+      return AnnunciEntity.defaultVal();
+    }
+  }
+
 
 }

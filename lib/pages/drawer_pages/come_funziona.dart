@@ -1,10 +1,6 @@
 
 
 import 'package:flutter/material.dart';
-import 'package:winteam/widgets/appbars.dart';
-
-
-import '../../services/drawer_widget/video_come_funziona.dart';
 
 
 class ComeFunziona extends StatefulWidget {

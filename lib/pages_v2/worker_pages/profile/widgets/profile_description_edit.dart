@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:winteam/constants/language.dart';
 import 'package:winteam/theme/app_style.dart';
 import 'package:winteam/utils/size_utils.dart';
 import 'package:winteam/widgets_v2/inputs_v2.dart';

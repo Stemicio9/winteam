@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:winteam/blocs/annunci_bloc/annunci_cubit.dart';
 import 'package:winteam/constants/colors.dart';
 import 'package:winteam/entities/annunci_entity.dart';
 import 'package:winteam/widgets/card_annuncio.dart';

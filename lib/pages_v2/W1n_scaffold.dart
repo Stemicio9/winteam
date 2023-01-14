@@ -50,11 +50,11 @@ class W1nScaffold extends StatelessWidget {
         resizeToAvoidBottomInset: false,
         body: CloseOnTapUtility(
             child: Stack(
-          children: [
-             hasBackgroundColor == true ? const BackgroundV2() : Container(),
-            body,
-          ],
-        )
+              children: [
+                hasBackgroundColor == true ? const BackgroundV2() : Container(),
+                body
+              ]
+            )
         )
     );
   }

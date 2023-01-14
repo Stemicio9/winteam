@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:winteam/constants/colors.dart';
-import 'package:winteam/constants/language.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:winteam/blocs/subscription_bloc/subscription_cubit.dart';
+import 'package:winteam/blocs/user_bloc/user_list_cubit.dart';
 import 'package:winteam/constants/route_constants.dart';
 import 'package:winteam/entities/skill_entity.dart';
-import 'package:winteam/pages_v2/W1n_scaffold.dart';
 import 'package:winteam/pages_v2/employer_pages/search_workers/widget/search_workers_card.dart';
-import 'package:winteam/pages_v2/employer_pages/search_workers/widget/subscription_dialog.dart';
-import 'package:winteam/pages_v2/worker_pages/ads/data/annuncio.dart';
 import 'package:winteam/pages_v2/worker_pages/ads/widgets/ads_autocomplete.dart';
 import 'package:winteam/utils/size_utils.dart';
 
@@ -18,73 +16,87 @@ class SearchWorkers extends StatefulWidget {
 }
 
 class SearchWorkersState extends State<SearchWorkers> {
+  UserListCubit get _userListCubit => context.read<UserListCubit>();
+
+  SubscriptionCubit get _subscriptionCubit => context.read<SubscriptionCubit>();
   final TextEditingController filterController = TextEditingController();
-  List<Annuncio> annunci = List.empty(growable: true);
+
+  @override
+  void initState() {
+    super.initState();
+    _userListCubit.searchUserFiltered('');
+    _subscriptionCubit.cani("search");
+  }
 
   @override
   Widget build(BuildContext context) {
-    annunci = dummyAnnunci();
-
-    return  SingleChildScrollView(
-          child: Padding(
-            padding: getPadding(bottom: 30),
-            child: Column(
-              children: [
-
-                AdsAutocomplete(
-                    paddingBottom: 30,
-                    filterController: filterController,
-                    optionSelected: onSelectedAutocomplete,
-                ),
-
-                ...annunci.map((e) => SearchWorkerCard(
-                  onTap: () { Navigator.pushNamed(context, RouteConstants.candidateProfileChoose, arguments:{
-                  'isVisible':'false',
-                  });
-
-                   /* showDialog(
-                        context: context,
-                        barrierColor: blackDialog,
-                        builder: (ctx) => SubscriptionDialog()
-                    ); */
-                  },
-                  title: e.title,
-                  subtitle: e.subtitle,
-                  position: e.position,
-                  email: e.email,
-                  phone: e.phone,
-                  image: e.image,
-                  skillIcon: e.skillIcon,
-
-                )),
-
-
-              ],
+    return Padding(
+        padding: getPadding(bottom: 30),
+        child: Column(
+          children: [
+            AdsAutocomplete(
+              paddingBottom: 30,
+              filterController: filterController,
+              optionSelected: onSelectedAutocomplete,
             ),
-          ),
-        );
+            Expanded(
+              child: ListView(
+                children: [
+                  BlocBuilder<UserListCubit, UserListState>(
+                    builder: (_, userState) {
+                      if (userState is UserListLoading) {
+                        return const Center(child: CircularProgressIndicator());
+                      } else if (userState is UserListLoaded) {
+                        return BlocBuilder<SubscriptionCubit, SubscriptionState>(
+                            builder: (_, state) {
+                          if (state is SubscriptionLoading) {
+                            return const Center(child: CircularProgressIndicator());
+                          } else if (state is SubscriptionCanI) {
+                            return Column(children: [
+                              ...userState.users
+                                  .map((e) => SearchWorkerCard(
+                                      onTap: () {
+                                        Navigator.pushNamed(context,
+                                            RouteConstants.candidateProfileChoose,
+                                            arguments: {'isVisible': false, 'company': e});
+                                      },
+                                      user: e,
+                                      skillIcon: 'assets/images/PizzaIcon.svg'))
+                                  .toList()
+                            ]);
+                          } else if (state is SubscriptionCannotI) {
+                            return Column(children: [
+                              ...userState.users
+                                  .map((e) => SearchWorkerCard(
+                                      onTap: () {
+                                        Navigator.pushNamed(context,
+                                            RouteConstants.candidateProfileChoose,
+                                            arguments: {'isVisible': 'false', 'company': e});
+                                      },
+                                      user: e,
+                                      skillIcon: 'assets/images/PizzaIcon.svg'))
+                                  .toList()
+                            ]);
+                          } else {
+                            return const Center(child: Text("Error"));
+                          }
+                        });
+                      } else if (userState is UserListError) {
+                        return const Center(child: Text("Error"));
+                      } else {
+                        return const Center(child: Text("Error"));
+                      }
+                    },
+                  ),
+                ],
+              ),
+            ),
+          ],
+        )
+    );
   }
 
-
-  void onSelectedAutocomplete(SkillEntity value){
+  void onSelectedAutocomplete(SkillEntity value) {
     print("Selected value ${value.name}");
   }
-
-
-  List<Annuncio> dummyAnnunci(){
-    List<Annuncio> result = List.empty(growable: true);
-    for(int i = 0; i< 5; i++){
-      result.add(
-          const Annuncio(
-              title: "Gianmario", subtitle: 'Pizzaiolo', position: 'Bisignano(CS)',
-              date: '', hours: '', price: "", skillIcon: 'assets/images/PizzaIcon.svg',
-              image: 'assets/images/img_pexelsphotoby.png',
-              email: 'gianmariodepaoletti@gmail.com', phone: '+39 1234567890'
-
-          )
-      );
-    }
-    return result;
-  }
-
 }

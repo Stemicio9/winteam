@@ -4,7 +4,6 @@ import 'package:winteam/constants/language.dart';
 import 'package:winteam/constants/route_constants.dart';
 import 'package:winteam/constants/validators.dart';
 import 'package:winteam/utils/image_constant.dart';
-import 'package:winteam/widgets/texts.dart';
 import 'package:winteam/widgets/utilities/image_utility.dart';
 import 'package:winteam/widgets_v2/action_buttons_v2.dart';
 import 'package:winteam/widgets_v2/inputs_v2.dart';

@@ -31,6 +31,6 @@ class SkillEntity extends AutocompleteElement{
 
   @override
   String toString() {
-    return 'SkillEntity{id: $id, name: $name, imageLink: $imageLink, hexColorText: $hexColorText, hexColorBackground: $hexColorBackground}';
+    return name;
   }
 }

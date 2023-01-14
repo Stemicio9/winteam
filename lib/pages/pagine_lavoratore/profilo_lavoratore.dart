@@ -1,7 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:hexcolor/hexcolor.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:winteam/blocs/user_bloc/current_user_cubit.dart';
 import 'package:winteam/constants/route_constants.dart';
@@ -9,9 +11,8 @@ import 'package:winteam/entities/skill_entity.dart';
 import 'package:winteam/entities/user_entity.dart';
 import 'package:winteam/widgets/action_buttons.dart';
 import 'package:winteam/widgets/texts.dart';
+
 import '../../constants/colors.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:hexcolor/hexcolor.dart';
 
 class ProfiloLavoratoreWidget extends StatelessWidget {
   const ProfiloLavoratoreWidget({super.key});

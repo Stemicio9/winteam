@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:winteam/widgets/chips.dart';
-
-import '../../widgets/appbars.dart';
 
 class RicercaUtenteLavoratore extends StatefulWidget {
   @override

@@ -1,8 +1,8 @@
 
 
 
-import 'package:hexcolor/hexcolor.dart';
 import 'package:flutter/material.dart';
+import 'package:hexcolor/hexcolor.dart';
 
 class SkillChip extends StatelessWidget {
 

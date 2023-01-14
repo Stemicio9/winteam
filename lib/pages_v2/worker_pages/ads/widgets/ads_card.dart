@@ -21,7 +21,6 @@ class AdsCard extends StatelessWidget {
   final String candidates;
   String message;
   Color? statusColor;
-  final skillIcon;
   final bool isVisible;
   final goToList;
   final goToProfile;
@@ -34,7 +33,6 @@ class AdsCard extends StatelessWidget {
     this.innerImageWidth = 90,
     this.innerImageHeight = 90,
     required this.onTap,
-    required this.skillIcon,
     required this.annunciEntity,
     this.message = '',
     this.statusColor = lightGreen,
@@ -70,9 +68,7 @@ class AdsCard extends StatelessWidget {
                         Padding(
                             padding: getPadding(right: 20),
                             child: Container(
-                              height: getSize(
-                                imageHeight,
-                              ),
+                              height: getSize(imageHeight),
                               width: getSize(
                                 imageWidth,
                               ),
@@ -81,20 +77,21 @@ class AdsCard extends StatelessWidget {
                                   children: [
                                     CustomImageView(
                                       onTap: goToProfile,
-                                      imagePath: annunciEntity.image,
+                                      svgPath: isWorkerCard ? null : (annunciEntity.skillDTO?.imageLink ?? ''),
+                                      imagePath: isWorkerCard ? annunciEntity.image : null,
                                       height: getSize(
                                         innerImageHeight,
                                       ),
                                       width: getSize(
                                         innerImageWidth,
                                       ),
-                                      radius: BorderRadius.circular(
+                                      radius: isWorkerCard ? BorderRadius.circular(
                                         getHorizontalSize(
                                           innerImageRadius,
-                                        ),
-                                      ),
+                                        ) ,
+                                      ): null,
                                       alignment: Alignment.center,
-                                      fit: BoxFit.cover,
+                                      fit: isWorkerCard ? BoxFit.cover : BoxFit.scaleDown,
                                     ),
                                   ]),
                             )),
@@ -104,7 +101,7 @@ class AdsCard extends StatelessWidget {
 
 
                             SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.4,
+                              width: isWorkerCard ? MediaQuery.of(context).size.width * 0.55 : MediaQuery.of(context).size.width * 0.50,
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
@@ -118,18 +115,16 @@ class AdsCard extends StatelessWidget {
                                   ),
 
 
-                                  Padding(
+                                  Visibility(
+                                    visible: isWorkerCard,
+                                    child: Padding(
                                     padding: getPadding(left: 5),
                                     child: CustomImageView(
-                                      svgPath: skillIcon,
-                                      height: getSize(
-                                        20,
-                                      ),
-                                      width: getSize(
-                                        20,
-                                      ),
+                                      svgPath: (annunciEntity.skillDTO?.imageLink ?? ''),
+                                      height: getSize(20),
+                                      width: getSize(20),
                                     ),
-                                  ),
+                                  ),)
                                 ],
                               ),
                             ),
@@ -138,7 +133,7 @@ class AdsCard extends StatelessWidget {
                               onTap: goToProfile,
                               child:
                               SizedBox(
-                                width: 150,
+                                width: MediaQuery.of(context).size.width * 0.45,
                                 child: Text(
                                   isWorkerCard ? (annunciEntity.publisherUserDTO?.companyName ?? '') : annunciEntity.description,
                                   maxLines: 2,
@@ -157,12 +152,8 @@ class AdsCard extends StatelessWidget {
                                     padding: getPadding(right: 12),
                                     child: CustomImageView(
                                       svgPath: ImageConstant.imgPosition,
-                                      height: getSize(
-                                        23,
-                                      ),
-                                      width: getSize(
-                                        18,
-                                      ),
+                                      height: getSize(23),
+                                      width: getSize(18),
                                     ),
                                   ),
                                   Text(
@@ -180,12 +171,8 @@ class AdsCard extends StatelessWidget {
                                     padding: getPadding(right: 10),
                                     child: CustomImageView(
                                       svgPath: ImageConstant.imgCalendar,
-                                      height: getSize(
-                                        20,
-                                      ),
-                                      width: getSize(
-                                        20,
-                                      ),
+                                      height: getSize(20),
+                                      width: getSize(20),
                                     ),
                                   ),
                                   Text(
@@ -203,12 +190,8 @@ class AdsCard extends StatelessWidget {
                                     padding: getPadding(right: 10),
                                     child: CustomImageView(
                                       svgPath: ImageConstant.imgHours,
-                                      height: getSize(
-                                        20,
-                                      ),
-                                      width: getSize(
-                                        20,
-                                      ),
+                                      height: getSize(20),
+                                      width: getSize(20),
                                     ),
                                   ),
                                   Text(
@@ -279,28 +262,25 @@ class AdsCard extends StatelessWidget {
                   //  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     alignment: WrapAlignment.center,
                     children: [
-                       Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            CustomImageView(
-                              svgPath: ImageConstant.imgPayment,
-                              height: getSize(
-                                45,
-                              ),
-                              width: getSize(
-                                45,
-                              ),
-                            ),
-                            Padding(
-                              padding: getPadding(left: 10),
-                              child: Text(
-                                '${annunciEntity.payment} €',
-                                style: AppStyle.txtMontserratBold20,
-                              ),
-                            )
-                          ],
-                        ),
-
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Padding(
+                            padding: getPadding(top: 10),
+                            child: Chip(
+                                padding: getPadding(
+                                    left: 20,
+                                    right: 20,
+                                    top: 10,
+                                    bottom: 10),
+                                backgroundColor: green,
+                                label: Text(
+                                  '${annunciEntity.payment} €',
+                                  style: AppStyle.txtMontserratBold22White,
+                                )),
+                          ),
+                        ],
+                      ),
                       Padding(
                         padding: getPadding(top: 10),
                         child: ActionButtonV2(
