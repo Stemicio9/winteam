@@ -202,7 +202,6 @@ class PubblicaAnnuncioDatoreState extends State<PubblicaAnnuncioDatore> {
     print(finalPrice);
     AnnunciEntity annuncio = AnnunciEntity(
         id: "",
-        title: title,
         description: description,
         date: datePicker.pickedDate!.toIso8601String(),
         hourSlot: hourSlotSelector.hourSlotSelected,

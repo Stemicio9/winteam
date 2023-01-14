@@ -2,7 +2,6 @@ import 'package:winteam/utils/superclasses_and_mixins/autocomplete_element.dart'
 
 class SkillEntity extends AutocompleteElement{
   String? id;
-
   String? hexColorText;
   String? hexColorBackground;
 
@@ -32,6 +31,6 @@ class SkillEntity extends AutocompleteElement{
 
   @override
   String toString() {
-    return name ?? "";
+    return 'SkillEntity{id: $id, name: $name, imageLink: $imageLink, hexColorText: $hexColorText, hexColorBackground: $hexColorBackground}';
   }
 }

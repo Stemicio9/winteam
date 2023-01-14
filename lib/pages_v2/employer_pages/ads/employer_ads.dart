@@ -71,13 +71,13 @@ class EmployerAdsState extends State<EmployerAds> {
                               isWorkerCard: false,
                               onTap: () {
                                 Navigator.pushNamed(
-                                    context, RouteConstants.employerAdsDetail);
+                                    context, RouteConstants.employerAdsDetail, arguments: {'annuncio': e});
                               },
                               skillIcon:
                                   e.skillDTO?.imageLink ??
                                       'assets/images/PizzaIcon.svg',
                               message: message,
-                              candidates: candidates,
+                              candidates: e.candidateUserList.length.toString(),
                               annunciEntity: e,
                               goToList: () {
                                 Navigator.pushNamed(

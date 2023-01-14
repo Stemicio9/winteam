@@ -19,52 +19,68 @@ class AdsDetailDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: getPadding(left: 20, right: 20),
+        padding: getPadding(left: 20, right: 20),
+        child:
+        Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            !isApplicantDialog
+                ?  isNotApplicant() : isApplicant(context),
+            DialogBackText()
+          ],
+        ),
+    );
+  }
+
+  Widget isApplicant(context){
+    return Column(
+      children: [
+        DialogCard(
+          cardTitle: NOTICE,
+          child:
+              Text(
+                'Sei sicuro di voler annullare la tua candidatura?',
+                style: AppStyle.txtMontserratRegular20,
+                textAlign: TextAlign.center,
+              ),
+        ),
+        Padding(
+          padding: getPadding(top: 55),
+          child: ActionButtonV2(
+              action: confirmOnTap,
+              text: CONFIRM,
+              color: background,
+              maxWidth: MediaQuery.of(context).size.width,
+              textColor: white),
+        ),
+      ],
+    );
+
+
+
+  }
+
+  Widget isNotApplicant(){
+    return DialogCard(
+      cardTitle: NOTICE,
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          DialogCard(
-            cardTitle: NOTICE,
-            child: Column(
-              children: [
-                !isApplicantDialog
-                    ? Text(
-                        'La tua candidatura è avvenuta con successo!',
-                        style: AppStyle.txtMontserratRegular20,
-                        textAlign: TextAlign.center,
-                      )
-                    : Text(
-                        'Sei sicuro di voler annullare la tua candidatura?',
-                        style: AppStyle.txtMontserratRegular20,
-                        textAlign: TextAlign.center,
-                      ),
-                !isApplicantDialog
-                    ? Padding(
-                        padding: getPadding(top: 20),
-                        child: CustomImageView(
-                          svgPath: ImageConstant.imgTickSuccess,
-                          height: 50,
-                          width: 50,
-                        ),
-                      )
-                    : Container()
-              ],
-            ),
+          Text(
+            'La tua candidatura è avvenuta con successo!',
+            style: AppStyle.txtMontserratRegular20,
+            textAlign: TextAlign.center,
           ),
-          !isApplicantDialog
-              ? Container()
-              : Padding(
-                  padding: getPadding(top: 55),
-                  child: ActionButtonV2(
-                      action: confirmOnTap,
-                      text: CONFIRM,
-                      color: background,
-                      maxWidth: MediaQuery.of(context).size.width,
-                      textColor: white),
-                ),
-          DialogBackText()
+          Padding(
+            padding: getPadding(top: 20),
+            child: CustomImageView(
+              svgPath: ImageConstant.imgTickSuccess,
+              height: 50,
+              width: 50,
+            ),
+          )
         ],
       ),
     );
   }
+
 }

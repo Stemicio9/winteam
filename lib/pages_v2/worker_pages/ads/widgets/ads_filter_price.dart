@@ -10,10 +10,11 @@ import '../../../../constants/language.dart';
 class AdsFilterPrice extends StatelessWidget{
 
   final TextEditingController priceController;
+  final Function(double?) onChanged;
 
   final dynamic priceValidator;
 
-  AdsFilterPrice({required this.priceController,this.priceValidator});
+  AdsFilterPrice({required this.priceController,this.priceValidator, required this.onChanged});
 
   @override
   Widget build(BuildContext context) {
@@ -56,8 +57,7 @@ class AdsFilterPrice extends StatelessWidget{
               elevation: 5,
               borderRadius: 5,
               keyboard: TextInputType.number,
-
-
+              onChanged: onChanged,
             ),
           ),
         ],

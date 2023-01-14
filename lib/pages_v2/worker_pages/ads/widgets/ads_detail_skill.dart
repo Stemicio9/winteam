@@ -17,10 +17,12 @@ class AdsDetailSkill extends StatelessWidget {
   final double textPadding; // 10
   final double dividerPadding; // 20
 
+
   final String skillName;
   final String price;
   final String message;
   final String state;
+  final Color statusColor;
   final bool isVisible;
 
   AdsDetailSkill({
@@ -29,6 +31,8 @@ class AdsDetailSkill extends StatelessWidget {
     this.imageWidth = 90,
     required this.skillName,
     required this.price,
+    this.isVisible = false,
+    this.statusColor = Colors.redAccent,
     this.chipsPaddingBottom = 10,
     this.chipsPaddingLeft = 20,
     this.chipsPaddingRight = 20,
@@ -38,7 +42,7 @@ class AdsDetailSkill extends StatelessWidget {
     this.dividerPadding = 20,
     this.state = '',
     this.message = '',
-    this.isVisible = false,
+
   });
 
   @override
@@ -47,7 +51,7 @@ class AdsDetailSkill extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Padding(
-          padding: getPadding(top: columnPadding),
+          padding:getPadding(top: columnPadding),
           child: CustomImageView(
             svgPath: skillIcon,
             height: getSize(
@@ -65,6 +69,8 @@ class AdsDetailSkill extends StatelessWidget {
             style: AppStyle.txtMontserratBold28,
           ),
         ),
+
+
         Padding(
           padding: getPadding(top: textPadding),
           child: Chip(
@@ -107,7 +113,7 @@ class AdsDetailSkill extends StatelessWidget {
                             width: 17,
                             height: 17,
                             decoration: BoxDecoration(
-                              color: lightGreen,
+                              color: statusColor,
                               borderRadius: BorderRadius.circular(10),
                             ),
                           )),

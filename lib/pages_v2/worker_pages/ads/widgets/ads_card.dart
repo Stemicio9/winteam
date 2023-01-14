@@ -3,6 +3,7 @@ import 'package:winteam/constants/colors.dart';
 import 'package:winteam/constants/language.dart';
 import 'package:winteam/entities/annunci_entity.dart';
 import 'package:winteam/theme/app_style.dart';
+import 'package:winteam/utils/ad_status_utils.dart';
 import 'package:winteam/utils/image_constant.dart';
 import 'package:winteam/utils/size_utils.dart';
 import 'package:winteam/widgets_v2/action_buttons_v2.dart';
@@ -100,35 +101,52 @@ class AdsCard extends StatelessWidget {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Row(
-                              children: [
-                                Text(
-                                  annunciEntity.title,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: AppStyle.txtMontserratBold24,
-                                ),
-                                Padding(
-                                  padding: getPadding(left: 5),
-                                  child: CustomImageView(
-                                    svgPath: skillIcon,
-                                    height: getSize(
-                                      20,
-                                    ),
-                                    width: getSize(
-                                      20,
+
+
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width * 0.4,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Flexible(
+                                    child: Text(
+                                        annunciEntity.skillDTO?.name ?? 'TEST NAME',
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: AppStyle.txtMontserratBold24,
+                                      ),
+                                  ),
+
+
+                                  Padding(
+                                    padding: getPadding(left: 5),
+                                    child: CustomImageView(
+                                      svgPath: skillIcon,
+                                      height: getSize(
+                                        20,
+                                      ),
+                                      width: getSize(
+                                        20,
+                                      ),
                                     ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
+
                             GestureDetector(
                               onTap: goToProfile,
-                              child: Text(
-                                annunciEntity.description,
-                                overflow: TextOverflow.ellipsis,
-                                style: isWorkerCard
-                                    ? AppStyle.txtMontserratRegularUnderline20
-                                    : AppStyle.txtMontserratRegular18,
+                              child:
+                              SizedBox(
+                                width: 150,
+                                child: Text(
+                                  isWorkerCard ? (annunciEntity.publisherUserDTO?.companyName ?? '') : annunciEntity.description,
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: isWorkerCard
+                                      ? AppStyle.txtMontserratRegularUnderline20
+                                      : AppStyle.txtMontserratRegular16,
+                                ),
                               ),
                             ),
                             Padding(
@@ -252,37 +270,46 @@ class AdsCard extends StatelessWidget {
                     )
                   ],
                 ),
+
+
+
                 Padding(
                   padding: getPadding(top: 30),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  child: Wrap(
+                  //  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    alignment: WrapAlignment.center,
                     children: [
-                      Row(
-                        children: [
-                          CustomImageView(
-                            svgPath: ImageConstant.imgPayment,
-                            height: getSize(
-                              45,
+                       Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            CustomImageView(
+                              svgPath: ImageConstant.imgPayment,
+                              height: getSize(
+                                45,
+                              ),
+                              width: getSize(
+                                45,
+                              ),
                             ),
-                            width: getSize(
-                              45,
-                            ),
-                          ),
-                          Padding(
-                            padding: getPadding(left: 10),
-                            child: Text(
-                              '${annunciEntity.payment} €',
-                              style: AppStyle.txtMontserratBold20,
-                            ),
-                          )
-                        ],
-                      ),
-                      ActionButtonV2(
-                        action: onTap,
-                        text: DETAILS,
-                        color: background,
-                        maxWidth: 200,
-                        textColor: white,
+                            Padding(
+                              padding: getPadding(left: 10),
+                              child: Text(
+                                '${annunciEntity.payment} €',
+                                style: AppStyle.txtMontserratBold20,
+                              ),
+                            )
+                          ],
+                        ),
+
+                      Padding(
+                        padding: getPadding(top: 10),
+                        child: ActionButtonV2(
+                          action: onTap,
+                          text: DETAILS,
+                          color: background,
+                          maxWidth: 200,
+                          textColor: white,
+                        ),
                       )
                     ],
                   ),
@@ -294,29 +321,8 @@ class AdsCard extends StatelessWidget {
   }
 
   initializeAds() {
-    switch (annunciEntity.advertisementStatus) {
-      case 'active':
-        {
-          message = 'Status annuncio: Attivo';
-          statusColor = lightGreen;
-          break;
-        }
-      case 'accepted':
-        {
-          message = 'Status annuncio: Accettato';
-          statusColor = blueState;
-          break;
-        }
-      case 'history':
-        {
-          message = 'Status annuncio: Storico';
-          statusColor = greyState;
-          break;
-        }
-      default:
-        {
-          print('stato annuncio non trovato');
-        }
-    }
+    var part = AdStatusUtils.getAdStatus(annunciEntity.advertisementStatus);
+    message = 'Status annuncio: $part';
+    statusColor = AdStatusUtils.getAdStatusColor(annunciEntity.advertisementStatus);
   }
 }
