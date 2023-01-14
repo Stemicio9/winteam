@@ -36,7 +36,7 @@ class CancelButton extends StatelessWidget{
             maxWidth:maxWidth,
             color:lightGrey,
             textColor:black,
-            margin:0
+
         )
     );
   }

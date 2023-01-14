@@ -113,6 +113,7 @@ class AdsDetailState extends State<AdsDetail> {
               ),
             ],
           ),
-        )));
+        ))
+    );
   }
 }

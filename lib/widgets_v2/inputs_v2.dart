@@ -31,6 +31,8 @@ class InputsV2Widget extends StatelessWidget {
   final bool readOnly;
 
   final onTap;
+  final iconOnTap;
+
   final bool multiline;
   final int maxLine;
   final double fontSize; //14
@@ -87,6 +89,7 @@ class InputsV2Widget extends StatelessWidget {
     this.suffixIconWidth = 25,
     this.suffixIcon,
     this.svgPath = '',
+    this.iconOnTap
   }) : hintText = hinttext;
 
   @override
@@ -170,6 +173,7 @@ class InputsV2Widget extends StatelessWidget {
                             suffixIconWidth,
                           ),
                           svgPath: svgPath,
+                          onTap: iconOnTap,
                         ),
                       )
                     : null,

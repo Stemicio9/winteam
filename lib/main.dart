@@ -105,6 +105,8 @@ class MyApp extends StatelessWidget {
         ],
         child: MaterialApp(
           title: APP_TITLE,
+          debugShowCheckedModeBanner: false,
+          debugShowMaterialGrid: false,
           theme: ThemeData(
               fontFamily: 'Montserrat',
               primarySwatch: Colors.blue,

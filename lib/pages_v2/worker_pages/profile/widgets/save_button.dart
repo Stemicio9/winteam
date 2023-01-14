@@ -29,7 +29,6 @@ class SaveButton extends StatelessWidget {
           maxWidth: 330,
           color: background,
           textColor: white,
-          margin: 0,
         ));
   }
 }

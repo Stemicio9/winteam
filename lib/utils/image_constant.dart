@@ -69,6 +69,9 @@ class ImageConstant {
 
   static String imgEmailSvg = 'assets/images/email.svg';
 
+  static String imgPasswordSee = 'assets/images/pass_icon_see.svg';
+
+  static String imgPasswordUnsee = 'assets/images/pass_icon_unsee.svg';
 
 
 

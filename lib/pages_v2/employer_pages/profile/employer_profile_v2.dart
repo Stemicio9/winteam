@@ -44,10 +44,7 @@ class EmployerProfileState extends State<EmployerProfile>{
 
   @override
   Widget build(BuildContext context) {
-    return W1nScaffold(
-        appBar: widget.isOnlyView ? 1 : 2,
-        title: PROFILE,
-        body: SingleChildScrollView(
+    return SingleChildScrollView(
           child: Padding(
             padding: getPadding(bottom: 35),
             child: Column(
@@ -98,8 +95,7 @@ class EmployerProfileState extends State<EmployerProfile>{
               ],
             ),
           ),
-        )
-    );
+        );
 
   }
 

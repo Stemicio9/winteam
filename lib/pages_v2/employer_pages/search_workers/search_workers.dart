@@ -25,11 +25,7 @@ class SearchWorkersState extends State<SearchWorkers> {
   Widget build(BuildContext context) {
     annunci = dummyAnnunci();
 
-    return W1nScaffold(
-        appBar: 2,
-        backgroundColor: lightGrey,
-        title: SEARCH_WORKER,
-        body: SingleChildScrollView(
+    return  SingleChildScrollView(
           child: Padding(
             padding: getPadding(bottom: 30),
             child: Column(
@@ -66,7 +62,7 @@ class SearchWorkersState extends State<SearchWorkers> {
               ],
             ),
           ),
-        ));
+        );
   }
 
 

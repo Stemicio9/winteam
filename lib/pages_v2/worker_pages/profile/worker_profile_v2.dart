@@ -20,10 +20,8 @@ import 'package:winteam/utils/size_utils.dart';
 
 class WorkerProfileV2 extends StatefulWidget {
   final bool isOnlyView;
-  final bool hasScaffold;
 
-  WorkerProfileV2({this.isOnlyView = false, this.hasScaffold = true
-  });
+  WorkerProfileV2({this.isOnlyView = false});
 
   @override
   State<StatefulWidget> createState() {
@@ -70,12 +68,7 @@ class WorkerProfileV2State extends State<WorkerProfileV2> {
 
   @override
   Widget build(BuildContext context) {
-    return !widget.hasScaffold ? content() :
-        W1nScaffold(
-            appBar: 2,
-            title: PROFILE,
-            body: content()
-        );
+    return content();
 
   }
 

@@ -72,7 +72,7 @@ class ForgotPasswordFormV2State extends State<ForgotPasswordFormV2> {
             maxWidth:190,
             color:green,
             textColor:white,
-            margin:10
+            marginTop: 30,
         ),
       ],
     );

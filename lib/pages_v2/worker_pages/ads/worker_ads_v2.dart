@@ -25,11 +25,7 @@ class WorkerAdsV2State extends State<WorkerAdsV2> {
   @override
   Widget build(BuildContext context) {
     annunci = dummyAnnunci();
-    return W1nScaffold(
-        appBar: 2,
-        title: ADS,
-        backgroundColor: lightGrey,
-        body: SingleChildScrollView(
+    return SingleChildScrollView(
             child: Padding(
                 padding: getPadding(bottom: 35),
                 child: Column(
@@ -43,8 +39,10 @@ class WorkerAdsV2State extends State<WorkerAdsV2> {
                     ...annunci.map(
                       (e) => AdsCard(
                         goToProfile: () {
+
                           Navigator.pushNamed(
                               context, RouteConstants.employerProfileOnlyView);
+
                         },
                         onTap: () {
                           Navigator.pushNamed(
@@ -55,7 +53,7 @@ class WorkerAdsV2State extends State<WorkerAdsV2> {
                       ),
                     )
                   ],
-                ))));
+                )));
   }
 
   void onSelectedAutocomplete(value){

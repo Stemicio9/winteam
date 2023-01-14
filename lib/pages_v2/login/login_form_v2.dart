@@ -9,9 +9,11 @@ import 'package:winteam/constants/colors.dart';
 import 'package:winteam/constants/language.dart';
 import 'package:winteam/constants/route_constants.dart';
 import 'package:winteam/constants/validators.dart';
+import 'package:winteam/utils/image_constant.dart';
 import 'package:winteam/widgets/utilities/image_utility.dart';
 import 'package:winteam/widgets_v2/action_buttons_v2.dart';
 import 'package:winteam/widgets_v2/checkbox_v2.dart';
+import 'package:winteam/widgets_v2/custom_image_view.dart';
 import 'package:winteam/widgets_v2/inputs_v2.dart';
 import 'package:winteam/widgets_v2/texts_v2.dart';
 
@@ -38,11 +40,17 @@ class LoginFormV2State extends State<LoginFormV2> {
   UserCubit get _cubit => context.read<UserCubit>();
   UserAuthCubit get _authCubit => context.read<UserAuthCubit>();
 
+  var _passwordVisible = false;
   final _formKey = GlobalKey<FormState>();
 
   final TextEditingController _emailTextController = TextEditingController();
 
   final TextEditingController _passwordTextController = TextEditingController();
+
+  @override
+  void initState() {
+    _passwordVisible = false;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -110,27 +118,38 @@ class LoginFormV2State extends State<LoginFormV2> {
     return Column(
       children: [
         InputsV2Widget(
-            hinttext: EMAIL,
-            controller: _emailTextController,
-            validator: validateEmail,
-            isPassword: false,
+          hinttext: EMAIL,
+          controller: _emailTextController,
+          validator: validateEmail,
+          isPassword: false,
         ),
 
         InputsV2Widget(
           hinttext: PASSWORD,
           controller: _passwordTextController,
           validator: notEmptyValidate,
-          isPassword: true,
-
+          isPassword: !_passwordVisible,
+          isSuffixIcon: true,
+          suffixIconHeight: 40,
+          suffixIconWidth: 40,
+          iconOnTap: () {
+            setState(() {
+              _passwordVisible = !_passwordVisible;
+            });
+          },
+          svgPath: _passwordVisible
+              ? ImageConstant.imgPasswordSee
+              : ImageConstant.imgPasswordUnsee,
         ),
-        CheckboxV2Widget(),
+        //CheckboxV2Widget(),
         ActionButtonV2(
-            text: LOGIN,
-            action: formSubmit,
-            maxWidth: 315,
-            color: green,
-            textColor: white,
-            margin: 10),
+          text: LOGIN,
+          action: formSubmit,
+          maxWidth: 315,
+          color: green,
+          textColor: white,
+          marginTop: 30,
+        ),
       ],
     );
   }
@@ -150,12 +169,14 @@ class LoginFormV2State extends State<LoginFormV2> {
       children: [
         Texth4V2(testo: DONT_HAVE_AN_ACCOUNT, color: white),
         ActionButtonV2(
-            text: REGISTER,
-            action: navigateToRegister,
-            maxWidth: 200,
-            color: green,
-            textColor: white,
-            margin: 10),
+          text: REGISTER,
+          action: navigateToRegister,
+          maxWidth: 200,
+          color: green,
+          textColor: white,
+          marginBottom: 10,
+          marginTop: 10,
+        ),
       ],
     );
   }

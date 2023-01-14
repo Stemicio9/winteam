@@ -41,10 +41,7 @@ class CreateAdsState extends State<CreateAds>{
 
   @override
   Widget build(BuildContext context) {
-    return W1nScaffold(
-        appBar: 2,
-        title: CREATE_ADS,
-        body: SingleChildScrollView(
+    return SingleChildScrollView(
           child: Container(
             width: MediaQuery.of(context).size.width,
             padding: getPadding(bottom: 35),
@@ -122,7 +119,7 @@ class CreateAdsState extends State<CreateAds>{
             ),
           ),
 
-        )
+
     );
   }
 

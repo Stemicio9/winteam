@@ -94,7 +94,6 @@ class ProfileSkillsEdit extends StatelessWidget {
                 maxWidth: MediaQuery.of(context).size.width,
                 color: lightGrey,
                 textColor: black,
-                margin: 0,
                 prefixIcon: Icons.add_rounded,
               ))
         ],

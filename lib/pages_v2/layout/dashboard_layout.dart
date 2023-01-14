@@ -65,12 +65,19 @@ class DashboardLayout extends StatefulWidget {
   final int maxCount;
   final bool datore; // true = datore, false = lavoratore
 
+  final List<Color> backgroundColors;
+  final List<String> titles;
+
+
   const DashboardLayout(
       {Key? key,
       required this.pages,
       required this.buttons,
       required this.maxCount,
-      required this.datore})
+      required this.datore,
+      required this.titles,
+        required this.backgroundColors
+      })
       : super(key: key);
 
   @override
@@ -83,7 +90,6 @@ class DashboardLayoutState extends State<DashboardLayout>
     with SingleTickerProviderStateMixin {
   final _pageController = PageController(initialPage: 0);
   int _tabIndex = 0;
-
   int get tabIndex => _tabIndex;
 
   set tabIndex(int v) {
@@ -107,10 +113,14 @@ class DashboardLayoutState extends State<DashboardLayout>
     return WillPopScope(
       onWillPop: () async => false,
       child: W1nScaffold(
+        title: widget.titles[_tabIndex],
+        backgroundColor: widget.backgroundColors[_tabIndex],
+        appBar: 2,
         body: PageView(
             controller: _pageController,
             physics: const NeverScrollableScrollPhysics(),
-            children: widget.pages),
+            children: widget.pages
+        ),
         bottomNavigationBar: widget.datore
             ? bottomNavigationDatore()
             : bottomNavigationLavoratore(),
@@ -186,8 +196,12 @@ class DashboardLayoutState extends State<DashboardLayout>
 class LavoratoreLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var page3 = WorkerAdsV2();
-    var page4 = WorkerProfileV2();
+    var workerAds = WorkerAdsV2();
+    var workerProfile = WorkerProfileV2();
+    var workwerAdsTitle = ADS;
+    var workerProfileTitle = PROFILE;
+    var workwerAdsColor = lightGrey;
+    var workerProfileColor = white;
 
     var button3 = BottomBarElement(
       activeElement: Icon(Icons.newspaper_rounded, color: white),
@@ -202,13 +216,21 @@ class LavoratoreLayout extends StatelessWidget {
     return DashboardLayout(
       datore: false,
       maxCount: 4,
+      titles: [
+        workwerAdsTitle,
+        workerProfileTitle,
+      ],
       pages: [
-        page3,
-        page4,
+        workerAds,
+        workerProfile,
       ],
       buttons: [
         button3,
         button4,
+      ],
+      backgroundColors: [
+        workwerAdsColor,
+        workerProfileColor,
       ],
     );
   }
@@ -217,10 +239,21 @@ class LavoratoreLayout extends StatelessWidget {
 class DatoreLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var page1 = EmployerAds();
-    var page2 = SearchWorkers();
-    var page3 = CreateAds();
-    var page4 = EmployerProfile();
+    var employerAds = EmployerAds();
+    var searchWorkers = SearchWorkers();
+    var createAds = CreateAds();
+    var employerProfile = EmployerProfile();
+
+    var employerAdsTitle = POSTED_ADS;
+    var searchWorkersTitle = SEARCH_WORKER;
+    var createAdsTitle = CREATE_ADS;
+    var employerProfileTitle = PROFILE;
+
+    var employerAdsColor = lightGrey;
+    var searchWorkersColor = lightGrey;
+    var createAdsColor = white;
+    var employerProfileColor = white;
+
 
     var button1 = BottomBarElement(
       activeElement: Icon(Icons.newspaper_rounded, color: white),
@@ -245,11 +278,23 @@ class DatoreLayout extends StatelessWidget {
     return DashboardLayout(
       datore: true,
       maxCount: 4,
+      titles: [
+        employerAdsTitle,
+        searchWorkersTitle,
+        createAdsTitle,
+        employerProfileTitle,
+      ],
+      backgroundColors: [
+        employerAdsColor,
+        searchWorkersColor,
+        createAdsColor,
+        employerProfileColor,
+      ],
       pages: [
-        page1,
-        page2,
-        page3,
-        page4,
+        employerAds,
+        searchWorkers,
+        createAds,
+        employerProfile,
       ],
       buttons: [
         button1,
@@ -259,4 +304,9 @@ class DatoreLayout extends StatelessWidget {
       ],
     );
   }
+
+
+
+
+
 }

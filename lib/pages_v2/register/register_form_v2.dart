@@ -3,6 +3,7 @@ import 'package:winteam/constants/colors.dart';
 import 'package:winteam/constants/language.dart';
 import 'package:winteam/constants/route_constants.dart';
 import 'package:winteam/constants/validators.dart';
+import 'package:winteam/utils/image_constant.dart';
 import 'package:winteam/widgets/texts.dart';
 import 'package:winteam/widgets/utilities/image_utility.dart';
 import 'package:winteam/widgets_v2/action_buttons_v2.dart';
@@ -19,12 +20,19 @@ class RegisterFormV2 extends StatefulWidget {
 class RegisterFormV2State extends State<RegisterFormV2> {
   final _formKey = GlobalKey<FormState>();
 
+  var _passwordVisible = false;
+  var _confirmPasswordVisible = false;
+
   final TextEditingController _emailTextController = TextEditingController();
-
   final TextEditingController _passwordTextController = TextEditingController();
+  final TextEditingController _passwordConfirmTextController =
+      TextEditingController();
 
-  final TextEditingController _passwordConfirmTextController = TextEditingController();
-
+  @override
+  void initState() {
+    _passwordVisible = false;
+    _confirmPasswordVisible = false;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -75,16 +83,36 @@ class RegisterFormV2State extends State<RegisterFormV2> {
         InputsV2Widget(
           hinttext: PASSWORD,
           controller: _passwordTextController,
-          isPassword: true,
+          isPassword: !_passwordVisible,
           validator: validatePassword,
-
+          isSuffixIcon: true,
+          suffixIconHeight: 40,
+          suffixIconWidth: 40,
+          iconOnTap: () {
+            setState(() {
+              _passwordVisible = !_passwordVisible;
+            });
+          },
+          svgPath: _passwordVisible
+              ? ImageConstant.imgPasswordSee
+              : ImageConstant.imgPasswordUnsee,
         ),
         InputsV2Widget(
           hinttext: PASSWORD_CONFIRM,
           controller: _passwordConfirmTextController,
-          isPassword: true,
+          isPassword: !_confirmPasswordVisible,
           validator: validatePassword,
-
+          isSuffixIcon: true,
+          suffixIconHeight: 40,
+          suffixIconWidth: 40,
+          iconOnTap: () {
+            setState(() {
+              _confirmPasswordVisible = !_confirmPasswordVisible;
+            });
+          },
+          svgPath: _confirmPasswordVisible
+              ? ImageConstant.imgPasswordSee
+              : ImageConstant.imgPasswordUnsee,
         ),
       ],
     );
@@ -92,12 +120,11 @@ class RegisterFormV2State extends State<RegisterFormV2> {
 
   Widget buttonSection() {
     return ActionButtonV2(
-        text:REGISTER,
-        action:formSubmit,
-        maxWidth:315,
-        color:green,
-        textColor:white,
-        margin: 10
+      text: REGISTER,
+      action: formSubmit,
+      maxWidth: 315,
+      color: green,
+      textColor: white,
     );
   }
 
@@ -113,7 +140,6 @@ class RegisterFormV2State extends State<RegisterFormV2> {
       ),
     );
   }
-
 
   formSubmit() async {
     if (_formKey.currentState!.validate()) {

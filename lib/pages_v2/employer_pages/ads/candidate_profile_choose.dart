@@ -38,7 +38,6 @@ class CandidateProfileChoose extends StatelessWidget {
           child: Column(
             children: [
               WorkerProfileV2(
-                hasScaffold: false,
                 isOnlyView: true,
               ),
 

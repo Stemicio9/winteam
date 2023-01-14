@@ -49,11 +49,7 @@ class EmployerAdsState extends State<EmployerAds> {
 
   @override
   Widget build(BuildContext context) {
-    return W1nScaffold(
-        appBar: 2,
-        backgroundColor: lightGrey,
-        title: POSTED_ADS,
-        body: SingleChildScrollView(
+    return SingleChildScrollView(
           child: Container(
             width: MediaQuery.of(context).size.width,
             padding: getPadding(bottom: 30),
@@ -102,7 +98,7 @@ class EmployerAdsState extends State<EmployerAds> {
               ],
             ),
           ),
-        ));
+        );
   }
 
   void selectElement(int index, bool value) {
