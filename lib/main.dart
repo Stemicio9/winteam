@@ -11,6 +11,7 @@ import 'package:winteam/blocs/annunci_bloc/annunci_cubit.dart';
 import 'package:winteam/blocs/annunci_user_list/annunci_user_list_cubit.dart';
 import 'package:winteam/blocs/annuncio_detail.dart';
 import 'package:winteam/blocs/dashboard_tab_index_bloc/tab_index_bloc.dart';
+import 'package:winteam/blocs/firebase_storage/firebase_storage_bloc.dart';
 import 'package:winteam/blocs/skill_bloc/skill_cubit.dart';
 import 'package:winteam/blocs/subscription_bloc/subscription_cubit.dart';
 import 'package:winteam/blocs/user_api_service/user_api_service.dart';
@@ -109,6 +110,9 @@ class MyApp extends StatelessWidget {
           ),
           BlocProvider(
             create: (context) => SubscriptionCubit(),
+          ),
+          BlocProvider(
+            create: (context) => FirebaseStorageCubit(),
           ),
         ],
         child: MaterialApp(

@@ -5,21 +5,53 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:winteam/authentication/authentication_bloc.dart';
+import 'package:winteam/blocs/firebase_storage/firebase_storage_bloc.dart';
+import 'package:winteam/blocs/user_bloc/current_user_cubit.dart';
 import 'package:winteam/constants/language.dart';
 import 'package:winteam/constants/route_constants.dart';
 import 'package:winteam/entities/skill_entity.dart';
 import 'package:winteam/entities/user_entity.dart';
+import 'package:winteam/pages_v2/employer_pages/profile/employer_profile_v2.dart';
 import 'package:winteam/pages_v2/worker_pages/profile/widgets/image_profile.dart';
 import 'package:winteam/pages_v2/worker_pages/profile/widgets/profile_description.dart';
 import 'package:winteam/pages_v2/worker_pages/profile/widgets/profile_info.dart';
 import 'package:winteam/pages_v2/worker_pages/profile/widgets/profile_name_header.dart';
 import 'package:winteam/pages_v2/worker_pages/profile/widgets/profile_skills.dart';
 import 'package:winteam/utils/size_utils.dart';
+import 'package:winteam/widgets_v2/loading_gif.dart';
+
+class WorkerProfileV2Widget extends StatelessWidget {
+  final bool isOnlyView;
+  final bool datore;
+
+  const WorkerProfileV2Widget({super.key, this.isOnlyView = false, this.datore = false});
+
+  @override
+  Widget build(BuildContext context) {
+    final arguments = (ModalRoute.of(context)?.settings.arguments ??
+        <String, dynamic>{}) as Map;
+    UserEntity company = arguments['company'] ?? UserEntity();
+    if (isOnlyView) {
+      if(!datore) {
+        return WorkerProfileV2(isOnlyView: isOnlyView, currentUser: company);
+      }else{
+        return EmployerProfile(isOnlyView: isOnlyView, currentUser: company);
+      }
+    } else {
+      if(!datore) {
+        return WorkerProfileV2(isOnlyView: isOnlyView);
+      }else{
+        return EmployerProfile(isOnlyView: isOnlyView);
+      }
+    }
+  }
+}
 
 class WorkerProfileV2 extends StatefulWidget {
   final bool isOnlyView;
+  UserEntity? currentUser;
 
-  WorkerProfileV2({this.isOnlyView = false});
+  WorkerProfileV2({super.key, this.isOnlyView = false, this.currentUser});
 
   @override
   State<StatefulWidget> createState() {
@@ -28,88 +60,76 @@ class WorkerProfileV2 extends StatefulWidget {
 }
 
 class WorkerProfileV2State extends State<WorkerProfileV2> {
-  UserAuthCubit get _authCubit => context.read<UserAuthCubit>();
-  UserEntity currentUser = UserEntity();
+  FirebaseStorageCubit get _firebaseStorageCubit =>
+      context.read<FirebaseStorageCubit>();
 
-  String name = "Mario Rossinettini";
-  String headerDescription = "Digital Creator";
-  String description =
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut et massa mi. Aliquam in hendrerit urna. Pellentesque sit amet sapien fringilla, mattis ligula consectetur, ultrices ';
-  String phone = "+39 9876543210";
-  String email = "mario.rossinettini@libeotto.com";
-  String position = "Milan, Italy";
-  final String mansione = "Mansione";
   XFile? imageFile;
-
-  final List<SkillEntity> mansioni = List.empty(growable: true);
 
   @override
   void initState() {
     super.initState();
   }
 
-  inputData(UserEntity company) {
-    if (widget.isOnlyView) {
-      currentUser = company;
-    } else {
-      currentUser = (_authCubit.state as UserAuthenticated).user;
-    }
-
-    print(currentUser);
-    name = '${currentUser.firstName} ${currentUser.lastName}';
-    headerDescription = currentUser.brief ?? '';
-    phone = currentUser.phoneNumber ?? '';
-    email = currentUser.email ?? '';
-    position = currentUser.address ?? '';
-    description = currentUser.description ?? '';
-
-    fillMansioni();
-  }
 
   @override
   Widget build(BuildContext context) {
-    final arguments = (ModalRoute.of(context)?.settings.arguments ??
-        <String, dynamic>{}) as Map;
-    UserEntity company = arguments['company'] ?? UserEntity();
-    inputData(company);
-
-    return content();
-  }
-
-  fillMansioni() {
-    mansioni.clear();
-    for (int i = 0; i < currentUser.skillList!.length; i++) {
-      mansioni.add(currentUser.skillList![i]);
+    if (widget.isOnlyView) {
+      return content(widget.currentUser?.imageLink ?? '',
+          widget.currentUser ?? UserEntity());
+    } else {
+      return BlocBuilder<UserAuthCubit, UserAuthenticationState>(
+          builder: (_, stateUser) {
+        if (stateUser is UserAuthenticated) {
+          return BlocBuilder<FirebaseStorageCubit, FirebaseStorageState>(
+            builder: (_, state) {
+              if (state is FirebaseStorageLoaded) {
+                if (state.toUpload) {
+                  _firebaseStorageCubit.update(
+                      stateUser.user.copyWith(imageLink: state.imageUrl));
+                }
+                //_authCubit.persistAuthentication(widget.currentUser!.copyWith(imageLink: state.imageUrl));
+                return content(state.imageUrl, stateUser.user);
+              } else {
+                return content(stateUser.user.imageLink ?? '', stateUser.user);
+              }
+            },
+          );
+        } else {
+          return const Center(child: Text("ERRORE DI AUTENTICAZIONE"));
+        }
+      });
     }
   }
 
-  openGallery() async {
-    var image = await ImagePicker().pickImage(source: ImageSource.gallery);
-
-    setState(() {
-      imageFile = image;
+  openGallery(String userId){
+    print("APRO LA GALLERY");
+    ImagePicker().pickImage(source: ImageSource.gallery).then((value) {
+      print("IMAGE PICKATA");
+      setState(() {
+        imageFile = value;
+      });
+      print("INIZIO A SALVARE SU FIREBASE");
+      saveImageToFirebase(userId);
+      Navigator.of(context).pop();
     });
-
-    var file = File(imageFile!.path);
-    Uint8List bytes = file.readAsBytesSync();
-
-    Navigator.of(context).pop();
   }
 
-  openCamera() async {
-    var image = await ImagePicker().pickImage(source: ImageSource.camera);
-
-    setState(() {
-      imageFile = image;
+  openCamera(String userId) {
+    ImagePicker().pickImage(source: ImageSource.camera).then((value) {
+      setState(() {
+        imageFile = value;
+      });
+      saveImageToFirebase(userId);
+      Navigator.of(context).pop();
     });
-
-    var file = File(imageFile!.path);
-    Uint8List bytes = file.readAsBytesSync();
-
-    Navigator.of(context).pop();
   }
 
-  Widget content() {
+  saveImageToFirebase(String id) {
+    _firebaseStorageCubit.saveImageToFirebase(
+        imageFile!, id);
+  }
+
+  Widget content(String imageLink, UserEntity user) {
     return Padding(
       padding: getPadding(bottom: 35),
       child: Column(
@@ -125,11 +145,13 @@ class WorkerProfileV2State extends State<WorkerProfileV2> {
             iconWidth: 45,
             openCamera: widget.isOnlyView ? null : openCamera,
             openGallery: openGallery,
+            urlImage: imageLink,
+            userId: user.id ?? '',
           ),
           ProfileNameHeader(
             isOnlyView: widget.isOnlyView,
-            name: name,
-            description: headerDescription,
+            name: '${user.firstName} ${user.lastName}',
+            description: user.brief ?? '',
             sectionHeight: 100,
             onTap: () {
               Navigator.pushNamed(context, RouteConstants.workerProfileEdit);
@@ -139,17 +161,17 @@ class WorkerProfileV2State extends State<WorkerProfileV2> {
             child: ListView(
               children: [
                 ProfileSkill(
-                  mansioni: mansioni,
+                  mansioni: user.skillList ?? [],
                 ),
                 ProfileDescription(
                   title: CHI_SONO,
-                  description: description,
+                  description: user.description ?? '',
                 ),
                 ProfileInfo(
                   title: I_MIEI_DATI,
-                  phone: phone,
-                  email: email,
-                  position: position,
+                  phone: user.phoneNumber ?? '',
+                  email: user.email ?? '',
+                  position: user.address ?? '',
                 ),
               ],
             ),

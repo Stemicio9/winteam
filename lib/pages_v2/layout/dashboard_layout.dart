@@ -195,7 +195,7 @@ class LavoratoreLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var workerAds = WorkerAdsV2();
-    var workerProfile = WorkerProfileV2();
+    var workerProfile = WorkerProfileV2Widget();
     var workwerAdsTitle = ADS;
     var workerProfileTitle = PROFILE;
     var workwerAdsColor = lightGrey;
@@ -240,7 +240,7 @@ class DatoreLayout extends StatelessWidget {
     var employerAds = EmployerAds();
     var searchWorkers = SearchWorkers();
     var createAds = CreateAdsWidget();
-    var employerProfile = EmployerProfile();
+    var employerProfile = WorkerProfileV2Widget(datore: true);
 
     var employerAdsTitle = POSTED_ADS;
     var searchWorkersTitle = SEARCH_WORKER;

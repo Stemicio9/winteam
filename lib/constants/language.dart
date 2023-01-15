@@ -264,3 +264,4 @@ final Map<String, String> LANG_EN = {
 const String BACKGROUND_IMAGE_NAME = "background-image.png";
 const String LOGO_IMAGE_NAME = "logo-white.png";
 const String LOGO_GIF_PATH = "assets/images/animated_logo.gif";
+const String IMAGE_DEFAULT_NAME = "profileImage";

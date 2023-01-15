@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:winteam/authentication/authentication_bloc.dart';
+import 'package:winteam/blocs/firebase_storage/firebase_storage_bloc.dart';
 import 'package:winteam/constants/colors.dart';
 import 'package:winteam/constants/language.dart';
 import 'package:winteam/constants/route_constants.dart';
@@ -18,8 +19,9 @@ import 'package:winteam/utils/size_utils.dart';
 
 class EmployerProfile extends StatefulWidget {
   final bool isOnlyView;
+  UserEntity? currentUser;
 
-  EmployerProfile({this.isOnlyView = false});
+  EmployerProfile({this.isOnlyView = false, this.currentUser});
 
   @override
   State<StatefulWidget> createState() {
@@ -28,18 +30,10 @@ class EmployerProfile extends StatefulWidget {
 }
 
 class EmployerProfileState extends State<EmployerProfile> {
-  UserAuthCubit get _authCubit => context.read<UserAuthCubit>();
+  FirebaseStorageCubit get _firebaseStorageCubit =>
+      context.read<FirebaseStorageCubit>();
   UserEntity currentUser = UserEntity();
 
-  String ratingMessage = 'Valutazione: 4/5';
-  String name = "Azienda srl";
-  double rating = 4.5;
-  String headerDescription = "Società di servizi";
-  String description =
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut et massa mi. Aliquam in hendrerit urna. Pellentesque sit amet sapien fringilla, mattis ligula consectetur, ultrices ';
-  String phone = "+39 9876543210";
-  String email = "mario.rossinettini@libeotto.com";
-  String position = "Milan, Italy";
   XFile? imageFile;
 
   @override
@@ -47,110 +41,123 @@ class EmployerProfileState extends State<EmployerProfile> {
     super.initState();
   }
 
-  inputData(UserEntity company) {
-    if (widget.isOnlyView) {
-      currentUser = company;
-    } else {
-      currentUser = (_authCubit.state as UserAuthenticated).user;
-    }
-
-    print(currentUser);
-    name = '${currentUser.companyName}';
-    headerDescription = currentUser.brief ?? '';
-    phone = currentUser.phoneNumber ?? '';
-    email = currentUser.email ?? '';
-    position = currentUser.address ?? '';
-    description = currentUser.description ?? '';
-    rating = currentUser.rating ?? 0.0;
-    ratingMessage = 'Valutazione: ${rating.toStringAsFixed(1)}/5';
-  }
 
   @override
   Widget build(BuildContext context) {
+    if (widget.isOnlyView) {
+      return content(widget.currentUser?.imageLink ?? '',
+          widget.currentUser ?? UserEntity());
+    } else {
+      return BlocBuilder<UserAuthCubit, UserAuthenticationState>(
+          builder: (_, stateUser) {
+            if (stateUser is UserAuthenticated) {
+              return BlocBuilder<FirebaseStorageCubit, FirebaseStorageState>(
+                builder: (_, state) {
+                  if (state is FirebaseStorageLoaded) {
+                    if (state.toUpload) {
+                      _firebaseStorageCubit.update(
+                          stateUser.user.copyWith(imageLink: state.imageUrl));
+                    }
+                    //_authCubit.persistAuthentication(widget.currentUser!.copyWith(imageLink: state.imageUrl));
+                    return content(state.imageUrl, stateUser.user);
+                  } else {
+                    return content(stateUser.user.imageLink ?? '', stateUser.user);
+                  }
+                },
+              );
+            } else {
+              return const Center(child: Text("ERRORE DI AUTENTICAZIONE"));
+            }
+          });
+    }
+  }
 
-    final arguments = (ModalRoute.of(context)?.settings.arguments ?? <String, dynamic>{}) as Map;
-    UserEntity company = arguments['company'] ?? UserEntity();
-    inputData(company);
+
+  Widget content(String imageLink, UserEntity user){
 
     return Padding(
-            padding: getPadding(bottom: 35),
-            child: Column(
-              children: [
-                ImageProfile(
-                  imageHeight: 200,
-                  imageWidth: 200,
-                  innerImageHeight: 190,
-                  innerImageWidth: 190,
-                  innerImageRadius: 100,
-                  topMargin: 46,
-                  iconHeight: 45,
-                  iconWidth: 45,
-                  openCamera: widget.isOnlyView ? null : openCamera,
-                  openGallery: openGallery,
-                ),
-                EmployerNameHeader(
-                    isOnlyView: widget.isOnlyView,
-                    message: ratingMessage,
-                    rating: rating,
-                    name: name,
-                    description: headerDescription,
-                    sectionHeight: 110,
-                    buttonOntap: () {
-                      showDialog(
-                          context: context,
-                          barrierColor: blackDialog,
-                          builder: (ctx) => ManageSubscriptionDialog());
-                    },
-                    onTap: () {
-                      Navigator.pushNamed(
-                          context, RouteConstants.employerProfileEdit);
-                    }),
-                Expanded(
-                  child: ListView(
-                    children: [
+        padding: getPadding(bottom: 35),
+        child: Column(
+          children: [
+            ImageProfile(
+              imageHeight: 200,
+              imageWidth: 200,
+              innerImageHeight: 190,
+              innerImageWidth: 190,
+              innerImageRadius: 100,
+              topMargin: 46,
+              iconHeight: 45,
+              iconWidth: 45,
+              openCamera: widget.isOnlyView ? null : openCamera,
+              openGallery: openGallery,
+              urlImage: imageLink,
+              userId: user.id ?? '',
+            ),
+            EmployerNameHeader(
+                isOnlyView: widget.isOnlyView,
+                message: 'Valutazione: ${user.rating?.toStringAsFixed(1) ?? 0}/5',
+                rating: user.rating ?? 0,
+                name: user.companyName ?? '',
+                description: user.brief ?? '',
+                sectionHeight: 110,
+                buttonOntap: () {
+                  showDialog(
+                      context: context,
+                      barrierColor: blackDialog,
+                      builder: (ctx) => ManageSubscriptionDialog());
+                },
+                onTap: () {
+                  Navigator.pushNamed(
+                      context, RouteConstants.employerProfileEdit);
+                }),
+            Expanded(
+              child: ListView(
+                children: [
 
-                      ProfileDescription(
-                        title: ABOUT_US,
-                        description: description,
-                      ),
-                      ProfileInfo(
-                        title: OUR_CONTACTS,
-                        email: email,
-                        position: position,
-                        phone: phone,
-                      )
-                    ],
+                  ProfileDescription(
+                    title: ABOUT_US,
+                    description: user.description ?? '',
                   ),
-                )
-
-              ],
+                  ProfileInfo(
+                    title: OUR_CONTACTS,
+                    email: user.email ?? '',
+                    position: user.address ?? '',
+                    phone: user.phoneNumber ?? '',
+                  )
+                ],
+              ),
             )
-        );
+
+          ],
+        )
+    );
   }
 
-  openGallery() async {
-    var image = await ImagePicker().pickImage(source: ImageSource.gallery);
+  openGallery(String userId){
 
-    setState(() {
-      imageFile = image;
+    ImagePicker().pickImage(source: ImageSource.gallery).then((value) {
+
+      setState(() {
+        imageFile = value;
+      });
+
+      saveImageToFirebase(userId);
+      Navigator.of(context).pop();
     });
-
-    var file = File(imageFile!.path);
-    Uint8List bytes = file.readAsBytesSync();
-
-    Navigator.of(context).pop();
   }
 
-  openCamera() async {
-    var image = await ImagePicker().pickImage(source: ImageSource.camera);
-
-    setState(() {
-      imageFile = image;
+  openCamera(String userId) {
+    ImagePicker().pickImage(source: ImageSource.camera).then((value) {
+      setState(() {
+        imageFile = value;
+      });
+      saveImageToFirebase(userId);
+      Navigator.of(context).pop();
     });
+  }
 
-    var file = File(imageFile!.path);
-    Uint8List bytes = file.readAsBytesSync();
-
-    Navigator.of(context).pop();
+  saveImageToFirebase(String id) {
+    _firebaseStorageCubit.saveImageToFirebase(
+        imageFile!, id);
   }
 }

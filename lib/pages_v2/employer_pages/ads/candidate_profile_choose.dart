@@ -29,8 +29,8 @@ class CandidateProfileChoose extends StatelessWidget {
         padding: getPadding(bottom: 35),
         child: Column(
           children: [
-            Expanded(
-              child: WorkerProfileV2(
+            const Expanded(
+              child: WorkerProfileV2Widget(
                 isOnlyView: true,
               ),
             ),

@@ -20,8 +20,10 @@ class ImageProfile extends StatelessWidget {
   final double innerImageRadius; // 77
   final double iconWidth; // 34
   final double iconHeight; // 34
-  final Function? openCamera;
-  final Function? openGallery;
+  final Function(String)? openCamera;
+  final Function(String)? openGallery;
+  final String urlImage;
+  final String userId;
 
   const ImageProfile({
     Key? key,
@@ -37,7 +39,11 @@ class ImageProfile extends StatelessWidget {
     this.iconHeight = 34,
     this.openCamera,
     this.openGallery,
+    this.urlImage = "",
+    this.userId = ""
   }) : super(key: key);
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -95,6 +101,9 @@ class ImageProfile extends StatelessWidget {
                         alignment: Alignment.bottomRight,
                         children: [
                           CustomImageView(
+                            // todo here change image
+                            url: urlImage,
+                            // TODO use this path as default AVATAR
                             imagePath: ImageConstant.imgPexelsphotoby,
                             height: getSize(
                               innerImageHeight,
@@ -124,7 +133,7 @@ class ImageProfile extends StatelessWidget {
                                               children: [
                                                 GestureDetector(
                                                   onTap: () {
-                                                    openGallery?.call();
+                                                    openGallery?.call(userId);
                                                   },
                                                   child: Card(
                                                       clipBehavior:
@@ -177,7 +186,7 @@ class ImageProfile extends StatelessWidget {
                                                             .txtMontserratMedium20)),
                                                 GestureDetector(
                                                   onTap: () {
-                                                    openCamera?.call();
+                                                    openCamera?.call(userId);
                                                   },
                                                   child: Card(
                                                       clipBehavior:

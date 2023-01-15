@@ -166,4 +166,7 @@ class UserEntity {
         "companyName": companyName,
         "rating": rating
       };
+
+
+  factory UserEntity.defaultValue() => UserEntity();
 }
