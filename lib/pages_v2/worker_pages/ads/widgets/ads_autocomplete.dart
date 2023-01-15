@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:winteam/constants/colors.dart';
+import 'package:winteam/constants/enums.dart';
 import 'package:winteam/constants/language.dart';
 import 'package:winteam/entities/skill_entity.dart';
 import 'package:winteam/utils/image_constant.dart';
@@ -11,6 +12,8 @@ class AdsAutocomplete extends StatelessWidget {
   final double paddingBottom;
   final TextEditingController filterController;
   final Function optionSelected;
+  final Function(String) onFieldSubmitted;
+  final AutocompleteSearchType type;
 
   final List<SkillEntity> kOptions;
 
@@ -21,6 +24,8 @@ class AdsAutocomplete extends StatelessWidget {
     required this.optionSelected,
     this.paddingBottom = 0,
     this.kOptions = const [],
+    this.onFieldSubmitted = emptyOptionSelected,
+    this.type = AutocompleteSearchType.adSearch,
   }) : super(key: key);
 
   @override
@@ -55,9 +60,11 @@ class AdsAutocomplete extends StatelessWidget {
                         return kOptions.where((SkillEntity option) => option.name.toLowerCase().contains(textEditingValue.text.toLowerCase()));
                       },
                       filterController: filterController,
-                      optionSelected: () {},
+                      optionSelected: (SkillEntity option) {
+                        onFieldSubmitted(option.name);
+                      },
                       icon: true,
-                      hintText: ADS_AUTOCOMPLETE,
+                      hintText: type == AutocompleteSearchType.userSearch ? ADS_AUTOCOMPLETE_USERS : ADS_AUTOCOMPLETE,
                       prefixIcon: ImageConstant.imgSearch,
                       fontSize: 18,
                       fontHintSize: 18,
@@ -69,5 +76,10 @@ class AdsAutocomplete extends StatelessWidget {
                 ])))
       ]),
     );
+  }
+
+
+  static emptyOptionSelected(String s){
+    print(s);
   }
 }

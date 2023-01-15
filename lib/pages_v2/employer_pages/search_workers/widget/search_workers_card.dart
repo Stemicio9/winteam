@@ -26,6 +26,8 @@ class SearchWorkerCard extends StatelessWidget {
   final bool isSelected;
   final bool isCandidatesList;
 
+  final bool isChoosenUser;
+
   SearchWorkerCard(
       {this.innerImageRadius = 77,
       this.imageWidth = 90,
@@ -39,7 +41,8 @@ class SearchWorkerCard extends StatelessWidget {
       this.view,
       this.isSearch = true,
       this.isCandidatesList = false,
-      this.isSelected = false});
+      this.isSelected = false,
+      this.isChoosenUser = false});
 
   @override
   Widget build(BuildContext context) {
@@ -52,6 +55,24 @@ class SearchWorkerCard extends StatelessWidget {
           padding: getPadding(top: 24, bottom: 24, left: 20, right: 20),
           child: Column(
             children: [
+              Visibility(
+                  visible: isChoosenUser,
+                  child: Align(
+                    alignment: Alignment.topRight,
+                    child: Container(
+                      width: 20,
+                      height: 20,
+                      decoration: BoxDecoration(
+                          color: Colors.green,
+                          borderRadius: BorderRadius.circular(10)),
+                      child: const Icon(
+                        Icons.check,
+                        color: Colors.white,
+                        size: 15,
+                      ),
+                    ),
+                    // ,
+                  )),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -209,7 +230,7 @@ class SearchWorkerCard extends StatelessWidget {
                   child: Padding(
                       padding: getPadding(top: 25),
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: !isSelected ? MainAxisAlignment.spaceBetween : MainAxisAlignment.center,
                         children: [
                           ActionButtonV2(
                               action: view,
@@ -217,14 +238,32 @@ class SearchWorkerCard extends StatelessWidget {
                               color: background,
                               maxWidth: 150,
                               textColor: white),
-                          isSelected
-                              ? const Text('egg')
-                              : ButtonChoose(
-                                  choose: choose,
-                                  maxWidth: 150,
-                                ),
+                           Visibility(
+                             visible: !isSelected,
+                             child: ButtonChoose(
+                                    choose: choose,
+                                    maxWidth: 150,
+                                  ),
+                           ),
                         ],
-                      )))
+                      ))),
+              Visibility(
+                  visible: isChoosenUser,
+                  child: Padding(
+                      padding: getPadding(top: 25),
+                      child: Center(
+                          child: ActionButtonV2(
+                              action: view,
+                              text: VIEW,
+                              color: background,
+                              maxWidth: 150,
+                              textColor: white),
+                      )
+
+
+                  )
+              ),
+
             ],
           ),
         ),

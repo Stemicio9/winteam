@@ -33,4 +33,7 @@ abstract class AnnunciListApiService {
   @GET('/advertisement/list/:id')
   Future<HttpResponse<dynamic>> getAnnuncio(String id);
 
+  @GET('/advertisement/list/skill')
+  Future<HttpResponse<dynamic>> getAnnuncioBySkill(String skill);
+
 }

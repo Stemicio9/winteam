@@ -14,6 +14,7 @@ const String DUMMY_NAME = "EGG";
 const String DUMMY_EMAIL = "s.miceli90@gmail.com";
 
 class AnnunciCubit extends Cubit<AnnunciState> {
+
   AnnunciCubit() : super(AnnunciLoading());
 
   final List<AnnunciEntity> _annuncis = [];
@@ -82,6 +83,25 @@ class AnnunciCubit extends Cubit<AnnunciState> {
     } catch (e) {
       print(e.toString());
       emit(AnnunciPublishingError());
+    }
+  }
+
+  void fetchAnnuncioBySkill(String skill) async {
+    emit(AnnunciLoading());
+    try {
+      HttpResponse<dynamic> result = await annunciListApiService.getAnnuncioBySkill(skill);
+      print("LA RISPOSTA ALLA REST ");
+      print(result.response);
+      var encoded = jsonEncode(result.data);
+      print("HO ENCODATO");
+      var json = (jsonDecode(encoded) as List)
+          .map((data) => AnnunciEntity.fromJson(data))
+          .toList();
+      print("HO CARICATO GLI ANNUNCI");
+      emit(AnnunciLoaded(json));
+    } catch (e) {
+      print(e.toString());
+      emit(AnnunciError());
     }
   }
 

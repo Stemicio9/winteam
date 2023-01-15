@@ -37,6 +37,7 @@ const String POSITION_PLACEHOLDER = "Inserisci la tua posizione";
 const String ADD_SKILLS = "Aggiungi mansione";
 const String GALLERY = "Seleziona foto dalla galleria";
 const String ADS_AUTOCOMPLETE = "Mansione o Azienda";
+const String ADS_AUTOCOMPLETE_USERS = "Inserisci una mansione...";
 const String CAMERA = "Scatta una foto";
 const String FILTER = "Filtra";
 const String OFFERS = "offerte";
@@ -129,6 +130,8 @@ const String CANNOT_LOAD_SUBSCRIPTION_INFO = "CANNOT_LOAD_SUBSCRIPTION_INFO";
 const String GESTISCI_ABBONAMENTO = "GESTISCI_ABBONAMENTO";
 const String INFORMAZIONI_DI_CONTATTO = "INFORMAZIONI_DI_CONTATTO";
 const String CHI_SIAMO = "CHI_SIAMO";
+
+const String OTHER_CANDIDATES = "OTHER_CANDIDATES";
 
 final Map<String, String> LANG_IT = {
   DASHBOARD_CONST: "Dashboard",
@@ -228,7 +231,7 @@ final Map<String, String> LANG_IT = {
   NOTICE:"Avviso",
   VIEW_AD:"Visualizza annuncio",
   VIEW_ADS:"Visualizza annunci",
-
+  OTHER_CANDIDATES:"Altri candidati",
   "": "",
   "": "",
   "": "",
@@ -260,3 +263,4 @@ final Map<String, String> LANG_EN = {
 
 const String BACKGROUND_IMAGE_NAME = "background-image.png";
 const String LOGO_IMAGE_NAME = "logo-white.png";
+const String LOGO_GIF_PATH = "assets/images/animated_logo.gif";

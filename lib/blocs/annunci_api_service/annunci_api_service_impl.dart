@@ -1,17 +1,12 @@
 part of 'annunci_api_service.dart';
 
-
-
-
-
-
 AnnunciListApiService annunciListApiService = AnnunciListApiService(Dio(),baseUrl: url_base);
 
 class _AnnunciListApiService implements AnnunciListApiService {
+
   _AnnunciListApiService(this._dio, {this.baseUrl});
 
   final Dio _dio;
-
   String? baseUrl;
 
 
@@ -190,6 +185,30 @@ class _AnnunciListApiService implements AnnunciListApiService {
       }
     }
     return requestOptions;
+  }
+
+  @override
+  Future<HttpResponse> getAnnuncioBySkill(String skill) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{
+      "skill" : skill
+    };
+    var token = await FirebaseAuth.instance.currentUser!.getIdToken();
+
+    final _headers = <String, dynamic>{
+      "w1ntoken" : token
+    };
+
+    final _data = <String, dynamic>{};
+
+    final _result = await _dio.fetch(_setStreamType<HttpResponse<dynamic>>(
+        Options(method: 'GET', headers: _headers, extra: _extra)
+            .compose(_dio.options, '/advertisement/list/skill',
+            queryParameters: queryParameters, data: _data)
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = _result.data;
+    final httpResponse = HttpResponse(value, _result);
+    return httpResponse;
   }
 
 

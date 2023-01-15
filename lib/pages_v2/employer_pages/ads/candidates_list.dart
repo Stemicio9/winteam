@@ -46,36 +46,73 @@ class CandidatesListState extends State<CandidatesList> {
                 } else if (state is AnnunciUserListError) {
                   return Container();
                 } else if (state is AnnunciUserListLoaded) {
+                  var matched = state.utenti.where((element) => element.id == annuncio.matchedUserId).toList();
+
+
                   return Column(
                     children: [
-                      ...state.utenti.map((e) => SearchWorkerCard(
-                            isSelected: widget.isSelected,
-                            view: () {
-                              Navigator.pushNamed(context,
-                                  RouteConstants.candidateProfileChoose,
-                                  arguments: {'company': e});
-                            },
-                            choose: () {
-                              showDialog(
-                                  context: context,
-                                  barrierColor: blackDialog,
-                                  builder: (ctx) => CandidatesListDialog(
-                                        cancelOnTap: () {
-                                          Navigator.pop(context);
-                                        },
-                                        confirmOnTap: () {
-                                          //todo chiamata api per match user in candidate list
-                                          _cubit.matchUser(e.id ?? '', annuncio.id ?? '');
-                                          widget.isSelected = true;
-                                          Navigator.pop(context);
-                                        },
-                                      ));
-                            },
-                            isCandidatesList: true,
-                            isSearch: false,
-                            user: e,
-                            skillIcon: '',
-                          )),
+                      Visibility(
+                        visible: matched.isNotEmpty,
+                        child: SearchWorkerCard(
+                          isSelected: widget.isSelected,
+                          view: () {
+                            Navigator.pushNamed(context,
+                                RouteConstants.candidateProfileChoose,
+                                arguments: {'company': matched[0], 'isVisible': "false"});
+                          },
+                          choose: () {
+                          },
+                          isChoosenUser: true,
+                          isCandidatesList: false,
+                          isSearch: false,
+                          user: matched[0],
+                          skillIcon: '',
+                        ),
+                      ),
+                      Visibility(
+                        visible: matched.isNotEmpty && state.utenti.length > 1,
+                        child: Padding(
+                          padding: getPadding(top: 5, bottom: 5),
+                          child: Text(
+                            getCurrentLanguageValue(OTHER_CANDIDATES)!,
+                            style: TextStyle(
+                                color: darkGrey,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600),
+                          ),
+                        ),
+                      ),
+                      ...state.utenti.map((e) => Visibility(
+                        visible: e.id != annuncio.matchedUserId,
+                        child: SearchWorkerCard(
+                              isSelected: matched.isNotEmpty,
+                              view: () {
+                                String isVisible = matched.isNotEmpty ? "false" : "true";
+                                Navigator.pushNamed(context,
+                                    RouteConstants.candidateProfileChoose,
+                                    arguments: {'company': e, 'isVisible': isVisible});
+                              },
+                              choose: () {
+                                showDialog(
+                                    context: context,
+                                    barrierColor: blackDialog,
+                                    builder: (ctx) => CandidatesListDialog(
+                                          cancelOnTap: () {
+                                            Navigator.pop(context);
+                                          },
+                                          confirmOnTap: () {
+                                            _cubit.matchUser(e.id ?? '', annuncio.id ?? '');
+                                            widget.isSelected = true;
+                                            Navigator.pop(context);
+                                          },
+                                        ));
+                              },
+                              isCandidatesList: true,
+                              isSearch: false,
+                              user: e,
+                              skillIcon: '',
+                            ),
+                      )),
                     ],
                   );
                 } else {
