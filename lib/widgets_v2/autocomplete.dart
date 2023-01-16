@@ -23,6 +23,9 @@ class W1NAutocomplete extends StatelessWidget {
   final double contentPaddingTop; //30,
   final String prefixIcon;
   final String svgPath;
+  final String suffixIcon;
+  final bool isSuffixIcon;
+  final Function suffixIconFunction;
 
   W1NAutocomplete({
     Key? key,
@@ -43,7 +46,14 @@ class W1NAutocomplete extends StatelessWidget {
     this.width,
     this.prefixIcon = '',
     this.svgPath = '',
+    this.isSuffixIcon = false,
+    this.suffixIcon = "",
+    this.suffixIconFunction = defaultEmptyFunction
   }) : super(key: key);
+
+  static defaultEmptyFunction(){
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -72,6 +82,10 @@ class W1NAutocomplete extends StatelessWidget {
                       return InkWell(
                         onTap: () {
                           optionSelected(option);
+                          FocusScopeNode currentFocus = FocusScope.of(context);
+                          if (!currentFocus.hasPrimaryFocus) {
+                            currentFocus.unfocus();
+                          }
                           onSelected(option);
                         },
                         child: Padding(
@@ -116,7 +130,12 @@ class W1NAutocomplete extends StatelessWidget {
                   contentPaddingTop: contentPaddingTop,
                   isPrefixIcon: prefixIcon.isEmpty && svgPath.isEmpty ? false : true,
                   prefixIcon: prefixIcon,
+                  suffixIcon: suffixIcon,
                   svgPath: svgPath,
+                  isSuffixIcon: isSuffixIcon,
+                  suffixIconHeight: 20,
+                  suffixIconWidth: 20,
+                  iconOnTap: suffixIconFunction
                 )));
   }
 }

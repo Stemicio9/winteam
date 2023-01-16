@@ -71,6 +71,11 @@ class AdsAutocomplete extends StatelessWidget {
                       paddingRight: 18,
                       paddingLeft: 18,
                       contentPaddingTop: 30,
+                      isSuffixIcon: true,
+                      suffixIcon: ImageConstant.imgCancel,
+                      suffixIconFunction: (){
+                        filterController.clear();
+                      },
                     ),
                   )
                 ])))
