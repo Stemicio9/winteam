@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:winteam/authentication/authentication_bloc.dart';
+import 'package:winteam/blocs/user_bloc/current_user_cubit.dart';
 import 'package:winteam/constants/language.dart';
 import 'package:winteam/constants/route_constants.dart';
 import 'package:winteam/constants/validators.dart';
@@ -24,6 +25,8 @@ class WorkerProfileEditV2 extends StatefulWidget {
 
 class WorkerProfileEditV2State extends State<WorkerProfileEditV2> {
   UserAuthCubit get _authCubit => context.read<UserAuthCubit>();
+
+  UserCubit get _userCubit => context.read<UserCubit>();
   UserEntity currentUser = UserEntity();
 
   final _formKey = GlobalKey<FormState>();
@@ -127,9 +130,16 @@ class WorkerProfileEditV2State extends State<WorkerProfileEditV2> {
 
   formSubmit() async {
     if (_formKey.currentState!.validate()) {
-      {
-        Navigator.pop(context);
-      }
+      _userCubit.update(currentUser.copyWith(
+          firstName: nameTextController.text.split(' ')[0],
+          lastName: nameTextController.text.split(' ')[1],
+          brief: headerDescriptionTextController.text,
+          phoneNumber: phoneTextController.text,
+          email: emailTextController.text,
+          address: positionTextController.text,
+          description: descriptionTextController.text));
+
+      Navigator.pop(context);
     }
   }
 
