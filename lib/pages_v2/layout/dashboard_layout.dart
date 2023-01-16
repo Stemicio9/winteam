@@ -10,11 +10,11 @@ import 'package:winteam/constants/language.dart';
 import 'package:winteam/pages_v2/W1n_scaffold.dart';
 import 'package:winteam/pages_v2/employer_pages/ads/employer_ads.dart';
 import 'package:winteam/pages_v2/employer_pages/create_ads/create_ads.dart';
-import 'package:winteam/pages_v2/employer_pages/profile/employer_profile_v2.dart';
 import 'package:winteam/pages_v2/employer_pages/search_workers/search_workers.dart';
 import 'package:winteam/pages_v2/layout/widgets/bottom_bar_element.dart';
 import 'package:winteam/pages_v2/worker_pages/ads/worker_ads_v2.dart';
 import 'package:winteam/pages_v2/worker_pages/profile/worker_profile_v2.dart';
+import 'package:winteam/widgets_v2/loading_gif.dart';
 import 'package:winteam/widgets_v2/texts_v2.dart';
 
 class DashboardWidget extends StatefulWidget {
@@ -47,7 +47,7 @@ class DashboardWidgetState extends State<DashboardWidget> {
                   : LavoratoreLayout();
             });
           } else if (state is UserLoading) {
-            return const Center(child: CircularProgressIndicator());
+            return Center(child: loadingGif());
           } else {
             // UserErrorAuthentication
             // todo
@@ -109,6 +109,7 @@ class DashboardLayoutState extends State<DashboardLayout>
         _pageController = PageController(initialPage: state.index);
         return WillPopScope(
           onWillPop: () async => false,
+
           child: W1nScaffold(
             title: widget.titles[state.index],
             backgroundColor: widget.backgroundColors[state.index],

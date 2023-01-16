@@ -5,6 +5,7 @@ import 'package:winteam/blocs/users_matched_bloc/users_matched_cubit.dart';
 import 'package:winteam/entities/annunci_entity.dart';
 import 'package:winteam/widgets/appbars.dart';
 import 'package:winteam/widgets/card_candidato.dart';
+import 'package:winteam/widgets_v2/loading_gif.dart';
 
 
 class ListaCandidatiWidget extends StatelessWidget {
@@ -118,7 +119,7 @@ class UserListWidget extends StatelessWidget {
     return  BlocBuilder<AnnunciUserListCubit, AnnunciUserListState>(
         builder: (_, state) {
           if (state is AnnunciUserListLoading) {
-            return const Center(child: CircularProgressIndicator());
+            return Center(child: loadingGif());
           } else if (state is AnnunciUserListLoaded) {
 
             return ListView.builder(

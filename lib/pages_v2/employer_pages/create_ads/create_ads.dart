@@ -91,7 +91,7 @@ class CreateAdsState extends State<CreateAds> {
       children: [
         BlocBuilder<SkillCubit, SkillState>(builder: (_, state) {
           if (state is SkillListLoading) {
-            return const Center(child: CircularProgressIndicator());
+            return Center(child: loadingGif());
           } else if (state is SkillListLoaded) {
             return CreateAdsSkill(
               filterController: filterController,

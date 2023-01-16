@@ -13,6 +13,7 @@ import 'package:winteam/utils/image_constant.dart';
 import 'package:winteam/widgets/utilities/image_utility.dart';
 import 'package:winteam/widgets_v2/action_buttons_v2.dart';
 import 'package:winteam/widgets_v2/inputs_v2.dart';
+import 'package:winteam/widgets_v2/loading_gif.dart';
 import 'package:winteam/widgets_v2/texts_v2.dart';
 
 class LoginWidget extends StatelessWidget {
@@ -62,7 +63,7 @@ class LoginFormV2State extends State<LoginFormV2> {
         // navigare verso la pagina corretta
         return Container();
       } else if (state is UserLoading) {
-        return const Center(child: CircularProgressIndicator());
+        return Center(child: loadingGif());
       } else {
         // UserErrorAuthentication
         // todo
@@ -181,8 +182,7 @@ class LoginFormV2State extends State<LoginFormV2> {
 
   formSubmit() async {
     if (_formKey.currentState!.validate()) {
-      UserCredential? log =
-          await signIn(_emailTextController.text, _passwordTextController.text);
+      UserCredential? log = await signIn(_emailTextController.text, _passwordTextController.text);
 
       if (log == null || log.user == null) {
         // @todo avvisare che il login è sbagliato

@@ -78,6 +78,7 @@ class AdsCard extends StatelessWidget {
                                     CustomImageView(
                                       onTap: goToProfile,
                                       svgPath: isWorkerCard ? null : (annunciEntity.skillDTO?.imageLink ?? ''),
+                                      url: isWorkerCard ? (annunciEntity.publisherUserDTO?.imageLink ?? '') : (annunciEntity.skillDTO?.imageLink ?? ''),
                                       imagePath: isWorkerCard ? annunciEntity.image : null,
                                       height: getSize(
                                         innerImageHeight,

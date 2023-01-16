@@ -4,6 +4,7 @@ import 'package:winteam/blocs/annunci_bloc/annunci_cubit.dart';
 import 'package:winteam/widgets/card_annuncio.dart';
 import 'package:winteam/widgets/chipsDatore.dart';
 import 'package:winteam/widgets/drawerWidget.dart';
+import 'package:winteam/widgets_v2/loading_gif.dart';
 
 class AnnunciDatore extends StatefulWidget {
   @override
@@ -11,10 +12,6 @@ class AnnunciDatore extends StatefulWidget {
 }
 
 class AnnunciDatoreState extends State<AnnunciDatore>{
-
-  AnnunciCubit get _cubit => context.read<AnnunciCubit>();
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +44,7 @@ class AnnunciDatoreState extends State<AnnunciDatore>{
                  builder: (_, state) {
 
                    if (state is AnnunciLoading) {
-                     return const Center(child: CircularProgressIndicator());
+                     return Center(child: loadingGif());
                    } else if (state is AnnunciLoaded) {
                       return
                       Expanded(

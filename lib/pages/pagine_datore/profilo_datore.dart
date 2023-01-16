@@ -12,6 +12,7 @@ import 'package:winteam/entities/user_entity.dart';
 import 'package:winteam/pages/pagine_datore/subscription_info_widget.dart';
 import 'package:winteam/widgets/action_buttons.dart';
 import 'package:winteam/widgets/texts.dart';
+import 'package:winteam/widgets_v2/loading_gif.dart';
 
 import '../../constants/colors.dart';
 
@@ -95,7 +96,7 @@ class ProfiloDatoreState extends State<ProfiloDatore> {
     return BlocBuilder<UserCubit, UserState>(
         builder: (_, state) {
           if (state is UserLoading) {
-            return const Center(child: CircularProgressIndicator());
+            return Center(child: loadingGif());
           } else if (state is UserLoaded) {
             return content(state.user,context);
           } else if (state is UserEmpty) {
@@ -186,7 +187,7 @@ class ProfiloDatoreState extends State<ProfiloDatore> {
       if (state is SubscriptionInfoLoading) {
         //@todo non va bene il circular progress qui,
         // shimmer effect per il caricamento del pulsante delle subscription
-        return const Center(child: CircularProgressIndicator());
+        return Center(child: loadingGif());
       } else if (state is SubscriptionInfoLoaded) {
         return SubscriptionInfoWidget(subscription: state.subscription);
       } else {
@@ -219,7 +220,7 @@ class ProfiloDatoreState extends State<ProfiloDatore> {
                     builder: (context, snapshot) {
                       var result = (snapshot.data);
                       return result == null
-                          ? const CircularProgressIndicator()
+                          ?  loadingGif()
                           : Image.network(result, fit: BoxFit.cover);
                     },
                   ),

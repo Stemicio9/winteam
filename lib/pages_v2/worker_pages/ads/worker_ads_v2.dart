@@ -61,8 +61,8 @@ class WorkerAdsV2State extends State<WorkerAdsV2> {
             BlocBuilder<AnnunciCubit, AnnunciState>(
               builder: (context, state) {
                 if (state is AnnunciLoading) {
-                  return const Center(
-                    child: CircularProgressIndicator(),
+                  return Center(
+                    child: loadingGif(),
                   );
                 } else if (state is AnnunciLoaded) {
                   return Expanded(

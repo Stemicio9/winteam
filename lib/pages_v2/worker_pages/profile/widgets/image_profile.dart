@@ -101,10 +101,7 @@ class ImageProfile extends StatelessWidget {
                         alignment: Alignment.bottomRight,
                         children: [
                           CustomImageView(
-                            // todo here change image
                             url: urlImage,
-                            // TODO use this path as default AVATAR
-                            imagePath: ImageConstant.imgPexelsphotoby,
                             height: getSize(
                               innerImageHeight,
                             ),

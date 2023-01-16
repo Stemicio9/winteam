@@ -94,7 +94,7 @@ class SearchWorkerCard extends StatelessWidget {
                                 children: [
                                   CustomImageView(
                                     onTap: onTap,
-                                    imagePath: user?.imageLink ?? 'assets/images/img_pexelsphotoby.png',
+                                    imagePath: user?.imageLink ?? ImageConstant.placeholderUserUrl,
                                     height: getSize(
                                       innerImageHeight,
                                     ),

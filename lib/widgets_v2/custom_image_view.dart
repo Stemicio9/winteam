@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:winteam/utils/image_constant.dart';
 
 class CustomImageView extends StatelessWidget {
   ///[url] is required parameter for fetching network image
@@ -23,7 +24,7 @@ class CustomImageView extends StatelessWidget {
   double? width;
   Color? color;
   final BoxFit fit;
-  final String placeHolder;
+  String placeHolder;
   Alignment? alignment;
   VoidCallback? onTap;
   EdgeInsetsGeometry? margin;
@@ -46,11 +47,12 @@ class CustomImageView extends StatelessWidget {
     this.radius,
     this.margin,
     this.border,
-    this.placeHolder = 'assets/images/image_not_found.png',
+    this.placeHolder= '',
   });
 
   @override
   Widget build(BuildContext context) {
+    placeHolder = ImageConstant.placeholderUserUrl;
     return alignment != null
         ? Align(
          alignment: alignment!,
@@ -132,12 +134,12 @@ class CustomImageView extends StatelessWidget {
             backgroundColor: Colors.grey.shade100,
           ),
         ),
-        errorWidget: (context, url, error) => Image.asset(
-          placeHolder,
+        errorWidget: (context, url, error) => CachedNetworkImage(
           height: height,
           width: width,
           fit: fit,
-        ),
+          imageUrl: placeHolder,
+        )
       );
     } else if (imagePath != null && imagePath!.isNotEmpty) {
       return Image.asset(

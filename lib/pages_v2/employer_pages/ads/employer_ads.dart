@@ -5,6 +5,7 @@ import 'package:winteam/constants/route_constants.dart';
 import 'package:winteam/pages_v2/employer_pages/ads/widget/employer_ads_choicechip.dart';
 import 'package:winteam/pages_v2/worker_pages/ads/widgets/ads_card.dart';
 import 'package:winteam/utils/size_utils.dart';
+import 'package:winteam/widgets_v2/loading_gif.dart';
 
 class EmployerAdsWidget extends StatelessWidget {
   const EmployerAdsWidget({super.key});
@@ -59,7 +60,7 @@ class EmployerAdsState extends State<EmployerAds> {
                 ),
                 BlocBuilder<AnnunciCubit, AnnunciState>(builder: (_, state) {
                   if (state is AnnunciLoading) {
-                    return const Center(child: CircularProgressIndicator());
+                    return Center(child: loadingGif());
                   } else if (state is AnnunciLoaded) {
                     return Expanded(
                       child: RefreshIndicator(

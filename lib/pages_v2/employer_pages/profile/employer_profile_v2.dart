@@ -1,6 +1,3 @@
-import 'dart:io';
-import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
@@ -15,6 +12,7 @@ import 'package:winteam/pages_v2/employer_pages/profile/widget/manage_subscripti
 import 'package:winteam/pages_v2/worker_pages/profile/widgets/image_profile.dart';
 import 'package:winteam/pages_v2/worker_pages/profile/widgets/profile_description.dart';
 import 'package:winteam/pages_v2/worker_pages/profile/widgets/profile_info.dart';
+import 'package:winteam/utils/image_constant.dart';
 import 'package:winteam/utils/size_utils.dart';
 
 class EmployerProfile extends StatefulWidget {
@@ -61,7 +59,7 @@ class EmployerProfileState extends State<EmployerProfile> {
                     //_authCubit.persistAuthentication(widget.currentUser!.copyWith(imageLink: state.imageUrl));
                     return content(state.imageUrl, stateUser.user);
                   } else {
-                    return content(stateUser.user.imageLink ?? '', stateUser.user);
+                    return content(stateUser.user.imageLink ?? ImageConstant.placeholderUserUrl, stateUser.user);
                   }
                 },
               );

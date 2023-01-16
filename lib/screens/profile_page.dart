@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:winteam/blocs/user_bloc/current_user_cubit.dart';
 import 'package:winteam/entities/user_entity.dart';
+import 'package:winteam/widgets_v2/loading_gif.dart';
 
 class DatoreProfile extends StatefulWidget {
   @override
@@ -39,7 +40,7 @@ class DatoreProfileState extends State<DatoreProfile> {
               builder: (_, state) {
 
                 if (state is UserLoading) {
-                  return const Center(child: CircularProgressIndicator());
+                  return Center(child: loadingGif());
                 } else if (state is UserLoaded) {
                   return userProfile(state.user);
                 } else if (state is UserEmpty) {

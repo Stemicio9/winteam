@@ -1,3 +1,4 @@
+import 'package:expand_tap_area/expand_tap_area.dart';
 import 'package:flutter/material.dart';
 import 'package:winteam/constants/colors.dart';
 import 'package:winteam/constants/language.dart';
@@ -41,16 +42,22 @@ class AdsFilterHeader extends StatelessWidget {
                   children: [
                     Padding(
                       padding: getPadding(right: 20),
-                      child: CustomImageView(
+                      child: ExpandTapWidget(
                         onTap: onTapBack,
-                        imagePath: ImageConstant.imgCancel,
-                        height: getSize(
-                          20,
-                        ),
-                        width: getSize(
-                          20,
+                        tapPadding: const EdgeInsets.all(20.0),
+                        child:CustomImageView(
+                          imagePath: ImageConstant.imgCancel,
+                          height: getSize(
+                            20,
+                          ),
+                          width: getSize(
+                            20,
+                          ),
                         ),
                       ),
+
+
+
                     ),
                     Text(
                       FILTERS,

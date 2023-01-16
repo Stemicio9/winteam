@@ -4,6 +4,7 @@ import 'package:winteam/blocs/skill_bloc/skill_cubit.dart';
 import 'package:winteam/constants/StateConstants.dart';
 import 'package:winteam/entities/skill_entity.dart';
 import 'package:winteam/widgets/appbars.dart';
+import 'package:winteam/widgets_v2/loading_gif.dart';
 
 class SelectSkillPage extends StatefulWidget {
   @override
@@ -55,7 +56,7 @@ class SelectSkillPageState extends State<SelectSkillPage> {
             ),
             BlocBuilder<SkillCubit, SkillState>(builder: (_, state) {
               if (state is SkillListLoading) {
-                return const Center(child: CircularProgressIndicator());
+                return Center(child: loadingGif());
               } else if (state is SkillListLoaded) {
                 return skillList(state.skillList);
               } else if (state is SkillListEmpty) {

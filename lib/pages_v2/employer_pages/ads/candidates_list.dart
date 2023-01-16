@@ -5,10 +5,12 @@ import 'package:winteam/constants/colors.dart';
 import 'package:winteam/constants/language.dart';
 import 'package:winteam/constants/route_constants.dart';
 import 'package:winteam/entities/annunci_entity.dart';
+import 'package:winteam/entities/user_entity.dart';
 import 'package:winteam/pages_v2/W1n_scaffold.dart';
 import 'package:winteam/pages_v2/employer_pages/ads/widget/candidates_list_dialog.dart';
 import 'package:winteam/pages_v2/employer_pages/search_workers/widget/search_workers_card.dart';
 import 'package:winteam/utils/size_utils.dart';
+import 'package:winteam/widgets_v2/loading_gif.dart';
 
 class CandidatesList extends StatefulWidget {
   late bool isSelected;
@@ -24,6 +26,8 @@ class CandidatesList extends StatefulWidget {
 class CandidatesListState extends State<CandidatesList> {
   AnnunciUserListCubit get _cubit => context.read<AnnunciUserListCubit>();
   late AnnunciEntity annuncio;
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -42,12 +46,11 @@ class CandidatesListState extends State<CandidatesList> {
               child: BlocBuilder<AnnunciUserListCubit, AnnunciUserListState>(
                   builder: (_, state) {
                 if (state is AnnunciUserListLoading) {
-                  return const CircularProgressIndicator();
+                  return loadingGif();
                 } else if (state is AnnunciUserListError) {
                   return Container();
                 } else if (state is AnnunciUserListLoaded) {
                   var matched = state.utenti.where((element) => element.id == annuncio.matchedUserId).toList();
-
 
                   return Column(
                     children: [
@@ -65,12 +68,12 @@ class CandidatesListState extends State<CandidatesList> {
                           isChoosenUser: true,
                           isCandidatesList: false,
                           isSearch: false,
-                          user: matched[0],
+                          user: matched.isNotEmpty ? matched[0] : UserEntity(),
                           skillIcon: '',
                         ),
                       ),
                       Visibility(
-                        visible: matched.isNotEmpty && state.utenti.length > 1,
+                        visible: matched.isNotEmpty && state.utenti.isNotEmpty && state.utenti.length > 1,
                         child: Padding(
                           padding: getPadding(top: 5, bottom: 5),
                           child: Text(

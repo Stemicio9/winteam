@@ -6,6 +6,7 @@ import 'package:winteam/widgets/action_buttons.dart';
 import 'package:winteam/widgets/card_annuncio.dart';
 import 'package:winteam/widgets/chips.dart';
 import 'package:winteam/widgets/drawerWidget.dart';
+import 'package:winteam/widgets_v2/loading_gif.dart';
 
 class AnnunciLavoratore extends StatefulWidget {
   @override
@@ -50,7 +51,7 @@ class AnnunciLavoratoreState extends State<AnnunciLavoratore> {
             ),
             BlocBuilder<AnnunciCubit, AnnunciState>(builder: (_, state) {
               if (state is AnnunciLoading) {
-                return const Center(child: CircularProgressIndicator());
+                return Center(child: loadingGif());
               } else if (state is AnnunciLoaded) {
                 return Expanded(
                     child: ListView.builder(

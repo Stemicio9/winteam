@@ -1,15 +1,10 @@
-import 'dart:io';
-import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:winteam/authentication/authentication_bloc.dart';
 import 'package:winteam/blocs/firebase_storage/firebase_storage_bloc.dart';
-import 'package:winteam/blocs/user_bloc/current_user_cubit.dart';
 import 'package:winteam/constants/language.dart';
 import 'package:winteam/constants/route_constants.dart';
-import 'package:winteam/entities/skill_entity.dart';
 import 'package:winteam/entities/user_entity.dart';
 import 'package:winteam/pages_v2/employer_pages/profile/employer_profile_v2.dart';
 import 'package:winteam/pages_v2/worker_pages/profile/widgets/image_profile.dart';
@@ -17,8 +12,8 @@ import 'package:winteam/pages_v2/worker_pages/profile/widgets/profile_descriptio
 import 'package:winteam/pages_v2/worker_pages/profile/widgets/profile_info.dart';
 import 'package:winteam/pages_v2/worker_pages/profile/widgets/profile_name_header.dart';
 import 'package:winteam/pages_v2/worker_pages/profile/widgets/profile_skills.dart';
+import 'package:winteam/utils/image_constant.dart';
 import 'package:winteam/utils/size_utils.dart';
-import 'package:winteam/widgets_v2/loading_gif.dart';
 
 class WorkerProfileV2Widget extends StatelessWidget {
   final bool isOnlyView;
@@ -74,7 +69,7 @@ class WorkerProfileV2State extends State<WorkerProfileV2> {
   @override
   Widget build(BuildContext context) {
     if (widget.isOnlyView) {
-      return content(widget.currentUser?.imageLink ?? '',
+      return content(widget.currentUser?.imageLink ?? ImageConstant.placeholderUserUrl,
           widget.currentUser ?? UserEntity());
     } else {
       return BlocBuilder<UserAuthCubit, UserAuthenticationState>(

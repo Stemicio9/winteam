@@ -5,6 +5,7 @@ import 'package:winteam/blocs/user_bloc/user_list_cubit.dart';
 import 'package:winteam/constants/StateConstants.dart';
 import 'package:winteam/entities/user_entity.dart';
 import 'package:winteam/widgets/card_candidato.dart';
+import 'package:winteam/widgets_v2/loading_gif.dart';
 
 class UserListWidget extends StatelessWidget {
 
@@ -63,7 +64,7 @@ class UserListViewState extends State<UserListView> {
             BlocBuilder<UserListCubit, UserListState>(
                 builder: (_, state) {
                   if (state is UserListLoading) {
-                    return const Center(child: CircularProgressIndicator());
+                    return Center(child: loadingGif());
                   } else if (state is UserListLoaded) {
                     return userList(state.users);
                   } else if (state is UserListEmpty) {

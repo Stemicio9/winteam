@@ -72,7 +72,7 @@ class SearchWorkersState extends State<SearchWorkers> {
                   BlocBuilder<UserListCubit, UserListState>(
                     builder: (_, userState) {
                       if (userState is UserListLoading) {
-                        return const Center(child: CircularProgressIndicator());
+                        return Center(child: loadingGif());
                       } else if (userState is UserListLoaded) {
                         return BlocBuilder<SubscriptionCubit,
                             SubscriptionState>(builder: (_, state) {

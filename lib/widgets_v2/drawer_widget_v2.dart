@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:winteam/authentication/authentication_bloc.dart';
+import 'package:winteam/blocs/dashboard_tab_index_bloc/tab_index_bloc.dart';
 import 'package:winteam/blocs/user_bloc/current_user_cubit.dart';
 import 'package:winteam/constants/colors.dart';
 import 'package:winteam/constants/language.dart';
@@ -48,7 +49,10 @@ class DrawerWidgetV2 extends StatefulWidget {
 
 class DrawerWidgetV2State extends State<DrawerWidgetV2> {
   UserAuthCubit get _authCubit => context.read<UserAuthCubit>();
+
   UserCubit get _userCubit => context.read<UserCubit>();
+
+  TabIndexCubit get _tabIndexCubit => context.read<TabIndexCubit>();
 
   @override
   Widget build(BuildContext context) {
@@ -57,6 +61,7 @@ class DrawerWidgetV2State extends State<DrawerWidgetV2> {
         child: ContentDrawerWidget(
             authCubit: _authCubit,
             userCubit: _userCubit,
+            tabIndexCubit: _tabIndexCubit,
             innerImageRadius: widget.innerImageRadius,
             innerImageWidth: widget.innerImageWidth,
             innerImageHeight: widget.innerImageHeight,
@@ -70,6 +75,7 @@ class DrawerWidgetV2State extends State<DrawerWidgetV2> {
 class ContentDrawerWidget extends StatelessWidget {
   final UserAuthCubit authCubit;
   final UserCubit userCubit;
+  final TabIndexCubit tabIndexCubit;
   final double innerImageRadius; // 77
   final double innerImageWidth; // 90
   final double innerImageHeight; // 90
@@ -83,6 +89,7 @@ class ContentDrawerWidget extends StatelessWidget {
   ContentDrawerWidget(
       {required this.authCubit,
       required this.userCubit,
+      required this.tabIndexCubit,
       required this.innerImageRadius,
       required this.innerImageWidth,
       required this.innerImageHeight,
@@ -100,7 +107,8 @@ class ContentDrawerWidget extends StatelessWidget {
         children: [
           Expanded(
             child: ListView(
-                padding: EdgeInsets.zero, children: createElementList(context, userCubit, authCubit)),
+                padding: EdgeInsets.zero,
+                children: createElementList(context, userCubit, authCubit)),
           ),
           drawerFooter(context)
         ],
@@ -108,7 +116,7 @@ class ContentDrawerWidget extends StatelessWidget {
     );
   }
 
-  drawerHeader(String username) {
+  drawerHeader(String username, String imageLink) {
     return Padding(
       padding: getPadding(bottom: 20),
       child: DrawerHeader(
@@ -130,7 +138,7 @@ class ContentDrawerWidget extends StatelessWidget {
                   child: Stack(alignment: Alignment.bottomRight, children: [
                     CustomImageView(
                       onTap: () {},
-                      imagePath: ImageConstant.imgPexelsphotoby,
+                      url: imageLink,
                       height: getSize(
                         innerImageHeight,
                       ),
@@ -177,15 +185,17 @@ class ContentDrawerWidget extends StatelessWidget {
     List<Widget> lista = List.empty(growable: true);
 
     var username = 'Username';
-    if(authCubit.state is UserAuthenticated){
+    var imageLink = '';
+    if (authCubit.state is UserAuthenticated) {
       var u = (authCubit.state as UserAuthenticated).user;
       username = '${u.firstName} ${u.lastName}';
-      if(username == ' '){
+      if (username == ' ') {
         username = u.companyName!;
       }
+      imageLink = u.imageLink ?? '';
     }
 
-    lista.add(drawerHeader(username));
+    lista.add(drawerHeader(username, imageLink));
 
     //  lista.add(createTile(comeFunziona, () {}, context, ImageConstant.imgComeFunziona, 22, 26));
 
@@ -208,6 +218,7 @@ class ContentDrawerWidget extends StatelessWidget {
                   FirebaseAuth.instance.signOut();
                   userCubit.logout();
                   authCubit.logout();
+                  tabIndexCubit.setTabIndex(0);
                   Navigator.pushReplacementNamed(context, RouteConstants.login);
                 },
               ));

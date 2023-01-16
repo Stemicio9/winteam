@@ -12,6 +12,7 @@ import 'package:winteam/pages_v2/worker_pages/profile/widgets/profile_descriptio
 import 'package:winteam/pages_v2/worker_pages/profile/widgets/profile_header_edit.dart';
 import 'package:winteam/pages_v2/worker_pages/profile/widgets/profile_info_edit.dart';
 import 'package:winteam/pages_v2/worker_pages/profile/widgets/save_button.dart';
+import 'package:winteam/utils/image_constant.dart';
 import 'package:winteam/utils/size_utils.dart';
 
 class EmployerProfileEditV2 extends StatefulWidget {
@@ -75,7 +76,7 @@ class EmployerProfileV2EditState extends State<EmployerProfileEditV2> {
               key: _formKey,
               child: Column(
                 children: [
-                  const ImageProfile(
+                  ImageProfile(
                     imageHeight: 200,
                     imageWidth: 200,
                     innerImageHeight: 190,
@@ -84,6 +85,7 @@ class EmployerProfileV2EditState extends State<EmployerProfileEditV2> {
                     topMargin: 46,
                     iconHeight: 45,
                     iconWidth: 45,
+                    urlImage: currentUser.imageLink ?? ImageConstant.placeholderUserUrl,
                   ),
                   Expanded(
                     child: ListView(

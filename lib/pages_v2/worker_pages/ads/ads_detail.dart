@@ -14,7 +14,9 @@ import 'package:winteam/pages_v2/worker_pages/ads/widgets/ads_detail_footer.dart
 import 'package:winteam/pages_v2/worker_pages/ads/widgets/ads_detail_info.dart';
 import 'package:winteam/pages_v2/worker_pages/ads/widgets/ads_detail_skill.dart';
 import 'package:winteam/utils/ad_status_utils.dart';
+import 'package:winteam/utils/image_constant.dart';
 import 'package:winteam/utils/size_utils.dart';
+import 'package:winteam/widgets_v2/loading_gif.dart';
 
 
 // todo reorganize this page with cubits
@@ -38,10 +40,8 @@ class AdsDetailState extends State<AdsDetail> {
   UserAuthCubit get _authCubit =>
       context.read<UserAuthCubit>();
 
-  final message = 'Valutazione: 4/5';
   final rating = 4.00;
   final stateMessage = 'Status annuncio: ';
-  final subtitle = 'Azienda srl';
   final image = 'assets/images/img_pexelsphotoby.png';
 
   String statusLabel = '';
@@ -75,7 +75,7 @@ class AdsDetailState extends State<AdsDetail> {
           builder: (_,state) {
 
             if (state is AnnuncioDetailLoading) {
-              return const CircularProgressIndicator();
+              return loadingGif();
             }
             else if (state is AnnuncioDetailLoaded) {
               formatStatusLabel(state.annuncio);
@@ -105,13 +105,13 @@ class AdsDetailState extends State<AdsDetail> {
               ),
               AdsDetailInfo(
                 isVisible: !widget.isEmployer,
-                message: message,
+                message: 'Valutazione: ${annuncio.publisherUserDTO?.rating?.toStringAsFixed(1) ?? 0}/5',
                 onTap: () {
                   Navigator.pushNamed(
                       context, RouteConstants.employerProfileOnlyView,
                       arguments: {'company': annuncio.publisherUserDTO});
                 },
-                image: image,
+                image: annuncio.publisherUserDTO?.imageLink ?? ImageConstant.placeholderUserUrl,
                 subtitle: annuncio.publisherUserDTO?.companyName ?? '',
                 position: annuncio.position,
                 date: annuncio.date,
@@ -131,7 +131,7 @@ class AdsDetailState extends State<AdsDetail> {
     return BlocBuilder<AnnunciUserListCubit,AnnunciUserListState>(
         builder: (_, state){
           if(state is AnnunciUserListLoading){
-            return const Center(child: CircularProgressIndicator());
+            return Center(child: loadingGif());
           } else if(state is AnnunciUserListLoaded){
 
             print("PERSONE CANDIDATE");

@@ -11,6 +11,7 @@ import 'package:winteam/entities/skill_entity.dart';
 import 'package:winteam/entities/user_entity.dart';
 import 'package:winteam/widgets/action_buttons.dart';
 import 'package:winteam/widgets/texts.dart';
+import 'package:winteam/widgets_v2/loading_gif.dart';
 
 import '../../constants/colors.dart';
 
@@ -76,7 +77,7 @@ class ProfiloLavoratoreState extends State<ProfiloLavoratore> {
   Widget build(BuildContext context) {
     return BlocBuilder<UserCubit, UserState>(builder: (_, state) {
       if (state is UserLoading) {
-        return const Center(child: CircularProgressIndicator());
+        return Center(child: loadingGif());
       } else if (state is UserLoaded) {
         return everyContent();
       } else if (state is UserEmpty) {
@@ -118,7 +119,7 @@ class ProfiloLavoratoreState extends State<ProfiloLavoratore> {
                               builder: (context, snapshot) {
                                 var result = (snapshot.data);
                                 return result == null
-                                    ? const CircularProgressIndicator()
+                                    ?  loadingGif()
                                     : Image.network(result, fit: BoxFit.cover);
                               },
                             ),

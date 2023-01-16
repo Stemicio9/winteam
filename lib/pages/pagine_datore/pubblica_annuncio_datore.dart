@@ -15,6 +15,7 @@ import 'package:winteam/widgets/date_picker.dart';
 import 'package:winteam/widgets/select_skill_page.dart';
 import 'package:winteam/widgets/skill_chip.dart';
 import 'package:winteam/widgets/texts.dart';
+import 'package:winteam/widgets_v2/loading_gif.dart';
 
 class PubblicaAnnuncioDatore extends StatefulWidget {
   @override
@@ -54,7 +55,7 @@ class PubblicaAnnuncioDatoreState extends State<PubblicaAnnuncioDatore> {
             builder: (_, state) {
 
               if (state is SubscriptionLoading) {
-                return const Center(child: CircularProgressIndicator());
+                return Center(child: loadingGif());
               } else if (state is SubscriptionCanI) {
                return canIPart();
               } else if (state is SubscriptionCannotI) {

@@ -1,13 +1,11 @@
 
 
 
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:winteam/blocs/firebase_storage/firebase_storage_service.dart';
 import 'package:winteam/blocs/user_api_service/user_api_service.dart';
-import 'package:winteam/blocs/user_bloc/current_user_cubit.dart';
 import 'package:winteam/entities/user_entity.dart';
 
 class FirebaseStorageCubit extends Cubit<FirebaseStorageState> {

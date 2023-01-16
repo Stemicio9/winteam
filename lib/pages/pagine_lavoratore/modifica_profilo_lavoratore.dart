@@ -13,6 +13,7 @@ import 'package:winteam/pages/login_section/register_form.dart';
 import 'package:winteam/widgets/action_buttons.dart';
 import 'package:winteam/widgets/appbars.dart';
 import 'package:winteam/widgets/inputs.dart';
+import 'package:winteam/widgets_v2/loading_gif.dart';
 
 class ModificaProfiloLavoratoreWidget extends StatelessWidget {
   const ModificaProfiloLavoratoreWidget({super.key});
@@ -209,7 +210,7 @@ class ModificaProfiloLavoratoreState extends State<ModificaProfiloLavoratore> {
     return Scaffold(
       body: BlocBuilder<UserCubit, UserState>(builder: (_, state) {
         if (state is UserLoading) {
-          return const Center(child: CircularProgressIndicator());
+          return Center(child: loadingGif());
         } else if (state is UserLoaded) {
           return everyContent(state);
         } else if (state is UserEmpty) {
@@ -256,7 +257,7 @@ class ModificaProfiloLavoratoreState extends State<ModificaProfiloLavoratore> {
                                   builder: (context, snapshot) {
                                     var result = (snapshot.data);
                                     return result == null
-                                        ? const CircularProgressIndicator()
+                                        ?  loadingGif()
                                         : Image.network(result,
                                             fit: BoxFit.cover);
                                   },

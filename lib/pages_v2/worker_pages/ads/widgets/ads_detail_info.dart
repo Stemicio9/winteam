@@ -63,7 +63,7 @@ class AdsDetailInfo extends StatelessWidget {
                       child: Stack(alignment: Alignment.bottomRight, children: [
                         CustomImageView(
                           onTap: onTap,
-                          imagePath: image,
+                          url: image,
                           height: getSize(
                             innerImageHeight,
                           ),
