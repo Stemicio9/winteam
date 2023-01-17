@@ -49,22 +49,22 @@ class SearchWorkersState extends State<SearchWorkers> {
         padding: getPadding(bottom: 30),
         child: Column(
           children: [
-            BlocBuilder<SkillCubit, SkillState>(builder: (_, state){
-             if(state is SkillListLoading){
-               return loadingGif();
-             }else if(state is SkillListLoaded){
-               return AdsAutocomplete(
-                 paddingBottom: 30,
-                 filterController: filterController,
-                 optionSelected: onSelectedAutocomplete,
-                 onFieldSubmitted: onSubmittedAutocomplete,
-                 type: AutocompleteSearchType.userSearch,
-                 kOptions: state.skillList,
-               );
-             }else{
-               //Todo
+            BlocBuilder<SkillCubit, SkillState>(builder: (_, state) {
+              if (state is SkillListLoading) {
+                return loadingGif();
+              } else if (state is SkillListLoaded) {
+                return AdsAutocomplete(
+                  paddingBottom: 30,
+                  filterController: filterController,
+                  optionSelected: onSelectedAutocomplete,
+                  onFieldSubmitted: onSubmittedAutocomplete,
+                  type: AutocompleteSearchType.userSearch,
+                  kOptions: state.skillList,
+                );
+              } else {
+                //Todo
                 return Container();
-             }
+              }
             }),
             Expanded(
               child: ListView(
@@ -85,8 +85,7 @@ class SearchWorkersState extends State<SearchWorkers> {
                                       onTap: () {
                                         Navigator.pushNamed(
                                             context,
-                                            RouteConstants
-                                                .candidateProfileChoose,
+                                            RouteConstants.candidateProfileChoose,
                                             arguments: {
                                               'isVisible': false,
                                               'company': e
@@ -104,8 +103,7 @@ class SearchWorkersState extends State<SearchWorkers> {
                                       onTap: () {
                                         Navigator.pushNamed(
                                             context,
-                                            RouteConstants
-                                                .candidateProfileChoose,
+                                            RouteConstants.candidateProfileChoose,
                                             arguments: {
                                               'isVisible': 'false',
                                               'company': e

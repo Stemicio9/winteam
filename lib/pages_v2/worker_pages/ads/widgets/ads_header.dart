@@ -7,10 +7,11 @@ import 'package:winteam/widgets_v2/texts_v2.dart';
 class AdsHeader extends StatelessWidget{
 
   final int offers;
+  final String filterText;
   final onTap;
 
 
-  const AdsHeader({super.key, this.offers = 20,required this.onTap});
+  const AdsHeader({super.key, this.offers = 20,required this.onTap,required this.filterText});
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +32,7 @@ class AdsHeader extends StatelessWidget{
             child: Row(
               children: [
                 Texth2V2(
-                    testo: FILTER,
+                    testo: filterText,
                     color: background,
                     weight: FontWeight.bold,
                 ),

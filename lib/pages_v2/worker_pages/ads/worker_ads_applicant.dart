@@ -18,7 +18,7 @@ class WorkerAdsApplicantState extends State<WorkerAdsApplicant> {
   AnnunciLavoratoreCubit get _annunciLavoratoreCubit => context.read<AnnunciLavoratoreCubit>();
 
   List<bool> indexes = [true, false, false, false];
-  List<String> texts = ['All', 'Current', 'Accepted', 'History'];
+  List<String> texts = ['Tutti', 'W1N', 'Attivi', 'Scaduti'];
   List<String> _choicesListQuery = ['all', 'current', 'accepted', 'history'];
   String message = '';
 
@@ -58,6 +58,9 @@ class WorkerAdsApplicantState extends State<WorkerAdsApplicant> {
                       children: [
                         ...state.annunci.map((e) =>
                             AdsCard(
+                              isWorkerCard: true,
+                              message: message,
+                              candidates: e.candidateUserList.length.toString(),
                               goToProfile: () {
                                 Navigator.of(context).pushNamed(
                                     RouteConstants
@@ -74,7 +77,7 @@ class WorkerAdsApplicantState extends State<WorkerAdsApplicant> {
                                       'annuncio': e.id
                                     });
                               },
-                              isVisible: false,
+                              isVisible: true,
                               annunciEntity: e,
                             ))
                             .toList()

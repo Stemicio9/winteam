@@ -1,41 +1,42 @@
 import 'package:flutter/material.dart';
+import 'package:winteam/constants/colors.dart';
+import 'package:winteam/pages_v2/employer_pages/search_workers/widget/subscription_dialog.dart';
+import 'package:winteam/theme/app_style.dart';
+import 'package:winteam/utils/image_constant.dart';
 import 'package:winteam/utils/size_utils.dart';
+import 'package:winteam/widgets_v2/custom_image_view.dart';
 
 class CannotSearchWorkersWidget extends StatelessWidget {
   const CannotSearchWorkersWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: getPadding(bottom: 20, left: 15, right: 15),
-      child: Card(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-        elevation: 0,
+    return GestureDetector(
+        onTap: () {
+          showDialog(
+              context: context,
+              barrierColor: blackDialog,
+              builder: (ctx) => SubscriptionDialog());
+        },
         child: Padding(
-          padding: getPadding(top: 24, bottom: 24, left: 20, right: 20),
+          padding: getPadding(bottom: 20, left: 20, right: 20),
           child: Column(
             children: [
-              Text(
-                'Non hai i permessi per cercare lavoratori',
-                style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.black),
+              CustomImageView(
+                svgPath: ImageConstant.imgNotice,
+                width: 40,
+                height: 40,
               ),
-              SizedBox(
-                height: 10,
-              ),
-              Text(
-                'Per cercare lavoratori devi essere un azienda',
-                style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w400,
-                    color: Colors.black),
+              Padding(
+                  padding: getPadding(top: 20),
+                  child: Text(
+                    'I dati relativi ai profili sottostanti sono stati nascosti perchè la tipologia del tuo abbonamento non ti permette di visualizzarli.',
+                    style: AppStyle.txtMontserratRegular18,
+                    textAlign: TextAlign.center,
+                  )
               ),
             ],
           ),
-        ),
-      ),
-    );
+        ));
   }
 }

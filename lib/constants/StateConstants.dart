@@ -1,6 +1,4 @@
-
 import 'package:flutter/material.dart';
-
 
 FilterAnnunciLavoratore filterAnnunciLavoratore = FilterAnnunciLavoratore();
 
@@ -11,23 +9,20 @@ class Filter {
   String? filterAnd;
   String? orders;
 
-  Filter({this.page, this.size,this.filterOr,this.filterAnd,this.orders});
+  Filter({this.page, this.size, this.filterOr, this.filterAnd, this.orders});
 
-  Map<String,dynamic> toQueryParameters(){
-     return {
-       "page" : page ?? 0,
-       "size" : size ?? 20,
-       "filterOr" : filterOr ?? "",
-       "filterAnd" : filterAnd ?? "",
-       "orders" : orders ?? "email|ASC"
-     };
+  Map<String, dynamic> toQueryParameters() {
+    return {
+      "page": page ?? 0,
+      "size": size ?? 20,
+      "filterOr": filterOr ?? "",
+      "filterAnd": filterAnd ?? "",
+      "orders": orders ?? "email|ASC"
+    };
   }
-
 }
 
-
 class FilterAnnunciLavoratore {
-
   //   filter.filterAnd = "email|like_insensitive|$filtro";
 
   final String SEPARATOR = "|";
@@ -44,7 +39,6 @@ class FilterAnnunciLavoratore {
   final String STRING_TYPE = "string";
   final String DATE_TYPE = "date";
 
-
   double? pagaMinima = 0;
   double? distanzaMassima = 10000;
   List<String>? fasceOrarie = [];
@@ -53,11 +47,30 @@ class FilterAnnunciLavoratore {
       end: DateTime.now().add(const Duration(days: 365)));
   String? state = 'all';
 
+  FilterAnnunciLavoratore(
+      {this.pagaMinima,
+      this.distanzaMassima,
+      this.fasceOrarie,
+      this.dateRange,
+      this.state});
 
-  FilterAnnunciLavoratore({this.pagaMinima, this.distanzaMassima, this.fasceOrarie, this.dateRange, this.state});
+  bool isFiltered() {
+    if ((pagaMinima != null && pagaMinima != 0) ||
+    (distanzaMassima != null && distanzaMassima != 10000) ||
+    (fasceOrarie != null && fasceOrarie!.isNotEmpty) ||
+    (dateRange != null && !sameDay(dateRange!.start, DateTime.now())) ||
+    (dateRange != null && !sameDay(dateRange!.end, DateTime.now().add(const Duration(days: 365)))) ||
+        (state != null && state != 'all')) {
+      return true;
+    }
+    return false;
+  }
 
+  bool sameDay(DateTime d1, DateTime d2) {
+    return d1.difference(d2).inDays == 0;
+  }
 
-  Filter toFilter(int page, int size){
+  Filter toFilter(int page, int size) {
     Filter result = Filter();
     result.page = page;
     result.size = size;
@@ -66,12 +79,12 @@ class FilterAnnunciLavoratore {
     return result;
   }
 
-
-  String compileAnd(){
+  String compileAnd() {
     String result = "";
     bool first = true;
-    if(pagaMinima != null && pagaMinima != 0){
-      result = "$result$PAYMENT_STRING$SEPARATOR$OPERATOR_GREATER_THAN_OR_EQUAL_TO$SEPARATOR$pagaMinima$SEPARATOR$NUMBER_TYPE";
+    if (pagaMinima != null && pagaMinima != 0) {
+      result =
+          "$result$PAYMENT_STRING$SEPARATOR$OPERATOR_GREATER_THAN_OR_EQUAL_TO$SEPARATOR$pagaMinima$SEPARATOR$NUMBER_TYPE";
       first = false;
     }
     /*if(distanzaMassima != null && distanzaMassima != 0){
@@ -81,43 +94,44 @@ class FilterAnnunciLavoratore {
       result = "$result$DISTANCE_STRING$SEPARATOR$OPERATOR_LESS_THAN_OR_EQUAL_TO$SEPARATOR$distanzaMassima$SEPARATOR$NUMBER_TYPE";
       first = false;
     }*/
-    if(dateRange != null){
-      if(dateRange!.start != null){
+    if (dateRange != null) {
+      if (dateRange!.start != null) {
         DateTime start = dateRange!.start.subtract(const Duration(days: 1));
-        if(!first){
+        if (!first) {
           result = "$result&";
         }
-        result = "$result$DATE$SEPARATOR$OPERATOR_GREATER_THAN_OR_EQUAL_TO$SEPARATOR${start.toIso8601String()}$SEPARATOR$DATE_TYPE";
+        result =
+            "$result$DATE$SEPARATOR$OPERATOR_GREATER_THAN_OR_EQUAL_TO$SEPARATOR${start.toIso8601String()}$SEPARATOR$DATE_TYPE";
         first = false;
       }
-      if(dateRange!.end != null){
+      if (dateRange!.end != null) {
         DateTime end = dateRange!.end.add(const Duration(days: 1));
-        if(!first){
+        if (!first) {
           result = "$result&";
         }
-        result = "$result$DATE$SEPARATOR$OPERATOR_LESS_THAN_OR_EQUAL_TO$SEPARATOR${end.toIso8601String()}$SEPARATOR$DATE_TYPE";
+        result =
+            "$result$DATE$SEPARATOR$OPERATOR_LESS_THAN_OR_EQUAL_TO$SEPARATOR${end.toIso8601String()}$SEPARATOR$DATE_TYPE";
         first = false;
       }
     }
     return result;
   }
 
-  String compileOr(){
+  String compileOr() {
     String result = "";
     bool first = true;
 
-    if(fasceOrarie != null) {
+    if (fasceOrarie != null) {
       for (var current in fasceOrarie!) {
-        if(!first){
+        if (!first) {
           result = "$result&";
         }
-        result = "$result$HOUR_SLOT$SEPARATOR$OPERATOR_EQUAL$SEPARATOR$current$SEPARATOR$STRING_TYPE";
+        result =
+            "$result$HOUR_SLOT$SEPARATOR$OPERATOR_EQUAL$SEPARATOR$current$SEPARATOR$STRING_TYPE";
         first = false;
       }
     }
 
     return result;
   }
-
-
 }

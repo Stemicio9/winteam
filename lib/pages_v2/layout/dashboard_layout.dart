@@ -36,7 +36,7 @@ class DashboardWidgetState extends State<DashboardWidget> {
           if (state is UserEmpty) {
             // todo
             // here navigate to login
-            return Container();
+            return Center(child: loadingGif(logoBlue: false));
           } else if (state is UserLoaded) {
             // todo
             // navigare verso la pagina corretta
@@ -48,7 +48,7 @@ class DashboardWidgetState extends State<DashboardWidget> {
                   : LavoratoreLayout();
             });
           } else if (state is UserLoading) {
-            return Center(child: loadingGif());
+            return Center(child: loadingGif(logoBlue: false));
           } else {
             // UserErrorAuthentication
             // todo
@@ -165,7 +165,7 @@ class DashboardLayoutState extends State<DashboardLayout>
       activeIcons: const [
         Icon(Icons.newspaper_rounded, color: white),
         Icon(Icons.search_rounded, color: white),
-        Icon(Icons.add_circle_outline_rounded, color: white),
+        Icon(Icons.add_circle_rounded, color: white),
         Icon(Icons.person, color: white),
       ],
       inactiveIcons: [
@@ -201,11 +201,14 @@ class LavoratoreLayout extends StatelessWidget {
     var workerAds = WorkerAdsV2();
     var workerProfile = WorkerProfileV2Widget();
     var workerPersonalAds = WorkerAdsApplicant();
+
     var workwerPersonalAdsTitle = WORKER_PERSONAL_ADS;
     var workwerAdsTitle = ADS;
     var workerProfileTitle = PROFILE;
+
     var workwerAdsColor = lightGrey;
     var workerProfileColor = white;
+
 
     var button3 = BottomBarElement(
       activeElement: const Icon(Icons.newspaper_rounded, color: white),
@@ -224,7 +227,7 @@ class LavoratoreLayout extends StatelessWidget {
 
     return DashboardLayout(
       datore: false,
-      maxCount: 4,
+      maxCount: 3,
       titles: [
         workwerAdsTitle,
         workwerPersonalAdsTitle,
@@ -279,7 +282,7 @@ class DatoreLayout extends StatelessWidget {
     );
 
     var button3 = BottomBarElement(
-      activeElement: const Icon(Icons.add_circle_outline_rounded, color: white),
+      activeElement: const Icon(Icons.add_circle_rounded, color: white),
       inactiveElement: Texth4V2(testo: CREATE, color: white),
     );
 

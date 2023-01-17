@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:winteam/blocs/annunci_bloc/annunci_cubit.dart';
 import 'package:winteam/blocs/skill_bloc/skill_cubit.dart';
+import 'package:winteam/constants/StateConstants.dart';
 import 'package:winteam/constants/enums.dart';
+import 'package:winteam/constants/language.dart';
 import 'package:winteam/constants/page_constants.dart';
 import 'package:winteam/constants/route_constants.dart';
 import 'package:winteam/pages_v2/worker_pages/ads/widgets/ads_autocomplete.dart';
@@ -31,8 +33,7 @@ class WorkerAdsV2State extends State<WorkerAdsV2> {
 
   inputData() {
     _skillCubit.getSkillList();
-    _cubit.fetchAnnunciLavoratore(
-        PageConstants.INIT_PAGE_NUMBER, PageConstants.PAGE_SIZE);
+    _cubit.fetchAnnunciLavoratore(PageConstants.INIT_PAGE_NUMBER, PageConstants.PAGE_SIZE);
   }
 
   @override
@@ -73,7 +74,8 @@ class WorkerAdsV2State extends State<WorkerAdsV2> {
                         child: ListView(
                           children: [
                             AdsHeader(
-                              offers: state.annunci.length,
+                              filterText: filterAnnunciLavoratore.isFiltered() ? FILTER_ACTIVE : FILTER ,
+                              offers:  state.annunci.length,
                               onTap: () {
                                 Navigator.pushNamed(
                                     context, RouteConstants.adsFilter);

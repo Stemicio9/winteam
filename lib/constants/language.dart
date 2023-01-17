@@ -86,6 +86,7 @@ const String VIEW = "Visualizza";
 const String CHOOSE = "Scegli!";
 const String VIEW_AD = "Visualizza annuncio";
 const String VIEW_ADS = "Visualizza annunci";
+const String FILTER_ACTIVE = "Filtri attivi";
 
 
 
@@ -233,6 +234,9 @@ final Map<String, String> LANG_IT = {
   VIEW_AD:"Visualizza annuncio",
   VIEW_ADS:"Visualizza annunci",
   OTHER_CANDIDATES:"Altri candidati",
+  FILTER_ACTIVE:"Filtri attivi",
+
+
   "": "",
   "": "",
   "": "",
@@ -264,5 +268,7 @@ final Map<String, String> LANG_EN = {
 
 const String BACKGROUND_IMAGE_NAME = "background-image.png";
 const String LOGO_IMAGE_NAME = "logo-white.png";
-const String LOGO_GIF_PATH = "assets/images/animated_logo.gif";
+const String LOGO_GIF_PATH = "assets/images/animated_logo_white.gif";
+const String LOGO_BLUE_GIF_PATH = "assets/images/animated_logo_blue.gif";
+
 const String IMAGE_DEFAULT_NAME = "profileImage";

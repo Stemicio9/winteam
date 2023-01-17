@@ -9,6 +9,8 @@ class AdStatusUtils {
       case 'accepted':{return 'Accettato';}
       case 'history':{return 'Storico';}
       case 'all':{return 'Attivo';}
+      case 'current':{return 'W1n';}
+
       default:
         {
           print('stato annuncio non trovato');
@@ -23,6 +25,8 @@ class AdStatusUtils {
       case 'accepted':{return blueState;}
       case 'history':{return greyState;}
       case 'all':{return lightGreen;}
+      case 'current':{return green;}
+
       default:
         {
           print('stato annuncio non trovato');

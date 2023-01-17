@@ -63,7 +63,7 @@ class LoginFormV2State extends State<LoginFormV2> {
         // navigare verso la pagina corretta
         return Container();
       } else if (state is UserLoading) {
-        return Center(child: loadingGif());
+        return Center(child: loadingGif(logoBlue: false));
       } else {
         // UserErrorAuthentication
         // todo

@@ -151,8 +151,7 @@ class AdsFilterState extends State<AdsFilter> {
   }
 
   void doSearch() {
-    _cubit.fetchAnnunciLavoratore(
-        PageConstants.INIT_PAGE_NUMBER, PageConstants.PAGE_SIZE);
+    _cubit.fetchAnnunciLavoratore(PageConstants.INIT_PAGE_NUMBER, PageConstants.PAGE_SIZE);
   }
 
   void setPrice(val) {

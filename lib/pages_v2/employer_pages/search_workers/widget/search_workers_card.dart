@@ -55,173 +55,198 @@ class SearchWorkerCard extends StatelessWidget {
           padding: getPadding(top: 24, bottom: 24, left: 20, right: 20),
           child: Column(
             children: [
-              Visibility(
-                  visible: isChoosenUser,
-                  child: Align(
-                    alignment: Alignment.topRight,
-                    child: Container(
-                      width: 20,
-                      height: 20,
-                      decoration: BoxDecoration(
-                          color: Colors.green,
-                          borderRadius: BorderRadius.circular(10)),
-                      child: const Icon(
-                        Icons.check,
-                        color: Colors.white,
-                        size: 15,
-                      ),
-                    ),
-                    // ,
-                  )),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                          padding: getPadding(right: 20),
-                          child: SizedBox(
-                            height: getSize(
-                              imageHeight,
-                            ),
-                            width: getSize(
-                              imageWidth,
-                            ),
-                            child: Stack(
-                                alignment: Alignment.bottomRight,
-                                children: [
-                                  CustomImageView(
-                                    onTap: onTap,
-                                    url: user?.imageLink ?? ImageConstant.placeholderUserUrl,
-                                    height: getSize(
-                                      innerImageHeight,
-                                    ),
-                                    width: getSize(
-                                      innerImageWidth,
-                                    ),
-                                    radius: BorderRadius.circular(
-                                      getHorizontalSize(
-                                        innerImageRadius,
+                  Expanded(
+                    flex: 10,
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          flex: 1,
+                          child: Padding(
+                              padding: getPadding(right: 20),
+                              child: SizedBox(
+                                height: getSize(
+                                  imageHeight,
+                                ),
+                                width: getSize(
+                                  imageWidth,
+                                ),
+                                child: Stack(
+                                    alignment: Alignment.bottomRight,
+                                    children: [
+                                      CustomImageView(
+                                        onTap: onTap,
+                                        url: user?.imageLink ??
+                                            ImageConstant.placeholderUserUrl,
+                                        height: getSize(
+                                          innerImageHeight,
+                                        ),
+                                        width: getSize(
+                                          innerImageWidth,
+                                        ),
+                                        radius: BorderRadius.circular(
+                                          getHorizontalSize(
+                                            innerImageRadius,
+                                          ),
+                                        ),
+                                        alignment: Alignment.center,
+                                        fit: BoxFit.cover,
                                       ),
-                                    ),
-                                    alignment: Alignment.center,
-                                    fit: BoxFit.cover,
-                                  ),
-                                ]),
-                          )),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SizedBox(
-                            width: MediaQuery.of(context).size.width * 0.53,
-                            child: Text(
-                              '${user?.firstName} ${user?.lastName}',
-                              overflow: TextOverflow.ellipsis,
-                              style: AppStyle.txtMontserratBoldBlue24,
-                            ),
-                          ),
-                          Row(
+                                    ]),
+                              )),
+                        ),
+                        Expanded(
+                          flex: 2,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               SizedBox(
-                                width: MediaQuery.of(context).size.width * 0.49,
-                                child:  Text(
-                                  user?.brief ?? '',
+                                width: MediaQuery.of(context).size.width * 0.53,
+                                child: Text(
+                                  '${user?.firstName} ${user?.lastName}',
                                   overflow: TextOverflow.ellipsis,
-                                  style: AppStyle.txtMontserratSemiBoldBlack20,
+                                  style: AppStyle.txtMontserratBoldBlue24,
                                 ),
-                              )
+                              ),
+                              Row(
+                                children: [
+                                  SizedBox(
+                                    width: MediaQuery.of(context).size.width *
+                                        0.49,
+                                    child: Text(
+                                      user?.brief ?? '',
+                                      overflow: TextOverflow.ellipsis,
+                                      style:
+                                          AppStyle.txtMontserratSemiBoldBlack20,
+                                    ),
+                                  )
+                                ],
+                              ),
+                              Padding(
+                                padding: getPadding(top: 15),
+                                child: Row(
+                                  children: [
+                                    Padding(
+                                      padding: getPadding(right: 10),
+                                      child: CustomImageView(
+                                        svgPath: ImageConstant.imgPhoneSvg,
+                                        height: getSize(
+                                          19,
+                                        ),
+                                        width: getSize(
+                                          18,
+                                        ),
+                                      ),
+                                    ),
+                                    Text(
+                                      user?.phoneNumber ?? '',
+                                      style: AppStyle.txtMontserratRegular18,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Padding(
+                                padding: getPadding(top: 10),
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                      flex: 1,
+                                      child: Padding(
+                                        padding: getPadding(right: 10),
+                                        child: CustomImageView(
+                                          svgPath: ImageConstant.imgEmailSvg,
+                                          height: getSize(
+                                            14,
+                                          ),
+                                          width: getSize(
+                                            18,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      flex:7,
+                                      child: Text(
+                                        user?.email ?? '',
+                                        overflow: TextOverflow.ellipsis,
+                                        style: AppStyle.txtMontserratRegular18,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Padding(
+                                padding: getPadding(top: 10),
+                                child: Row(
+                                  children: [
+                                    Padding(
+                                      padding: getPadding(right: 10),
+                                      child: CustomImageView(
+                                        svgPath: ImageConstant.imgPosition,
+                                        height: getSize(
+                                          23,
+                                        ),
+                                        width: getSize(
+                                          18,
+                                        ),
+                                      ),
+                                    ),
+                                    Text(
+                                      user?.address ?? '',
+                                      style: AppStyle.txtMontserratRegular18,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Visibility(
+                                  visible: isSearch,
+                                  child: Padding(
+                                    padding: getPadding(top: 25),
+                                    child: ActionButtonV2(
+                                      action: onTap,
+                                      text: VIEW_PROFILE,
+                                      color: background,
+                                      maxWidth: 210,
+                                      textColor: white,
+                                    ),
+                                  )),
                             ],
                           ),
-                          Padding(
-                            padding: getPadding(top: 15),
-                            child: Row(
-                              children: [
-                                Padding(
-                                  padding: getPadding(right: 10),
-                                  child: CustomImageView(
-                                    svgPath: ImageConstant.imgPhoneSvg,
-                                    height: getSize(
-                                      19,
-                                    ),
-                                    width: getSize(
-                                      18,
-                                    ),
-                                  ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Expanded(
+                    flex: 1,
+                    child: Visibility(
+                      visible: isChoosenUser,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Material(
+                              elevation: 4,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10)),
+                              child: Container(
+                                width: 17,
+                                height: 17,
+                                decoration: BoxDecoration(
+                                  color: green,
+                                  borderRadius: BorderRadius.circular(10),
                                 ),
-                                Text(
-                                  user?.phoneNumber ?? '',
-                                  style: AppStyle.txtMontserratRegular18,
+                                child: const Icon(
+                                  Icons.check,
+                                  color: Colors.white,
+                                  size: 15,
                                 ),
-                              ],
-                            ),
-                          ),
-                          Padding(
-                            padding: getPadding(top: 10),
-                            child: Row(
-                              children: [
-                                Padding(
-                                  padding: getPadding(right: 10),
-                                  child: CustomImageView(
-                                    svgPath: ImageConstant.imgEmailSvg,
-                                    height: getSize(
-                                      14,
-                                    ),
-                                    width: getSize(
-                                      18,
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: MediaQuery.of(context).size.width * 0.45,
-                                  child: Text(
-                                    user?.email ?? '',
-                                    overflow: TextOverflow.ellipsis,
-                                    style: AppStyle.txtMontserratRegular18,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Padding(
-                            padding: getPadding(top: 10),
-                            child: Row(
-                              children: [
-                                Padding(
-                                  padding: getPadding(right: 10),
-                                  child: CustomImageView(
-                                    svgPath: ImageConstant.imgPosition,
-                                    height: getSize(
-                                      23,
-                                    ),
-                                    width: getSize(
-                                      18,
-                                    ),
-                                  ),
-                                ),
-                                Text(
-                                  user?.address ?? '',
-                                  style: AppStyle.txtMontserratRegular18,
-                                ),
-                              ],
-                            ),
-                          ),
-                          Visibility(
-                              visible: isSearch,
-                              child: Padding(
-                                padding: getPadding(top: 25),
-                                child: ActionButtonV2(
-                                  action: onTap,
-                                  text: VIEW_PROFILE,
-                                  color: background,
-                                  maxWidth: 230,
-                                  textColor: white,
-                                ),
-                              ))
+                              )),
                         ],
                       ),
-                    ],
+                    ),
                   ),
                 ],
               ),
@@ -230,7 +255,9 @@ class SearchWorkerCard extends StatelessWidget {
                   child: Padding(
                       padding: getPadding(top: 25),
                       child: Row(
-                        mainAxisAlignment: !isSelected ? MainAxisAlignment.spaceBetween : MainAxisAlignment.center,
+                        mainAxisAlignment: !isSelected
+                            ? MainAxisAlignment.spaceBetween
+                            : MainAxisAlignment.center,
                         children: [
                           ActionButtonV2(
                               action: view,
@@ -238,13 +265,13 @@ class SearchWorkerCard extends StatelessWidget {
                               color: background,
                               maxWidth: 150,
                               textColor: white),
-                           Visibility(
-                             visible: !isSelected,
-                             child: ButtonChoose(
-                                    choose: choose,
-                                    maxWidth: 150,
-                                  ),
-                           ),
+                          Visibility(
+                            visible: !isSelected,
+                            child: ButtonChoose(
+                              choose: choose,
+                              maxWidth: 150,
+                            ),
+                          ),
                         ],
                       ))),
               Visibility(
@@ -252,18 +279,13 @@ class SearchWorkerCard extends StatelessWidget {
                   child: Padding(
                       padding: getPadding(top: 25),
                       child: Center(
-                          child: ActionButtonV2(
-                              action: view,
-                              text: VIEW,
-                              color: background,
-                              maxWidth: 150,
-                              textColor: white),
-                      )
-
-
-                  )
-              ),
-
+                        child: ActionButtonV2(
+                            action: view,
+                            text: VIEW,
+                            color: background,
+                            maxWidth: 150,
+                            textColor: white),
+                      ))),
             ],
           ),
         ),
