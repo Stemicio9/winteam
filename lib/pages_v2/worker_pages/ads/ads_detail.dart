@@ -37,8 +37,6 @@ class AdsDetailState extends State<AdsDetail> {
       context.read<AnnunciUserListCubit>();
   AnnuncioDetailCubit get _annuncioDetailCubit =>
       context.read<AnnuncioDetailCubit>();
-  UserAuthCubit get _authCubit =>
-      context.read<UserAuthCubit>();
 
   final rating = 4.00;
   final stateMessage = 'Status annuncio: ';
@@ -179,6 +177,8 @@ class AdsDetailState extends State<AdsDetail> {
                 AnnunciEntity newAnnuncio = await _annunciCubit.candidate(annuncio.id ?? "");
                 _annuncioDetailCubit.getAnnuncioById(annuncio.id ?? "");
                 _annunciCubit.listCandidati(annuncio.id ?? "");
+                // TODO qui
+                // TODO inserire una chiamata al cubit per aggiornare lo stato degli annunci personali di un lavoratore
                 Navigator.pop(context);
               },
             ));

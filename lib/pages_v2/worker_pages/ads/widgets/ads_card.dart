@@ -78,7 +78,7 @@ class AdsCard extends StatelessWidget {
                                     CustomImageView(
                                       onTap: goToProfile,
                                       svgPath: isWorkerCard ? null : (annunciEntity.skillDTO?.imageLink ?? ''),
-                                      url: isWorkerCard ? (annunciEntity.publisherUserDTO?.imageLink ?? '') : (annunciEntity.skillDTO?.imageLink ?? ''),
+                                      url: isWorkerCard ? (annunciEntity.publisherUserDTO?.imageLink ?? ImageConstant.placeholderUserUrl) : (annunciEntity.skillDTO?.imageLink ?? ''),
                                       imagePath: isWorkerCard ? annunciEntity.image : null,
                                       height: getSize(
                                         innerImageHeight,
@@ -102,7 +102,7 @@ class AdsCard extends StatelessWidget {
 
 
                             SizedBox(
-                              width: isWorkerCard ? MediaQuery.of(context).size.width * 0.55 : MediaQuery.of(context).size.width * 0.50,
+                              width: isWorkerCard ? MediaQuery.of(context).size.width * 0.55 : MediaQuery.of(context).size.width * 0.45,
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [

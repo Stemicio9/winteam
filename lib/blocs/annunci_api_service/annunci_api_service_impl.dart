@@ -56,6 +56,28 @@ class _AnnunciListApiService implements AnnunciListApiService {
   }
 
   @override
+  Future<HttpResponse> getAnnunciPagedForApplicant(String state, int page, int size) async {
+    const _extra = <String, dynamic>{};
+    var token = await FirebaseAuth.instance.currentUser!.getIdToken();
+    final queryParameters =  <String, dynamic>{
+      "state": state
+    };
+    final _headers = <String, dynamic>{
+      "w1ntoken" : token
+    };
+    final _data = <String, dynamic>{};
+
+    final _result = await _dio.fetch(_setStreamType<HttpResponse<dynamic>>(
+        Options(method: 'GET', headers: _headers, extra: _extra)
+            .compose(_dio.options, '/advertisement/page/applicant',
+            queryParameters: queryParameters, data: _data)
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = _result.data;
+    final httpResponse = HttpResponse(value, _result);
+    return httpResponse;
+  }
+
+  @override
   Future<HttpResponse> publishAnnuncio(AnnunciEntity annuncio) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};

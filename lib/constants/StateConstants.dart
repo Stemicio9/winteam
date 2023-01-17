@@ -1,6 +1,4 @@
 
-
-
 import 'package:flutter/material.dart';
 
 
@@ -26,11 +24,6 @@ class Filter {
   }
 
 }
-
-
-
-
-
 
 
 class FilterAnnunciLavoratore {

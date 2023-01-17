@@ -95,6 +95,7 @@ const String SEARCH = "Cerca";
 const String PROFILE = "Profilo";
 const String NOTIFICATIONS = "Notifiche";
 const String ADS = "Annunci";
+const String WORKER_PERSONAL_ADS = "I miei annunci";
 const String CREATE = "Crea";
 
 // Stati degli annunci

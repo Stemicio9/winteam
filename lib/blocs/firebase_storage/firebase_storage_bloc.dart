@@ -1,6 +1,7 @@
 
 
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
@@ -23,6 +24,8 @@ class FirebaseStorageCubit extends Cubit<FirebaseStorageState> {
       print("HO FATTO UPLOAD SU FIREBASE, ORA MI PRENDO URL");
       String finalResult = await firebaseStorageService.downloadUrlImage(uid);
       print("HO PRESO URL IMAGE : $finalResult");
+      CachedNetworkImage.evictFromCache(finalResult);
+
       emit(FirebaseStorageLoaded(finalResult, toUpload: true));
     }catch(e){
       emit(FirebaseStorageError());

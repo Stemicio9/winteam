@@ -45,6 +45,7 @@ class FirebaseStorageService {
   Future saveDataToFirebase(XFile imageFile, String uid) async {
     print("SONO NEL METODO SAVEDATATOFIREBASE, PRENDO IL FILE");
     var file = File(imageFile.path);
+
     Uint8List bytes = file.readAsBytesSync();
 
     var fileList =
@@ -56,7 +57,7 @@ class FirebaseStorageService {
 
     print("HO ELIMINATO EVENTUALI ALTRI FILE");
     var reference = await FirebaseStorage.instance
-        .ref('UID:$uid/image_profile/$IMAGE_DEFAULT_NAME')
+        .ref('UID:$uid/image_profile/${imageFile.name}')
         .putData(bytes);
 
     return "FINITO";

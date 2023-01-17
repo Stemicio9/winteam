@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:winteam/authentication/authentication_bloc.dart';
 import 'package:winteam/blocs/annunci_bloc/annunci_cubit.dart';
+import 'package:winteam/blocs/annunci_lavoratore_bloc/annunci_lavoratore_cubit.dart';
 import 'package:winteam/blocs/annunci_user_list/annunci_user_list_cubit.dart';
 import 'package:winteam/blocs/annuncio_detail.dart';
 import 'package:winteam/blocs/dashboard_tab_index_bloc/tab_index_bloc.dart';
@@ -113,6 +114,9 @@ class MyApp extends StatelessWidget {
           ),
           BlocProvider(
             create: (context) => FirebaseStorageCubit(),
+          ),
+          BlocProvider(
+            create: (context) => AnnunciLavoratoreCubit(),
           ),
         ],
         child: MaterialApp(

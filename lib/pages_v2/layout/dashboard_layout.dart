@@ -12,6 +12,7 @@ import 'package:winteam/pages_v2/employer_pages/ads/employer_ads.dart';
 import 'package:winteam/pages_v2/employer_pages/create_ads/create_ads.dart';
 import 'package:winteam/pages_v2/employer_pages/search_workers/search_workers.dart';
 import 'package:winteam/pages_v2/layout/widgets/bottom_bar_element.dart';
+import 'package:winteam/pages_v2/worker_pages/ads/worker_ads_applicant.dart';
 import 'package:winteam/pages_v2/worker_pages/ads/worker_ads_v2.dart';
 import 'package:winteam/pages_v2/worker_pages/profile/worker_profile_v2.dart';
 import 'package:winteam/widgets_v2/loading_gif.dart';
@@ -131,10 +132,12 @@ class DashboardLayoutState extends State<DashboardLayout>
     return CircleNavBar(
       activeIcons: const [
         Icon(Icons.newspaper_rounded, color: white),
+        Icon(Icons.ads_click, color: white),
         Icon(Icons.person, color: white),
       ],
       inactiveIcons: [
         Texth4V2(testo: ADS, color: white),
+        Texth4V2(testo: WORKER_PERSONAL_ADS, color: white),
         Texth4V2(testo: PROFILE, color: white),
       ],
       circleColor: green,
@@ -197,6 +200,8 @@ class LavoratoreLayout extends StatelessWidget {
   Widget build(BuildContext context) {
     var workerAds = WorkerAdsV2();
     var workerProfile = WorkerProfileV2Widget();
+    var workerPersonalAds = WorkerAdsApplicant();
+    var workwerPersonalAdsTitle = WORKER_PERSONAL_ADS;
     var workwerAdsTitle = ADS;
     var workerProfileTitle = PROFILE;
     var workwerAdsColor = lightGrey;
@@ -212,22 +217,31 @@ class LavoratoreLayout extends StatelessWidget {
       inactiveElement: Texth4V2(testo: PROFILE, color: white),
     );
 
+    var button5 = BottomBarElement(
+      activeElement: const Icon(Icons.ads_click, color: white),
+      inactiveElement: Texth4V2(testo: WORKER_PERSONAL_ADS, color: white),
+    );
+
     return DashboardLayout(
       datore: false,
       maxCount: 4,
       titles: [
         workwerAdsTitle,
+        workwerPersonalAdsTitle,
         workerProfileTitle,
       ],
       pages: [
         workerAds,
+        workerPersonalAds,
         workerProfile,
       ],
       buttons: [
         button3,
+        button5,
         button4,
       ],
       backgroundColors: [
+        workwerAdsColor,
         workwerAdsColor,
         workerProfileColor,
       ],

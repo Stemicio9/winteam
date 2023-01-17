@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:winteam/authentication/authentication_bloc.dart';
 import 'package:winteam/blocs/dashboard_tab_index_bloc/tab_index_bloc.dart';
 import 'package:winteam/blocs/user_bloc/current_user_cubit.dart';
+import 'package:winteam/constants/StateConstants.dart';
 import 'package:winteam/constants/colors.dart';
 import 'package:winteam/constants/language.dart';
 import 'package:winteam/constants/route_constants.dart';
@@ -100,19 +101,23 @@ class ContentDrawerWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Drawer(
-      //  width: 260,
+    return BlocBuilder<UserCubit, UserState>(
+      builder: (_, state) {
+        return Drawer(
+          //  width: 260,
 
-      child: Column(
-        children: [
-          Expanded(
-            child: ListView(
-                padding: EdgeInsets.zero,
-                children: createElementList(context, userCubit, authCubit)),
+          child: Column(
+            children: [
+              Expanded(
+                child: ListView(
+                    padding: EdgeInsets.zero,
+                    children: createElementList(context, state)),
+              ),
+              drawerFooter(context)
+            ],
           ),
-          drawerFooter(context)
-        ],
-      ),
+        );
+      }
     );
   }
 
@@ -169,7 +174,7 @@ class ContentDrawerWidget extends StatelessWidget {
     );
   }
 
-  createElementList(context, userCubit, authCubit) {
+  createElementList(context, state) {
     String comeFunziona = COME_FUNZIONA;
     String contattaci = CONTATTACI;
     String privacyPolicy = POLICY_PRIVACY;
@@ -186,14 +191,17 @@ class ContentDrawerWidget extends StatelessWidget {
 
     var username = 'Username';
     var imageLink = '';
-    if (authCubit.state is UserAuthenticated) {
-      var u = (authCubit.state as UserAuthenticated).user;
+    if (state is UserLoaded) {
+      var u = state.user;
       username = '${u.firstName} ${u.lastName}';
       if (username == ' ') {
         username = u.companyName!;
       }
       imageLink = u.imageLink ?? '';
     }
+    print("SONO NEL DRAWER");
+    print(imageLink);
+
 
     lista.add(drawerHeader(username, imageLink));
 
@@ -219,6 +227,7 @@ class ContentDrawerWidget extends StatelessWidget {
                   userCubit.logout();
                   authCubit.logout();
                   tabIndexCubit.setTabIndex(0);
+                  filterAnnunciLavoratore = FilterAnnunciLavoratore();
                   Navigator.pushReplacementNamed(context, RouteConstants.login);
                 },
               ));

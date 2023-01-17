@@ -47,7 +47,7 @@ class CustomImageView extends StatelessWidget {
     this.radius,
     this.margin,
     this.border,
-    this.placeHolder= '',
+    this.placeHolder= ''
   });
 
   @override
@@ -120,6 +120,7 @@ class CustomImageView extends StatelessWidget {
         color: color,
       );
     } else if (url != null && url!.isNotEmpty) {
+
       return CachedNetworkImage(
         height: height,
         width: width,
