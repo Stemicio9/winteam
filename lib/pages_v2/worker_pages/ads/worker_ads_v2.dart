@@ -11,6 +11,7 @@ import 'package:winteam/pages_v2/worker_pages/ads/widgets/ads_autocomplete.dart'
 import 'package:winteam/pages_v2/worker_pages/ads/widgets/ads_card.dart';
 import 'package:winteam/pages_v2/worker_pages/ads/widgets/ads_header.dart';
 import 'package:winteam/utils/size_utils.dart';
+import 'package:winteam/widgets_v2/empty_message.dart';
 import 'package:winteam/widgets_v2/loading_gif.dart';
 
 class WorkerAdsV2 extends StatefulWidget {
@@ -33,7 +34,8 @@ class WorkerAdsV2State extends State<WorkerAdsV2> {
 
   inputData() {
     _skillCubit.getSkillList();
-    _cubit.fetchAnnunciLavoratore(PageConstants.INIT_PAGE_NUMBER, PageConstants.PAGE_SIZE);
+    _cubit.fetchAnnunciLavoratore(
+        PageConstants.INIT_PAGE_NUMBER, PageConstants.PAGE_SIZE);
   }
 
   @override
@@ -42,10 +44,10 @@ class WorkerAdsV2State extends State<WorkerAdsV2> {
         padding: getPadding(bottom: 35),
         child: Column(
           children: [
-            BlocBuilder<SkillCubit, SkillState>(builder: (_, state){
-              if(state is SkillListLoading){
+            BlocBuilder<SkillCubit, SkillState>(builder: (_, state) {
+              if (state is SkillListLoading) {
                 return loadingGif();
-              }else if(state is SkillListLoaded){
+              } else if (state is SkillListLoaded) {
                 return AdsAutocomplete(
                   paddingBottom: 30,
                   filterController: filterController,
@@ -54,7 +56,7 @@ class WorkerAdsV2State extends State<WorkerAdsV2> {
                   type: AutocompleteSearchType.adSearch,
                   kOptions: state.skillList,
                 );
-              }else{
+              } else {
                 //Todo
                 return Container();
               }
@@ -66,6 +68,28 @@ class WorkerAdsV2State extends State<WorkerAdsV2> {
                     child: loadingGif(),
                   );
                 } else if (state is AnnunciLoaded) {
+                  if (state.annunci.isEmpty) {
+                    return Column(
+                      children: [
+                        AdsHeader(
+                          filterText: filterAnnunciLavoratore.isFiltered()
+                              ? FILTER_ACTIVE
+                              : FILTER,
+                          offers: state.annunci.length,
+                          onTap: () {
+                            Navigator.pushNamed(
+                                context, RouteConstants.adsFilter);
+                          },
+                        ),
+                        Padding(
+                          padding: getPadding(left: 10, right: 10),
+                          child: EmptyMessage(
+                            text: EMPTY_MESSAGE,
+                          ),
+                        )
+                      ],
+                    );
+                  }
                   return Expanded(
                     child: RefreshIndicator(
                         onRefresh: () {
@@ -74,8 +98,10 @@ class WorkerAdsV2State extends State<WorkerAdsV2> {
                         child: ListView(
                           children: [
                             AdsHeader(
-                              filterText: filterAnnunciLavoratore.isFiltered() ? FILTER_ACTIVE : FILTER ,
-                              offers:  state.annunci.length,
+                              filterText: filterAnnunciLavoratore.isFiltered()
+                                  ? FILTER_ACTIVE
+                                  : FILTER,
+                              offers: state.annunci.length,
                               onTap: () {
                                 Navigator.pushNamed(
                                     context, RouteConstants.adsFilter);

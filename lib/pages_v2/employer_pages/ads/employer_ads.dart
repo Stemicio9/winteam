@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:winteam/blocs/annunci_bloc/annunci_cubit.dart';
+import 'package:winteam/constants/language.dart';
 import 'package:winteam/constants/route_constants.dart';
 import 'package:winteam/pages_v2/employer_pages/ads/widget/employer_ads_choicechip.dart';
 import 'package:winteam/pages_v2/worker_pages/ads/widgets/ads_card.dart';
 import 'package:winteam/utils/size_utils.dart';
+import 'package:winteam/widgets_v2/empty_message.dart';
 import 'package:winteam/widgets_v2/loading_gif.dart';
 
 class EmployerAdsWidget extends StatelessWidget {
@@ -62,7 +64,14 @@ class EmployerAdsState extends State<EmployerAds> {
                   if (state is AnnunciLoading) {
                     return Center(child: loadingGif());
                   } else if (state is AnnunciLoaded) {
-                    return Expanded(
+                    if(state.annunci.isEmpty) {
+                      return Padding(
+                        padding:getPadding(left: 10,right: 10),
+                        child: EmptyMessage(text: EMPTY_MESSAGE),
+                      );
+
+                    }
+                      return Expanded(
                       child: RefreshIndicator(
                           onRefresh: () {
                             return inputData();
@@ -86,12 +95,8 @@ class EmployerAdsState extends State<EmployerAds> {
                             ],
                           )),
                     );
-                  } else if (state is AnnunciEmpty) {
-                    // @todo insert an empty state element
-                    return const Center(
-                      child: Text("NON CI SONO ANNUNCI"),
-                    );
-                  } else {
+                  }
+                   else {
                     return const Center(child: Text('Errore di caricamento'));
                   }
                 }),

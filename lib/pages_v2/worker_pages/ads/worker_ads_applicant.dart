@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:winteam/blocs/annunci_lavoratore_bloc/annunci_lavoratore_cubit.dart';
+import 'package:winteam/constants/language.dart';
 import 'package:winteam/constants/page_constants.dart';
 import 'package:winteam/constants/route_constants.dart';
 import 'package:winteam/pages_v2/employer_pages/ads/widget/employer_ads_choicechip.dart';
 import 'package:winteam/pages_v2/worker_pages/ads/widgets/ads_card.dart';
+import 'package:winteam/theme/app_style.dart';
+import 'package:winteam/utils/image_constant.dart';
 import 'package:winteam/utils/size_utils.dart';
+import 'package:winteam/widgets_v2/custom_image_view.dart';
+import 'package:winteam/widgets_v2/empty_message.dart';
 import 'package:winteam/widgets_v2/loading_gif.dart';
 
 class WorkerAdsApplicant extends StatefulWidget {
@@ -14,8 +19,8 @@ class WorkerAdsApplicant extends StatefulWidget {
 }
 
 class WorkerAdsApplicantState extends State<WorkerAdsApplicant> {
-
-  AnnunciLavoratoreCubit get _annunciLavoratoreCubit => context.read<AnnunciLavoratoreCubit>();
+  AnnunciLavoratoreCubit get _annunciLavoratoreCubit =>
+      context.read<AnnunciLavoratoreCubit>();
 
   List<bool> indexes = [true, false, false, false];
   List<String> texts = ['Tutti', 'W1N', 'Attivi', 'Scaduti'];
@@ -28,8 +33,9 @@ class WorkerAdsApplicantState extends State<WorkerAdsApplicant> {
     inputData();
   }
 
-  inputData(){
-    _annunciLavoratoreCubit.fetchAnnunciLavoratore('all', PageConstants.INIT_PAGE_NUMBER, PageConstants.PAGE_SIZE);
+  inputData() {
+    _annunciLavoratoreCubit.fetchAnnunciLavoratore(
+        'all', PageConstants.INIT_PAGE_NUMBER, PageConstants.PAGE_SIZE);
   }
 
   @override
@@ -45,7 +51,8 @@ class WorkerAdsApplicantState extends State<WorkerAdsApplicant> {
             indexes: indexes,
             texts: texts,
           ),
-          BlocBuilder<AnnunciLavoratoreCubit, AnnunciLavoratoreState>(builder: (_, state) {
+          BlocBuilder<AnnunciLavoratoreCubit, AnnunciLavoratoreState>(
+              builder: (_, state) {
             if (state is AnnunciLavoratoreLoading) {
               return Center(child: loadingGif());
             } else if (state is AnnunciLavoratoreLoaded) {
@@ -56,33 +63,30 @@ class WorkerAdsApplicantState extends State<WorkerAdsApplicant> {
                     },
                     child: ListView(
                       children: [
-                        ...state.annunci.map((e) =>
-                            AdsCard(
-                              isWorkerCard: true,
-                              message: message,
-                              candidates: e.candidateUserList.length.toString(),
-                              goToProfile: () {
-                                Navigator.of(context).pushNamed(
-                                    RouteConstants
-                                        .employerProfileOnlyView,
-                                    arguments: {
-                                      'company':
-                                      e.publisherUserDTO
-                                    });
-                              },
-                              onTap: () {
-                                Navigator.of(context).pushNamed(
-                                    RouteConstants.adsDetail,
-                                    arguments: {
-                                      'annuncio': e.id
-                                    });
-                              },
-                              isVisible: true,
-                              annunciEntity: e,
-                            ))
+                        ...state.annunci
+                            .map((e) => AdsCard(
+                                  isWorkerCard: true,
+                                  message: message,
+                                  candidates:
+                                      e.candidateUserList.length.toString(),
+                                  goToProfile: () {
+                                    Navigator.of(context).pushNamed(
+                                        RouteConstants.employerProfileOnlyView,
+                                        arguments: {
+                                          'company': e.publisherUserDTO
+                                        });
+                                  },
+                                  onTap: () {
+                                    Navigator.of(context).pushNamed(
+                                        RouteConstants.adsDetail,
+                                        arguments: {'annuncio': e.id});
+                                  },
+                                  isVisible: true,
+                                  annunciEntity: e,
+                                ))
                             .toList()
 
-                            /*AdsCard(
+                        /*AdsCard(
                           onTap: () {
                             Navigator.pushNamed(context, RouteConstants.employerAdsDetail, arguments: {'annuncio': e.id});
                           },
@@ -97,9 +101,11 @@ class WorkerAdsApplicantState extends State<WorkerAdsApplicant> {
                     )),
               );
             } else if (state is AnnunciLavoratoreEmpty) {
-              // @todo insert an empty state element
-              return const Center(
-                child: Text("NON CI SONO ANNUNCI"),
+              return Padding(
+                padding: getPadding(left: 20, right: 20),
+                child: EmptyMessage(
+                  text: SEARCH_EMPTY_MESSAGE,
+                )
               );
             } else {
               return const Center(child: Text('Errore di caricamento'));
@@ -114,7 +120,8 @@ class WorkerAdsApplicantState extends State<WorkerAdsApplicant> {
     if (!value) {
       return;
     }
-    _annunciLavoratoreCubit.fetchAnnunciLavoratore(_choicesListQuery[index], PageConstants.INIT_PAGE_NUMBER, PageConstants.PAGE_SIZE);
+    _annunciLavoratoreCubit.fetchAnnunciLavoratore(_choicesListQuery[index],
+        PageConstants.INIT_PAGE_NUMBER, PageConstants.PAGE_SIZE);
     indexes = [false, false, false, false];
     setState(() {
       indexes[index] = value;

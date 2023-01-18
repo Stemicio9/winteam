@@ -279,6 +279,11 @@ class AdsCard extends StatelessWidget {
                                       color: statusColor,
                                       borderRadius: BorderRadius.circular(10),
                                     ),
+                                    child: statusColor == green ? const Icon(
+                                      Icons.check,
+                                      color: Colors.white,
+                                      size: 15,
+                                    ) : Container(),
                                   )),
                             ),
                             Padding(

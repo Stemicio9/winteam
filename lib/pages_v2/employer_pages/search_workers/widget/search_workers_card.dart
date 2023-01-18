@@ -169,7 +169,7 @@ class SearchWorkerCard extends StatelessWidget {
                                       ),
                                     ),
                                     Expanded(
-                                      flex:7,
+                                      flex: 7,
                                       child: Text(
                                         user?.email ?? '',
                                         overflow: TextOverflow.ellipsis,

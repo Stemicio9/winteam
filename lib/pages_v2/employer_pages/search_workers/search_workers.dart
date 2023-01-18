@@ -9,6 +9,7 @@ import 'package:winteam/entities/skill_entity.dart';
 import 'package:winteam/pages_v2/employer_pages/search_workers/widget/search_workers_card.dart';
 import 'package:winteam/pages_v2/worker_pages/ads/widgets/ads_autocomplete.dart';
 import 'package:winteam/utils/size_utils.dart';
+import 'package:winteam/widgets_v2/empty_message.dart';
 import 'package:winteam/widgets_v2/loading_gif.dart';
 
 import 'widget/cannot_search_workers.dart';
@@ -79,6 +80,10 @@ class SearchWorkersState extends State<SearchWorkers> {
                           if (state is SubscriptionLoading) {
                             return Center(child: loadingGif());
                           } else if (state is SubscriptionCanI) {
+
+                            if(userState.users.isEmpty){
+                              return EmptyMessage(text: 'egg',);
+                            }
                             return Column(children: [
                               ...userState.users
                                   .map((e) => SearchWorkerCard(
@@ -96,6 +101,9 @@ class SearchWorkersState extends State<SearchWorkers> {
                                   .toList()
                             ]);
                           } else if (state is SubscriptionCannotI) {
+                            if(userState.users.isEmpty){
+                              return EmptyMessage(text: 'egg',);
+                            }
                             return Column(children: [
                               CannotSearchWorkersWidget(),
                               ...userState.users
@@ -118,8 +126,12 @@ class SearchWorkersState extends State<SearchWorkers> {
                           }
                         });
                       } else if (userState is UserListError) {
-                        return const Center(child: Text("Error"));
-                      } else {
+                        return const Center(
+                            child: Text("Error")
+                        );
+                      }
+
+                      else {
                         return const Center(child: Text("Error"));
                       }
                     },

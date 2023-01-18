@@ -87,7 +87,8 @@ const String CHOOSE = "Scegli!";
 const String VIEW_AD = "Visualizza annuncio";
 const String VIEW_ADS = "Visualizza annunci";
 const String FILTER_ACTIVE = "Filtri attivi";
-
+const String EMPTY_MESSAGE= "Non sono presenti annunci che rispettano i criteri selezionati";
+const String SEARCH_EMPTY_MESSAGE = "Non sono presenti profili che rispettano i criteri selezionati";
 
 
 //Pagine bottombar
@@ -235,7 +236,7 @@ final Map<String, String> LANG_IT = {
   VIEW_ADS:"Visualizza annunci",
   OTHER_CANDIDATES:"Altri candidati",
   FILTER_ACTIVE:"Filtri attivi",
-
+  EMPTY_MESSAGE:"Non sono presenti annunci che rispettano i criteri selezionati",
 
   "": "",
   "": "",
