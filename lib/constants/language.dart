@@ -29,10 +29,12 @@ const String INSERT_EMAIL = "Inserisci la tua email";
 const String BACK = "Torna indietro";
 const String I_ALREADY_HAVE_ACCOUNT = "Ho già un account";
 const String REMOVE_ACCOUNT = "Rimuovi account";
-const String PROFILE_NAME_PLACEHOLDER = "Inserisci nome e cognome";
+const String PROFILE_NAME_PLACEHOLDER = "Inserisci il nome";
+const String PROFILE_SURNAME_PLACEHOLDER = "Inserisci il cognome";
+
 const String PROFILE_DESCRIPTION_PLACEHOLDER =
     "Inserisci una breve descrizione";
-const String PHONE_PLACEHOLDER = "Inserisci una numero di telefono";
+const String PHONE_PLACEHOLDER = "Inserisci un numero di telefono";
 const String POSITION_PLACEHOLDER = "Inserisci la tua posizione";
 const String ADD_SKILLS = "Aggiungi mansione";
 const String GALLERY = "Seleziona foto dalla galleria";
@@ -51,6 +53,21 @@ const String FILTERS = "Filtri";
 const String CANCEL_APPLICATION = "Annulla candidatura";
 const String VIEW_APPLIES = "Visualizza candidati";
 const String NOTICE = "Avviso";
+const String EMPTY_NAME = "Nome Cognome";
+const String EMPTY_COMPANY_NAME = "Nome Azienda";
+const String EMPTY_BRIEF = "Inserisci breve descrizione";
+const String EMPTY_DESCRIPTION = "Inserisci descrizione";
+const String EMPTY_PHONE = "Inserisci telefono";
+const String EMPTY_EMAIL = "Inserisci email";
+const String EMPTY_POSITION = "Inserisci indirizzo";
+const String EMPTY_SKILLS = "Nessuna mansione inserita";
+
+const String EMPTY_NAME_ONLYVIEW = "Nome non disponibile";
+const String EMPTY_BRIEF_ONLYVIEW = "Breve descrizione non disponibile";
+const String EMPTY_DESCRIPTION_ONLYVIEW = "Descrizione non disponibile";
+const String EMPTY_PHONE_ONLYVIEW = "Telefono non disponibile ";
+const String EMPTY_EMAIL_ONLYVIEW = "Email non disponibile ";
+const String EMPTY_POSITION_ONLYVIEW = "Indirizzo non disponibile";
 
 
 
@@ -179,7 +196,8 @@ final Map<String, String> LANG_IT = {
   CHI_SONO: "Chi sono",
   I_MIEI_DATI: "I miei dati",
   MANSIONI: "Mansioni",
-  PROFILE_NAME_PLACEHOLDER: "Inserisci nome e cognome",
+  PROFILE_NAME_PLACEHOLDER: "Inserisci il nome",
+  PROFILE_SURNAME_PLACEHOLDER: "Inserisci il cognome",
   PROFILE_DESCRIPTION_PLACEHOLDER: "Inserisci una breve descrizione",
   PHONE_PLACEHOLDER: "Inserisci un numero di telefono",
   POSITION_PLACEHOLDER: "Inserisci la tua posizione",
@@ -237,6 +255,21 @@ final Map<String, String> LANG_IT = {
   OTHER_CANDIDATES:"Altri candidati",
   FILTER_ACTIVE:"Filtri attivi",
   EMPTY_MESSAGE:"Non sono presenti annunci che rispettano i criteri selezionati",
+  EMPTY_NAME:"Nome Cognome",
+  EMPTY_COMPANY_NAME:"Nnome Azienda",
+  EMPTY_DESCRIPTION:"Inserisci descrizone",
+  EMPTY_BRIEF:"Inserisci breve descrizione",
+  EMPTY_PHONE:"Inserisci telefono",
+  EMPTY_EMAIL:"Inserisci email",
+  EMPTY_POSITION:"Inserisci indirizzo",
+  EMPTY_SKILLS:"Nessuna mansione inserita",
+  EMPTY_NAME_ONLYVIEW:"Nome non disponibile",
+  EMPTY_DESCRIPTION_ONLYVIEW:"Descrizone non disponibile",
+  EMPTY_BRIEF_ONLYVIEW:"Breve descrizone non disponibile",
+  EMPTY_PHONE_ONLYVIEW:"Telefono non disponibile",
+  EMPTY_EMAIL_ONLYVIEW:"Email non disponibile",
+  EMPTY_POSITION_ONLYVIEW:"Indirizzo non disponibile",
+
 
   "": "",
   "": "",

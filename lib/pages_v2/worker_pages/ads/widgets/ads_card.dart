@@ -145,18 +145,34 @@ class AdsCard extends StatelessWidget {
                                           0.45,
                                   child: Row(
                                     mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+                                        MainAxisAlignment.start,
                                     children: [
+                                      Visibility(
+                                        visible: isWorkerCard && !isVisible,
+                                        child: Padding(
+                                                padding:  getPadding(right: 10),
+                                                child: CustomImageView(
+                                            svgPath: (annunciEntity
+                                                  .skillDTO
+                                                  ?.imageLink ??
+                                                  ''),
+                                            height: getSize(20),
+                                            width: getSize(20),
+                                          ),
+                                              ),
+
+                                      ),
+
+
                                       SizedBox(
                                         child: Text(
-                                          annunciEntity.skillDTO?.name ??
-                                              'TEST NAME',
+                                          annunciEntity.skillDTO?.name ?? 'TEST NAME',
                                           maxLines: 1,
                                           overflow: TextOverflow.ellipsis,
                                           style: AppStyle.txtMontserratBold24,
                                         ),
                                       ),
-                                      Visibility(
+                                  /*    Visibility(
                                         visible: isWorkerCard,
                                         child: Padding(
                                           padding: getPadding(left: 5),
@@ -171,7 +187,7 @@ class AdsCard extends StatelessWidget {
                                                   width: getSize(20),
                                                 ),
                                         ),
-                                      )
+                                      ) */
                                     ],
                                   ),
                                 ),
@@ -181,11 +197,7 @@ class AdsCard extends StatelessWidget {
                                     width: MediaQuery.of(context).size.width *
                                         0.45,
                                     child: Text(
-                                      isWorkerCard
-                                          ? (annunciEntity.publisherUserDTO
-                                                  ?.companyName ??
-                                              '')
-                                          : annunciEntity.description,
+                                      isWorkerCard ? (annunciEntity.publisherUserDTO?.companyName ?? '') : annunciEntity.description,
                                       maxLines: 2,
                                       overflow: TextOverflow.ellipsis,
                                       style: isWorkerCard

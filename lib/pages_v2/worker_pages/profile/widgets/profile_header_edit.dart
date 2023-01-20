@@ -5,16 +5,22 @@ import 'package:winteam/widgets_v2/inputs_v2.dart';
 
 class ProfileHeaderEdit extends StatelessWidget {
   final TextEditingController nameTextController;
+  final  lastNameTextController;
   final TextEditingController headerDescriptionTextController;
   final dynamic nameValidator;
+  final dynamic lastNameValidator;
   final dynamic headerDescriptionValidator;
   final double getPaddingTop; //15
+  final bool isWorkwerProfile;
 
   const ProfileHeaderEdit({
     this.getPaddingTop = 15,
     required this.nameTextController,
+     this.lastNameTextController,
     required this.headerDescriptionTextController,
     this.nameValidator,
+    this.lastNameValidator,
+    this.isWorkwerProfile = true,
     this.headerDescriptionValidator,
   });
 
@@ -37,11 +43,24 @@ class ProfileHeaderEdit extends StatelessWidget {
               fontHintSize: 22,
               elevation: 5,
               borderRadius: 5,
-           //   isPrefixIcon: true,
-            //  svgPath: ImageConstant.imgBuilding,
-           //   prefixIconWidth: 35,
-           //   prefixIconHeight: 35,
             ),
+
+
+          isWorkwerProfile ? InputsV2Widget(
+              hinttext: PROFILE_SURNAME_PLACEHOLDER,
+              controller: lastNameTextController,
+              validator: lastNameValidator,
+              paddingLeft: 35,
+              paddingRight: 35,
+              fontSize: 22,
+              textAlign: TextAlign.center,
+              contentPaddingLeft: 0,
+              fontHintSize: 22,
+              elevation: 5,
+              borderRadius: 5,
+
+            ) : Container(),
+
             InputsV2Widget(
               hinttext: PROFILE_DESCRIPTION_PLACEHOLDER,
               controller: headerDescriptionTextController,

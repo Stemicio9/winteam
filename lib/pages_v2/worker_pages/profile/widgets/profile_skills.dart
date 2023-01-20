@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:winteam/constants/language.dart';
 import 'package:winteam/entities/skill_entity.dart';
 import 'package:winteam/theme/app_style.dart';
+import 'package:winteam/utils/image_constant.dart';
 import 'package:winteam/utils/size_utils.dart';
 import 'package:winteam/widgets_v2/custom_image_view.dart';
 
@@ -17,7 +18,6 @@ class ProfileSkill extends StatelessWidget{
   final double getPaddingSkillTop; //12
   final double getPaddingSkillBottom; //12
   final double getPaddingSkillLeft; //16
-
   final List<SkillEntity> mansioni;
 
 
@@ -27,6 +27,7 @@ class ProfileSkill extends StatelessWidget{
     this.customImageViewWidth = 26, this.getPaddingSkillBottom = 12,
     this.getPaddingSkillTop = 12, this.getPaddingSkillLeft= 16,
     this.getVerticalSizeHeight = 26, this.getHorizontalSizeWidth = 26,
+
     required this.mansioni
     }) : super(key: key);
 
@@ -50,14 +51,41 @@ class ProfileSkill extends StatelessWidget{
             textAlign: TextAlign.left,
             style: AppStyle.txtMontserratSemiBold24,
           ),
-          Padding(
-            padding: getPadding(
-              top: getPaddingTop,
+          Visibility(
+            visible: mansioni.isNotEmpty,
+            child: Padding(
+              padding: getPadding(
+                top: getPaddingTop,
+              ),
+              child: Column(
+                children: mansioni.map((e) => mansione(e)).toList(),
+              )
             ),
-            child: Column(
-              children: mansioni.map((e) => mansione(e)).toList(),
-            )
           ),
+          Visibility(
+              visible: mansioni.isEmpty,
+              child: Padding(
+                padding:  getPadding(
+                  top: getPaddingTop,
+                ),
+                child: Row(
+                  children: [
+                    Padding(
+                        padding: getPadding(right: 16),
+                      child: CustomImageView(
+                        svgPath: ImageConstant.imgBag,
+                        height: 20,
+                        width: 20,
+                      ),
+                    ),
+                    Text(
+                        EMPTY_SKILLS,
+                      style: AppStyle.txtMontserratRegular20,
+                    ),
+                  ],
+                ),
+              )
+          )
         ],
       ),
     );

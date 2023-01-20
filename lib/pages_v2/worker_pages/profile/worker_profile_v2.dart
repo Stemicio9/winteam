@@ -145,8 +145,10 @@ class WorkerProfileV2State extends State<WorkerProfileV2> {
           ),
           ProfileNameHeader(
             isOnlyView: widget.isOnlyView,
-            name: '${user.firstName} ${user.lastName}',
-            description: user.brief ?? '',
+            name: !widget.isOnlyView ? showNamePlaceholder(user) ? EMPTY_NAME : '${user.firstName} ${user.lastName}'
+            : showNamePlaceholder(user) ? EMPTY_NAME_ONLYVIEW : '${user.firstName} ${user.lastName}',
+
+            description: verifyValName( user.brief ?? "",EMPTY_BRIEF,EMPTY_BRIEF_ONLYVIEW ),
             sectionHeight: 100,
             onTap: () {
               Navigator.pushNamed(context, RouteConstants.workerProfileEdit);
@@ -160,13 +162,13 @@ class WorkerProfileV2State extends State<WorkerProfileV2> {
                 ),
                 ProfileDescription(
                   title: CHI_SONO,
-                  description: user.description ?? '',
+                  description: verifyValName( user.description ?? "",EMPTY_DESCRIPTION,EMPTY_DESCRIPTION_ONLYVIEW ),
                 ),
                 ProfileInfo(
                   title: I_MIEI_DATI,
-                  phone: user.phoneNumber ?? '',
-                  email: user.email ?? '',
-                  position: user.address ?? '',
+                  phone: verifyValName( user.phoneNumber ?? "",EMPTY_PHONE,EMPTY_PHONE_ONLYVIEW ),
+                  email:  verifyValName( user.email ?? "",EMPTY_EMAIL,EMPTY_EMAIL_ONLYVIEW ),
+                  position: verifyValName( user.address ?? "",EMPTY_POSITION,EMPTY_POSITION_ONLYVIEW ),
                 ),
               ],
             ),
@@ -174,5 +176,24 @@ class WorkerProfileV2State extends State<WorkerProfileV2> {
         ],
       ),
     );
+  }
+
+  bool showNamePlaceholder(UserEntity user) {
+    return user.firstName != null &&
+            user.lastName != null &&
+            user.firstName!.isEmpty &&
+            user.lastName!.isEmpty;
+
+  }
+
+
+  // this method checks if a field is empty or not and if we are in
+  // the view-only profile or not, and populates them.
+  verifyValName(String? valName, String text, String textOnlyView){
+    print("CIAO CIAO CIAO");
+    String result = !widget.isOnlyView
+        ? ((valName != null && valName.isNotEmpty) ? valName : text)
+        : ((valName != null && valName.isNotEmpty) ? valName : textOnlyView);
+    return result;
   }
 }

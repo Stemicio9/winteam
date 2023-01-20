@@ -7,9 +7,9 @@ import 'package:winteam/widgets_v2/custom_image_view.dart';
 
 class ProfileInfo extends StatelessWidget {
 
-  final double padddingLeft; //35
+  final double paddingLeft; //35
   final double paddingRight; //35
-  final double padddingTop; //55
+  final double paddingTop; //55
   final double customImageViewHeight; //26
   final double customImageViewWidht; //26
   final double getPaddingTop; //24
@@ -29,7 +29,7 @@ class ProfileInfo extends StatelessWidget {
 
 
   const ProfileInfo({Key? key, this.paddingRight = 35,
-    this.padddingTop = 55, this.padddingLeft = 35,
+    this.paddingTop = 55, this.paddingLeft = 35,
     this.getPaddingTop = 24, this.customImageViewHeight = 26,
     this.customImageViewWidht = 26, this.getPaddingInfoBottom = 2,
     this.getPaddingInfoTop = 1, this.getPaddingInfoLeft= 16,
@@ -42,9 +42,9 @@ class ProfileInfo extends StatelessWidget {
     return Container(
       width: size.width,
       padding: getPadding(
-        left: padddingLeft,
+        left: paddingLeft,
         right: paddingRight,
-        top: padddingTop,
+        top: paddingTop,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

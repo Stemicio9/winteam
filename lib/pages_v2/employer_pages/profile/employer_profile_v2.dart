@@ -39,7 +39,6 @@ class EmployerProfileState extends State<EmployerProfile> {
     super.initState();
   }
 
-
   @override
   Widget build(BuildContext context) {
     if (widget.isOnlyView) {
@@ -48,31 +47,32 @@ class EmployerProfileState extends State<EmployerProfile> {
     } else {
       return BlocBuilder<UserAuthCubit, UserAuthenticationState>(
           builder: (_, stateUser) {
-            if (stateUser is UserAuthenticated) {
-              return BlocBuilder<FirebaseStorageCubit, FirebaseStorageState>(
-                builder: (_, state) {
-                  if (state is FirebaseStorageLoaded) {
-                    if (state.toUpload) {
-                      _firebaseStorageCubit.update(
-                          stateUser.user.copyWith(imageLink: state.imageUrl));
-                    }
-                    //_authCubit.persistAuthentication(widget.currentUser!.copyWith(imageLink: state.imageUrl));
-                    return content(state.imageUrl, stateUser.user);
-                  } else {
-                    return content(stateUser.user.imageLink ?? ImageConstant.placeholderUserUrl, stateUser.user);
-                  }
-                },
-              );
-            } else {
-              return const Center(child: Text("ERRORE DI AUTENTICAZIONE"));
-            }
-          });
+        if (stateUser is UserAuthenticated) {
+          return BlocBuilder<FirebaseStorageCubit, FirebaseStorageState>(
+            builder: (_, state) {
+              if (state is FirebaseStorageLoaded) {
+                if (state.toUpload) {
+                  _firebaseStorageCubit.update(
+                      stateUser.user.copyWith(imageLink: state.imageUrl));
+                }
+                //_authCubit.persistAuthentication(widget.currentUser!.copyWith(imageLink: state.imageUrl));
+                return content(state.imageUrl, stateUser.user);
+              } else {
+                return content(
+                    stateUser.user.imageLink ??
+                        ImageConstant.placeholderUserUrl,
+                    stateUser.user);
+              }
+            },
+          );
+        } else {
+          return const Center(child: Text("ERRORE DI AUTENTICAZIONE"));
+        }
+      });
     }
   }
 
-
-  Widget content(String imageLink, UserEntity user){
-
+  Widget content(String imageLink, UserEntity user) {
     return Padding(
         padding: getPadding(bottom: 35),
         child: Column(
@@ -95,8 +95,8 @@ class EmployerProfileState extends State<EmployerProfile> {
                 isOnlyView: widget.isOnlyView,
                 message: 'Valutazione: ${user.rating?.toStringAsFixed(1) ?? 0}/5',
                 rating: user.rating ?? 0,
-                name: user.companyName ?? '',
-                description: user.brief ?? '',
+                name: verifyValName(user.companyName ?? "",EMPTY_COMPANY_NAME,EMPTY_NAME_ONLYVIEW),
+                description: verifyValName( user.brief ?? "",EMPTY_BRIEF,EMPTY_BRIEF_ONLYVIEW ),
                 sectionHeight: 110,
                 buttonOntap: () {
                   showDialog(
@@ -111,30 +111,27 @@ class EmployerProfileState extends State<EmployerProfile> {
             Expanded(
               child: ListView(
                 children: [
-
                   ProfileDescription(
                     title: ABOUT_US,
-                    description: user.description ?? '',
+                    description: verifyValName( user.description ?? "",EMPTY_DESCRIPTION,EMPTY_DESCRIPTION_ONLYVIEW ),
+
                   ),
                   ProfileInfo(
                     title: OUR_CONTACTS,
-                    email: user.email ?? '',
-                    position: user.address ?? '',
-                    phone: user.phoneNumber ?? '',
+                    email: verifyValName( user.email ?? "",EMPTY_EMAIL,EMPTY_EMAIL_ONLYVIEW ),
+                    position: verifyValName( user.address ?? "",EMPTY_POSITION,EMPTY_POSITION_ONLYVIEW ),
+                    phone: verifyValName( user.phoneNumber ?? "",EMPTY_PHONE,EMPTY_PHONE_ONLYVIEW ),
+
                   )
                 ],
               ),
             )
-
           ],
-        )
-    );
+        ));
   }
 
-  openGallery(String userId){
-
+  openGallery(String userId) {
     ImagePicker().pickImage(source: ImageSource.gallery).then((value) {
-
       setState(() {
         imageFile = value;
       });
@@ -155,7 +152,18 @@ class EmployerProfileState extends State<EmployerProfile> {
   }
 
   saveImageToFirebase(String id) {
-    _firebaseStorageCubit.saveImageToFirebase(
-        imageFile!, id);
+    _firebaseStorageCubit.saveImageToFirebase(imageFile!, id);
   }
+
+
+  // this method checks if a field is empty or not and if we are in
+  // the view-only profile or not, and populates them.
+  verifyValName(String? valName, String text, String textOnlyView){
+    print("CIAO CIAO CIAO");
+    String result = !widget.isOnlyView
+        ? ((valName != null && valName.isNotEmpty) ? valName : text)
+        : ((valName != null && valName.isNotEmpty) ? valName : textOnlyView);
+    return result;
+  }
+
 }

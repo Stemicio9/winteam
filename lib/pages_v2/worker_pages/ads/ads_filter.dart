@@ -110,12 +110,10 @@ class AdsFilterState extends State<AdsFilter> {
     }
     if (filterAnnunciLavoratore.dateRange?.start != null) {
       print('fill date start ${filterAnnunciLavoratore.dateRange?.start}');
-      fromDateController.text =
-          format.format(filterAnnunciLavoratore.dateRange!.start);
+      fromDateController.text = format.format(filterAnnunciLavoratore.dateRange!.start);
     }
     if (filterAnnunciLavoratore.dateRange?.end != null) {
-      toDateController.text =
-          format.format(filterAnnunciLavoratore.dateRange!.end);
+      toDateController.text = format.format(filterAnnunciLavoratore.dateRange!.end);
     }
 
     if (filterAnnunciLavoratore.fasceOrarie != null &&
@@ -169,8 +167,7 @@ class AdsFilterState extends State<AdsFilter> {
     print('setFromDate $val');
     filterAnnunciLavoratore.dateRange = DateTimeRange(
         start: val,
-        end: filterAnnunciLavoratore.dateRange?.end ??
-            DateTime.now().add(const Duration(days: 5)));
+        end: filterAnnunciLavoratore.dateRange?.end ?? DateTime.now().add(const Duration(days: 5)));
   }
 
   void setToDate(val) {

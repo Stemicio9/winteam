@@ -33,8 +33,8 @@ class WorkerProfileEditV2State extends State<WorkerProfileEditV2> {
   final _formKey = GlobalKey<FormState>();
 
   final TextEditingController nameTextController = TextEditingController();
-  final TextEditingController headerDescriptionTextController =
-      TextEditingController();
+  final TextEditingController lastNameTextController = TextEditingController();
+  final TextEditingController headerDescriptionTextController = TextEditingController();
   final TextEditingController phoneTextController = TextEditingController();
   final TextEditingController emailTextController = TextEditingController();
   final TextEditingController positionTextController = TextEditingController();
@@ -52,8 +52,8 @@ class WorkerProfileEditV2State extends State<WorkerProfileEditV2> {
 
   inputData() {
     currentUser = (_authCubit.state as UserAuthenticated).user;
-    nameTextController.text =
-        '${currentUser.firstName} ${currentUser.lastName}';
+    lastNameTextController.text = '${currentUser.lastName}';
+    nameTextController.text = '${currentUser.firstName}';
     headerDescriptionTextController.text = currentUser.brief ?? '';
     phoneTextController.text = currentUser.phoneNumber ?? '';
     emailTextController.text = currentUser.email ?? '';
@@ -87,9 +87,9 @@ class WorkerProfileEditV2State extends State<WorkerProfileEditV2> {
                       child: ListView(
                         children: [
                           ProfileHeaderEdit(
+                            lastNameTextController: lastNameTextController,
                             nameTextController: nameTextController,
-                            headerDescriptionTextController:
-                                headerDescriptionTextController,
+                            headerDescriptionTextController: headerDescriptionTextController,
                           ),
                           ProfileSkillsEdit(
                             mansioni: mansioni,
@@ -132,9 +132,10 @@ class WorkerProfileEditV2State extends State<WorkerProfileEditV2> {
 
   formSubmit() async {
     if (_formKey.currentState!.validate()) {
+
       _userCubit.update(currentUser.copyWith(
-          firstName: nameTextController.text.split(' ')[0],
-          lastName: nameTextController.text.split(' ')[1],
+          firstName: nameTextController.text,
+          lastName: lastNameTextController.text,
           brief: headerDescriptionTextController.text,
           phoneNumber: phoneTextController.text,
           email: emailTextController.text,

@@ -91,6 +91,7 @@ class EmployerProfileV2EditState extends State<EmployerProfileEditV2> {
                     child: ListView(
                       children: [
                         ProfileHeaderEdit(
+                          isWorkwerProfile: false,
                           nameTextController: nameTextController,
                           headerDescriptionTextController: headerDescriptionTextController,
                         ),

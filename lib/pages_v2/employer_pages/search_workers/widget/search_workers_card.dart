@@ -6,7 +6,6 @@ import 'package:winteam/pages_v2/employer_pages/ads/widget/button_choose.dart';
 import 'package:winteam/utils/image_constant.dart';
 import 'package:winteam/widgets_v2/action_buttons_v2.dart';
 import 'package:winteam/widgets_v2/custom_image_view.dart';
-
 import '../../../../theme/app_style.dart';
 import '../../../../utils/size_utils.dart';
 
@@ -19,13 +18,11 @@ class SearchWorkerCard extends StatelessWidget {
   final onTap;
   final Function? view;
   final Function? choose;
-
   final UserEntity? user;
   final skillIcon;
   final bool isSearch;
   final bool isSelected;
   final bool isCandidatesList;
-
   final bool isChoosenUser;
 
   SearchWorkerCard(
@@ -107,7 +104,8 @@ class SearchWorkerCard extends StatelessWidget {
                               SizedBox(
                                 width: MediaQuery.of(context).size.width * 0.53,
                                 child: Text(
-                                  '${user?.firstName} ${user?.lastName}',
+                                  showNamePlaceholder(user!) ? EMPTY_NAME_ONLYVIEW
+                                      : '${user!.firstName} ${user!.lastName}',
                                   overflow: TextOverflow.ellipsis,
                                   style: AppStyle.txtMontserratBoldBlue24,
                                 ),
@@ -118,10 +116,9 @@ class SearchWorkerCard extends StatelessWidget {
                                     width: MediaQuery.of(context).size.width *
                                         0.49,
                                     child: Text(
-                                      user?.brief ?? '',
+                                      user?.brief != null && user!.brief!.isEmpty ? '' : user!.brief!,
                                       overflow: TextOverflow.ellipsis,
-                                      style:
-                                          AppStyle.txtMontserratSemiBoldBlack20,
+                                      style: AppStyle.txtMontserratSemiBoldBlack20,
                                     ),
                                   )
                                 ],
@@ -143,7 +140,7 @@ class SearchWorkerCard extends StatelessWidget {
                                       ),
                                     ),
                                     Text(
-                                      user?.phoneNumber ?? '',
+                                      user?.phoneNumber != null && user!.phoneNumber!.isEmpty ? '******' : user!.phoneNumber!,
                                       style: AppStyle.txtMontserratRegular18,
                                     ),
                                   ],
@@ -171,7 +168,7 @@ class SearchWorkerCard extends StatelessWidget {
                                     Expanded(
                                       flex: 7,
                                       child: Text(
-                                        user?.email ?? '',
+                                        user?.email != null && user!.email!.isEmpty ? '******' : user!.email!,
                                         overflow: TextOverflow.ellipsis,
                                         style: AppStyle.txtMontserratRegular18,
                                       ),
@@ -196,7 +193,8 @@ class SearchWorkerCard extends StatelessWidget {
                                       ),
                                     ),
                                     Text(
-                                      user?.address ?? '',
+                                     isChoosenUser ? user?.address != null && user!.address!.isEmpty ? '-' : user!.address!
+                                      : '******',
                                       style: AppStyle.txtMontserratRegular18,
                                     ),
                                   ],
@@ -291,5 +289,12 @@ class SearchWorkerCard extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  bool showNamePlaceholder(UserEntity user) {
+    return user.firstName != null &&
+        user.lastName != null &&
+        user.firstName!.isEmpty &&
+        user.lastName!.isEmpty;
   }
 }

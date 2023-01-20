@@ -6,10 +6,7 @@ import 'package:winteam/constants/page_constants.dart';
 import 'package:winteam/constants/route_constants.dart';
 import 'package:winteam/pages_v2/employer_pages/ads/widget/employer_ads_choicechip.dart';
 import 'package:winteam/pages_v2/worker_pages/ads/widgets/ads_card.dart';
-import 'package:winteam/theme/app_style.dart';
-import 'package:winteam/utils/image_constant.dart';
 import 'package:winteam/utils/size_utils.dart';
-import 'package:winteam/widgets_v2/custom_image_view.dart';
 import 'package:winteam/widgets_v2/empty_message.dart';
 import 'package:winteam/widgets_v2/loading_gif.dart';
 
@@ -104,7 +101,7 @@ class WorkerAdsApplicantState extends State<WorkerAdsApplicant> {
               return Padding(
                 padding: getPadding(left: 20, right: 20),
                 child: EmptyMessage(
-                  text: SEARCH_EMPTY_MESSAGE,
+                  text: EMPTY_MESSAGE,
                 )
               );
             } else {
