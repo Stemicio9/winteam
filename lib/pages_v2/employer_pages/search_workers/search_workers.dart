@@ -4,6 +4,7 @@ import 'package:winteam/blocs/skill_bloc/skill_cubit.dart';
 import 'package:winteam/blocs/subscription_bloc/subscription_cubit.dart';
 import 'package:winteam/blocs/user_bloc/user_list_cubit.dart';
 import 'package:winteam/constants/enums.dart';
+import 'package:winteam/constants/language.dart';
 import 'package:winteam/constants/route_constants.dart';
 import 'package:winteam/entities/skill_entity.dart';
 import 'package:winteam/pages_v2/employer_pages/search_workers/widget/search_workers_card.dart';
@@ -82,7 +83,7 @@ class SearchWorkersState extends State<SearchWorkers> {
                           } else if (state is SubscriptionCanI) {
 
                             if(userState.users.isEmpty){
-                              return EmptyMessage(text: 'egg',);
+                              return EmptyMessage(text: SEARCH_EMPTY_MESSAGE);
                             }
                             return Column(children: [
                               ...userState.users
@@ -102,10 +103,10 @@ class SearchWorkersState extends State<SearchWorkers> {
                             ]);
                           } else if (state is SubscriptionCannotI) {
                             if(userState.users.isEmpty){
-                              return EmptyMessage(text: 'egg',);
+                              return EmptyMessage(text: SEARCH_EMPTY_MESSAGE);
                             }
                             return Column(children: [
-                              CannotSearchWorkersWidget(),
+                              const CannotSearchWorkersWidget(),
                               ...userState.users
                                   .map((e) => SearchWorkerCard(
                                       onTap: () {
@@ -113,7 +114,7 @@ class SearchWorkersState extends State<SearchWorkers> {
                                             context,
                                             RouteConstants.candidateProfileChoose,
                                             arguments: {
-                                              'isVisible': 'false',
+                                              'isVisible': false,
                                               'company': e
                                             });
                                       },
@@ -148,6 +149,6 @@ class SearchWorkersState extends State<SearchWorkers> {
   }
 
   onSubmittedAutocomplete(String skillSelected) {
-    _userListCubit.searchUserFiltered(skillSelected);
+      _userListCubit.searchUserFiltered(skillSelected);
   }
 }

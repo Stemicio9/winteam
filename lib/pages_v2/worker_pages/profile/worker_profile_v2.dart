@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:winteam/authentication/authentication_bloc.dart';
 import 'package:winteam/blocs/firebase_storage/firebase_storage_bloc.dart';
+import 'package:winteam/blocs/user_bloc/current_user_cubit.dart';
 import 'package:winteam/constants/language.dart';
 import 'package:winteam/constants/route_constants.dart';
 import 'package:winteam/entities/user_entity.dart';
@@ -55,10 +55,10 @@ class WorkerProfileV2 extends StatefulWidget {
 }
 
 class WorkerProfileV2State extends State<WorkerProfileV2> {
-  FirebaseStorageCubit get _firebaseStorageCubit =>
-      context.read<FirebaseStorageCubit>();
-
+  FirebaseStorageCubit get _firebaseStorageCubit => context.read<FirebaseStorageCubit>();
+  UserCubit get _userCubit => context.read<UserCubit>();
   XFile? imageFile;
+
 
   @override
   void initState() {
@@ -72,20 +72,20 @@ class WorkerProfileV2State extends State<WorkerProfileV2> {
       return content(widget.currentUser?.imageLink ?? ImageConstant.placeholderUserUrl,
           widget.currentUser ?? UserEntity());
     } else {
-      return BlocBuilder<UserAuthCubit, UserAuthenticationState>(
+      return BlocBuilder<UserCubit, UserState>(
           builder: (_, stateUser) {
-        if (stateUser is UserAuthenticated) {
+        if (stateUser is UserLoaded) {
           return BlocBuilder<FirebaseStorageCubit, FirebaseStorageState>(
             builder: (_, state) {
               if (state is FirebaseStorageLoaded) {
                 if (state.toUpload) {
-                  _firebaseStorageCubit.update(
-                      stateUser.user.copyWith(imageLink: state.imageUrl));
+                  _userCubit.update(stateUser.user.copyWith(imageLink: state.imageUrl));
+                  _firebaseStorageCubit.uploaded(state.imageUrl);
                 }
                 //_authCubit.persistAuthentication(widget.currentUser!.copyWith(imageLink: state.imageUrl));
                 return content(state.imageUrl, stateUser.user);
               } else {
-                return content(stateUser.user.imageLink ?? '', stateUser.user);
+                return content(stateUser.user.imageLink ?? ImageConstant.placeholderUserUrl, stateUser.user);
               }
             },
           );
@@ -151,7 +151,7 @@ class WorkerProfileV2State extends State<WorkerProfileV2> {
             description: verifyValName( user.brief ?? "",EMPTY_BRIEF,EMPTY_BRIEF_ONLYVIEW ),
             sectionHeight: 100,
             onTap: () {
-              Navigator.pushNamed(context, RouteConstants.workerProfileEdit);
+              Navigator.pushNamed(context, RouteConstants.workerProfileEdit, arguments: {'user': user});
             },
           ),
           Expanded(

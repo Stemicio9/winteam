@@ -1,10 +1,11 @@
 import 'dart:convert';
-import 'package:flutter/services.dart';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:winteam/authentication/authentication_bloc.dart';
 import 'package:winteam/blocs/annunci_bloc/annunci_cubit.dart';
@@ -66,8 +67,8 @@ void main() async {
       app: Firebase.app(), persistence: Persistence.LOCAL);
   var user = auth.currentUser;
   String initialRoute = "/";
+  await fetchBaseUrl();
   if (user != null) {
-    await fetchBaseUrl();
     var me = await userListApiService.me();
     var encoded = jsonEncode(me.data);
     var decoded = jsonDecode(encoded);

@@ -5,16 +5,14 @@ class AnnunciEntity {
   final String? id;
   final String description;
   final String position;
-  final String date;
+  final DateTime date;
   final String hourSlot;
   final String image;
-  final String skillId;
-  final SkillEntity? skillDTO;
+  final SkillEntity? skill;
   final String payment;
-  final String publisherUserId;
-  final UserEntity? publisherUserDTO;
+  final UserEntity? publisherUser;
   final List<dynamic> candidateUserList;
-  final String matchedUserId;
+  final UserEntity? matchedUser;
   final String advertisementStatus;
 
   AnnunciEntity(
@@ -24,35 +22,31 @@ class AnnunciEntity {
       required this.date,
       required this.image,
       required this.hourSlot,
-      required this.skillId,
-      this.skillDTO,
-      this.publisherUserDTO,
+      this.skill,
+      this.publisherUser,
       required this.payment,
-      required this.publisherUserId,
       required this.candidateUserList,
-      required this.matchedUserId,
+      this.matchedUser,
       required this.advertisementStatus});
 
   //write to String
   @override
   String toString() {
-    return 'AnnunciEntity{id: $id, description: $description, position: $position, date: $date, hourSlot: $hourSlot, image: $image, skillId: $skillId, skillDTO: $skillDTO, payment: $payment, publisherUserId: $publisherUserId, publisherUserDTO: $publisherUserDTO, candidateUserList: $candidateUserList, matchedUserId: $matchedUserId, advertisementStatus: $advertisementStatus}';
+    return 'AnnunciEntity{id: $id, description: $description, position: $position, date: $date, hourSlot: $hourSlot, image: $image, skill: $skill, payment: $payment, publisherUser: $publisherUser, candidateUserList: $candidateUserList, matchedUser: $matchedUser, advertisementStatus: $advertisementStatus}';
   }
 
   AnnunciEntity copyWith(
       {String? id,
       String? description,
       String? position,
-      String? date,
+        DateTime? date,
       String? hourSlot,
       String? image,
-      String? skillId,
-      SkillEntity? skillDTO,
+      SkillEntity? skill,
       String? payment,
-      String? publisherUserId,
-      UserEntity? publisherUserDTO,
+      UserEntity? publisherUser,
       List<dynamic>? candidateUserList,
-      String? matchedUserId,
+        UserEntity? matchedUser,
       String? advertisementStatus}) {
     return AnnunciEntity(
         id: id ?? this.id,
@@ -61,13 +55,11 @@ class AnnunciEntity {
         date: date ?? this.date,
         hourSlot: hourSlot ?? this.hourSlot,
         image: image ?? this.image,
-        skillId: skillId ?? this.skillId,
-        skillDTO: skillDTO ?? this.skillDTO,
+        skill: skill ?? this.skill,
         payment: payment ?? this.payment,
-        publisherUserId: publisherUserId ?? this.publisherUserId,
-        publisherUserDTO: publisherUserDTO ?? this.publisherUserDTO,
+        publisherUser: publisherUser ?? this.publisherUser,
         candidateUserList: candidateUserList ?? this.candidateUserList,
-        matchedUserId: matchedUserId ?? this.matchedUserId,
+        matchedUser: matchedUser ?? this.matchedUser,
         advertisementStatus: advertisementStatus ?? this.advertisementStatus);
   }
 
@@ -75,33 +67,33 @@ class AnnunciEntity {
       id: json["id"] ?? "",
       description: json["description"] ?? "",
       position: json["position"] ?? "",
-      date: json["date"] ?? "",
+      date: DateTime.parse(json["date"]),
       image: json["image"] ?? 'assets/images/img_pexelsphotoby.png',
       hourSlot: json["hourSlot"] ?? "",
-      skillId: json["skillId"] ?? "",
-      skillDTO: json["skillDTO"] != null
-          ? SkillEntity.fromJson(json["skillDTO"])
+      skill: json["skill"] != null
+          ? SkillEntity.fromJson(json["skill"])
           : SkillEntity(),
-      payment: json["payment"].toString() ?? "",
-      publisherUserId: json["publisherUserId"] ?? "",
-      publisherUserDTO: json["publisherUserDTO"] != null
-          ? UserEntity.fromJson(json["publisherUserDTO"])
+      payment: json["payment"].toString(),
+      publisherUser: json["publisherUser"] != null
+          ? UserEntity.fromJson(json["publisherUser"])
           : UserEntity(),
       candidateUserList: json["candidateUserList"] ?? "",
-      matchedUserId: json["matchedUserId"] ?? "",
+      matchedUser: json["matchedUser"] != null
+          ? UserEntity.fromJson(json["matchedUser"])
+          : null,
       advertisementStatus: json["advertisementStatus"] ?? "");
 
   Map<String, dynamic> toJson() => {
         "id": id,
         "description": description,
         "position": position,
-        "date": date,
+        "date": date.toIso8601String(),
         "hourSlot": hourSlot,
-        "skillId": skillId,
+        "skill": skill?.toJson(),
         "payment": payment,
-        "publisherUserId": publisherUserId,
+        "publisherUser": publisherUser?.toJson(),
         "candidateUserList": candidateUserList,
-        "matchedUserId": matchedUserId,
+        "matchedUser": matchedUser?.toJson(),
         "advertisementStatus": advertisementStatus
       };
 
@@ -109,15 +101,23 @@ class AnnunciEntity {
       id: "",
       description: "",
       position: "",
-      date: "",
+      date: DateTime.now(),
       image: 'assets/images/img_pexelsphotoby.png',
       hourSlot: "",
-      skillId: "",
-      skillDTO: SkillEntity(),
+      skill: SkillEntity(),
       payment: "",
-      publisherUserId: "",
-      publisherUserDTO: UserEntity(),
+      publisherUser: UserEntity(),
       candidateUserList: [],
-      matchedUserId: "",
+      matchedUser: null,
       advertisementStatus: "");
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is AnnunciEntity &&
+          runtimeType == other.runtimeType &&
+          id == other.id;
+
+  @override
+  int get hashCode => id.hashCode;
 }

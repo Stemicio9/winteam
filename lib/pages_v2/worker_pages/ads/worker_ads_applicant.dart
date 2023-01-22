@@ -20,7 +20,7 @@ class WorkerAdsApplicantState extends State<WorkerAdsApplicant> {
       context.read<AnnunciLavoratoreCubit>();
 
   List<bool> indexes = [true, false, false, false];
-  List<String> texts = ['Tutti', 'W1N', 'Attivi', 'Scaduti'];
+  List<String> texts = ['Tutti', 'W1N', 'Accettati', 'Scaduti'];
   List<String> _choicesListQuery = ['all', 'current', 'accepted', 'history'];
   String message = '';
 
@@ -70,7 +70,7 @@ class WorkerAdsApplicantState extends State<WorkerAdsApplicant> {
                                     Navigator.of(context).pushNamed(
                                         RouteConstants.employerProfileOnlyView,
                                         arguments: {
-                                          'company': e.publisherUserDTO
+                                          'company': e.publisherUser
                                         });
                                   },
                                   onTap: () {

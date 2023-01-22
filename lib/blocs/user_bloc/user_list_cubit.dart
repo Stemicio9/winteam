@@ -50,9 +50,14 @@ class UserListCubit extends Cubit<UserListState> {
       // Qui bisogna creare la nostra lista
       HttpResponse<dynamic> result = await userListApiService.searchUserFiltered(search);
 
-      var encoded = jsonEncode(result.data);
-      print("HO ENCODATO");
+
+
+      var encoded = jsonEncode(result.data["content"]);
+
+      print("LA RISPOSTA CHE CERCHIAMO ADESSO 2");
       print(encoded);
+
+
 
       var json = (jsonDecode(encoded) as List)
           .map((data) => UserEntity.fromJson(data))

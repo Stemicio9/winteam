@@ -16,7 +16,7 @@ class AdsHeader extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: getPadding(top:18,left: 18,right: 18,bottom: 35),
+      padding: getPadding(top:18,left: 18,right: 18,bottom: 18),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [

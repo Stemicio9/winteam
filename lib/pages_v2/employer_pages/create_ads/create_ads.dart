@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intl/intl.dart';
 import 'package:winteam/blocs/annunci_bloc/annunci_cubit.dart';
 import 'package:winteam/blocs/dashboard_tab_index_bloc/tab_index_bloc.dart';
 import 'package:winteam/blocs/skill_bloc/skill_cubit.dart';
@@ -11,7 +10,6 @@ import 'package:winteam/constants/route_constants.dart';
 import 'package:winteam/entities/annunci_entity.dart';
 import 'package:winteam/entities/skill_entity.dart';
 import 'package:winteam/pages_v2/employer_pages/create_ads/widget/ads_published_dialog.dart';
-import 'package:winteam/pages_v2/employer_pages/create_ads/widget/cannot_create_ads.dart';
 import 'package:winteam/pages_v2/employer_pages/create_ads/widget/create_ads_chips.dart';
 import 'package:winteam/pages_v2/employer_pages/create_ads/widget/create_ads_date.dart';
 import 'package:winteam/pages_v2/employer_pages/create_ads/widget/create_ads_description.dart';
@@ -19,6 +17,7 @@ import 'package:winteam/pages_v2/employer_pages/create_ads/widget/create_ads_pos
 import 'package:winteam/pages_v2/employer_pages/create_ads/widget/create_ads_price.dart';
 import 'package:winteam/pages_v2/employer_pages/create_ads/widget/create_ads_skill.dart';
 import 'package:winteam/pages_v2/employer_pages/create_ads/widget/publish_button.dart';
+import 'package:winteam/utils/ad_status_utils.dart';
 import 'package:winteam/utils/size_utils.dart';
 import 'package:winteam/widgets_v2/loading_gif.dart';
 
@@ -53,7 +52,6 @@ class CreateAdsState extends State<CreateAds> {
   List<String> texts = ['Mattina', 'Pomeriggio', 'Sera', 'Notte'];
   SkillEntity skillSelected = SkillEntity();
   DateTime dateSelected = DateTime.now();
-  final format = DateFormat('dd/MM/yyyy');
 
   @override
   void initState() {
@@ -74,9 +72,10 @@ class CreateAdsState extends State<CreateAds> {
               }else if(state is SubscriptionCanI){
                 return adsCreateForm();
               }else if(state is SubscriptionCannotI){
-                return CannotCreateAdsWidget();
+                return adsCreateForm();
+                //return const CannotCreateAdsWidget();
               }else{
-                return Center(child: Text('Errore'));
+                return const Center(child: Text('Errore'));
               }
             },
             )
@@ -124,7 +123,7 @@ class CreateAdsState extends State<CreateAds> {
             print('change $date');
           },
           fromDateOnConfirm: (date) {
-            fromDateController.text = format.format(date);
+            fromDateController.text =  AdStatusUtils.formatDate(date);
             dateSelected = date;
             print('confirm $date');
           },
@@ -132,7 +131,7 @@ class CreateAdsState extends State<CreateAds> {
             print('change $date');
           },
           toDateOnConfirm: (date) {
-            toDateController.text = format.format(date);
+            toDateController.text =  AdStatusUtils.formatDate(date);
             print('confirm $date');
           },
           fromDateMaxTime: toDateController.text == ''
@@ -185,12 +184,14 @@ class CreateAdsState extends State<CreateAds> {
   AnnunciEntity composeAd() {
     AnnunciEntity result = AnnunciEntity.defaultVal();
     String hourSlot = formatHourSlot();
+    print(" skillSelected name: ${skillSelected.name}");
+    print(" skillSelected id: ${skillSelected.id}");
     result = result.copyWith(
         description: descriptionController.text,
         position: positionController.text,
         payment: priceController.text,
-        skillId: skillSelected.id,
-        date: dateSelected.toIso8601String(),
+        skill: skillSelected,
+        date: dateSelected,
         hourSlot: hourSlot);
     return result;
   }

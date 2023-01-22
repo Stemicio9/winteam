@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:winteam/constants/language.dart';
 import 'package:winteam/theme/app_style.dart';
 import 'package:winteam/utils/image_constant.dart';
 import 'package:winteam/utils/size_utils.dart';
 import 'package:winteam/widgets_v2/custom_image_view.dart';
-import 'package:winteam/widgets_v2/dialog_card.dart';
 import 'package:winteam/widgets_v2/divider_v2.dart';
 
 class CannotCreateAdsWidget extends StatelessWidget {

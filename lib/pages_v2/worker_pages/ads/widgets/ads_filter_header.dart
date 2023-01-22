@@ -7,8 +7,8 @@ import 'package:winteam/utils/image_constant.dart';
 import 'package:winteam/utils/size_utils.dart';
 import 'package:winteam/widgets_v2/action_buttons_v2.dart';
 import 'package:winteam/widgets_v2/custom_image_view.dart';
+import 'package:winteam/widgets_v2/divider_v2.dart';
 
-import '../../../../widgets_v2/divider_v2.dart';
 
 class AdsFilterHeader extends StatelessWidget {
   final double paddingTop;

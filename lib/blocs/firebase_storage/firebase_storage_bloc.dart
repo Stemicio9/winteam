@@ -1,13 +1,7 @@
-
-
-
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:winteam/blocs/firebase_storage/firebase_storage_service.dart';
-import 'package:winteam/blocs/user_api_service/user_api_service.dart';
-import 'package:winteam/entities/user_entity.dart';
 
 class FirebaseStorageCubit extends Cubit<FirebaseStorageState> {
   FirebaseStorageCubit() : super(FirebaseStorageNothing());
@@ -24,7 +18,8 @@ class FirebaseStorageCubit extends Cubit<FirebaseStorageState> {
       print("HO FATTO UPLOAD SU FIREBASE, ORA MI PRENDO URL");
       String finalResult = await firebaseStorageService.downloadUrlImage(uid);
       print("HO PRESO URL IMAGE : $finalResult");
-      CachedNetworkImage.evictFromCache(finalResult);
+
+
 
       emit(FirebaseStorageLoaded(finalResult, toUpload: true));
     }catch(e){
@@ -32,13 +27,14 @@ class FirebaseStorageCubit extends Cubit<FirebaseStorageState> {
     }
   }
 
-  Future<void> update(UserEntity userEntity) async {
-    try{
-      var a = await userListApiService.updateUser(userEntity);
-    }catch(e){
-      print(e);
-    }
+  uploaded(String imageUrl){
+    emit(FirebaseStorageLoaded(imageUrl));
   }
+
+  clear(){
+    emit(FirebaseStorageNothing());
+  }
+
 
 }
 

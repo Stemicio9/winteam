@@ -31,7 +31,7 @@ class CardDettaglioDatore extends StatelessWidget {
                 ListTile(
                   title: Column(
                     children: [
-                      Texth5(testo: annuncio.skillDTO?.name ?? "" ,color: Colors.black,),
+                      Texth5(testo: annuncio.skill?.name ?? "" ,color: Colors.black,),
 
                       Container(padding: EdgeInsets.only(bottom: 10),),
 
@@ -72,7 +72,7 @@ class CardDettaglioDatore extends StatelessWidget {
                     children: [
 
                       iconaConTitoloDettaglio(
-                          Icon(Icons.today_outlined, color: giallo, size: 30,), annuncio.date),
+                          Icon(Icons.today_outlined, color: giallo, size: 30,), annuncio.date.toString()),
                       iconaConTitoloDettaglio(
                           Icon(Icons.location_on_outlined, color: giallo,size: 30,), '5 Km'),
                       iconaConTitoloDettaglio(

@@ -19,7 +19,7 @@ class AnnunciLavoratoreState extends State<AnnunciLavoratore> {
   @override
   void initState() {
     super.initState();
-    _cubit.fetchAnnunciLavoratore(0, 20);
+    //_cubit.fetchAnnunciLavoratore(0, 20);
   }
 
   @override

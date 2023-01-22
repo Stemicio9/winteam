@@ -3,11 +3,12 @@ import 'package:winteam/constants/colors.dart';
 import 'package:winteam/constants/language.dart';
 import 'package:winteam/entities/user_entity.dart';
 import 'package:winteam/pages_v2/employer_pages/ads/widget/button_choose.dart';
+import 'package:winteam/theme/app_style.dart';
 import 'package:winteam/utils/image_constant.dart';
+import 'package:winteam/utils/size_utils.dart';
 import 'package:winteam/widgets_v2/action_buttons_v2.dart';
 import 'package:winteam/widgets_v2/custom_image_view.dart';
-import '../../../../theme/app_style.dart';
-import '../../../../utils/size_utils.dart';
+
 
 class SearchWorkerCard extends StatelessWidget {
   final double innerImageRadius; // 77
@@ -193,8 +194,9 @@ class SearchWorkerCard extends StatelessWidget {
                                       ),
                                     ),
                                     Text(
-                                     isChoosenUser ? user?.address != null && user!.address!.isEmpty ? '-' : user!.address!
-                                      : '******',
+                                    /* isChoosenUser ? user?.address != null && user!.address!.isEmpty ? '-' : user!.address!
+                                      : '', */
+                                      user?.address ?? "",
                                       style: AppStyle.txtMontserratRegular18,
                                     ),
                                   ],

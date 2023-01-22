@@ -51,7 +51,9 @@ class W1nScaffold extends StatelessWidget {
         body: CloseOnTapUtility(
             child: Stack(
               children: [
-                hasBackgroundColor == true ? const BackgroundV2() : Container(),
+                Visibility(
+                    visible: hasBackgroundColor,
+                    child: const BackgroundV2()),
                 body
               ]
             )

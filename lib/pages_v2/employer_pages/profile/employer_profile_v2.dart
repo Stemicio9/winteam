@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:winteam/authentication/authentication_bloc.dart';
 import 'package:winteam/blocs/firebase_storage/firebase_storage_bloc.dart';
+import 'package:winteam/blocs/user_bloc/current_user_cubit.dart';
 import 'package:winteam/constants/colors.dart';
 import 'package:winteam/constants/language.dart';
 import 'package:winteam/constants/route_constants.dart';
@@ -14,6 +14,7 @@ import 'package:winteam/pages_v2/worker_pages/profile/widgets/profile_descriptio
 import 'package:winteam/pages_v2/worker_pages/profile/widgets/profile_info.dart';
 import 'package:winteam/utils/image_constant.dart';
 import 'package:winteam/utils/size_utils.dart';
+import 'package:winteam/widgets_v2/loading_gif.dart';
 
 class EmployerProfile extends StatefulWidget {
   final bool isOnlyView;
@@ -28,9 +29,8 @@ class EmployerProfile extends StatefulWidget {
 }
 
 class EmployerProfileState extends State<EmployerProfile> {
-  FirebaseStorageCubit get _firebaseStorageCubit =>
-      context.read<FirebaseStorageCubit>();
-  UserEntity currentUser = UserEntity();
+  FirebaseStorageCubit get _firebaseStorageCubit => context.read<FirebaseStorageCubit>();
+  UserCubit get _userCubit => context.read<UserCubit>();
 
   XFile? imageFile;
 
@@ -42,33 +42,30 @@ class EmployerProfileState extends State<EmployerProfile> {
   @override
   Widget build(BuildContext context) {
     if (widget.isOnlyView) {
-      return content(widget.currentUser?.imageLink ?? '',
+      return content(widget.currentUser?.imageLink ?? ImageConstant.placeholderUserUrl,
           widget.currentUser ?? UserEntity());
     } else {
-      return BlocBuilder<UserAuthCubit, UserAuthenticationState>(
+      return BlocBuilder<UserCubit, UserState>(
           builder: (_, stateUser) {
-        if (stateUser is UserAuthenticated) {
-          return BlocBuilder<FirebaseStorageCubit, FirebaseStorageState>(
-            builder: (_, state) {
-              if (state is FirebaseStorageLoaded) {
-                if (state.toUpload) {
-                  _firebaseStorageCubit.update(
-                      stateUser.user.copyWith(imageLink: state.imageUrl));
-                }
-                //_authCubit.persistAuthentication(widget.currentUser!.copyWith(imageLink: state.imageUrl));
-                return content(state.imageUrl, stateUser.user);
-              } else {
-                return content(
-                    stateUser.user.imageLink ??
-                        ImageConstant.placeholderUserUrl,
-                    stateUser.user);
-              }
-            },
-          );
-        } else {
-          return const Center(child: Text("ERRORE DI AUTENTICAZIONE"));
-        }
-      });
+            if (stateUser is UserLoaded) {
+              return BlocBuilder<FirebaseStorageCubit, FirebaseStorageState>(
+                builder: (_, state) {
+                  if (state is FirebaseStorageLoaded) {
+                    if (state.toUpload) {
+                      _userCubit.update(stateUser.user.copyWith(imageLink: state.imageUrl));
+                      _firebaseStorageCubit.uploaded(state.imageUrl);
+                    }
+                    //_authCubit.persistAuthentication(widget.currentUser!.copyWith(imageLink: state.imageUrl));
+                    return content(state.imageUrl, stateUser.user);
+                  } else {
+                    return content(stateUser.user.imageLink ?? ImageConstant.placeholderUserUrl, stateUser.user);
+                  }
+                },
+              );
+            } else {
+              return Center(child: loadingGif(logoBlue: true));
+            }
+          });
     }
   }
 
@@ -135,7 +132,6 @@ class EmployerProfileState extends State<EmployerProfile> {
       setState(() {
         imageFile = value;
       });
-
       saveImageToFirebase(userId);
       Navigator.of(context).pop();
     });

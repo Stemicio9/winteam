@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:winteam/authentication/authentication_bloc.dart';
 import 'package:winteam/blocs/dashboard_tab_index_bloc/tab_index_bloc.dart';
+import 'package:winteam/blocs/firebase_storage/firebase_storage_bloc.dart';
 import 'package:winteam/blocs/user_bloc/current_user_cubit.dart';
 import 'package:winteam/constants/StateConstants.dart';
 import 'package:winteam/constants/colors.dart';
@@ -53,6 +54,8 @@ class DrawerWidgetV2State extends State<DrawerWidgetV2> {
 
   UserCubit get _userCubit => context.read<UserCubit>();
 
+  FirebaseStorageCubit get _firebaseStorageCubit => context.read<FirebaseStorageCubit>();
+
   TabIndexCubit get _tabIndexCubit => context.read<TabIndexCubit>();
 
   @override
@@ -60,6 +63,7 @@ class DrawerWidgetV2State extends State<DrawerWidgetV2> {
     return BlocProvider(
         create: (_) => UserAuthCubit(),
         child: ContentDrawerWidget(
+            firebaseStorageCubit: _firebaseStorageCubit,
             authCubit: _authCubit,
             userCubit: _userCubit,
             tabIndexCubit: _tabIndexCubit,
@@ -77,6 +81,7 @@ class ContentDrawerWidget extends StatelessWidget {
   final UserAuthCubit authCubit;
   final UserCubit userCubit;
   final TabIndexCubit tabIndexCubit;
+  final FirebaseStorageCubit firebaseStorageCubit;
   final double innerImageRadius; // 77
   final double innerImageWidth; // 90
   final double innerImageHeight; // 90
@@ -97,7 +102,8 @@ class ContentDrawerWidget extends StatelessWidget {
       required this.imageWidth,
       required this.imageHeight,
       required this.customImageViewHeight,
-      required this.customImageViewWidth});
+      required this.customImageViewWidth,
+      required this.firebaseStorageCubit});
 
   @override
   Widget build(BuildContext context) {
@@ -105,7 +111,6 @@ class ContentDrawerWidget extends StatelessWidget {
       builder: (_, state) {
         return Drawer(
           //  width: 260,
-
           child: Column(
             children: [
               Expanded(
@@ -133,35 +138,37 @@ class ContentDrawerWidget extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
-                  height: getSize(
-                    imageHeight,
-                  ),
-                  width: getSize(
-                    imageWidth,
-                  ),
-                  child: Stack(alignment: Alignment.bottomRight, children: [
-                    CustomImageView(
-                      onTap: () {},
-                      url: imageLink,
-                      height: getSize(
-                        innerImageHeight,
-                      ),
-                      width: getSize(
-                        innerImageWidth,
-                      ),
-                      radius: BorderRadius.circular(
-                        getHorizontalSize(
-                          innerImageRadius,
-                        ),
-                      ),
-                      alignment: Alignment.center,
-                      fit: BoxFit.cover,
+                Expanded(
+                  child: Container(
+                    height: getSize(
+                      imageHeight,
                     ),
-                  ]),
+                    width: getSize(
+                      imageWidth,
+                    ),
+                    child: Stack(alignment: Alignment.bottomRight, children: [
+                      CustomImageView(
+                        onTap: () {},
+                        url: imageLink,
+                        height: getSize(
+                          innerImageHeight,
+                        ),
+                        width: getSize(
+                          innerImageWidth,
+                        ),
+                        radius: BorderRadius.circular(
+                          getHorizontalSize(
+                            innerImageRadius,
+                          ),
+                        ),
+                        alignment: Alignment.center,
+                        fit: BoxFit.cover,
+                      ),
+                    ]),
+                  ),
                 ),
                 Padding(
-                  padding: getPadding(top: 20),
+                  padding: getPadding(bottom: 5),
                   child: Texth3V2(
                     testo: username,
                     color: white,
@@ -193,9 +200,14 @@ class ContentDrawerWidget extends StatelessWidget {
     var imageLink = '';
     if (state is UserLoaded) {
       var u = state.user;
+      if(u.roleId == USER_LAVORATORE){
       username = '${u.firstName} ${u.lastName}';
-      if (username == ' ') {
+      }else {
         username = u.companyName!;
+      }
+      if(username.isEmpty){
+        //todo add here username not inserted
+       // username =
       }
       imageLink = u.imageLink ?? '';
     }
@@ -223,17 +235,23 @@ class ContentDrawerWidget extends StatelessWidget {
                   Navigator.pop(context);
                 },
                 confirmOnTap: () {
-                  FirebaseAuth.instance.signOut();
-                  userCubit.logout();
-                  authCubit.logout();
-                  tabIndexCubit.setTabIndex(0);
-                  filterAnnunciLavoratore = FilterAnnunciLavoratore();
+                  logoutFromAll();
                   Navigator.pushReplacementNamed(context, RouteConstants.login);
                 },
               ));
     }, context, ImageConstant.imgLogout, 27, 19));
     elementList.clear();
     return lista;
+  }
+
+  void logoutFromAll() {
+    FirebaseAuth.instance.signOut();
+    userCubit.logout();
+    globalUser = null;
+    authCubit.logout();
+    tabIndexCubit.setTabIndex(0);
+    firebaseStorageCubit.clear();
+    filterAnnunciLavoratore = FilterAnnunciLavoratore();
   }
 
   ListTile createTile(String testo, funzione, context, String svgPath,

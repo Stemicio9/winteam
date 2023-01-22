@@ -94,7 +94,7 @@ class FiltriAnnunciState extends State<FiltriAnnunci> {
                   flex: 1,
                   child: ActionButton("Applica", () {
                     compileHourSlotFilter();
-                    _cubit.fetchAnnunciLavoratore(0, 20);
+                    //_cubit.fetchAnnunciLavoratore(0, 20);
                     Navigator.pop(context);
                   }, 150, azzurroscuro, Colors.white)
               ),

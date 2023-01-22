@@ -61,10 +61,10 @@ class AdsAutocomplete extends StatelessWidget {
                       },
                       filterController: filterController,
                       optionSelected: (SkillEntity option) {
-                        onFieldSubmitted(option.name);
+                        onFieldSubmitted(option.id ?? '');
                       },
                       icon: true,
-                      hintText: type == AutocompleteSearchType.userSearch ? ADS_AUTOCOMPLETE_USERS : ADS_AUTOCOMPLETE,
+                      hintText: ADS_AUTOCOMPLETE_USERS,
                       prefixIcon: ImageConstant.imgSearch,
                       fontSize: 18,
                       fontHintSize: 18,
@@ -74,7 +74,9 @@ class AdsAutocomplete extends StatelessWidget {
                       isSuffixIcon: true,
                       suffixIcon: ImageConstant.imgCancel,
                       suffixIconFunction: (){
+                        onFieldSubmitted('');
                         filterController.clear();
+
                       },
                     ),
                   )

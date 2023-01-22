@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:winteam/authentication/authentication_bloc.dart';
 import 'package:winteam/authentication/firebase_repository.dart';
+import 'package:winteam/blocs/firebase_storage/firebase_storage_bloc.dart';
 import 'package:winteam/blocs/user_bloc/current_user_cubit.dart';
 import 'package:winteam/blocs/user_bloc/user_list_cubit.dart';
 import 'package:winteam/constants/colors.dart';
@@ -37,6 +38,7 @@ class LoginFormV2 extends StatefulWidget {
 
 class LoginFormV2State extends State<LoginFormV2> {
   UserCubit get _cubit => context.read<UserCubit>();
+  FirebaseStorageCubit get _firebaseCubit => context.read<FirebaseStorageCubit>();
   UserAuthCubit get _authCubit => context.read<UserAuthCubit>();
 
   var _passwordVisible = false;
@@ -46,10 +48,6 @@ class LoginFormV2State extends State<LoginFormV2> {
 
   final TextEditingController _passwordTextController = TextEditingController();
 
-  @override
-  void initState() {
-    _passwordVisible = false;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -191,6 +189,10 @@ class LoginFormV2State extends State<LoginFormV2> {
 
       var userEntity = await _cubit.saveLoggedUser();
       _authCubit.persistAuthentication(userEntity);
+
+      if (userEntity.imageLink?.isNotEmpty ?? false) {
+        _firebaseCubit.persistImageUrl(userEntity.imageLink!);
+      }
       navigateToDashboard();
     }
   }

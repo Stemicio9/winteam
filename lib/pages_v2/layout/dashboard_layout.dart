@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:winteam/authentication/authentication_bloc.dart';
 import 'package:winteam/blocs/dashboard_tab_index_bloc/tab_index_bloc.dart';
 import 'package:winteam/blocs/user_bloc/current_user_cubit.dart';
-import 'package:winteam/blocs/user_bloc/user_list_cubit.dart';
 import 'package:winteam/constants/colors.dart';
 import 'package:winteam/constants/language.dart';
 import 'package:winteam/pages_v2/W1n_scaffold.dart';
@@ -15,7 +14,6 @@ import 'package:winteam/pages_v2/layout/widgets/bottom_bar_element.dart';
 import 'package:winteam/pages_v2/worker_pages/ads/worker_ads_applicant.dart';
 import 'package:winteam/pages_v2/worker_pages/ads/worker_ads_v2.dart';
 import 'package:winteam/pages_v2/worker_pages/profile/worker_profile_v2.dart';
-import 'package:winteam/widgets_v2/loading_gif.dart';
 import 'package:winteam/widgets_v2/texts_v2.dart';
 
 class DashboardWidget extends StatefulWidget {
@@ -29,33 +27,30 @@ class DashboardWidgetState extends State<DashboardWidget> {
   UserAuthCubit get _authCubit => context.read<UserAuthCubit>();
 
   @override
+  void initState() {
+    super.initState();
+    if(globalUser != null){
+      _authCubit.persistAuthentication(globalUser);
+    }
+  }
+
+
+
+  @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-        create: (_) => UserListCubit(),
-        child: BlocBuilder<UserCubit, UserState>(builder: (_, state) {
-          if (state is UserEmpty) {
-            // todo
-            // here navigate to login
-            return Center(child: loadingGif(logoBlue: false));
-          } else if (state is UserLoaded) {
-            // todo
-            // navigare verso la pagina corretta
-            _authCubit.persistAuthentication(state.user);
-            return BlocBuilder<UserAuthCubit, UserAuthenticationState>(
-                builder: (_, __) {
-              return state.user.roleId == getCurrentLanguageValue(USER_DATORE)
-                  ? DatoreLayout()
-                  : LavoratoreLayout();
-            });
-          } else if (state is UserLoading) {
-            return Center(child: loadingGif(logoBlue: false));
+    return BlocBuilder<UserAuthCubit, UserAuthenticationState>(
+        builder: (_, state) {
+          if(state is UserAuthenticated) {
+            return state.user.roleId == getCurrentLanguageValue(USER_DATORE)
+                ? DatoreLayout()
+                : LavoratoreLayout();
           } else {
-            // UserErrorAuthentication
-            // todo
-            // restituire form con errori in evidenza
-            return Container();
+            print('User not authenticated');
+            return Center(
+              child: Text("ERRORE DI AUTENTICAZIONE STRANO"),
+            );
           }
-        }));
+    });
   }
 }
 
@@ -117,8 +112,10 @@ class DashboardLayoutState extends State<DashboardLayout>
             appBar: 2,
             body: PageView(
                 controller: _pageController,
-                physics: const NeverScrollableScrollPhysics(),
-                children: widget.pages),
+          //      physics: const NeverScrollableScrollPhysics(),
+
+                children: widget.pages,
+            ),
             bottomNavigationBar: widget.datore
                 ? bottomNavigationDatore(state.index)
                 : bottomNavigationLavoratore(state.index),

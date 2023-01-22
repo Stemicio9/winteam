@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:winteam/constants/language.dart';
 import 'package:winteam/theme/app_style.dart';
 import 'package:winteam/utils/image_constant.dart';
 import 'package:winteam/utils/size_utils.dart';
 import 'package:winteam/widgets_v2/custom_image_view.dart';
 import 'package:winteam/widgets_v2/inputs_v2.dart';
 
-import '../../../../constants/language.dart';
 
 class AdsFilterPrice extends StatelessWidget{
 

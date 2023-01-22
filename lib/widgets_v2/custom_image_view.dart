@@ -2,7 +2,6 @@
 
 import 'dart:io';
 
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:winteam/utils/image_constant.dart';
@@ -33,31 +32,31 @@ class CustomImageView extends StatelessWidget {
 
   ///a [CustomImageView] it can be used for showing any type of images
   /// it will shows the placeholder image if image is not found on network image
-  CustomImageView({super.key,
-    this.url,
-    this.imagePath,
-    this.svgPath,
-    this.file,
-    this.height,
-    this.width,
-    this.color,
-    this.fit = BoxFit.fill,
-    this.alignment,
-    this.onTap,
-    this.radius,
-    this.margin,
-    this.border,
-    this.placeHolder= ''
-  });
+  CustomImageView(
+      {super.key,
+      this.url,
+      this.imagePath,
+      this.svgPath,
+      this.file,
+      this.height,
+      this.width,
+      this.color,
+      this.fit = BoxFit.fill,
+      this.alignment,
+      this.onTap,
+      this.radius,
+      this.margin,
+      this.border,
+      this.placeHolder = ''});
 
   @override
   Widget build(BuildContext context) {
     placeHolder = ImageConstant.placeholderUserUrl;
     return alignment != null
         ? Align(
-         alignment: alignment!,
-         child: _buildWidget(),
-    )
+            alignment: alignment!,
+            child: _buildWidget(),
+          )
         : _buildWidget();
   }
 
@@ -120,28 +119,42 @@ class CustomImageView extends StatelessWidget {
         color: color,
       );
     } else if (url != null && url!.isNotEmpty) {
-
-      return CachedNetworkImage(
-        height: height,
-        width: width,
-        fit: fit,
-        imageUrl: url!,
-        color: color,
-        placeholder: (context, url) => Container(
-          height: 30,
-          width: 30,
-          child: LinearProgressIndicator(
-            color: Colors.grey.shade200,
-            backgroundColor: Colors.grey.shade100,
-          ),
-        ),
-        errorWidget: (context, url, error) => CachedNetworkImage(
+      return Image.network(url!,
           height: height,
           width: width,
           fit: fit,
-          imageUrl: placeHolder,
-        )
-      );
+          color: color,
+          loadingBuilder: (context, child, loadingProgress) {
+            if (loadingProgress == null) return child;
+            return SizedBox(
+              height: 30,
+              width: 30,
+              child: LinearProgressIndicator(
+                color: Colors.grey.shade200,
+                backgroundColor: Colors.grey.shade100,
+              ),
+            );
+          },
+          errorBuilder: (context, url, error) => Image.network(placeHolder, height: height, width: width, fit: fit));
+
+    } else if (url != null && url!.isEmpty) {
+      return Image.network(url!,
+          height: height,
+          width: width,
+          fit: fit,
+          color: color,
+          loadingBuilder: (context, child, loadingProgress) {
+            if (loadingProgress == null) return child;
+            return SizedBox(
+              height: 30,
+              width: 30,
+              child: LinearProgressIndicator(
+                color: Colors.grey.shade200,
+                backgroundColor: Colors.grey.shade100,
+              ),
+            );
+          },
+          errorBuilder: (context, url, error) => Image.network(placeHolder, height: height, width: width, fit: fit));
     } else if (imagePath != null && imagePath!.isNotEmpty) {
       return Image.asset(
         imagePath!,

@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intl/intl.dart';
 import 'package:winteam/blocs/annunci_bloc/annunci_cubit.dart';
 import 'package:winteam/constants/StateConstants.dart';
-import 'package:winteam/constants/page_constants.dart';
 import 'package:winteam/pages_v2/W1n_scaffold.dart';
 import 'package:winteam/pages_v2/worker_pages/ads/widgets/ads_filter_bottombar.dart';
 import 'package:winteam/pages_v2/worker_pages/ads/widgets/ads_filter_chips.dart';
 import 'package:winteam/pages_v2/worker_pages/ads/widgets/ads_filter_date.dart';
 import 'package:winteam/pages_v2/worker_pages/ads/widgets/ads_filter_header.dart';
 import 'package:winteam/pages_v2/worker_pages/ads/widgets/ads_filter_price.dart';
+import 'package:winteam/utils/ad_status_utils.dart';
 
 class AdsFilter extends StatefulWidget {
   @override
@@ -27,8 +26,6 @@ class AdsFilterState extends State<AdsFilter> {
 
   List<bool> indexes = [false, false, false, false];
   List<String> texts = ['Mattina', 'Pomeriggio', 'Sera', 'Notte'];
-
-  final format = DateFormat('dd/MM/yyyy');
 
   DateTime toDateMinTime = DateTime.now();
   DateTime fromDateMaxTime = DateTime.now().add(const Duration(days: 365));
@@ -76,7 +73,7 @@ class AdsFilterState extends State<AdsFilter> {
                   print('change $date');
                 },
                 fromDateOnConfirm: (date) {
-                  fromDateController.text = format.format(date);
+                  fromDateController.text = AdStatusUtils.formatDate(date);
                   setDateValue(date, true);
                   setFromDate(date);
                 },
@@ -84,7 +81,7 @@ class AdsFilterState extends State<AdsFilter> {
                   print('change $date');
                 },
                 toDateOnConfirm: (date) {
-                  toDateController.text = format.format(date);
+                  toDateController.text = AdStatusUtils.formatDate(date);
                   setDateValue(date, false);
                   setToDate(date);
                 },
@@ -110,10 +107,10 @@ class AdsFilterState extends State<AdsFilter> {
     }
     if (filterAnnunciLavoratore.dateRange?.start != null) {
       print('fill date start ${filterAnnunciLavoratore.dateRange?.start}');
-      fromDateController.text = format.format(filterAnnunciLavoratore.dateRange!.start);
+      fromDateController.text = AdStatusUtils.formatDate(filterAnnunciLavoratore.dateRange!.start);
     }
     if (filterAnnunciLavoratore.dateRange?.end != null) {
-      toDateController.text = format.format(filterAnnunciLavoratore.dateRange!.end);
+      toDateController.text =  AdStatusUtils.formatDate(filterAnnunciLavoratore.dateRange!.end);
     }
 
     if (filterAnnunciLavoratore.fasceOrarie != null &&
@@ -149,7 +146,7 @@ class AdsFilterState extends State<AdsFilter> {
   }
 
   void doSearch() {
-    _cubit.fetchAnnunciLavoratore(PageConstants.INIT_PAGE_NUMBER, PageConstants.PAGE_SIZE);
+    _cubit.fetchAnnunciLavoratore(firstCall: true);
   }
 
   void setPrice(val) {
@@ -165,9 +162,10 @@ class AdsFilterState extends State<AdsFilter> {
 
   void setFromDate(val) {
     print('setFromDate $val');
+
     filterAnnunciLavoratore.dateRange = DateTimeRange(
         start: val,
-        end: filterAnnunciLavoratore.dateRange?.end ?? DateTime.now().add(const Duration(days: 5)));
+        end: filterAnnunciLavoratore.dateRange?.end ?? val.add(const Duration(days: 365)));
   }
 
   void setToDate(val) {

@@ -4,6 +4,7 @@ import 'package:winteam/authentication/authentication_bloc.dart';
 import 'package:winteam/blocs/skill_bloc/skill_cubit.dart';
 import 'package:winteam/constants/language.dart';
 import 'package:winteam/entities/skill_entity.dart';
+import 'package:winteam/entities/user_entity.dart';
 import 'package:winteam/pages_v2/W1n_scaffold.dart';
 import 'package:winteam/pages_v2/worker_pages/profile/widgets/add_skills_autocomplete.dart';
 import 'package:winteam/widgets_v2/loading_gif.dart';
@@ -16,7 +17,6 @@ class AddSkills extends StatefulWidget {
 }
 
 class AddSkillsState extends State<AddSkills> {
-  UserAuthCubit get _authCubit => context.read<UserAuthCubit>();
   SkillCubit get _skillCubit => context.read<SkillCubit>();
 
   final TextEditingController skillsController = TextEditingController();
@@ -50,29 +50,20 @@ class AddSkillsState extends State<AddSkills> {
         }));
   }
 
+
   saveNewSkill(SkillEntity skill) {
-    var currentUser = (_authCubit.state as UserAuthenticated).user;
-    if (currentUser.skillList == null) {
-      currentUser.skillList = List.empty(growable: true);
-      currentUser.skillList?.add(skill);
-    } else {
-      currentUser.skillList?.add(skill);
-    }
-    _authCubit.persistAuthentication(currentUser);
-    Navigator.pop(context, currentUser);
+    Navigator.pop(context, skill);
   }
 
+
+
   List<SkillEntity> formatSkillForSelection(List<SkillEntity> skills){
-    List<SkillEntity> userSkillList = (_authCubit.state as UserAuthenticated).user.skillList ?? [];
-    List<SkillEntity> result = skills;
-    if(userSkillList.isNotEmpty){
-      for(var s in userSkillList){
-        int x = result.indexOf(s);
-        if(x != -1) {
-          result.removeAt(result.indexOf(s));
-        }
-      }
-    }
+    print("CIAO AAAA");
+    print(ModalRoute.of(context)?.settings.arguments);
+    final arguments = (ModalRoute.of(context)?.settings.arguments ?? <String, dynamic>{}) as Map;
+    var currentUser = (arguments['user'] as UserEntity).copyWith();
+    List<SkillEntity> userSkillList = currentUser.skillList ?? [];
+    List<SkillEntity> result = skills.where((element) => !userSkillList.contains(element)).toList();
     return result;
   }
 }

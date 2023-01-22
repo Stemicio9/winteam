@@ -50,7 +50,7 @@ class ChipsWidgetState extends State<ChipsWidget>{
          ),
          onSelected: (value) {
            filterAnnunciLavoratore.state = _choicesListQuery[index];
-           _cubit.fetchAnnunciLavoratore(0, 20);
+           //_cubit.fetchAnnunciLavoratore(0, 20);
            setState(() {
              defaultChoiceIndex = value ? index : defaultChoiceIndex;
            });

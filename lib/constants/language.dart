@@ -153,6 +153,7 @@ const String CHI_SIAMO = "CHI_SIAMO";
 
 const String OTHER_CANDIDATES = "OTHER_CANDIDATES";
 
+
 final Map<String, String> LANG_IT = {
   DASHBOARD_CONST: "Dashboard",
   POLICY_PRIVACY: "Privacy Policy",

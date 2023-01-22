@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:winteam/authentication/authentication_bloc.dart';
 import 'package:winteam/blocs/user_bloc/current_user_cubit.dart';
 import 'package:winteam/constants/language.dart';
 import 'package:winteam/constants/validators.dart';
@@ -24,7 +23,6 @@ class EmployerProfileEditV2 extends StatefulWidget {
 
 class EmployerProfileV2EditState extends State<EmployerProfileEditV2> {
 
-  UserAuthCubit get _authCubit => context.read<UserAuthCubit>();
   UserCubit get _userCubit => context.read<UserCubit>();
 
   UserEntity currentUser = UserEntity();
@@ -47,9 +45,8 @@ class EmployerProfileV2EditState extends State<EmployerProfileEditV2> {
 
 
   inputData(){
-    currentUser = (_authCubit.state as UserAuthenticated).user;
+    currentUser = (_userCubit.state as UserLoaded).user;
 
-    print(currentUser);
     nameTextController.text = currentUser.companyName ?? '';
     headerDescriptionTextController.text = currentUser.brief ?? '';
     phoneTextController.text = currentUser.phoneNumber ?? '';
@@ -127,15 +124,16 @@ class EmployerProfileV2EditState extends State<EmployerProfileEditV2> {
 
   formSubmit() async {
     if (_formKey.currentState!.validate()) {
+      UserEntity res = currentUser.copyWith(
+          companyName: nameTextController.text,
+          brief: headerDescriptionTextController.text,
+          phoneNumber: phoneTextController.text,
+          email: emailTextController.text,
+          address: positionTextController.text,
+          description: descriptionTextController.text
+      );
 
-      _userCubit.update(currentUser.copyWith(
-        companyName: nameTextController.text,
-        brief: headerDescriptionTextController.text,
-        phoneNumber: phoneTextController.text,
-        email: emailTextController.text,
-        address: positionTextController.text,
-        description: descriptionTextController.text
-      ));
+      _userCubit.update(res);
 
       Navigator.pop(context);
     }

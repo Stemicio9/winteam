@@ -58,9 +58,7 @@ class FilterAnnunciLavoratore {
     if ((pagaMinima != null && pagaMinima != 0) ||
     (distanzaMassima != null && distanzaMassima != 10000) ||
     (fasceOrarie != null && fasceOrarie!.isNotEmpty) ||
-    (dateRange != null && !sameDay(dateRange!.start, DateTime.now())) ||
-    (dateRange != null && !sameDay(dateRange!.end, DateTime.now().add(const Duration(days: 365)))) ||
-        (state != null && state != 'all')) {
+    (dateRange != null)) {
       return true;
     }
     return false;
@@ -70,7 +68,8 @@ class FilterAnnunciLavoratore {
     return d1.difference(d2).inDays == 0;
   }
 
-  Filter toFilter(int page, int size) {
+
+  Filter toFilter({int page = 0, int size = 20}) {
     Filter result = Filter();
     result.page = page;
     result.size = size;

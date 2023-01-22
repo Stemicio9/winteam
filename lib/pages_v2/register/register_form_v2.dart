@@ -1,4 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:retrofit/retrofit.dart';
+import 'package:winteam/authentication/firebase_repository.dart';
+import 'package:winteam/blocs/user_api_service/user_api_service.dart';
 import 'package:winteam/constants/colors.dart';
 import 'package:winteam/constants/language.dart';
 import 'package:winteam/constants/route_constants.dart';
@@ -142,7 +146,22 @@ class RegisterFormV2State extends State<RegisterFormV2> {
 
   formSubmit() async {
     if (_formKey.currentState!.validate()) {
-      Navigator.pushNamed(context, RouteConstants.login);
+
+      UserCredential? user = await createUser(_emailTextController.text,_passwordTextController.text);
+      if(user == null){
+        // @todo la registrazione non è andata a buon fine per qualche motivo
+        return;
+      }
+
+      // @todo chiamare la rest per creare utente anche sul server Spring
+
+      //HttpResponse<dynamic> response = await userListApiService.register("DATORE");
+      HttpResponse<dynamic> response = await userListApiService.register("LAVORATORE");
+
+      if(response.response.statusCode == 200){
+        Navigator.pushNamed(context, RouteConstants.login);
+      }
+
     }
   }
 }

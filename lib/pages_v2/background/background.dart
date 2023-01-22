@@ -13,6 +13,6 @@ class BackgroundV2 extends StatelessWidget {
       name: BACKGROUND_IMAGE_NAME,
       width: MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.height,
-      opacity: 0.1,);
+      opacity: 0.3,);
   }
 }

@@ -54,7 +54,7 @@ class CreateAdsSkill extends StatelessWidget {
                       .contains(textEditingValue.text.toLowerCase()));
                 },
                 filterController: filterController,
-                optionSelected: (option) {},
+                optionSelected: (option) {optionSelected(option);},
                 icon: false,
                 hintText: SEARCH_SKILL,
                 paddingRight: 0,

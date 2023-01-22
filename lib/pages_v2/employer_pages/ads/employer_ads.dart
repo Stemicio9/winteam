@@ -34,7 +34,7 @@ class EmployerAdsState extends State<EmployerAds> {
   List<bool> indexes = [true, false, false, false];
   List<String> texts = ['Tutti', 'Attivi', 'Accettati', 'Storico'];
   List<String> _choicesListQuery = ['all', 'active', 'accepted', 'history'];
-  String message = 'Status annuncio: Attivo';
+  String message = 'Stato annuncio: Attivo';
   String candidates = '100';
 
   @override
@@ -89,7 +89,7 @@ class EmployerAdsState extends State<EmployerAds> {
                                 annunciEntity: e,
                                 goToList: () {
                                   Navigator.pushNamed(
-                                      context, RouteConstants.candidatesList, arguments: {'annuncio': e});
+                                      context, RouteConstants.candidatesList, arguments: {'annuncio': e.id});
                                 },
                               )).toList(),
                             ],

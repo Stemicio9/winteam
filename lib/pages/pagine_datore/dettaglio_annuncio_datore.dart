@@ -59,7 +59,7 @@ class DettaglioAnnuncioDatoreState extends State<DettaglioAnnuncioDatore>{
   Widget build(BuildContext context) {
 
     final annuncio = ModalRoute.of(context)!.settings.arguments as AnnunciEntity;
-    matchCubit.getUserMatched(annuncio.matchedUserId);
+    matchCubit.getUserMatched(annuncio.matchedUser?.id ?? "");
 
     return Scaffold(
         appBar: appbarSenzaActions(context, 'Dettaglio annuncio'),
@@ -88,7 +88,7 @@ class DettaglioAnnuncioDatoreState extends State<DettaglioAnnuncioDatore>{
                         if(annuncio.candidateUserList.contains(state.user.id)) {
                           show = false;
                         }
-                        if(annuncio.matchedUserId.isNotEmpty){
+                        if(annuncio.matchedUser?.id?.isNotEmpty ?? false) {
                           show = false;
                         }
                         return ActionButton(show ? "CANDIDATI" : "NON TI PUOI CANDIDARE" ,

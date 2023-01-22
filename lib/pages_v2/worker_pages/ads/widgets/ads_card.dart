@@ -8,7 +8,6 @@ import 'package:winteam/utils/image_constant.dart';
 import 'package:winteam/utils/size_utils.dart';
 import 'package:winteam/widgets_v2/action_buttons_v2.dart';
 import 'package:winteam/widgets_v2/custom_image_view.dart';
-import 'package:winteam/widgets_v2/divider_v2.dart';
 import 'package:winteam/widgets_v2/tooltip_widget.dart';
 
 class AdsCard extends StatelessWidget {
@@ -43,6 +42,7 @@ class AdsCard extends StatelessWidget {
     this.goToProfile,
     this.isWorkerCard = true,
   });
+
 
   @override
   Widget build(BuildContext context) {
@@ -96,16 +96,14 @@ class AdsCard extends StatelessWidget {
                                           onTap: goToProfile,
                                           svgPath: isWorkerCard
                                               ? null
-                                              : (annunciEntity
-                                                      .skillDTO?.imageLink ??
+                                              : (annunciEntity.skill?.imageLink ??
                                                   ''),
                                           url: isWorkerCard
-                                              ? (annunciEntity.publisherUserDTO
-                                                      ?.imageLink ??
+                                              ? (annunciEntity.publisherUser?.imageLink ??
                                                   ImageConstant
                                                       .placeholderUserUrl)
                                               : (annunciEntity
-                                                      .skillDTO?.imageLink ??
+                                                      .skill?.imageLink ??
                                                   ''),
                                           imagePath: isWorkerCard
                                               ? annunciEntity.image
@@ -153,7 +151,7 @@ class AdsCard extends StatelessWidget {
                                                 padding:  getPadding(right: 10),
                                                 child: CustomImageView(
                                             svgPath: (annunciEntity
-                                                  .skillDTO
+                                                  .skill
                                                   ?.imageLink ??
                                                   ''),
                                             height: getSize(20),
@@ -166,7 +164,7 @@ class AdsCard extends StatelessWidget {
 
                                       SizedBox(
                                         child: Text(
-                                          annunciEntity.skillDTO?.name ?? 'TEST NAME',
+                                          annunciEntity.skill?.name ?? 'TEST NAME',
                                           maxLines: 1,
                                           overflow: TextOverflow.ellipsis,
                                           style: AppStyle.txtMontserratBold24,
@@ -197,7 +195,7 @@ class AdsCard extends StatelessWidget {
                                     width: MediaQuery.of(context).size.width *
                                         0.45,
                                     child: Text(
-                                      isWorkerCard ? (annunciEntity.publisherUserDTO?.companyName ?? '') : annunciEntity.description,
+                                      isWorkerCard ? (annunciEntity.publisherUser?.companyName ?? '') : annunciEntity.description,
                                       maxLines: 2,
                                       overflow: TextOverflow.ellipsis,
                                       style: isWorkerCard
@@ -239,7 +237,7 @@ class AdsCard extends StatelessWidget {
                                         ),
                                       ),
                                       Text(
-                                        annunciEntity.date,
+                                        AdStatusUtils.formatDate(annunciEntity.date),
                                         style: AppStyle.txtMontserratRegular18,
                                       ),
                                     ],
@@ -363,7 +361,7 @@ class AdsCard extends StatelessWidget {
 
   initializeAds() {
     var part = AdStatusUtils.getAdStatus(annunciEntity.advertisementStatus);
-    message = 'Status annuncio: $part';
+    message = 'Stato annuncio: $part';
     statusColor =
         AdStatusUtils.getAdStatusColor(annunciEntity.advertisementStatus);
   }

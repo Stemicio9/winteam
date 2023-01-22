@@ -115,6 +115,7 @@ class ImageProfile extends StatelessWidget {
                             ),
                             alignment: Alignment.center,
                             fit: BoxFit.cover,
+                            placeHolder: ImageConstant.placeholderUserUrl,
                           ),
                           Visibility(
                               visible: openCamera != null,

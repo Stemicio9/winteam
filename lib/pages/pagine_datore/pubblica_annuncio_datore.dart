@@ -7,8 +7,6 @@ import 'package:winteam/blocs/skill_bloc/skill_cubit.dart';
 import 'package:winteam/blocs/subscription_bloc/subscription_cubit.dart';
 import 'package:winteam/constants/colors.dart';
 import 'package:winteam/constants/language.dart';
-import 'package:winteam/entities/annunci_entity.dart';
-import 'package:winteam/entities/skill_entity.dart';
 import 'package:winteam/widgets/action_buttons.dart';
 import 'package:winteam/widgets/chips_hour.dart';
 import 'package:winteam/widgets/date_picker.dart';
@@ -195,7 +193,7 @@ class PubblicaAnnuncioDatoreState extends State<PubblicaAnnuncioDatore> {
   }
 
   void publishAnnuncio() {
-    print("STAMPO LA DATA");
+    /*print("STAMPO LA DATA");
     print(paymentAmount);
     var finalPrice = paymentAmount.replaceAll(RegExp(r'[^0-9,]'), '');
     finalPrice = finalPrice.replaceAll(',', '.');
@@ -214,6 +212,6 @@ class PubblicaAnnuncioDatoreState extends State<PubblicaAnnuncioDatore> {
         advertisementStatus: "", position: '', image: '');
 
     _cubitAnnunci.publishAnnuncio(annuncio);
-    _cubit.selectedEntity = SkillEntity();
+    _cubit.selectedEntity = SkillEntity();*/
   }
 }

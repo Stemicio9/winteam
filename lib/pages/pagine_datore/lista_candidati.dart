@@ -55,8 +55,8 @@ class ListaCandidatiState extends State<ListaCandidati> {
      annuncio = ModalRoute.of(context)!.settings.arguments as AnnunciEntity;
     _cubit.listCandidati(annuncio.id ?? "");
     print("HO FATTO LA BUILD ");
-    print(annuncio.matchedUserId);
-    matchCubit.getUserMatched(annuncio.matchedUserId);
+    print(annuncio.matchedUser?.id);
+    matchCubit.getUserMatched(annuncio.matchedUser?.id ?? "");
 
     return Scaffold(
       appBar: appbarSenzaActions(context, 'Lista candidati'),
@@ -88,7 +88,7 @@ class ListaCandidatiState extends State<ListaCandidati> {
 
   void reloadAll() async {
     await _cubit.listCandidati(annuncio.id ?? "");
-    matchCubit.getUserMatched(annuncio.matchedUserId);
+    matchCubit.getUserMatched(annuncio.matchedUser?.id ?? "");
   }
 
 

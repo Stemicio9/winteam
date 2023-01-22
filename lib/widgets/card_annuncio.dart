@@ -223,7 +223,7 @@ class CardAnnuncioDatore extends StatelessWidget{
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      iconaConTitolo(Icon(Icons.today_outlined,color: giallo), annuncio.date ?? "Nessuna data inserita"),
+                      iconaConTitolo(Icon(Icons.today_outlined,color: giallo), annuncio.date.toString() ?? "Nessuna data inserita"),
                       //iconaConTitolo(Icon(Icons.location_on_outlined,color: giallo), "" ?? ""),
                       iconaConTitolo(Icon(Icons.timer_outlined,color: giallo), annuncio.hourSlot ?? "??:??"),
                       iconaConTitolo(Icon(Icons.euro_symbol_outlined,color: giallo), annuncio.payment ?? "NS"),

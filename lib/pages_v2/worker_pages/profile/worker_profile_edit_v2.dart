@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:winteam/authentication/authentication_bloc.dart';
 import 'package:winteam/blocs/user_bloc/current_user_cubit.dart';
 import 'package:winteam/constants/language.dart';
 import 'package:winteam/constants/route_constants.dart';
@@ -25,9 +24,8 @@ class WorkerProfileEditV2 extends StatefulWidget {
 }
 
 class WorkerProfileEditV2State extends State<WorkerProfileEditV2> {
-  UserAuthCubit get _authCubit => context.read<UserAuthCubit>();
-
   UserCubit get _userCubit => context.read<UserCubit>();
+
   UserEntity currentUser = UserEntity();
 
   final _formKey = GlobalKey<FormState>();
@@ -41,19 +39,15 @@ class WorkerProfileEditV2State extends State<WorkerProfileEditV2> {
   final TextEditingController descriptionTextController =
       TextEditingController();
 
-  final List<SkillEntity> mansioni = List.empty(growable: true);
 
   @override
   void initState() {
-    inputData();
-    fillMansioni();
     super.initState();
   }
 
   inputData() {
-    currentUser = (_authCubit.state as UserAuthenticated).user;
-    lastNameTextController.text = '${currentUser.lastName}';
     nameTextController.text = '${currentUser.firstName}';
+    lastNameTextController.text = '${currentUser.lastName}';
     headerDescriptionTextController.text = currentUser.brief ?? '';
     phoneTextController.text = currentUser.phoneNumber ?? '';
     emailTextController.text = currentUser.email ?? '';
@@ -63,6 +57,10 @@ class WorkerProfileEditV2State extends State<WorkerProfileEditV2> {
 
   @override
   Widget build(BuildContext context) {
+    final arguments = (ModalRoute.of(context)?.settings.arguments ?? <String, dynamic>{}) as Map;
+    currentUser = (arguments['user'] as UserEntity).copyWith();
+    inputData();
+
     return W1nScaffold(
         appBar: 1,
         title: PROFILE,
@@ -87,20 +85,18 @@ class WorkerProfileEditV2State extends State<WorkerProfileEditV2> {
                       child: ListView(
                         children: [
                           ProfileHeaderEdit(
-                            lastNameTextController: lastNameTextController,
                             nameTextController: nameTextController,
+                            lastNameTextController: lastNameTextController,
                             headerDescriptionTextController: headerDescriptionTextController,
                           ),
                           ProfileSkillsEdit(
-                            mansioni: mansioni,
-                            deleteSkill: deleteDummySkill,
+                            mansioni: currentUser.skillList ?? [],
+                            deleteSkill: deleteSkill,
                             ontap: () async {
-                              var newUser = await Navigator.pushNamed(
-                                      context, RouteConstants.addSkills)
-                                  as UserEntity;
+                              var skill = await Navigator.pushNamed(context, RouteConstants.addSkills, arguments: {"user": currentUser}) as SkillEntity;
                               setState(() {
-                                currentUser = newUser;
-                                fillMansioni();
+                                setArguments();
+                                (arguments['user'] as UserEntity).skillList?.add(skill);
                               });
                             },
                           ),
@@ -146,22 +142,23 @@ class WorkerProfileEditV2State extends State<WorkerProfileEditV2> {
     }
   }
 
-  fillMansioni() {
-    mansioni.clear();
-    //iterate over currentUser.skillList
-    print(currentUser);
-    if (currentUser.skillList != null) {
-      for (var skill in currentUser.skillList!) {
-        mansioni.add(skill);
-      }
-    }
+  deleteSkill(int index) {
+    print('delete skill $index');
+    setState(() {
+      setArguments();
+      currentUser.skillList?.removeAt(index);
+    });
   }
 
-  deleteDummySkill(int index) {
-    setState(() {
-      var currentUser = (_authCubit.state as UserAuthenticated).user;
-      currentUser.skillList!.removeAt(index);
-      fillMansioni();
-    });
+  setArguments(){
+    final arguments = (ModalRoute.of(context)?.settings.arguments ?? <String, dynamic>{}) as Map;
+    arguments['user'] = (arguments['user'] as UserEntity).copyWith(
+        firstName: nameTextController.text,
+        lastName: lastNameTextController.text,
+        brief: headerDescriptionTextController.text,
+        phoneNumber: phoneTextController.text,
+        email: emailTextController.text,
+        address: positionTextController.text,
+        description: descriptionTextController.text);
   }
 }

@@ -7,6 +7,7 @@ import 'package:winteam/constants/colors.dart';
 import 'package:winteam/constants/language.dart';
 import 'package:winteam/constants/route_constants.dart';
 import 'package:winteam/entities/annunci_entity.dart';
+import 'package:winteam/entities/user_entity.dart';
 import 'package:winteam/pages_v2/W1n_scaffold.dart';
 import 'package:winteam/pages_v2/worker_pages/ads/widgets/ads_detail_description.dart';
 import 'package:winteam/pages_v2/worker_pages/ads/widgets/ads_detail_dialog.dart';
@@ -39,13 +40,12 @@ class AdsDetailState extends State<AdsDetail> {
       context.read<AnnuncioDetailCubit>();
 
   final rating = 4.00;
-  final stateMessage = 'Status annuncio: ';
+  final stateMessage = 'Stato annuncio: ';
   final image = 'assets/images/img_pexelsphotoby.png';
 
   String statusLabel = '';
   String candidateNumber = '0';
   Color statusColor = Colors.transparent;
-
 
 
   @override
@@ -58,7 +58,6 @@ class AdsDetailState extends State<AdsDetail> {
     final arguments = (ModalRoute.of(context)?.settings.arguments ??
         <String, dynamic>{}) as Map;
     String id = arguments['annuncio'];
-    print("REFRESHO LA PAGINA CON ANNUNCIO ID $id");
     _annuncioDetailCubit.getAnnuncioById(id);
     _annunciCubit.listCandidati(id);
    return content();
@@ -73,7 +72,9 @@ class AdsDetailState extends State<AdsDetail> {
           builder: (_,state) {
 
             if (state is AnnuncioDetailLoading) {
-              return loadingGif();
+              return Center(
+                child: loadingGif(),
+              );
             }
             else if (state is AnnuncioDetailLoaded) {
               formatStatusLabel(state.annuncio);
@@ -93,8 +94,8 @@ class AdsDetailState extends State<AdsDetail> {
           child: Column(
             children: [
               AdsDetailSkill(
-                skillIcon: annuncio.skillDTO?.imageLink ?? '',
-                skillName: annuncio.skillDTO?.name ?? 'TEST NAME',
+                skillIcon: annuncio.skill?.imageLink ?? '',
+                skillName: annuncio.skill?.name ?? 'TEST NAME',
                 price: annuncio.payment,
                 message: stateMessage,
                 state: statusLabel,
@@ -103,18 +104,18 @@ class AdsDetailState extends State<AdsDetail> {
               ),
               AdsDetailInfo(
                 isVisible: !widget.isEmployer,
-                message: 'Valutazione: ${annuncio.publisherUserDTO?.rating?.toStringAsFixed(1) ?? 0}/5',
+                message: 'Valutazione: ${annuncio.publisherUser?.rating?.toStringAsFixed(1) ?? 0}/5',
                 onTap: () {
                   Navigator.pushNamed(
                       context, RouteConstants.employerProfileOnlyView,
-                      arguments: {'company': annuncio.publisherUserDTO});
+                      arguments: {'company': annuncio.publisherUser});
                 },
-                image: annuncio.publisherUserDTO?.imageLink ?? ImageConstant.placeholderUserUrl,
-                subtitle: annuncio.publisherUserDTO?.companyName ?? '',
+                image: annuncio.publisherUser?.imageLink ?? ImageConstant.placeholderUserUrl,
+                subtitle: annuncio.publisherUser?.companyName ?? '',
                 position: annuncio.position,
-                date: annuncio.date,
+                date: AdStatusUtils.formatDate(annuncio.date),
                 hours: annuncio.hourSlot,
-                rating: annuncio.publisherUserDTO?.rating ?? 0,
+                rating: annuncio.publisherUser?.rating ?? 0,
               ),
               AdsDetailDescription(
                 description: annuncio.description,
@@ -138,7 +139,7 @@ class AdsDetailState extends State<AdsDetail> {
                 builder: (_ ,innerState){
                   if(innerState is UserAuthenticated){
                     bool isApplicant = state.utenti.any((element) => element.id ==  innerState.user.id);
-                    return bottomButton(annuncio, isApplicant);
+                    return bottomButton(annuncio, isApplicant, innerState.user, state.utenti);
                   }else{
                     return Container(
                       child: const Center(
@@ -156,13 +157,16 @@ class AdsDetailState extends State<AdsDetail> {
   }
 
 
-  Widget bottomButton(AnnunciEntity annuncio, bool isApplicant) {
+  Widget bottomButton(AnnunciEntity annuncio, bool isApplicant, UserEntity currentUser, List<UserEntity> annuncioUserList) {
     return AdsDetailFooter(
       goToList: () {
-        Navigator.pushNamed(context, RouteConstants.candidatesList, arguments: {'annuncio': annuncio});
+        Navigator.pushNamed(context, RouteConstants.candidatesList, arguments: {'annuncio': annuncio.id});
       },
+      matchedUser: annuncio.matchedUser,
+      annuncioUserList: annuncioUserList,
+      currentUser: currentUser,
       viewApplies: VIEW_APPLIES,
-      isVisible: widget.isEmployer,
+      isEmployer: widget.isEmployer,
       text: APPLY,
       cancelButtonText: CANCEL_APPLICATION,
       candidates: candidateNumber,
